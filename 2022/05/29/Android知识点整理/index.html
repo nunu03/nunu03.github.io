@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     
     
-    <title>aar依赖引用关系 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <title>Android知识点整理 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="aar">
+    <meta name="keywords" content="Android">
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
     <link rel="stylesheet" href="/css/style.css?v=1.4.4">
@@ -146,7 +146,7 @@
           <i class="icon icon-lg icon-navicon"></i>
         </a>
         <div class="flex-col header-title ellipsis">
-            <span>aar依赖引用关系</span>
+            <span>Android知识点整理</span>
             
         </div>
         
@@ -159,15 +159,15 @@
 <header class="content-header post-header">
     <img src="/img/banner.jpg" class="header-bg">
     <div class="container fade-scale">
-        <h1 class="title">aar依赖引用关系</h1>
+        <h1 class="title">Android知识点整理</h1>
         <h5 class="subtitle">
             
-                <time datetime="2019-07-23T11:47:36.000Z" itemprop="datePublished" class="page-time">
-  2019-07-23
+                <time datetime="2022-05-29T03:29:03.000Z" itemprop="datePublished" class="page-time">
+  2022-05-29
 </time>
 
 
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Gradle/">Gradle</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
 
             
         </h5>
@@ -192,15 +192,15 @@
 
 
 <div class="container body-wrap">
-    <article id="post-aar依赖引用关系"
+    <article id="post-Android知识点整理"
   class="post-article article-type-post" itemprop="blogPost">
     <div class="post-card">
-        <h1 class="post-card-title">aar依赖引用关系</h1>
+        <h1 class="post-card-title">Android知识点整理</h1>
         <div class="post-meta">
-            <time class="post-time" title="2019-07-23 19:47:36" datetime="2019-07-23T11:47:36.000Z"  itemprop="datePublished">2019-07-23</time>
+            <time class="post-time" title="2022-05-29 11:29:03" datetime="2022-05-29T03:29:03.000Z"  itemprop="datePublished">2022-05-29</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Gradle/">Gradle</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
 
 
 
@@ -213,27 +213,14 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             
-            <h2 id="依赖关系查看"><a href="#依赖关系查看" class="headerlink" title="依赖关系查看"></a>依赖关系查看</h2><h3 id="Gradle-View"><a href="#Gradle-View" class="headerlink" title="Gradle View"></a>Gradle View</h3><p>在AS中安装Gradle View插件，安装完重启。</p>
-<p>在AS面板中-&gt;View-&gt;Tool Windows-&gt;Gradle View查看。</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><h4 id="查看app模块所有依赖，包含依赖的依赖"><a href="#查看app模块所有依赖，包含依赖的依赖" class="headerlink" title="查看app模块所有依赖，包含依赖的依赖"></a>查看app模块所有依赖，包含依赖的依赖</h4><p>./gradlew -q :app:dependencies</p>
-<h4 id="查看app模块所有依赖，包含依赖的依赖-1"><a href="#查看app模块所有依赖，包含依赖的依赖-1" class="headerlink" title="查看app模块所有依赖，包含依赖的依赖"></a>查看app模块所有依赖，包含依赖的依赖</h4><p> ./gradlew : app:dependencies –configuration implementation</p>
-<h4 id="查看指定项目app模块的依赖，并输出到文件"><a href="#查看指定项目app模块的依赖，并输出到文件" class="headerlink" title="查看指定项目app模块的依赖，并输出到文件"></a>查看指定项目app模块的依赖，并输出到文件</h4><p> ./gradlew -q :app:dependencies &gt; tree.txt</p>
-<h2 id="多版本依赖"><a href="#多版本依赖" class="headerlink" title="多版本依赖"></a>多版本依赖</h2><blockquote>
-<p>依赖库有版本冲突时，默认使用高版本中的依赖（注意：是引用库的高版本中的依赖），如果项目中指定版本高于依赖中，优先用项目中指定的版本<br>如果想指定使用引入库中版本，使用force参数</p>
-<blockquote>
-<p>总结：</p>
-<p>1.a = 引用库依赖（高）&gt;引用库依赖（低）;</p>
-<p>2.force = true 使用指定;</p>
-<p>3.引用&gt; a 使用引用，否则使用a</p>
-</blockquote>
-</blockquote>
-<figure class="image-box">
-                <a rel=aar依赖引用关系 href="http://nunu03.github.io/2019/07/23/aar依赖引用关系/aar.jpg" title="aar" data-fancybox="images"><img src="http://nunu03.github.io/2019/07/23/aar依赖引用关系/aar.jpg" alt="aar" title class></a>
-                <p>aar</p>
-            </figure>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/weixin_33714884/article/details/90770965" target="_blank" rel="noopener">aar依赖关系解析</a></p>
-<p><a href="https://www.jianshu.com/p/3b29f6890eac" target="_blank" rel="noopener">Android Studio查看第三方库依赖树</a></p>
-<p><a href="https://blog.csdn.net/jifenglie/article/details/81390517" target="_blank" rel="noopener">Gradle查看第三方依赖关系图</a></p>
+            <h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>循序表（数组arraylist）和linklist （ 双向链表）链表的插入、删除、查询的效率？<br>如果一个数组反复插入删除怎么降低时间复杂度？</p>
+<h3 id="A。数组插入、删除："><a href="#A。数组插入、删除：" class="headerlink" title="A。数组插入、删除："></a>A。数组插入、删除：</h3><p>是在下标i的地方，后边的数组整体system.copy一份，然后插入到i位置。Copy是一个循环。<br>链表插入、删除：是一个节点node，node包含两部分，数组和指针，当前指针指向下一个数组。</p>
+<p>数组，查找快，直接用下标获取。<br>链表，查找慢，需要循环获取。</p>
+<h3 id="B。标记-查找："><a href="#B。标记-查找：" class="headerlink" title="B。标记-查找："></a>B。标记-查找：</h3><p>删除的时候不删除，赋值为null或者标记其他，这个下次在插入的时候直接赋值即可。然后在适当的机会，循环删除值为null的数组即可。这样就可以优化了对象的反复创建和删除。</p>
+<h3 id="C。linkedlist，"><a href="#C。linkedlist，" class="headerlink" title="C。linkedlist，"></a>C。linkedlist，</h3><p>查询第一个和最后一个时间复杂度一样？一样，查询第一个和倒数第二个一样吗？不一样，liankedlist是双向链表。倒数第二个需要两步。</p>
+<h3 id="hashmap？长度默认16"><a href="#hashmap？长度默认16" class="headerlink" title="hashmap？长度默认16"></a>hashmap？长度默认16</h3><h3 id="jdk-1-7-为什么用链表？用的是hash碰撞原理"><a href="#jdk-1-7-为什么用链表？用的是hash碰撞原理" class="headerlink" title="jdk 1.7:为什么用链表？用的是hash碰撞原理"></a>jdk 1.7:为什么用链表？用的是hash碰撞原理</h3><p>A。把key通过hashcode对length取模，设置下标。所以hashmap的table表是顺序的。然后创建一个节点（数据hashmapentry），放到这个下标的位置。同时每个下表对应的所有节点是一个单链表。<br>B。Hashcode的获取，就是一个hash碰撞的过程。比如hashcode=1和hashcode=17，是在一个下标上。<br>C。Get一个数据，就是用过key获取链表，然后在通过key循环具体的值，循环过程中要判断hashcode一致，判断key一致。<br>D。Hash表在什么情况性能最差？所有数据在一个节点上，那链表久非常大，效率就非常低了。<br>E。什么长度是16？因为在hash下标的过程中。16的二进制是10000.</p>
+<h3 id="jdk1-8-每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。"><a href="#jdk1-8-每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。" class="headerlink" title="jdk1.8:每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。"></a>jdk1.8:每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。</h3><p>A。hash冲突后不在用链表保存相同的index节点，而是采用红黑树保存冲突节点。<br>B。红黑树构建的时候很复杂、效率很低（旋转）。所以当链表超过8个才使用红黑树。</p>
+<h3 id="hashmap线程安全问题：不安全。"><a href="#hashmap线程安全问题：不安全。" class="headerlink" title="hashmap线程安全问题：不安全。"></a>hashmap线程安全问题：不安全。</h3><p>如果链表被同时操作就会出现问题。<br>Hashtable线程安全；所有函数（put、get，remove）的时候用到了synchronized。但是这样的任何访问都加了锁，包括所有hashcode上。<br>Synchronized，内置锁，开锁和关锁都是jvm完成的。所以get时候不能put。只能执行其中一个。<br>Concurrenthashmap：是基于hashtable的优化，它是在具体的链表上锁，也是用到了synchronized，但是它只是锁在了链表上。</p>
 
         </div>
         
@@ -241,12 +228,12 @@
     <div class="content">
         
 <span class="post-time">
-    最後更新時間：<time datetime="2019-12-13T07:38:11.000Z" itemprop="dateUpdated">2019-12-13 15:38:11</time>
+    最後更新時間：<time datetime="2022-05-29T03:37:15.801Z" itemprop="dateUpdated">2022-05-29 11:37:15</time>
 </span><br>
 
 
         
-        转载注明出处，原文地址：<a href="/2019/07/23/aar依赖引用关系/" target="_blank" rel="external">http://nunu03.github.io/2019/07/23/aar依赖引用关系/</a>
+        转载注明出处，原文地址：<a href="/2022/05/29/Android知识点整理/" target="_blank" rel="external">http://nunu03.github.io/2022/05/29/Android知识点整理/</a>
         
     </div>
     <footer>
@@ -260,7 +247,7 @@
         
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aar/">aar</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
 
             <div class="page-share-wrap">
     
@@ -269,7 +256,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/07/23/aar依赖引用关系/&title=《aar依赖引用关系》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2022/05/29/Android知识点整理/&title=《Android知识点整理》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -281,7 +268,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/07/23/aar依赖引用关系/&title=《aar依赖引用关系》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2022/05/29/Android知识点整理/&title=《Android知识点整理》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -304,21 +291,14 @@
         
     </div>
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="prev">
-      <a href="/2019/08/08/Fragment和Activity生命周期/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Fragment和Activity生命周期</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="next">
-      <a href="/2019/07/12/Flutter-配置/" id="post-next" class="post-nav-link">
+      <a href="/2022/05/29/hello-world/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Flutter 配置</h4>
+        <h4 class="title">Hexo 配置</h4>
       </a>
     </div>
   
@@ -330,7 +310,7 @@
         <aside class="post-widget">
             <nav class="post-toc-wrap" id="post-toc">
                 <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#依赖关系查看"><span class="post-toc-number">1.</span> <span class="post-toc-text">依赖关系查看</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Gradle-View"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Gradle View</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#命令"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">命令</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#查看app模块所有依赖，包含依赖的依赖"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">查看app模块所有依赖，包含依赖的依赖</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#查看app模块所有依赖，包含依赖的依赖-1"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">查看app模块所有依赖，包含依赖的依赖</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#查看指定项目app模块的依赖，并输出到文件"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">查看指定项目app模块的依赖，并输出到文件</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多版本依赖"><span class="post-toc-number">2.</span> <span class="post-toc-text">多版本依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考</span></a></li></ol>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Map"><span class="post-toc-number">1.</span> <span class="post-toc-text">Map</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#A。数组插入、删除："><span class="post-toc-number">1.1.</span> <span class="post-toc-text">A。数组插入、删除：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#B。标记-查找："><span class="post-toc-number">1.2.</span> <span class="post-toc-text">B。标记-查找：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#C。linkedlist，"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">C。linkedlist，</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#hashmap？长度默认16"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">hashmap？长度默认16</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#jdk-1-7-为什么用链表？用的是hash碰撞原理"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">jdk 1.7:为什么用链表？用的是hash碰撞原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#jdk1-8-每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">jdk1.8:每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#hashmap线程安全问题：不安全。"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">hashmap线程安全问题：不安全。</span></a></li></ol></li></ol>
             </nav>
             <div class="toc-bar"><div>
         </aside>
@@ -400,7 +380,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/07/23/aar依赖引用关系/&title=《aar依赖引用关系》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2022/05/29/Android知识点整理/&title=《Android知识点整理》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -412,7 +392,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/07/23/aar依赖引用关系/&title=《aar依赖引用关系》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2022/05/29/Android知识点整理/&title=《Android知识点整理》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -424,7 +404,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3aS27DMAwFwNz/0ukBCiuPpBPA0ngVtHas6YLl7/WKr/fF9f+3V/evv3n9k9suDAyMxzLey2t9rDVm/a71GfKzYWBgnMNYh8Krz8n91cBafRcGBgZG9VhJaK4GcQwMDIwJI3llL0HEwMDA6BWxyf1RwVn8891ci2NgYDyQkYfI33/+ynwDAwPjUYxJ0Jw093vh9fJUGBgYWzPyAJd/XXUYWV3OuCyDMTAwDmBUA1xSoFZXK3oLHBgYGHszeg36XsNrkmh+OAMGBsYBjN7yRP6yvFjN08TL3BYDA2M7RnXlqzc8SNh5EVtot2FgYGzBuHegWF3RmK+mNeerGBgYj2L0Vq+q7bMfhXUMDIwDGHlbrQru3ZknlBgYGHsz8scm6V11dawc1jEwMA5gJIsO89Z/kuo178HAwNiaUX1lEpR7B8pXxD5kuBgYGNsxqsPCHnUyNiiEWgwMjK0Z+XJqsiTRK0Sr34CBgXEOo7owcW+x2hsVREEfAwNjO0a+HtE7RN6kyxkfli0wMDA2ZSTpWnVtIl+5yBttl09hYGAcwMgfrobU0WAyn1FiYGBsyngXr0mB2huONpNCDAyMjRi9YNdM3eL2XHXtDAMD4wTGZBj57TK4EGQxMDAOYOSBbzL+nP8HGM03MDAwjmSsD1QdA4wWwjAwMDDiYnIyEpiwMTAwTmAkRWwSEKuNuXz8gIGBcTJjUjre1UqrgpuDTAwMjOcx/gDwYQPxpAUGmwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3awY7CMAxFUf7/pztbJNRwn11GSny7QgHanC4sO/brha/r7fpceV8n337+cr3y2CVDhoxtGdfyumP070/YZG8yZMiYw1iHQg5Yb/Sp58qQIUNGeru7QEnA/LMMGTJk1B7DMTzJkyFDhoxOEbt+WJoUkvWf1OIyZMjYkMFL0////JP+hgwZMrZiXOFFeDwQp+nj7a5kyJBxNCM9GkvLS7JFkjKi9oMMGTIOZdRGHPgxWW1oLB7ykCFDxtEM/vhOYyAdOEvbDDJkyDibsQ5k6QgFD5S8CYFamDJkyBjD4EGQNyY76WaQVsqQIWMAI33Ys/3SGh7dQoYMGQcx0oN7PvJFAvR6Ba3LkCHjaEa6lbRVGQTN0tGbDBkyJjDSoYdaEpluN365MmTIOJpBkrDOgEUaXvmuXukfZMiQsS0jDZE8QeQpYxriv6SGMmTIOI7BIxgfm6glf/yAr9hzkCFDxhGMtGG53lBnRKPWJJAhQ8Y0Bj9QI2GUlLtpmL7FyJAh41DGU0f5/MiMjJfFZbMMGTLGMNIEsVagkgSRj3rIkCFjJqOTzNXCZdrIlCFDxhxGrUzlATEY5Cq9VhkyZExg1DqDfKPkX7WgnL4aGTJk7M6ola9pMlfDB3uQIUPGAEZa+3aOzPhBXlzKypAhQ0aJxIcnWiFehgwZMhrNy06pzIO7DBkyJjBIEVsrOPnAGT8LlCFDxjRGp3TshFTCe6r0lSFDxraMPxW9+gj+OO0GAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
