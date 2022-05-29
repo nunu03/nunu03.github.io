@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>nps 内网穿透 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="ngrok,nps">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>4</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/nunu03/" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>nps 内网穿透</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">nps 内网穿透</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-01-06T12:20:53.000Z" itemprop="datePublished" class="page-time">
+  2021-01-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/ngrok/">ngrok</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/ngrok/nps/">nps</a></li></ul></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-nps-内网穿透"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">nps 内网穿透</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-01-06 20:20:53" datetime="2021-01-06T12:20:53.000Z"  itemprop="datePublished">2021-01-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/ngrok/">ngrok</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/ngrok/nps/">nps</a></li></ul></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a href="https://github.com/ehang-io/nps/releases" target="_blank" rel="noopener">下载nps：</a></p>
+<p>Mac系统：darwin_amd64_server.tar.gz<br>下载后解压，在解压文件夹，执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01deMacBook-Pro:Downloads chenyulong01$ cd darwin_amd64_server</span><br><span class="line"></span><br><span class="line">chenyulong01deMacBook-Pro:darwin_amd64_server chenyulong01$ sudo ./nps install</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/conf/clients.json to /etc/nps/conf/clients.json</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/conf/hosts.json to /etc/nps/conf/hosts.json</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/conf/nps.conf to /etc/nps/conf/nps.conf</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/conf/server.key to /etc/nps/conf/server.key</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/conf/server.pem to /etc/nps/conf/server.pem</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/conf/tasks.json to /etc/nps/conf/tasks.json</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/client/add.html to /etc/nps/web/views/client/add.html</span><br><span class="line">2021/01/06 14:21:18 mkdir:/etc/nps/web/views/client/</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/client/edit.html to /etc/nps/web/views/client/edit.html</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/client/list.html to /etc/nps/web/views/client/list.html</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/index/add.html to /etc/nps/web/views/index/add.html</span><br><span class="line">2021/01/06 14:21:18 mkdir:/etc/nps/web/views/index/</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/index/edit.html to /etc/nps/web/views/index/edit.html</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/index/hadd.html to /etc/nps/web/views/index/hadd.html</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/index/hedit.html to /etc/nps/web/views/index/hedit.html</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/index/help.html to /etc/nps/web/views/index/help.html</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/index/hlist.html to /etc/nps/web/views/index/hlist.html</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/index/index.html to /etc/nps/web/views/index/index.html</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/index/list.html to /etc/nps/web/views/index/list.html</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/login/index.html to /etc/nps/web/views/login/index.html</span><br><span class="line">2021/01/06 14:21:18 mkdir:/etc/nps/web/views/login/</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/login/register.html to /etc/nps/web/views/login/register.html</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/public/error.html to /etc/nps/web/views/public/error.html</span><br><span class="line">2021/01/06 14:21:18 mkdir:/etc/nps/web/views/public/</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/views/public/layout.html to /etc/nps/web/views/public/layout.html</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/css/bootstrap-table.min.css to /etc/nps/web/static/css/bootstrap-table.min.css</span><br><span class="line">2021/01/06 14:21:18 mkdir:/etc/nps/web/static/css/</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/css/bootstrap.min.css to /etc/nps/web/static/css/bootstrap.min.css</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/css/datatables.css to /etc/nps/web/static/css/datatables.css</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/css/fontawesome.min.css to /etc/nps/web/static/css/fontawesome.min.css</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/css/regular.min.css to /etc/nps/web/static/css/regular.min.css</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/css/solid.min.css to /etc/nps/web/static/css/solid.min.css</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/css/style.css to /etc/nps/web/static/css/style.css</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/img/flag/en-US.png to /etc/nps/web/static/img/flag/en-US.png</span><br><span class="line">2021/01/06 14:21:18 mkdir:/etc/nps/web/static/img/</span><br><span class="line">2021/01/06 14:21:18 mkdir:/etc/nps/web/static/img/flag/</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/img/flag/zh-CN.png to /etc/nps/web/static/img/flag/zh-CN.png</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/js/bootstrap-table-locale-all.min.js to /etc/nps/web/static/js/bootstrap-table-locale-all.min.js</span><br><span class="line">2021/01/06 14:21:18 mkdir:/etc/nps/web/static/js/</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/js/bootstrap-table.min.js to /etc/nps/web/static/js/bootstrap-table.min.js</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/js/bootstrap.min.js to /etc/nps/web/static/js/bootstrap.min.js</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/js/echarts.min.js to /etc/nps/web/static/js/echarts.min.js</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/js/fontawesome.min.js to /etc/nps/web/static/js/fontawesome.min.js</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/js/inspinia.js to /etc/nps/web/static/js/inspinia.js</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/js/jquery-3.4.1.min.js to /etc/nps/web/static/js/jquery-3.4.1.min.js</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/js/language.js to /etc/nps/web/static/js/language.js</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/js/popper.min.js to /etc/nps/web/static/js/popper.min.js</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/page/error.html to /etc/nps/web/static/page/error.html</span><br><span class="line">2021/01/06 14:21:18 mkdir:/etc/nps/web/static/page/</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/page/languages.xml to /etc/nps/web/static/page/languages.xml</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/webfonts/fa-solid-900.eot to /etc/nps/web/static/webfonts/fa-solid-900.eot</span><br><span class="line">2021/01/06 14:21:18 mkdir:/etc/nps/web/static/webfonts/</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/webfonts/fa-solid-900.svg to /etc/nps/web/static/webfonts/fa-solid-900.svg</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/webfonts/fa-solid-900.ttf to /etc/nps/web/static/webfonts/fa-solid-900.ttf</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/webfonts/fa-solid-900.woff to /etc/nps/web/static/webfonts/fa-solid-900.woff</span><br><span class="line">2021/01/06 14:21:18 copy file ::/Users/chenyulong01/Downloads/darwin_amd64_server/web/static/webfonts/fa-solid-900.woff2 to /etc/nps/web/static/webfonts/fa-solid-900.woff2</span><br><span class="line">2021/01/06 14:21:18 install ok!</span><br><span class="line">2021/01/06 14:21:18 Static files and configuration files in the current directory will be useless</span><br><span class="line">2021/01/06 14:21:18 The new configuration file is located in /etc/nps you can edit them</span><br><span class="line">2021/01/06 14:21:18 You can start with:</span><br><span class="line">nps start|stop|restart|uninstall|update or nps-update update</span><br><span class="line">anywhere!</span><br></pre></td></tr></table></figure>
+
+<p>启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01deMacBook-Pro:~ chenyulong01$ cd /etc/nps/</span><br><span class="line">chenyulong01deMacBook-Pro:nps chenyulong01$ ls</span><br><span class="line">conf	web</span><br><span class="line">chenyulong01deMacBook-Pro:nps chenyulong01$ sudo nps start</span><br><span class="line">2021/01/06 14:27:47.789 [E] [nps.go:132]  Valid actions: [&quot;start&quot; &quot;stop&quot; &quot;restart&quot; &quot;install&quot; &quot;uninstall&quot;]</span><br><span class="line">Failed to start nps内网穿透代理服务器: &quot;launchctl&quot; failed with stderr: /Library/LaunchDaemons/Nps.plist: service already loaded</span><br><span class="line"></span><br><span class="line">chenyulong01deMacBook-Pro:nps chenyulong01$ sudo nps stop</span><br><span class="line">chenyulong01deMacBook-Pro:nps chenyulong01$ sudo nps start</span><br></pre></td></tr></table></figure>
+
+<h2 id="web管理"><a href="#web管理" class="headerlink" title="web管理"></a>web管理</h2><p>网址：<a href="http://localhost:8080/login/index" target="_blank" rel="noopener">http://localhost:8080/login/index</a></p>
+<p>账号：admin</p>
+<p>密码：123</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://www.nasge.com/archives/48.html" target="_blank" rel="noopener">内网穿透工具比较(ngrok,frp,lanproxy,goproxy,nps)</a><br><a href="https://github.com/ehang-io/nps/blob/master/README_zh.md" target="_blank" rel="noopener">ehang-io-nps</a></p>
+<p><a href="https://ehang-io.github.io/nps/#/example" target="_blank" rel="noopener">Api</a></p>
+<p><a href="https://blog.csdn.net/weixin_39251927/article/details/104843100" target="_blank" rel="noopener">NPS内网穿透工具</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-01-15T02:34:34.000Z" itemprop="dateUpdated">2021-01-15 10:34:34</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2021/01/06/nps-内网穿透/" target="_blank" rel="external">http://nunu03.github.io/2021/01/06/nps-内网穿透/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ngrok/">ngrok</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nps/">nps</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/01/06/nps-内网穿透/&title=《nps 内网穿透》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/01/06/nps-内网穿透/&title=《nps 内网穿透》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2021/02/25/日常问题解决记录/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">日常问题解决记录</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2020/11/12/Uri获取资源文件/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Uri获取资源文件</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装"><span class="post-toc-number">1.</span> <span class="post-toc-text">安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#web管理"><span class="post-toc-number">2.</span> <span class="post-toc-text">web管理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://handsomeliuyang.github.io/" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2019 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/01/06/nps-内网穿透/&title=《nps 内网穿透》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/01/06/nps-内网穿透/&title=《nps 内网穿透》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACH0lEQVR42u3awW4DIQxF0fz/T0+3ldrS+2wSCXNZjdCEcLJwbMzrhcfzY3yfX79PVl7PbBsyZMg4lvEsx/od/sWdldfvyJAh4x7GOhTyTXdCLf8uGTJkyOAM/sxnZMiQIeMdDL4JnobKkCFDxq6l12E0TTE/VIvLkCHjQAY/df/881v6GzJkyDiK8YSDJ3zr+c4efllThgwZoxn9BmS/9O00FWTIkHEDg5eLPHQSNgnfAUyGDBlXMni0Jshdrco/dytDhozRjP7m+sUtbxKgDFeGDBnjGLXwl8LSBDQup2XIkDGa0dk0uVjWuXKRri9DhowbGGn4S/E8HeQnaX9muDJkyBjESI/4SfgjgKC/StaUIUPGlYxOkN1F5Yd3MmTImM2oHWzVZnh4rRXJMmTImM3gxWQNw9O+1moyZMi4gEEKWnLQTzbNS+ViCihDhoxxDF4iks2lvUUSWIM0UYYMGaMZu4Jp58iMI+OyVoYMGYcz1hdMa4GV/zS7nmXIkHEPI20PpEdptWCNgr4MGTIuYKRXJWrXIPhG4ysdMmTIGMp4wtEpVnmiGR/DyZAhYzSj0xnkTUpeJKfl64YGpwwZMg5hpG1FfkjHg3gacON/DxkyZIxg1BqZaVOzVjajglmGDBky8EWxtKDl4fUfsAwZMmSEpWmtVm61QmXIkHEBoxYWa61KnlYGYBkyZIxm8FBItsuvXHQ+W2xkypAh4zzGF6v2+gjrF8V0AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

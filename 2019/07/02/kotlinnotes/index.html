@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Kotlin新手使用笔记 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Android,Kotlin">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>4</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/nunu03/" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Kotlin新手使用笔记</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">Kotlin新手使用笔记</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-02T03:44:51.000Z" itemprop="datePublished" class="page-time">
+  2019-07-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Kotlin/">Kotlin</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-kotlinnotes"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">Kotlin新手使用笔记</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-02 11:44:51" datetime="2019-07-02T03:44:51.000Z"  itemprop="datePublished">2019-07-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Kotlin/">Kotlin</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="const关键字"><a href="#const关键字" class="headerlink" title="const关键字"></a>const关键字</h2><p>只读属性使用const关键字之后将没有get方法，举个例子<br>在kotlin文件中，写两个包级属性，一个是const，一个不是const</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const val i = 1</span><br><span class="line">val j = &quot;A&quot;</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+<p>使用java代码访问，访问方式是不同的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class TestConst &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int i = ConstKt.i;</span><br><span class="line">        ConstKt.getJ();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一种是使用get方法访问，一种是直接使用类访问。说明const关键字实际上相当于java的static final。<br>需要注意的是，Const只能是kotlin的string和基本类型。<br>其实在object中const相当于@JvmField注解，比如下面的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@JvmField</span><br><span class="line">val c = 3</span><br></pre></td></tr></table></figure>
+
+<p>就和</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const val c = 3</span><br></pre></td></tr></table></figure>
+
+<p>效果一样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@JvmField</span><br><span class="line">val TAGS = WeixinHook.TAG + &quot;.Test&quot;</span><br><span class="line">const val TAGSG = WeixinHook.TAG + &quot;.Test&quot;</span><br><span class="line">    </span><br><span class="line">@NotNull</span><br><span class="line">@JvmField</span><br><span class="line">public static final String TAGS = &quot;hotB.wechat.Test&quot;;</span><br><span class="line">@NotNull</span><br><span class="line">public static final String TAGSG = &quot;hotB.wechat.Test&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>在class中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">private const val TAG = XLog.hotPanel + &quot;DeviceUtil&quot;</span><br><span class="line">class DeviceUtil&#123;&#125;</span><br><span class="line"></span><br><span class="line">生成了另一个文件存储const</span><br><span class="line">public final class DeviceUtilKt &#123;</span><br><span class="line">    /* renamed from: MB */</span><br><span class="line">    private static final long f14MB = 1048576;</span><br><span class="line">    private static final String TAG = &quot;hotPanel.DeviceUtil&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这就是kotlin中const关键字的本质。<br><a href="https://blog.csdn.net/ilovewqf/article/details/78826373" target="_blank" rel="noopener">原文点击</a></p>
+<h2 id="静态内部类，常量，三元运算符"><a href="#静态内部类，常量，三元运算符" class="headerlink" title="静态内部类，常量，三元运算符"></a>静态内部类，常量，三元运算符</h2><p>静态内部变量和常量定义方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">companion object &#123;</span><br><span class="line">        private const val MSG_UPDATE_PROGRESS = 1</span><br><span class="line">        private const val MSG_UPDATE_TIME= 1000</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>静态内部类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Parent&#123;</span><br><span class="line">    class Child //默认就是 java的 public static</span><br><span class="line">&#125;</span><br><span class="line">fun main(args: Array&lt;String&gt;) &#123;</span><br><span class="line">    val inner = Parent.Child()</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>非静态内部类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Parent&#123;</span><br><span class="line">    //非静态内部类声明</span><br><span class="line">    inner class Child</span><br><span class="line">&#125;</span><br><span class="line">fun main(args: Array&lt;String&gt;) &#123;</span><br><span class="line">    val inner = Parent().Child()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>内部类访问外部持有类的this</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Parent&#123;</span><br><span class="line">    val a:Int = 0</span><br><span class="line">    inner class Child&#123;</span><br><span class="line">        val a:Int = 5</span><br><span class="line">        fun hello()&#123;</span><br><span class="line">            println(this@Parent.a)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">fun main(args: Array&lt;String&gt;) &#123;</span><br><span class="line">    val inner = Parent().Child()</span><br><span class="line">    inner.hello()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>三元运算符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> //Java写法</span><br><span class="line">int size=list!=null?list.size:0</span><br><span class="line">//kotlin写法</span><br><span class="line">val size=if(list!=null) list.size() else 0</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://blog.csdn.net/weixin_34032621/article/details/86817626" target="_blank" rel="noopener">原文点击</a></p>
+<h2 id="readLine赋值为空"><a href="#readLine赋值为空" class="headerlink" title="readLine赋值为空"></a>readLine赋值为空</h2><p>Java中有一个判断是 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if（（str=bufferedReader.readLine()）!= null）</span><br></pre></td></tr></table></figure>
+
+<p>这句话到了kotlin转不过来,java经过强制转换成kotlin，可能最初我们是这么写的 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var str=bufferedReader.readLine() </span><br><span class="line">while(str != null)&#123; </span><br><span class="line">执行代码 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可是出oom了，问题在哪呢？不说了。最后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var line: String</span><br><span class="line">while (true) &#123;</span><br><span class="line">    line = bufferedReader.readLine() ?: break</span><br><span class="line">    buffer.append(line)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>val:val属性只提供getter</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val usbState: UsbState</span><br><span class="line">    get() = sUsbState.copy()</span><br><span class="line">编译后的：</span><br><span class="line">@NotNull</span><br><span class="line">public final UsbState getUsbState() &#123;</span><br><span class="line">    return UsbMonitor.sUsbState.copy();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>var：默认生成getter，setter方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var usbConnected: Boolean = false</span><br><span class="line">public final boolean getUsbConnected() &#123;</span><br><span class="line">    return this.usbConnected;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public final void setUsbConnected(boolean &lt;set-?&gt;) &#123;</span><br><span class="line">    this.usbConnected = &lt;set-?&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="对象表达式-amp-amp-对象声明-amp-amp-伴生对象"><a href="#对象表达式-amp-amp-对象声明-amp-amp-伴生对象" class="headerlink" title="对象表达式 &amp;&amp; 对象声明 &amp;&amp; 伴生对象"></a>对象表达式 &amp;&amp; 对象声明 &amp;&amp; 伴生对象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">var btn: Button = findViewById(R.id.btn)</span><br><span class="line">// 对象表达式实现匿名内部类</span><br><span class="line">btn.setOnClickListener(object: View.OnClickListener &#123;</span><br><span class="line">    override fun onClick(v: View?) &#123;</span><br><span class="line">        text.setText(&quot;$&#123;text.text&#125; $&#123;++clickTime&#125;&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">// OnClickListener是函数式接口，可使用Lambda表达式</span><br><span class="line">btn.setOnClickListener &#123; view -&gt;</span><br><span class="line">    text.setText(&quot;$&#123;text.text&#125; $&#123;++clickTime&#125;&quot;)</span><br><span class="line">&#125;</span><br><span class="line">// 对象声明---单例</span><br><span class="line">object FoodManager &#123;</span><br><span class="line">    var foods: MutableList&lt;String&gt;</span><br><span class="line">    init&#123;</span><br><span class="line">        foods = mutableListOf&lt;String&gt;()</span><br><span class="line">        // 初始化食物池</span><br><span class="line">        for (i in 1..9) &#123;</span><br><span class="line">            foods.add(&quot;food$&#123;i&#125;&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">var foods = FoodManager.foods // 使用对象声明</span><br><span class="line">// 伴生对象---静态成员</span><br><span class="line">interface Outputable&#123;</span><br><span class="line">    fun output(msg: String)</span><br><span class="line">&#125;</span><br><span class="line">class MyClass&#123;</span><br><span class="line">    // 定义的MyClass的伴生对象</span><br><span class="line">    companion object: Outputable&#123;</span><br><span class="line">        val name = ”name属性值” </span><br><span class="line">        </span><br><span class="line">        //重写父接口中的抽象方法</span><br><span class="line">        override fun output(msg: String) &#123;</span><br><span class="line">            for(i in 1..6)&#123;</span><br><span class="line">                println (”&lt;h$(i&#125;&gt;$&#123; msg&#125;&lt;/h$&#123;i&#125;&gt;”)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">fun main(args: Array&lt;String&gt;) &#123;</span><br><span class="line">    // 调用伴生对象里的方法与属性，与调用静态成员一样</span><br><span class="line">    MyClass.output(&quot;fkit.org&quot;)</span><br><span class="line">    println(MyClass.name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="对象声明定义常量"><a href="#对象声明定义常量" class="headerlink" title="对象声明定义常量"></a>对象声明定义常量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">object NetUtils &#123;</span><br><span class="line"> /**</span><br><span class="line">     * 移动</span><br><span class="line">     */</span><br><span class="line">    const val PROVIDER_TYPE_MOVE = 1</span><br><span class="line">    /**</span><br><span class="line">     * 联通</span><br><span class="line">     */</span><br><span class="line">    const val PROVIDER_TYPE_UNICOM = 2</span><br><span class="line">    /**</span><br><span class="line">     * 电信</span><br><span class="line">     */</span><br><span class="line">    const val PROVIDER_TYPE_TELECOM = 3</span><br><span class="line"></span><br><span class="line">    val NET_TYPE_MOVE = &quot;10086&quot;</span><br><span class="line">    val NET_TYPE_UNICOM = &quot;10010&quot;</span><br><span class="line">    val NET_TYPE_TELECOM = &quot;10001&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于对象声明定义的数据单例，所以一般调用(.java)都会用Class.INSTANCE.getXXXX，(kotlin)会用Class.XXXX，但是如果对象中声明的是const常量，则只能用Class.XXXX调用。<br>举例说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">switch (NetUtils.INSTANCE.providerType(WxVersions.CURRENT_APPLICATION)) &#123;</span><br><span class="line">            case NetUtils.PROVIDER_TYPE_MOVE:</span><br><span class="line">                destinationAddress = NetUtils.INSTANCE.getNET_TYPE_MOVE();</span><br><span class="line">                break;</span><br><span class="line">            case NetUtils.PROVIDER_TYPE_UNICOM:</span><br><span class="line">                destinationAddress = NetUtils.INSTANCE.getNET_TYPE_UNICOM();</span><br><span class="line">                break;</span><br><span class="line">            case NetUtils.PROVIDER_TYPE_TELECOM:</span><br><span class="line">                destinationAddress = NetUtils.INSTANCE.getNET_TYPE_TELECOM();</span><br><span class="line">                break;</span><br><span class="line">            default:</span><br><span class="line">                destinationAddress = null;</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>反编译后的NetUtils</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public final class NetUtils &#123;</span><br><span class="line">    public static final NetUtils INSTANCE = new NetUtils();</span><br><span class="line">    @NotNull</span><br><span class="line">    private static final String NET_TYPE_MOVE = NET_TYPE_MOVE;</span><br><span class="line">    @NotNull</span><br><span class="line">    private static final String NET_TYPE_TELECOM = NET_TYPE_TELECOM;</span><br><span class="line">    @NotNull</span><br><span class="line">    private static final String NET_TYPE_UNICOM = NET_TYPE_UNICOM;</span><br><span class="line">    public static final int PROVIDER_TYPE_MOVE = 1;</span><br><span class="line">    public static final int PROVIDER_TYPE_TELECOM = 3;</span><br><span class="line">    public static final int PROVIDER_TYPE_UNICOM = 2;</span><br><span class="line"></span><br><span class="line">    private NetUtils() &#123;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果定义的常量没有加const，则在调用的时候要用Class.INSTANCE.getXXXX，但是，这个时候switch，会报constant expression requierd异常。</p>
+<p><strong>注意：伴生对象常量定义方式：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class MicroMsg &#123;</span><br><span class="line">	companion object &#123;</span><br><span class="line">		val DB_NAME = &quot;EnMicroMsg.db&quot;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">而下面这样写法拿不到DB_NAME</span><br><span class="line">class MicroMsg &#123;</span><br><span class="line">	val DB_NAME = &quot;EnMicroMsg.db&quot;</span><br><span class="line">	companion object &#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>伴生对象如何生成public static final</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class MicroMsg &#123;</span><br><span class="line">	companion object &#123;</span><br><span class="line">		 val TYPE_IMG = 1</span><br><span class="line">        val TYPE_FILE = 2</span><br><span class="line">        const val TYPE_VOICE = 3</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">反编译后</span><br><span class="line">private static final int TYPE_FILE = 2;</span><br><span class="line">private static final int TYPE_IMG = 1;</span><br><span class="line">public static final int TYPE_VOICE = 3;</span><br></pre></td></tr></table></figure>
+
+<h2 id="constructor构造器"><a href="#constructor构造器" class="headerlink" title="constructor构造器"></a>constructor构造器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1.主构造器</span><br><span class="line">class MultiTask&lt;TaskData, Result&gt; constructor(private val mTaskItem: TaskItem, private val mRequest: TaskData, private val mTaskCount: Int, private val mDelay: Long = 500) </span><br><span class="line"></span><br><span class="line">2.主构造器可以省略constructor</span><br><span class="line">class MultiTask&lt;TaskData, Result&gt; (private val mTaskItem: TaskItem, private val mRequest: TaskData, private val mTaskCount: Int, private val mDelay: Long = 500) </span><br><span class="line"></span><br><span class="line">3.主构造器如果有@JvmOverloads则不可以省略constructor</span><br><span class="line">class MultiTask&lt;TaskData, Result&gt; @JvmOverloads constructor(private val mTaskItem: TaskItem, private val mRequest: TaskData, private val mTaskCount: Int, private val mDelay: Long = 500) </span><br><span class="line"></span><br><span class="line">4.使用@JvmOverloads注解的主构造器，不可以再有次构造器</span><br><span class="line">	constructor(taskItem: TaskItem,mRequest: TaskData,mTaskCount: Int): this(taskItem, mRequest,mTaskCount,300) &#123;</span><br><span class="line">&#125;</span><br><span class="line">异常，hava the same JVM signature.</span><br></pre></td></tr></table></figure>
+
+<p><strong>构造器几种使用：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">空构造器</span><br><span class="line">class OuterConstructor&#123;&#125;</span><br><span class="line"></span><br><span class="line">私有构造器</span><br><span class="line">class OuterConstructor private constructor(str:String, ins:Int)&#123;&#125;</span><br><span class="line"></span><br><span class="line">私有构造器+次构造器（可调）</span><br><span class="line">class OuterConstructor private constructor(str:String, ins:Int)&#123;</span><br><span class="line">    var s1 = &quot;123&quot;</span><br><span class="line">    init&#123;</span><br><span class="line">        this.s1 = str</span><br><span class="line">    &#125;</span><br><span class="line">    constructor(str:String):this(str,8)</span><br><span class="line">&#125;</span><br><span class="line">主构造器</span><br><span class="line">class OuterConstructor constructor(str:String, ins:Int)&#123;</span><br><span class="line">    var s1 = &quot;123&quot;</span><br><span class="line">    init&#123;</span><br><span class="line">        this.s1 = str</span><br><span class="line">    &#125;</span><br><span class="line">    constructor(str:String):this(str,8)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">主构造器省略初始化init</span><br><span class="line">class OuterConstructor &#123;</span><br><span class="line">    var s1 = &quot;123&quot;</span><br><span class="line">    init&#123;</span><br><span class="line">        this.s1 = &quot;qdf&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">主构造器初始化init</span><br><span class="line">class OuterConstructor constructor(str:String, ins:Int)&#123;</span><br><span class="line">    var s1 = &quot;123&quot;</span><br><span class="line">    init&#123;</span><br><span class="line">        this.s1 = str</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="JvmOverloads作用"><a href="#JvmOverloads作用" class="headerlink" title="@JvmOverloads作用"></a>@JvmOverloads作用</h3><p>在有默认参数值的方法中使用@JvmOverloads注解，则Kotlin就会暴露多个重载方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@JvmOverloads fun f(a: String, b: Int=0, c:String=&quot;abc&quot;)&#123;</span><br><span class="line">&#125;</span><br><span class="line">反编译后：</span><br><span class="line">void f(String a)</span><br><span class="line">void f(String a, int b)</span><br><span class="line">void f(String a, int b, String c)</span><br></pre></td></tr></table></figure>
+
+<p>所以@JvmOverloads不仅仅用于构造方法。</p>
+<h3 id="constructor中参数指定val-var和没有制定的区别"><a href="#constructor中参数指定val-var和没有制定的区别" class="headerlink" title="constructor中参数指定val,var和没有制定的区别"></a>constructor中参数指定val,var和没有制定的区别</h3><h4 id="不指定"><a href="#不指定" class="headerlink" title="不指定"></a>不指定</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class OuterConstructor constructor(mHookConfig: HookConfig) </span><br><span class="line">反编译后</span><br><span class="line">public AvatarServiceImplKT(@NotNull HookConfig mHookConfig) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="val"><a href="#val" class="headerlink" title="val"></a>val</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class OuterConstructor constructor(val mHookConfig: HookConfig) </span><br><span class="line">反编译后</span><br><span class="line">private final HookConfig mHookConfig;</span><br><span class="line">public AvatarServiceImplKT(@NotNull HookConfig mHookConfig) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="var"><a href="#var" class="headerlink" title="var"></a>var</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class OuterConstructor constructor(var mHookConfig: HookConfig) </span><br><span class="line">反编译后</span><br><span class="line">private HookConfig mHookConfig;</span><br><span class="line">public AvatarServiceImplKT(@NotNull HookConfig mHookConfig) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="vararg可变参数"><a href="#vararg可变参数" class="headerlink" title="vararg可变参数"></a>vararg可变参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fun print(vararg msgs: String) &#123;</span><br><span class="line">    for (msg in msgs) &#123;</span><br><span class="line">    	println(msg)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun LogPrinters()&#123;</span><br><span class="line">	print(&quot;11&quot;,&quot;22&quot;,&quot;33&quot;,&quot;44&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是如果是下面这样调用是不可以的，会报参数匹配异常：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val array = arrayOf(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;)</span><br><span class="line">print(array)</span><br></pre></td></tr></table></figure>
+
+<p>如果想调用，需要使用*操作符：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(*array)</span><br></pre></td></tr></table></figure>
+
+<p>所以我们调用带有可变参数的方法时，只能传递离散的参数值，直接传递数组会报语法错误。但是当我们手头上就是一个数组，要想传递，就需要借助运算符*(spread operator)：相当于将数组分散成一个个的个体再传入进去。</p>
+<h2 id="var-get-set-xxx-方法"><a href="#var-get-set-xxx-方法" class="headerlink" title="var get() set(xxx)方法"></a>var get() set(xxx)方法</h2><p>1.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">override var name: String=&quot;ninhao&quot;</span><br><span class="line">	get() = field</span><br><span class="line">	set(value) &#123;</span><br><span class="line">		field=value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">XLog.e(&quot;------name1:&quot;,name)</span><br><span class="line">name = &quot;henhao&quot;</span><br><span class="line">XLog.e(&quot;------name2:&quot;,name)</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ninhao</span><br><span class="line">henhao</span><br></pre></td></tr></table></figure>
+
+<p>注意：var name: String=”ninhao”，必须初始化。<br>2.可以通过fun get() 和fun set(XXX)实现。</p>
+<p>3.<br>错误写法：死循环</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var name: String</span><br><span class="line">	get() = name</span><br><span class="line">	set(value) &#123;</span><br><span class="line">	name=&quot;afff&quot;</span><br><span class="line">&#125;</span><br><span class="line">反编译后</span><br><span class="line"></span><br><span class="line">@NotNull</span><br><span class="line">public String getName() &#123;</span><br><span class="line">    return getName();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void setName(@NotNull String value) &#123;</span><br><span class="line">    Intrinsics.checkParameterIsNotNull(value, UserInfo.COLUMN_value);</span><br><span class="line">    setName(&quot;afff&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.runoob.com/kotlin/kotlin-class-object.html" target="_blank" rel="noopener">详细注解链接</a></p>
+<h2 id="split"><a href="#split" class="headerlink" title="split"></a>split</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var sb = StringBuilder()</span><br><span class="line">sb.append(&quot;111,&quot;).append(&quot;222,&quot;).append(&quot;333,&quot;).append(&quot;,&quot;).append(&quot;aaa,&quot;).append(&quot;bbb,&quot;).append(&quot;ccc,&quot;).append(&quot;&quot;)</span><br><span class="line">val strs = sb.toString()</span><br><span class="line">val splits = strs.split(&quot;,&quot;.toRegex()).dropWhile &#123; !it.isEmpty() &#125;.toTypedArray()</span><br><span class="line">for(str in splits)&#123;</span><br><span class="line">	XLog.e(&quot;-------split:&quot;,str)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1.<strong>dropWhile</strong> 返回从第一项起，去掉满足条件的元素，直到不满足条件的一项为止；<br>it.isEmpty():</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[-------split:][main]</span><br><span class="line">[-------split:][main]aaa</span><br><span class="line">[-------split:][main]bbb</span><br><span class="line">[-------split:][main]ccc</span><br><span class="line">[-------split:][main]</span><br></pre></td></tr></table></figure>
+
+<p>!it.isEmpty():</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[-------split:][main]111</span><br><span class="line">[-------split:][main]222</span><br><span class="line">[-------split:][main]333</span><br><span class="line">[-------split:][main]</span><br><span class="line">[-------split:][main]aaa</span><br><span class="line">[-------split:][main]bbb</span><br><span class="line">[-------split:][main]ccc</span><br><span class="line">[-------split:][main]</span><br></pre></td></tr></table></figure>
+
+<p>2.<strong>dropLastWhile</strong> 返回从最后一项起，去掉满足条件的元素，直到不满足条件的一项为止；<br>it.isEmpty():</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[-------split:][main]111</span><br><span class="line">[-------split:][main]222</span><br><span class="line">[-------split:][main]333</span><br><span class="line">[-------split:][main]</span><br><span class="line">[-------split:][main]aaa</span><br><span class="line">[-------split:][main]bbb</span><br><span class="line">[-------split:][main]ccc</span><br></pre></td></tr></table></figure>
+
+<p>!it.isEmpty():</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[-------split:][main]111</span><br><span class="line">[-------split:][main]222</span><br><span class="line">[-------split:][main]333</span><br><span class="line">[-------split:][main]</span><br><span class="line">[-------split:][main]aaa</span><br><span class="line">[-------split:][main]bbb</span><br><span class="line">[-------split:][main]ccc</span><br><span class="line">[-------split:][main]</span><br></pre></td></tr></table></figure>
+
+<p>3.<strong>drop</strong> 返回去掉前n个元素后的列表；<br>drop(4)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[-------split:][main]aaa</span><br><span class="line">[-------split:][main]bbb</span><br><span class="line">[-------split:][main]ccc</span><br><span class="line">[-------split:][main]</span><br></pre></td></tr></table></figure>
+
+<p>4.<strong>filter &amp; slice &amp; take</strong></p>
+<p>filter–过滤掉所有不满足条件的元素；<br>filterNot–过滤掉所有满足条件的元素；<br>filterNotNull–过滤掉所有值为null的元素；</p>
+<p>slice–过滤掉非指定下标的元素，即保留下标对应的元素过滤List中指定下标的元素（比如这里只保留下标为1，3，4的元素），当过滤list中有元素值大于目标List大小时会出现异常；</p>
+<p>take–返回从第一个开始的n个元素；<br>takeLast–返回从最后一个开始的n个元素；<br>takeWhile–返回不满足条件的下标前面的所有元素的集合；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">filter &#123; !it.isEmpty() &#125;</span><br><span class="line"></span><br><span class="line">[-------split:][main]111</span><br><span class="line">[-------split:][main]222</span><br><span class="line">[-------split:][main]333</span><br><span class="line">[-------split:][main]aaa</span><br><span class="line">[-------split:][main]bbb</span><br><span class="line">[-------split:][main]ccc</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.cnblogs.com/tgyf/p/6892551.html?utm_source=itdadao&utm_medium=referral" target="_blank" rel="noopener">参考链接点击</a></p>
+<h2 id="显式转换-amp-强制转换"><a href="#显式转换-amp-强制转换" class="headerlink" title="显式转换&amp;强制转换"></a>显式转换&amp;强制转换</h2><p>每个数字类型支持如下的转换:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; toByte(): Byte</span><br><span class="line">&gt; toShort(): Short</span><br><span class="line">&gt; toInt(): Int</span><br><span class="line">&gt; toLong(): Long</span><br><span class="line">&gt; toFloat(): Float</span><br><span class="line">&gt; toDouble(): Double</span><br><span class="line">&gt; toChar(): Char</span><br></pre></td></tr></table></figure>
+
+<p>强制转换<br>xxx as 类：强制转换，可能崩溃</p>
+<p>xxx as? 类：安全的强制转换，转换失败返回null</p>
+<p><strong>注意：数字类型的转换也可以使用as ，编译时不报错，但运行时会报错。</strong></p>
+<h2 id="Lambda-argument-should-be-moved-out-of-parentheses"><a href="#Lambda-argument-should-be-moved-out-of-parentheses" class="headerlink" title="Lambda argument should be moved out of parentheses"></a>Lambda argument should be moved out of parentheses</h2><p>解决方式：option+enter；</p>
+<h2 id="return-标签"><a href="#return-标签" class="headerlink" title="return@标签"></a>return@标签</h2><p>跳转到指定的位置，标签的写法很简单，只需要名字之后加@符号，要用的时候@名字就好，一般在lambda表达式中可能会用到。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fun print(vararg msgs: String) &#123;</span><br><span class="line">        Async.io &#123;</span><br><span class="line">            for (msg in msgs) &#123;</span><br><span class="line">                XLog.e(&quot;-------print:&quot;,msg)</span><br><span class="line">            &#125;</span><br><span class="line">            return@io</span><br><span class="line">            XLog.e(&quot;-------print:&quot;,&quot;8&quot;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        XLog.e(&quot;-------print:&quot;,&quot;9&quot;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[-------print:][main]9</span><br><span class="line">[-------print:][IOExecutor#1]a</span><br><span class="line">[-------print:][IOExecutor#1]b</span><br><span class="line">[-------print:][IOExecutor#1]c</span><br><span class="line">[-------print:][IOExecutor#1]d</span><br></pre></td></tr></table></figure>
+
+<h2 id="for循环使用方法"><a href="#for循环使用方法" class="headerlink" title="for循环使用方法"></a>for循环使用方法</h2><p>在Kotlin中想遍历1-100的数值可以这样写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (index in 1..10)&#123;</span><br><span class="line">	print(index)//会输出1..10</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样写是正序遍历，如果想倒序遍历就该使用标准库中定义的downTo()函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (index in 10 downTo 1)&#123;</span><br><span class="line">	print(index)//会输出10..1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>想不使用1作为遍历的步长，可以使用step()函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (index in 1..100 step 2)&#123;</span><br><span class="line">	print(index)//会输出1..3..5......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要创建一个不包含末尾元素的区间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (index in 1 until 10)&#123;</span><br><span class="line">	println(index)//输出1..9</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>遍历一个数组/列表，想同时取出下标和元素：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val array = arrayOf(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)</span><br><span class="line">for ((index,e) in array.withIndex())&#123;</span><br><span class="line">	println(&quot;下标=$index----元素=$e&quot;)</span><br><span class="line">&#125;</span><br><span class="line">[-----index:][main]下标=0----元素=a</span><br><span class="line">[-----index:][main]下标=1----元素=b</span><br><span class="line">[-----index:][main]下标=2----元素=c</span><br></pre></td></tr></table></figure>
+
+<p>遍历一个数组/列表，只取出下标:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val array = arrayOf(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)</span><br><span class="line">for (index in array.indices)&#123;</span><br><span class="line">	println(&quot;index=$index&quot;)//输出0，1，2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>遍历取元素：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val array = arrayOf(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)</span><br><span class="line">for (element in array)&#123;</span><br><span class="line">	println(&quot;element=$element&quot;)//输出a,b,c</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="class"><a href="#class" class="headerlink" title=".class"></a>.class</h2><p>Service::class.java的语法展现了如何获取java.lang.Class对应的Kotlin类，这和Java中的Service.Class是完全等同的.</p>
+<h2 id="java通配符-amp-kotlin声明处型变"><a href="#java通配符-amp-kotlin声明处型变" class="headerlink" title="java通配符&amp;kotlin声明处型变"></a>java通配符&amp;kotlin声明处型变</h2><h3 id="java"><a href="#java" class="headerlink" title="java"></a><strong>java</strong></h3> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public static &lt;T&gt; void copy(List&lt;? super T&gt; dest, List&lt;? extends T&gt; src) &#123;</span><br><span class="line">      // 校验略</span><br><span class="line">      ListIterator&lt;? super T&gt; di = dest.listIterator();</span><br><span class="line">      ListIterator&lt;? extends T&gt; si = src.listIterator();</span><br><span class="line">      while (si.hasNext()) &#123;</span><br><span class="line">          /**</span><br><span class="line">           * 编译时异常</span><br><span class="line">           * Incompatible types.不兼容类型；</span><br><span class="line">           * Required:T;</span><br><span class="line">           * Found:Capture&lt;? super T&gt;</span><br><span class="line">           */</span><br><span class="line">          T elementD =di.next();</span><br><span class="line"></span><br><span class="line">          T element = si.next(); //src extent 生产者 作为方法返回值类型是安全的</span><br><span class="line">          di.set(element); // dest super 消费者 作为方法参数类型是安全的</span><br><span class="line"></span><br><span class="line">          /**</span><br><span class="line">           * 编译时异常</span><br><span class="line">           * set(&lt;? extends T&gt;) in ListIterator cannot be applied.</span><br><span class="line">           * to (T)</span><br><span class="line">           */</span><br><span class="line">          si.set(elementD);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="kotlin"><a href="#kotlin" class="headerlink" title="kotlin:"></a><strong>kotlin:</strong></h3> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">abstract class Supplier&lt;out T&gt; &#123;</span><br><span class="line">       abstract fun get(): T</span><br><span class="line">       /**</span><br><span class="line">        * 编译期错误：</span><br><span class="line">        * Type parameter T is declared as &apos;out&apos; but occurs in &apos;in&apos; position in type T</span><br><span class="line">        */</span><br><span class="line">       abstract fun set(t: T)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   abstract class Customer&lt;in T&gt; &#123;</span><br><span class="line">       abstract fun set(t: T)</span><br><span class="line">       /**</span><br><span class="line">        * 编译期错误：</span><br><span class="line">        * Type parameter T is declared as &apos;in&apos; but occurs in &apos;out&apos; position in type T</span><br><span class="line">        */</span><br><span class="line">       abstract fun get(): T</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-List-lt-extends-T-gt-协变：-out"><a href="#1-List-lt-extends-T-gt-协变：-out" class="headerlink" title="1.List&lt;? extends T&gt;协变：== out"></a>1.List&lt;? extends T&gt;协变：== out</h3><p> 在si.set(elementD)中， elementD的类型是T，所以我们可以set（T t），以及一切参数中含有 T 的方法（称为消费者方法），T类型或者从T继承的类型都可以被set，但是因为可以set不同的类型，所以这些方法可能会破坏类型安全，所以编译器限制这些方法的调用。</p>
+<p> 举kotlin例说明：<br> 有一方法</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fun generate(args : Array&lt;Any&gt;)&#123;</span><br><span class="line">//todo</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 我们调用它：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val args : Array&lt;String&gt; = arrayOf()</span><br><span class="line">generate(args)</span><br></pre></td></tr></table></figure>
+
+<p> 这个时候会提示异常（类型不匹配）：type mismitch，为了解决这个问题，我们只需要修改一下调用方法，使用型变out即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fun generate(args : Array&lt;out Any&gt;)&#123;</span><br><span class="line"> //todo</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="List-lt-super-T-gt-逆变：-in"><a href="#List-lt-super-T-gt-逆变：-in" class="headerlink" title="List&lt;? super T&gt;逆变：== in"></a>List&lt;? super T&gt;逆变：== in</h3><p> 同协变正好相反，在T elementD =di.next();中，因为di的类型是&lt;? super T&gt;，所以我们通过di.next()获取的类型可能T,也可能是从T继承的类型，从而我们不能确定next的类型。注意，这次拒绝的理由跟协变中是不一样的。get方法并不会破坏泛型类的类型安全，主要原因在于我们不能确定get的返回类型。<br> <a href="https://www.jianshu.com/p/0c2948f7e656" target="_blank" rel="noopener">参考链接1</a><br> <a href="https://www.jianshu.com/p/ecacb7af79eb?from=timeline&isappinstalled=0" target="_blank" rel="noopener">参考链接2</a></p>
+<h2 id="操作符"><a href="#操作符" class="headerlink" title="?: ?. !!操作符"></a>?: ?. !!操作符</h2><h3 id="If-not-null"><a href="#If-not-null" class="headerlink" title="?. == If not null"></a>?. == If not null</h3><p>?.就是当前面的变量!= nuil 时正常调用，如果为null就为null;并且?.可以连续使用。例如user?.userName?.length</p>
+<h3 id="npe"><a href="#npe" class="headerlink" title="!!! == npe"></a>!!! == npe</h3><p>!!,加在变量名后，就是当变量为null时，抛出空指针异常;</p>
+<h3 id="if-null"><a href="#if-null" class="headerlink" title="?: == if null"></a>?: == if null</h3><p>?: 仅仅在左边的表达式结果为null时才会计算 ?: 后面的表达式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val map = XXXXX ?: return</span><br><span class="line">等同于</span><br><span class="line">val map = XXXXX</span><br><span class="line">if(map == null)&#123;</span><br><span class="line">	return</span><br><span class="line">&#125;</span><br><span class="line">但是if会有://Replace &apos;if&apos; with elvis operator</span><br></pre></td></tr></table></figure>
+
+<h2 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns a string representation of the object. Can be called with a null receiver, in which case</span><br><span class="line"> * it returns the string &quot;null&quot;.</span><br><span class="line"> */</span><br><span class="line">public fun Any?.toString(): String</span><br></pre></td></tr></table></figure>
+
+<p><strong>疑问点：</strong><br>null.toString()<br>反编译<br>String.valueOf(null)</p>
+<h2 id="Serializable"><a href="#Serializable" class="headerlink" title="Serializable"></a>Serializable</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class XXXXKT:Serializable&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Cannot access ‘Serializable’:it is internal in ‘kotlin.io’</p>
+<p>解决：import java.io.Serializable</p>
+<h2 id="Suppress-“UNCHECKED-CAST”"><a href="#Suppress-“UNCHECKED-CAST”" class="headerlink" title="@Suppress(“UNCHECKED_CAST”)"></a>@Suppress(“UNCHECKED_CAST”)</h2><p>当使用 as Array<string>强转时可能会出现Unchecked cast: Any! to Array<any> 警告。解决方法就是在强转代码前加@Suppress(“UNCHECKED_CAST”)。<br>备注：@SuppressWarnings(“unchecked”)使用时机呢？</any></string></p>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p><a href="https://www.jianshu.com/p/e6bbc00b18f6" target="_blank" rel="noopener">详细使用点击</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.runoob.com/kotlin/kotlin-class-object.html" target="_blank" rel="noopener">Runoob</a></p>
+<p><a href="https://www.kotlincn.net/docs/reference/basic-syntax.html" target="_blank" rel="noopener">kotlincn</a></p>
+<p><a href="https://handsomeliuyang.github.io/2019/05/07/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank" rel="noopener">Kotlin学习笔记</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-07-11T12:37:31.000Z" itemprop="dateUpdated">2019-07-11 20:37:31</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/07/02/kotlinnotes/" target="_blank" rel="external">http://nunu03.github.io/2019/07/02/kotlinnotes/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kotlin/">Kotlin</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/07/02/kotlinnotes/&title=《Kotlin新手使用笔记》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/07/02/kotlinnotes/&title=《Kotlin新手使用笔记》 — chenyulong&source=const关键字只读属性使用const关键字之后将没有get方法，举个例子在kotlin文件中，写两个包级属性，一个是const，一个不是const
+12..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/07/02/permissioncheck/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">MIUI权限检测之路</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#const关键字"><span class="post-toc-number">1.</span> <span class="post-toc-text">const关键字</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#静态内部类，常量，三元运算符"><span class="post-toc-number">2.</span> <span class="post-toc-text">静态内部类，常量，三元运算符</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#readLine赋值为空"><span class="post-toc-number">3.</span> <span class="post-toc-text">readLine赋值为空</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#属性"><span class="post-toc-number">4.</span> <span class="post-toc-text">属性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对象表达式-amp-amp-对象声明-amp-amp-伴生对象"><span class="post-toc-number">5.</span> <span class="post-toc-text">对象表达式 &amp;&amp; 对象声明 &amp;&amp; 伴生对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对象声明定义常量"><span class="post-toc-number">6.</span> <span class="post-toc-text">对象声明定义常量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#constructor构造器"><span class="post-toc-number">7.</span> <span class="post-toc-text">constructor构造器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#JvmOverloads作用"><span class="post-toc-number">7.1.</span> <span class="post-toc-text">@JvmOverloads作用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#constructor中参数指定val-var和没有制定的区别"><span class="post-toc-number">7.2.</span> <span class="post-toc-text">constructor中参数指定val,var和没有制定的区别</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#不指定"><span class="post-toc-number">7.2.1.</span> <span class="post-toc-text">不指定</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#val"><span class="post-toc-number">7.2.2.</span> <span class="post-toc-text">val</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#var"><span class="post-toc-number">7.2.3.</span> <span class="post-toc-text">var</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vararg可变参数"><span class="post-toc-number">8.</span> <span class="post-toc-text">vararg可变参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#var-get-set-xxx-方法"><span class="post-toc-number">9.</span> <span class="post-toc-text">var get() set(xxx)方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#split"><span class="post-toc-number">10.</span> <span class="post-toc-text">split</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#显式转换-amp-强制转换"><span class="post-toc-number">11.</span> <span class="post-toc-text">显式转换&amp;强制转换</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Lambda-argument-should-be-moved-out-of-parentheses"><span class="post-toc-number">12.</span> <span class="post-toc-text">Lambda argument should be moved out of parentheses</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#return-标签"><span class="post-toc-number">13.</span> <span class="post-toc-text">return@标签</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#for循环使用方法"><span class="post-toc-number">14.</span> <span class="post-toc-text">for循环使用方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#class"><span class="post-toc-number">15.</span> <span class="post-toc-text">.class</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#java通配符-amp-kotlin声明处型变"><span class="post-toc-number">16.</span> <span class="post-toc-text">java通配符&amp;kotlin声明处型变</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#java"><span class="post-toc-number">16.1.</span> <span class="post-toc-text">java</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#kotlin"><span class="post-toc-number">16.2.</span> <span class="post-toc-text">kotlin:</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-List-lt-extends-T-gt-协变：-out"><span class="post-toc-number">16.3.</span> <span class="post-toc-text">1.List&lt;? extends T&gt;协变：== out</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#List-lt-super-T-gt-逆变：-in"><span class="post-toc-number">16.4.</span> <span class="post-toc-text">List&lt;? super T&gt;逆变：== in</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#操作符"><span class="post-toc-number">17.</span> <span class="post-toc-text">?: ?. !!操作符</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#If-not-null"><span class="post-toc-number">17.1.</span> <span class="post-toc-text">?. == If not null</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#npe"><span class="post-toc-number">17.2.</span> <span class="post-toc-text">!!! == npe</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#if-null"><span class="post-toc-number">17.3.</span> <span class="post-toc-text">?: == if null</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#toString-NaN"><span class="post-toc-number">18.</span> <span class="post-toc-text">toString()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Serializable"><span class="post-toc-number">19.</span> <span class="post-toc-text">Serializable</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Suppress-“UNCHECKED-CAST”"><span class="post-toc-number">20.</span> <span class="post-toc-text">@Suppress(“UNCHECKED_CAST”)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#接口"><span class="post-toc-number">21.</span> <span class="post-toc-text">接口</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">22.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://handsomeliuyang.github.io/" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2019 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/07/02/kotlinnotes/&title=《Kotlin新手使用笔记》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/07/02/kotlinnotes/&title=《Kotlin新手使用笔记》 — chenyulong&source=const关键字只读属性使用const关键字之后将没有get方法，举个例子在kotlin文件中，写两个包级属性，一个是const，一个不是const
+12..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIUlEQVR42u3aMXbEIAwFwNz/0k6bIvZ+SWxhGKo8x3EYiv8Q4ucnHtfj+PvO3fvPX35+smxgYGC8lpFPMXn+PK3nd/Lv/0PFwMA4gPEchdVPJ1NPIjiZGwYGBkbyTjLu/ipZMgwMDIweI9quxVPP38HAwDiZkW/1qlE7D9zFtTgGBsYLGZPC8ts/f6W/gYGB8SrGJDTzbeLzF67xwMDA2JuRB9ykqZm0CqrbPgwMjHMY1Sjs/bZ3kFdof2JgYBzPqLYQJpVm78IHBgbGCYzkOL4atVV2dZuIgYFxMmNybaK6KNWm6e3XMDAwDmNMytTqFY1lx3AYGBgHMCabvN7hXfVY7UMoY2BgbM1IptgrSpMjtlWNUgwMjL0ZvVbi2vbAgq0qBgbGAYzJYVkestWtZGGBMDAwtmZMLmzl03peoOqCRkuAgYGxHWNynaI6uV75Wg5ZDAyMjRj5RHtHb3mbM2l23v5fDAyMrRnVGvAKRp6Kq55gYGCcwKgee/Vg1aq63DzAwMA4hpHEaB6LkwZAsxbHwMDYmlFtHOaMVY3JQk8DAwNjI8ZVHAkjv5yRX9dYsCnEwMB4LWMSdvkRW6+dObozgoGBsR2jF5f5pY1kF1cN3HItjoGBsQWjd7UiCd9qNPfaqxgYGBi97Vr1SVL0fjh0w8DAwJjUwYPgTtgYGBgnMJIiNi9T54FbbmdiYGBszegF5SRw88ZA0pzAwMDYmvELoKJqmJhNAF8AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

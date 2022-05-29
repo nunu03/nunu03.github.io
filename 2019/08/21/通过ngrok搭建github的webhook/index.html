@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>通过ngrok搭建github的webhook | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="ngrok,WebHook">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>4</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/nunu03/" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>通过ngrok搭建github的webhook</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">通过ngrok搭建github的webhook</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-21T11:58:27.000Z" itemprop="datePublished" class="page-time">
+  2019-08-21
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WebHook/">WebHook</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WebHook/ngrok/">ngrok</a></li></ul></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-通过ngrok搭建github的webhook"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">通过ngrok搭建github的webhook</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-21 19:58:27" datetime="2019-08-21T11:58:27.000Z"  itemprop="datePublished">2019-08-21</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WebHook/">WebHook</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WebHook/ngrok/">ngrok</a></li></ul></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="WebHook"><a href="#WebHook" class="headerlink" title="WebHook"></a>WebHook</h2><h3 id="webhook概述"><a href="#webhook概述" class="headerlink" title="webhook概述"></a>webhook概述</h3><p>When one of those events is triggered, we’ll send a HTTP POST payload to the webhook’s configured URL. Webhooks can be used to update an external issue tracker, trigger CI builds, update a backup mirror, or even deploy to your production server. You’re only limited by your imagination.</p>
+<p>Webhooks can be installed on an organization, a specific repository, or a GitHub App. Once installed, the webhook will be sent each time one or more subscribed events occurs.</p>
+<p>You can create up to 20 webhooks for each event on each installation target (specific organization or specific repository).<br>Learn more in our <a href="https://developer.github.com/webhooks/" target="_blank" rel="noopener">Webhooks Guide</a>.</p>
+<p>当触发其中一个事件时，我们将向webhook配置的URL发送httppost负载。webhook可以用于更新外部问题跟踪程序、触发CI构建、更新备份镜像，甚至可以部署到生产服务器。webhook不能做的的，可能是受到想象力的限制。</p>
+<p>webhook可以安装在组织、特定存储库或GitHub应用程序上。一旦安装，webhook将在每次发生一个或多个订阅事件时发送。</p>
+<p>您可以为每个安装目标（特定组织或特定存储库）上的每个事件创建最多20个webhook。</p>
+<p>所以，Webhook顾名思义，其实就是一钩子。当我们在Github上做出某些特定操作时，可以触发钩子，去进行一些我们事先设定好的脚本，以达到某些特定功能（例如–前端项目自动发布）。</p>
+<h3 id="github上webhook设置"><a href="#github上webhook设置" class="headerlink" title="github上webhook设置"></a>github上webhook设置</h3><p>在配置webhook的时候，你可以选择自己想要接收的事件。你甚至可以选择参加触发所有事件。只有订阅特殊的需要的事件，可以有效限制服务器HTTP请求数。可以通过API或者UR随时订阅事件。默认情况下，webhook只订阅push事件。</p>
+<figure class="image-box">
+                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhooks.png" title="webhooks position" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhooks.png" alt="webhooks position" title class></a>
+                <p>webhooks position</p>
+            </figure>
+<figure class="image-box">
+                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhooksuc.png" title="add webhook" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhooksuc.png" alt="add webhook" title class></a>
+                <p>add webhook</p>
+            </figure>
+<p>上图是我设置的好的webhook：可以看到我设置好了Payload URL和Content type.</p>
+<p>Payload URL：就是我们要设置的钩子。</p>
+<p>Content type：是在通知我们时传递的内容类型，一般情况下我们选择json数据格式。还有另外一种类型：application/x-www-form-urlencoded。</p>
+<p>Which events would you like to trigger this webhook?：这个选择比较重要，直接决定了当仓库发生什么变化时才对我们进行通知。</p>
+<p>到此webhook添加完成。</p>
+<h3 id="负载数据属性"><a href="#负载数据属性" class="headerlink" title="负载数据属性"></a>负载数据属性</h3><p>每个webhook事件负载还包含事件特有的属性。</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>action</td>
+<td>string</td>
+<td>Most webhook payloads contain an action property that contains the specific activity that triggered the event.</td>
+</tr>
+<tr>
+<td>sender</td>
+<td>object</td>
+<td>The user that triggered the event. This property is included in every webhook payload.</td>
+</tr>
+<tr>
+<td>repository</td>
+<td>object</td>
+<td>The repository where the event occurred. Webhook payloads contain the repository property when the event occurs from activity in a repository.</td>
+</tr>
+<tr>
+<td>organization</td>
+<td>object</td>
+<td>Webhook payloads contain the organization object when the webhook is configured for an organization or the event occurs from activity in a repository owned by an organization.</td>
+</tr>
+<tr>
+<td>installation</td>
+<td>object</td>
+<td>The GitHub App installation. Webhook payloads contain the installation property when the event is configured for and sent to a GitHub App. For more information, see “Building GitHub App.”</td>
+</tr>
+</tbody></table>
+<p><strong>注意：</strong></p>
+<blockquote>
+<p>Payloads are capped at 25 MB. If your event generates a larger payload, a<br>webhook will not be fired. This may happen, for example, on a create event if  many branches or tags are pushed at once.</p>
+</blockquote>
+<h3 id="报文头"><a href="#报文头" class="headerlink" title="报文头"></a>报文头</h3><p>发送到webhook配置URL的HTTP POST负载会包含几个指定的报文头。</p>
+<p>X-GitHub-Event：触发分发的事件类型。<br>X-GitHub-Delivery：唯一识别分发的GUID。<br>X-Hub-Signature：HMAC十六进制的响应体。<br>X-Hub-Signature-256：<br>如果secret配置了，这个头信息将被发送。HMAC十六进制由sha1哈希算法生成，secret作为HMAC的key。</p>
+<h3 id="事例"><a href="#事例" class="headerlink" title="事例"></a>事例</h3><p>通过python配置一个简单的服务器，用于接收通知信息。具体事例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@route(&apos;/payload&apos;, method=[&apos;GET&apos;,&apos;POST&apos;])</span><br><span class="line">def payload():</span><br><span class="line">    print(&apos;payload----request.json:&apos;+request.json.__str__())</span><br><span class="line">    print(&apos;payload----request.headers.X-GitHub-Event:&apos;+request.get_header(&apos;X-GitHub-Event&apos;))</span><br><span class="line">    print(&apos;payload----request.headers.X-GitHub-Delivery:&apos;+request.get_header(&apos;X-GitHub-Delivery&apos;))</span><br><span class="line">    return &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
+
+<p>这个时候我们手动push一个信息，打印信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;ref&quot;: &quot;refs/heads/master&quot;,</span><br><span class="line">	&quot;before&quot;: &quot;fc7585b3799386a625a2584b75c3e94424212889&quot;,</span><br><span class="line">	&quot;after&quot;: &quot;db7bbed15a40cec6c3cbbd778877fee8941bf86d&quot;,</span><br><span class="line">	&quot;created&quot;: false,</span><br><span class="line">	&quot;deleted&quot;: false,</span><br><span class="line">	&quot;forced&quot;: false,</span><br><span class="line">	&quot;base_ref&quot;: &quot;none&quot;,</span><br><span class="line">	&quot;compare&quot;: &quot;https://github.com/nunu03/photo/compare/fc7585b37993...db7bbed15a40&quot;,</span><br><span class="line">	&quot;commits&quot;: [&#123;</span><br><span class="line">		&quot;id&quot;: &quot;db7bbed15a40cec6c3cbbd778877fee8941bf86d&quot;,</span><br><span class="line">		&quot;tree_id&quot;: &quot;8394661d6d3855d60e431ad5a73a88b03e6944ab&quot;,</span><br><span class="line">		&quot;distinct&quot;: true,</span><br><span class="line">		&quot;message&quot;: &quot;6 update and commit&quot;,</span><br><span class="line">		&quot;timestamp&quot;: &quot;2019-08-21T18:04:00+08:00&quot;,</span><br><span class="line">		&quot;url&quot;: &quot;https://github.com/nunu03/photo/commit/db7bbed15a40cec6c3cbbd778877fee8941bf86d&quot;,</span><br><span class="line">		&quot;author&quot;: &#123;</span><br><span class="line">			&quot;name&quot;: &quot;YlJava110&quot;,</span><br><span class="line">			&quot;email&quot;: &quot;594531261@qq.com&quot;,</span><br><span class="line">			&quot;username&quot;: &quot;nunu03&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;committer&quot;: &#123;</span><br><span class="line">			&quot;name&quot;: &quot;YlJava110&quot;,</span><br><span class="line">			&quot;email&quot;: &quot;594531261@qq.com&quot;,</span><br><span class="line">			&quot;username&quot;: &quot;nunu03&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;added&quot;: [],</span><br><span class="line">		&quot;removed&quot;: [],</span><br><span class="line">		&quot;modified&quot;: [&quot;P2.docx&quot;]</span><br><span class="line">	&#125;],</span><br><span class="line">	&quot;head_commit&quot;: &#123;</span><br><span class="line">		&quot;id&quot;: &quot;db7bbed15a40cec6c3cbbd778877fee8941bf86d&quot;,</span><br><span class="line">		&quot;tree_id&quot;: &quot;8394661d6d3855d60e431ad5a73a88b03e6944ab&quot;,</span><br><span class="line">		&quot;distinct&quot;: true,</span><br><span class="line">		&quot;message&quot;: &quot;6 update and commit&quot;,</span><br><span class="line">		&quot;timestamp&quot;: &quot;2019-08-21T18:04:00+08:00&quot;,</span><br><span class="line">		&quot;url&quot;: &quot;https://github.com/nunu03/photo/commit/db7bbed15a40cec6c3cbbd778877fee8941bf86d&quot;,</span><br><span class="line">		&quot;author&quot;: &#123;</span><br><span class="line">			&quot;name&quot;: &quot;YlJava110&quot;,</span><br><span class="line">			&quot;email&quot;: &quot;594531261@qq.com&quot;,</span><br><span class="line">			&quot;username&quot;: &quot;nunu03&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;committer&quot;: &#123;</span><br><span class="line">			&quot;name&quot;: &quot;YlJava110&quot;,</span><br><span class="line">			&quot;email&quot;: &quot;594531261@qq.com&quot;,</span><br><span class="line">			&quot;username&quot;: &quot;nunu03&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;added&quot;: [],</span><br><span class="line">		&quot;removed&quot;: [],</span><br><span class="line">		&quot;modified&quot;: [&quot;P2.docx&quot;]</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;repository&quot;: &#123;</span><br><span class="line">		&quot;id&quot;: 158326464,</span><br><span class="line">		&quot;node_id&quot;: &quot;MDEwOlJlcG9zaXRvcnkxNTgzMjY0NjQ=&quot;,</span><br><span class="line">		&quot;name&quot;: &quot;photo&quot;,</span><br><span class="line">		&quot;full_name&quot;: &quot;nunu03/photo&quot;,</span><br><span class="line">		&quot;private&quot;: false,</span><br><span class="line">		&quot;owner&quot;: &#123;</span><br><span class="line">			&quot;name&quot;: &quot;nunu03&quot;,</span><br><span class="line">			&quot;email&quot;: &quot;594531261@qq.com&quot;,</span><br><span class="line">			&quot;login&quot;: &quot;nunu03&quot;,</span><br><span class="line">			&quot;id&quot;: 9353063,</span><br><span class="line">			&quot;node_id&quot;: &quot;MDQ6VXNlcjkzNTMwNjM=&quot;,</span><br><span class="line">			&quot;avatar_url&quot;: &quot;https://avatars0.githubusercontent.com/u/9353063?v=4&quot;,</span><br><span class="line">			......</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;created_at&quot;: 1542684949,</span><br><span class="line">		......</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;pusher&quot;: &#123;</span><br><span class="line">		&quot;name&quot;: &quot;nunu03&quot;,</span><br><span class="line">		&quot;email&quot;: &quot;594531261@qq.com&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;sender&quot;: &#123;</span><br><span class="line">		&quot;login&quot;: &quot;nunu03&quot;,</span><br><span class="line">		&quot;id&quot;: 9353063,</span><br><span class="line">		......</span><br><span class="line">		&quot;type&quot;: &quot;User&quot;,</span><br><span class="line">		&quot;site_admin&quot;: false</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload----request.headers.X-GitHub-Event:push</span><br><span class="line">payload----request.headers.X-GitHub-Delivery:7a8185c4-c40a-11e9-8ed7-401aabcf3ce7</span><br></pre></td></tr></table></figure>
+
+<p>事件的驱动信息可以在webhook中查看：</p>
+<figure class="image-box">
+                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhookimage.jpg" title="webhook deliveries" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhookimage.jpg" alt="webhook deliveries" title class></a>
+                <p>webhook deliveries</p>
+            </figure>
+
+<p><a href="https://igit.58corp.com/help/api/README.md" target="_blank" rel="noopener">igit api help</a></p>
+<h2 id="ngrok配置"><a href="#ngrok配置" class="headerlink" title="ngrok配置"></a>ngrok配置</h2><p>你设置好了钩子，那就需要当收到通知的时候进行接收处理。这个时候要注意，我们的钩子里要求你的服务器能连接到外网上。那怎么办，我们本地做服务器，肯定就收不到通知了。这个时候推荐一个神器ngrok，它就可以让你在本地就有一个外网地址。<a href="https://ngrok.com/download" target="_blank" rel="noopener">ngrok下载地址</a>.下载之后，在ngrok目录执行cmd：./ngrok http 4567，弹出下面的界面：</p>
+<figure class="image-box">
+                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/ngrok.png" title="ngrok start" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/ngrok.png" alt="ngrok start" title class></a>
+                <p>ngrok start</p>
+            </figure>
+<p>可以看到我们本地服务器的地址被映射到了一个外网的地址。而这个<a href="http://4c8a9e3f.ngrok.io/就是上图中我们设置好的Payload" target="_blank" rel="noopener">http://4c8a9e3f.ngrok.io/就是上图中我们设置好的Payload</a> URL。</p>
+<p>需要注意的是，当我们调试程序的时候，ngrok要打开，并且每次启动ngrok，外网地址都不同，每次启动有效时间为8小时。</p>
+<h3 id="ngrok注册"><a href="#ngrok注册" class="headerlink" title="ngrok注册"></a>ngrok注册</h3><figure class="image-box">
+                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/authtoken.png" title="ngrok register" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/authtoken.png" alt="ngrok register" title class></a>
+                <p>ngrok register</p>
+            </figure>
+
+<p>通过官网注册，拿到了authtoken，然后保存即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01deMacBook-Pro:ngrok chenyulong01$ ./ngrok authtoken 1mg5VxMW7jhF3J90SBAerxFulVJ_7YWWYmNVX4C3jYyYoz5xR</span><br><span class="line">Authtoken saved to configuration file: /Users/chenyulong01/.ngrok2/ngrok.yml</span><br><span class="line"></span><br><span class="line">chenyulong01deMacBook-Pro:ngrok chenyulong01$ ./ngrok http 4567</span><br></pre></td></tr></table></figure>
+
+<p>使用open .ngrok2 打开ngrok.yml文件夹，ngrok.yml中存储了Authtoken，同时我们也可以修改其内容，增加root_cas: trusted，可以解决How to fix ngrok reconnecting (x509 certificate signed by unknown authority)异常问题。</p>
+<h3 id="其他反代理工具"><a href="#其他反代理工具" class="headerlink" title="其他反代理工具"></a>其他反代理工具</h3><p>localtunnel，natapp，花生壳</p>
+<h2 id="配置服务器"><a href="#配置服务器" class="headerlink" title="配置服务器"></a>配置服务器</h2><h3 id="bottle"><a href="#bottle" class="headerlink" title="bottle"></a>bottle</h3><p>Bottle是一个简单高效的遵循WSGI的微型python Web框架。bottle几乎没有任何依赖，而且只有一个文件。而相对于python默认的SimpleHTTPServer，功能更加丰富，实用更加灵活。如果只是开发一个小型的web程序，bottle已经足够了。但是这个服务器是阻塞式的，当一个用户请求的时候，其他用户的请求会被阻塞。可以很简单的使用其他的框架来配合bottle来实现无阻塞的web服务器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@route(&apos;/&apos;)</span><br><span class="line">@route(&apos;/index.html&apos;)</span><br><span class="line">def index():</span><br><span class="line">    return &apos;&lt;a href=&quot;/hello&quot;&gt;Go to Hello World Page&lt;/a&gt;&apos;</span><br><span class="line">@route(&apos;/hello&apos;)</span><br><span class="line">def hello():</span><br><span class="line">    return &apos;Hello World&apos;</span><br><span class="line">@route(&apos;/hello/&lt;id&gt;&apos;)</span><br><span class="line">def hello(id):</span><br><span class="line">    return &apos;Hello World&apos;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">server_names = &#123;</span><br><span class="line">    &apos;cgi&apos;: CGIServer,</span><br><span class="line">    &apos;flup&apos;: FlupFCGIServer,</span><br><span class="line">    &apos;wsgiref&apos;: WSGIRefServer,</span><br><span class="line">    &apos;waitress&apos;: WaitressServer,</span><br><span class="line">    &apos;cherrypy&apos;: CherryPyServer,</span><br><span class="line">    &apos;paste&apos;: PasteServer,</span><br><span class="line">    &apos;fapws3&apos;: FapwsServer,</span><br><span class="line">    &apos;tornado&apos;: TornadoServer,</span><br><span class="line">    &apos;gae&apos;: AppEngineServer,</span><br><span class="line">    &apos;twisted&apos;: TwistedServer,</span><br><span class="line">    &apos;diesel&apos;: DieselServer,</span><br><span class="line">    &apos;meinheld&apos;: MeinheldServer,</span><br><span class="line">    &apos;gunicorn&apos;: GunicornServer,</span><br><span class="line">    &apos;eventlet&apos;: EventletServer,</span><br><span class="line">    &apos;gevent&apos;: GeventServer,</span><br><span class="line">    &apos;geventSocketIO&apos;:GeventSocketIOServer,</span><br><span class="line">    &apos;rocket&apos;: RocketServer,</span><br><span class="line">    &apos;bjoern&apos; : BjoernServer,</span><br><span class="line">    &apos;auto&apos;: AutoServer,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="paste"><a href="#paste" class="headerlink" title="paste"></a>paste</h3><table>
+<tbody>
+<tr><th style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);font-size:1.2em;">
+名称</th>
+<th style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);font-size:1.2em;">
+主页</th>
+<th style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);font-size:1.2em;">
+介绍</th>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+cgi</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+ </td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+以CGI脚本运行</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+flup</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://trac.saddi.com/flup" rel="noopener" title="FLUP" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="c7b4b5077834a0ed1f5c0a4bca14f4cf" target="_blank">http://trac.saddi.com/flup</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+以FastCGI进程运行</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+gae</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://code.google.com/appengine/docs/python/overview.html" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="288e3bc1b26e0f48f7cbdecc50951f37" target="_blank">http://code.google.com/appengine/docs/python/overview.html</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+Google App Engine部属</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+wsgiref</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://docs.python.org/library/wsgiref.html" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="237e23e44a4365b59fcc33b28a891844" target="_blank">http://docs.python.org/library/wsgiref.html</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+默认为单线程的服务器</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+cherrypy</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://www.cherrypy.org/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="72c50cd82c583c625d441d5022206177" target="_blank">http://www.cherrypy.org/</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+多线程服务器</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+paste</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://pythonpaste.org/" rel="noopener" title="http://pythonpaste.org/" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="71228709dedcb943fefeb0aec3bbd640" target="_blank">http://pythonpaste.org/</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+多线程服务器</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+rocket</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://pypi.python.org/pypi/rocket" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="cefb0f508a65db9aca1af3f78aa8df61" target="_blank">http://pypi.python.org/pypi/rocket</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+多线程服务器</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+gunicorn</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://pypi.python.org/pypi/gunicorn" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="9a58bd759fbfdbd2c6bb60b30eb894f3" target="_blank">http://pypi.python.org/pypi/gunicorn</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+部分用C编写</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+fapws3</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://www.fapws.org/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="7380c8ebddf823041cb3785a15444f1e" target="_blank">http://www.fapws.org/</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+Asynchronous，基于C开发</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+tornado</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://www.tornadoweb.org/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="28816a7f106f3be4d11b72a58302eabb" target="_blank">http://www.tornadoweb.org/</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+Asynchronous，服务了部分 FaceBook 的服务</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+twisted</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://twistedmatrix.com/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="c11813c5b43ff62fd484194d38ea9b09" target="_blank">http://twistedmatrix.com/</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+Asynchronous</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+gevent</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://www.gevent.org/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="8739ffd1da6ba93b622d20965903c018" target="_blank">http://dieselweb.org/</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+Asynchronous，基于Greenlet</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+diesel</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://dieselweb.org/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="8739ffd1da6ba93b622d20965903c018" target="_blank">http://dieselweb.org/</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+Asynchronous，基于Greenlet</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+meinheld</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://pypi.python.org/pypi/meinheld" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="e8fc885d48908fbe74c4848d401bb8f0" target="_blank">http://pypi.python.org/pypi/meinheld</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+Asynchronous，部分基于C开发</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+bjoern</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+<a href="http://pypi.python.org/pypi/bjoern" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="f9fa6703b208a2b47317f58614c91139" target="_blank">http://pypi.python.org/pypi/bjoern</a></td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+Asynchronous，非常快，基于C开发</td>
+</tr>
+
+<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+auto</td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+ </td>
+<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
+自动选择一个可用的服务器</td>
+</tr>
+</tbody>
+</table>
+可以看到，bottle适配的web服务器很丰富。工作模式也很全面，有多线程的（如paste）、有多进程模式的（如gunicorn）、也有基于协程的（如gevent）。
+
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>nohup python3 -u githook.py &gt; nohup.log 2&gt;&amp;1 &amp;</p>
+<p>nohup：放在命令的开头，表示不挂起（no hang up），也即，关闭终端或者退出某个账号，进程也继续保持运行状态。</p>
+<p>-u ：不启用缓冲。</p>
+<p>nohup.log：日志文件</p>
+<p>2&gt;&amp;1：也就表示将错误重定向到标准输出上</p>
+<p>&amp; ：放在命令到结尾，表示后台运行，防止终端一直被某个进程占用，这样终端可以执行别到任务。</p>
+<p><strong>注意使用nohup命令后台运行命令之后，需要使用exit正常退出当前账户，这样才能保证命令一直在后台运行。否则当前账户非正常退出或者结束的时候，命令还是会结束。</strong></p>
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><p>1.我们的路由@route(‘/payload’, method=[‘GET’,’POST’])是必填的，如果丢失method,我们将不能受到请求。同时payload，要与Payload URL中设置的名一样。</p>
+<p>2.requests</p>
+<p>print(r):&lt;Response [200]&gt;<br>print(r.json):{‘id’: 132968, ‘iid’: 2182437, ‘project_id’: 15509,<br>print(r.text):{“id”:132968,”iid”:2182437,”project_id”:15509,<br>json.dumps(r.json())</p>
+<p>3.can only concatenate str (not “int”) to str</p>
+<p>print(‘payload—-projectid:%d’ % projectid)</p>
+<h2 id="MR方案"><a href="#MR方案" class="headerlink" title="MR方案"></a>MR方案</h2><figure class="image-box">
+                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/automr.png" title="MR流程图" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/automr.png" alt="MR流程图" title class></a>
+                <p>MR流程图</p>
+            </figure>
+<h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><p>1.Could not fetch URL <a href="https://pypi.python.org/simple/requests/" target="_blank" rel="noopener">https://pypi.python.org/simple/requests/</a>: There was a problem confirming the ssl certificate: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:777) - skipping<br>  Could not find a version that satisfies the requirement requests (from versions: )<br>No matching distribution found for requests</p>
+<p>解决方法：pip3 install requests  -i  <a href="http://pypi.douban.com/simple" target="_blank" rel="noopener">http://pypi.douban.com/simple</a> –trusted-host=pypi.douban.com</p>
+<p>2.升级pip</p>
+<p>解决方法：尝试使用如下指令</p>
+<p>pip install -U pip</p>
+<p>sudo easy_install –upgrade pip</p>
+<p>3.405 Method Not Allowed</p>
+<p>路由名不对与Payload URL中设置的名不一样，或者method丢失。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.jianshu.com/p/55209f1031e8" target="_blank" rel="noopener">webhook小试水(无需外网服务器)</a></p>
+<p><a href="https://forge.autodesk.com/blog/how-fix-ngrok-reconnecting-x509-certificate-signed-unknown-authority" target="_blank" rel="noopener">x509 certificate signed by unknown authority</a></p>
+<p><a href="https://github.com/inconshreveable/ngrok" target="_blank" rel="noopener">ngrok git</a></p>
+<p><a href="https://ngrok.com/download" target="_blank" rel="noopener">ngrok官网</a></p>
+<p><a href="https://docs.github.com/en/free-pro-team@latest/developers" target="_blank" rel="noopener">webhooks developers</a></p>
+<p><a href="https://www.cnblogs.com/handsome1013/p/7390849.html" target="_blank" rel="noopener">反向代理</a></p>
+<p><a href="https://www.jianshu.com/p/b11d70d9dd52" target="_blank" rel="noopener">映射公网花生壳、PubYun、NoIP、DynDNS、Ngrok、Tunnel、localtunnel、pagekite</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-01-15T02:40:30.000Z" itemprop="dateUpdated">2021-01-15 10:40:30</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/08/21/通过ngrok搭建github的webhook/" target="_blank" rel="external">http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebHook/">WebHook</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ngrok/">ngrok</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/&title=《通过ngrok搭建github的webhook》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/&title=《通过ngrok搭建github的webhook》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/08/29/gitlab-api-使用问题/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">gitlab api 使用问题</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/08/16/charles修改请求参数/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Charles设置</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#WebHook"><span class="post-toc-number">1.</span> <span class="post-toc-text">WebHook</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#webhook概述"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">webhook概述</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#github上webhook设置"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">github上webhook设置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#负载数据属性"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">负载数据属性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#报文头"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">报文头</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#事例"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">事例</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ngrok配置"><span class="post-toc-number">2.</span> <span class="post-toc-text">ngrok配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ngrok注册"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">ngrok注册</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#其他反代理工具"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">其他反代理工具</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置服务器"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置服务器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#bottle"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">bottle</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#paste"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">paste</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#启动"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">启动</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#注意点"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">注意点</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MR方案"><span class="post-toc-number">4.</span> <span class="post-toc-text">MR方案</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#遇到问题"><span class="post-toc-number">5.</span> <span class="post-toc-text">遇到问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">6.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://handsomeliuyang.github.io/" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2019 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/&title=《通过ngrok搭建github的webhook》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/&title=《通过ngrok搭建github的webhook》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3aUY7qMAwF0O5/07wFoJZ744THSKdfaIA2JyPFxvZ1xdfr7boG1/sd7u6/97l4eHh4u577erzeF/S8iLs73/Hyp7ffwsPDwzvNez6+717Pj/WWka8ZDw8P79d4z8d9vYiYioeHh/e3eHnSPP9WG5zw8PDwvs9rywF58FhLmtv7b6i14OHh4cW8tmX1C6+P9Pfw8PDwxl31tjibJ9Z5OWO0Wjw8PLwDvMnoQDtKNSlwTMoZeHh4eOd4SQLdpr95QysPOfU/AA8PD+8A79zi2jCwVoqNPo+Hh4e3iZcvem24atJmK5Lmu+3Dw8PDO8ZrA8Pk3XmRoigN4+Hh4R3jrQ0zTcae1j5TFynw8PDwjvHallLeKps0w9pUuy7d4uHh4S3x5s2ntpAxH9taHCnAw8PD28RbO3zz0mp+6CeYvHV3TWILHh4eXjyPlDx+kkCvpdGT8ICHh4d3gtf+vH/F12TIYK2e8KEBhoeHh3eA15ImaXQefkbbh4eHh/efeNEP/rJmnJcb2nZXNBmBh4eHN+C1Cet8CKAdSsg3MZqSwMPDwxvzkrS1LSK0wwdrTa+o/YaHh4d3jLdWDmi3Zm/giTYUDw8P7wCvDQ+TxLfFTBpyi9EPDw8PL+Ylj1kLAG0LLd/WetPx8PDwtvLa0kNSLGib/cVAQFsiwcPDwzvGS477vH2VD1pNEuU6mcbDw8PbymuP3Tzhbptha60vPDw8vO/wJm2tvEe/a4CgLmfg4eHhHeCtHb7PSfP8kW2AGcHw8PDwlnh5WnzucE/KGWsNNjw8PLxzvPnhPh8d2HXh4eHh/SYvDyFrR/+knFFXqfHw8PC+yFurduQp+wiGh4eHd5i3qxjRpuD5oNXz3z8EBjw8PLytvPbnfXu7dhyhDQ/b+nt4eHh4n3n/AB0u9FGQhW1eAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

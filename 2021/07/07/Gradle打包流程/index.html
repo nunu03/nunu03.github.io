@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Gradle打包流程-Gradle Wrapper | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Gradle">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>4</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/nunu03/" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Gradle打包流程-Gradle Wrapper</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">Gradle打包流程-Gradle Wrapper</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-07-07T07:24:52.000Z" itemprop="datePublished" class="page-time">
+  2021-07-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Gradle/">Gradle</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-Gradle打包流程"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">Gradle打包流程-Gradle Wrapper</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-07-07 15:24:52" datetime="2021-07-07T07:24:52.000Z"  itemprop="datePublished">2021-07-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Gradle/">Gradle</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="主要概念"><a href="#主要概念" class="headerlink" title="主要概念"></a>主要概念</h2><h3 id="Gradle是什么？"><a href="#Gradle是什么？" class="headerlink" title="Gradle是什么？"></a>Gradle是什么？</h3><p>Gradle其实就是个构建系统,一个构建项目的工具，即把一堆堆的目录、文件按照一定的规则关联起来，形成一个项目的自动化构建工具,能够简化你的编译、打包、测试过程。Gradle版本,如下gradle-6.1.1-all.zip。</p>
+<p>位置:项目主目录 gradle 文件夹-&gt;wrapper-&gt;gradle-wrapper.properties</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">distributionBase=GRADLE_USER_HOME // ~/.gradle</span><br><span class="line">distributionPath=wrapper/dists</span><br><span class="line">zipStoreBase=GRADLE_USER_HOME</span><br><span class="line">zipStorePath=wrapper/dists  // 下载到本地的~/.gradle/wrapper/dists目录</span><br><span class="line">distributionUrl=https\://services.gradle.org/distributions/gradle-6.1.1-all.zip //要下载的gradle的地址</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>gradle-xx-all.zip是完整版，包含了各种二进制文件，源代码文件，和离线的文档。例如，<a href="https://services.gradle.org/distributions/gradle-6.1.1-all.zip" target="_blank" rel="noopener">https://services.gradle.org/distributions/gradle-6.1.1-all.zip</a></p>
+</li>
+<li><p>gradle-xx-bin.zip是二进制版，只包含了二进制文件（可执行文件），没有文档和源代码。例如，<a href="https://services.gradle.org/distributions/gradle-6.1.1-bin.zip" target="_blank" rel="noopener">https://services.gradle.org/distributions/gradle-6.1.1-bin.zip</a></p>
+</li>
+<li><p>gradle-xx-src.zip是源码版，只包含了Gradle源代码，不能用来编译你的工程。例如，<a href="https://services.gradle.org/distributions/gradle-6.1.1-src.zip" target="_blank" rel="noopener">https://services.gradle.org/distributions/gradle-6.1.1-src.zip</a></p>
+</li>
+</ul>
+<h3 id="Gradle-Wrapper是什么？"><a href="#Gradle-Wrapper是什么？" class="headerlink" title="Gradle Wrapper是什么？"></a>Gradle Wrapper是什么？</h3><p>Gradle Wrapper的作用是简化Gradle本身的安装、部署。不同版本的项目可能需要不同版本的Gradle，手工部署的话比较麻烦，而且可能产生冲突，所以需要Gradle Wrapper帮你搞定这些事情。Gradle Wrapper是Gradle项目的一部分.gradle-wrapper.jar/gradle-wrapper.properties，gradle-wrapper.jar是Gradle Wrapper的主体功能包。在Android Studio安装过程中产生gradle-wrapper.jar.然后每次新建项目，会将gradle-wrapper.jar拷贝到你的项目的gradle/wrapper目录中。</p>
+<h3 id="Gradle插件又是什么？"><a href="#Gradle插件又是什么？" class="headerlink" title="Gradle插件又是什么？"></a>Gradle插件又是什么？</h3><p>Gradle插件是针对Gradle发行版和Android SDK Build Tools封装的一个工具，是一堆适合Android开发的Gradle插件的集合,主要有两大功能：</p>
+<blockquote>
+<p>调用Gradle本身的代码和批处理工具来构建项目</p>
+<p>调用Android SDK的编译、打包功能</p>
+</blockquote>
+<p><strong>Gradle插件版本</strong>:项目主目录下的 build.gradle 中，如“com.android.tools.build:gradle:4.0.2”:它会下载到~.gradle\caches\modules-2\files-2.1\com.android.tools.build目录中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    classpath &apos;com.android.tools.build:gradle:4.0.2&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Android SDK Build Tools Version</strong>：Android SDK 构建工具版本;<br>buildToolsVersion 位置:app 目录-&gt;buid.gradle 文件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion 28</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId &quot;com.myapplication&quot;</span><br><span class="line">        minSdkVersion 23</span><br><span class="line">        targetSdkVersion 28</span><br><span class="line">        versionCode 1</span><br><span class="line">        versionName &quot;1.0&quot;</span><br><span class="line">        testInstrumentationRunner &quot;android.support.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled false</span><br><span class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android-optimize.txt&apos;), &apos;proguard-rules.pro&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    compileOptions &#123;</span><br><span class="line">        sourceCompatibility JavaVersion.VERSION_1_8</span><br><span class="line">        targetCompatibility JavaVersion.VERSION_1_8</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="依赖关系"><a href="#依赖关系" class="headerlink" title="依赖关系"></a>依赖关系</h3><p>明确概念:</p>
+<ul>
+<li><p>Gradle Plugin Version: Gradle 插件版本</p>
+</li>
+<li><p>Gradle Version: Gradle发行版本</p>
+</li>
+<li><p>Android SDK Build Tools Version：Android SDK 构建工具版本<br>Gradle Plugin 有不同的版本号。 即我们常见的：classpath ‘com.android.tools.build:gradle:4.0.2’】，<br>每个插件版本号又对应一个或一些 Gradle 发行版本【即我们常见的：gradle-6.1.1-all.zip】<br>如果这两个版本对应不上了，那么构建项目的时候就会报错。<br><a href="https://developer.android.google.cn/studio/releases/gradle-plugin" target="_blank" rel="noopener">Android Gradle 插件版本说明</a></p>
+</li>
+</ul>
+<p>Gradle Plugin 还和 Android SDK BuildTool 有关联,因为它还负责和编译相关的功能，这也是为何我们要在 build.gradle 里注明 buildToolsVersion 的原因。</p>
+<h2 id="断点调试"><a href="#断点调试" class="headerlink" title="断点调试"></a>断点调试</h2><figure class="image-box">
+                <a rel=Gradle打包流程-Gradle Wrapper href="http://nunu03.github.io/2021/07/07/Gradle打包流程/debug.jpg" title="debug调试" data-fancybox="images"><img src="http://nunu03.github.io/2021/07/07/Gradle打包流程/debug.jpg" alt="debug调试" title class></a>
+                <p>debug调试</p>
+            </figure>
+<h2 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h2><p>先看一下<a href="https://juejin.cn/post/6844904142725447687#heading-29" target="_blank" rel="noopener">来自掘金社区</a>Gradle构建的核心流程图</p>
+<figure class="image-box">
+                <a rel=Gradle打包流程-Gradle Wrapper href="http://nunu03.github.io/2021/07/07/Gradle打包流程/执行流程图.image" title="核心流程图" data-fancybox="images"><img src="http://nunu03.github.io/2021/07/07/Gradle打包流程/执行流程图.image" alt="核心流程图" title class></a>
+                <p>核心流程图</p>
+            </figure>
+<p>时序图：</p>
+<figure class="image-box">
+                <a rel=Gradle打包流程-Gradle Wrapper href="http://nunu03.github.io/2021/07/07/Gradle打包流程/pretask.png" title="时序图" data-fancybox="images"><img src="http://nunu03.github.io/2021/07/07/Gradle打包流程/pretask.png" alt="时序图" title class></a>
+                <p>时序图</p>
+            </figure>
+<p>1.当我们执行一个 gralde 命令时，便会调用 gradle/wrapper/gradle-wrapper.jar 里面 org.gradle.wrapper.GradleWrapperMain 类的 main 方法，它就是 gradle 的一个入口方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        ......</span><br><span class="line">        WrapperExecutor wrapperExecutor = WrapperExecutor.forWrapperPropertiesFile(propertiesFile);</span><br><span class="line">        wrapperExecutor.execute(</span><br><span class="line">                args,</span><br><span class="line">                new Install(logger, new Download(logger, &quot;gradlew&quot;, UNKNOWN_VERSION), new PathAssembler(gradleUserHome)),</span><br><span class="line">                new BootstrapMainStarter());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.WrapperExecutor 的 execute 方法:createDist,会根据config的配置去校验版本和下载gradle wrapper需要的依赖与源码；start方法开始执行gradle的构建流程。Gradle对应版本下载完成之后，Gradle Wrapper的使命基本完成了.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void execute(String[] args, Install install, BootstrapMainStarter bootstrapMainStarter) throws Exception &#123;</span><br><span class="line">        File gradleHome = install.createDist(config);</span><br><span class="line">        bootstrapMainStarter.start(args, gradleHome);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.<br>BootstrapMainStarter的start做了什么：就是调用GradleMain里的main方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public void start(String[] args, File gradleHome) throws Exception &#123;</span><br><span class="line">        ......</span><br><span class="line">        Class&lt;?&gt; mainClass = contextClassLoader.loadClass(&quot;org.gradle.launcher.GradleMain&quot;);</span><br><span class="line">        Method mainMethod = mainClass.getMethod(&quot;main&quot;, String[].class);</span><br><span class="line">        mainMethod.invoke(null, new Object[]&#123;args&#125;);</span><br><span class="line">        if (contextClassLoader instanceof Closeable) &#123;</span><br><span class="line">            ((Closeable) contextClassLoader).close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>4.GradleMain不解释。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        new ProcessBootstrap().run(&quot;org.gradle.launcher.Main&quot;, args);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>5.Main</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">       new Main().run(args);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @Override</span><br><span class="line">   protected void doAction(String[] args, ExecutionListener listener) &#123;</span><br><span class="line">       createActionFactory().convert(Arrays.asList(args)).execute(listener);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   CommandLineActionFactory createActionFactory() &#123;</span><br><span class="line">       return new DefaultCommandLineActionFactory();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>6.DefaultCommandLineActionFactory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public CommandLineExecution convert(List&lt;String&gt; args) &#123;</span><br><span class="line">        ......</span><br><span class="line">        return new WithLogging(loggingServices,</span><br><span class="line">            args,</span><br><span class="line">            loggingConfiguration,</span><br><span class="line">            new ParseAndBuildAction(loggingServices, args),</span><br><span class="line">            new BuildExceptionReporter(loggingServices.get(StyledTextOutputFactory.class), loggingConfiguration, clientMetaData()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void execute(ExecutionListener executionListener) &#123;</span><br><span class="line">            ......</span><br><span class="line">            Action&lt;? super ExecutionListener&gt; action;</span><br><span class="line">            try &#123;</span><br><span class="line">                ParsedCommandLine commandLine = parser.parse(args);</span><br><span class="line">                action = createAction(actions, parser, commandLine);</span><br><span class="line">            &#125; catch (CommandLineArgumentException e) &#123;</span><br><span class="line">                action = new CommandLineParseFailureAction(parser, e);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            action.execute(executionListener);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="image-box">
+                <a rel=Gradle打包流程-Gradle Wrapper href="http://nunu03.github.io/2021/07/07/Gradle打包流程/pretask2.jpg" title="时序图" data-fancybox="images"><img src="http://nunu03.github.io/2021/07/07/Gradle打包流程/pretask2.jpg" alt="时序图" title class></a>
+                <p>时序图</p>
+            </figure>
+<p>1.BuildActionsFactory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">private Runnable runBuildInProcess(StartParameterInternal startParameter, DaemonParameters daemonParameters) &#123;</span><br><span class="line">    ServiceRegistry globalServices = ServiceRegistryBuilder.builder()</span><br><span class="line">            .displayName(&quot;Global services&quot;)</span><br><span class="line">            .parent(loggingServices)</span><br><span class="line">            .parent(NativeServices.getInstance())</span><br><span class="line">            .provider(new GlobalScopeServices(startParameter.isContinuous()))</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">    // Force the user home services to be stopped first, the dependencies between the user home services and the global services are not preserved currently</span><br><span class="line">    return runBuildAndCloseServices(startParameter, daemonParameters, globalServices.get(BuildExecuter.class), globalServices, globalServices.get(GradleUserHomeScopeServiceRegistry.class));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public ServiceRegistry build() &#123;</span><br><span class="line">    DefaultServiceRegistry registry = new DefaultServiceRegistry(displayName, parents.toArray(new ServiceRegistry[0]));</span><br><span class="line">    for (Object provider : providers) &#123;</span><br><span class="line">        registry.addProvider(provider);</span><br><span class="line">    &#125;</span><br><span class="line">    return registry;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private Runnable runBuildAndCloseServices(StartParameterInternal startParameter, DaemonParameters daemonParameters, BuildActionExecuter&lt;BuildActionParameters&gt; executer, ServiceRegistry sharedServices, Object... stopBeforeSharedServices) &#123;</span><br><span class="line">        BuildActionParameters parameters = createBuildActionParameters(startParameter, daemonParameters);</span><br><span class="line">        Stoppable stoppable = new CompositeStoppable().add(stopBeforeSharedServices).add(sharedServices);</span><br><span class="line">        return new RunBuildAction(executer, startParameter, clientMetaData(), getBuildStartTime(), parameters, sharedServices, stoppable);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.DefaultServiceRegistry</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">private void findProviderMethods(Object target) &#123;</span><br><span class="line">    Class&lt;?&gt; type = target.getClass();</span><br><span class="line">    RelevantMethods methods = RelevantMethods.getMethods(type);</span><br><span class="line">    for (ServiceMethod method : methods.decorators) &#123;</span><br><span class="line">        if (parentServices == null) &#123;</span><br><span class="line">            throw new ServiceLookupException(String.format(&quot;Cannot use decorator method %s.%s() when no parent registry is provided.&quot;, type.getSimpleName(), method.getName()));</span><br><span class="line">        &#125;</span><br><span class="line">        ownServices.add(new FactoryMethodService(this, target, method));</span><br><span class="line">    &#125;</span><br><span class="line">    for (ServiceMethod method : methods.factories) &#123;</span><br><span class="line">        ownServices.add(new FactoryMethodService(this, target, method));</span><br><span class="line">    &#125;</span><br><span class="line">    for (ServiceMethod method : methods.configurers) &#123;</span><br><span class="line">        applyConfigureMethod(method, target);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void applyConfigureMethod(ServiceMethod method, Object target) &#123;</span><br><span class="line">    Object[] params = new Object[method.getParameterTypes().length];</span><br><span class="line">    for (int i = 0; i &lt; method.getParameterTypes().length; i++) &#123;</span><br><span class="line">        Type paramType = method.getParameterTypes()[i];</span><br><span class="line">        if (paramType.equals(ServiceRegistration.class)) &#123;</span><br><span class="line">            params[i] = newRegistration();</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            Service paramProvider = find(paramType, allServices);</span><br><span class="line">            if (paramProvider == null) &#123;</span><br><span class="line">                throw new ServiceLookupException(String.format(&quot;Cannot configure services using %s.%s() as required service of type %s is not available.&quot;,</span><br><span class="line">                    method.getOwner().getSimpleName(),</span><br><span class="line">                    method.getName(),</span><br><span class="line">                    format(paramType)));</span><br><span class="line">            &#125;</span><br><span class="line">            params[i] = paramProvider.get();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    try &#123;</span><br><span class="line">        method.invoke(target, params);</span><br><span class="line">    &#125; catch (Exception e) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.GlobalScopeServices</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void configure(ServiceRegistration registration, ClassLoaderRegistry classLoaderRegistry) &#123;</span><br><span class="line">    registration.add(ClassLoaderScopeListeners.class);</span><br><span class="line">    final List&lt;PluginServiceRegistry&gt; pluginServiceFactories = new DefaultServiceLocator(classLoaderRegistry.getRuntimeClassLoader(), classLoaderRegistry.getPluginsClassLoader()).getAll(PluginServiceRegistry.class);</span><br><span class="line">    for (PluginServiceRegistry pluginServiceRegistry : pluginServiceFactories) &#123;</span><br><span class="line">        registration.add(PluginServiceRegistry.class, pluginServiceRegistry);</span><br><span class="line">        pluginServiceRegistry.registerGlobalServices(registration);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4.LauncherServices</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void registerGlobalServices(ServiceRegistration registration) &#123;</span><br><span class="line">    registration.addProvider(new ToolingGlobalScopeServices());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5.InProcessBuildActionExecuter</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public BuildActionResult execute(final BuildAction action, final BuildRequestContext buildRequestContext, BuildActionParameters actionParameters, ServiceRegistry contextServices) &#123;</span><br><span class="line">       BuildStateRegistry buildRegistry = contextServices.get(BuildStateRegistry.class);</span><br><span class="line">       final PayloadSerializer payloadSerializer = contextServices.get(PayloadSerializer.class);</span><br><span class="line">       BuildOperationNotificationValve buildOperationNotificationValve = contextServices.get(BuildOperationNotificationValve.class);</span><br><span class="line"></span><br><span class="line">       buildOperationNotificationValve.start();</span><br><span class="line">       try &#123;</span><br><span class="line">           RootBuildState rootBuild = buildRegistry.createRootBuild(BuildDefinition.fromStartParameter(action.getStartParameter(), null));</span><br><span class="line">           return rootBuild.run(new Transformer&lt;BuildActionResult, BuildController&gt;() &#123;</span><br><span class="line">               @Override</span><br><span class="line">               public BuildActionResult transform(BuildController buildController) &#123;</span><br><span class="line">                   BuildActionRunner.Result result = buildActionRunner.run(action, buildController);</span><br><span class="line">                   if (result.getBuildFailure() == null) &#123;</span><br><span class="line">                       return BuildActionResult.of(payloadSerializer.serialize(result.getClientResult()));</span><br><span class="line">                   &#125;</span><br><span class="line">                   if (buildRequestContext.getCancellationToken().isCancellationRequested()) &#123;</span><br><span class="line">                       return BuildActionResult.cancelled(payloadSerializer.serialize(result.getBuildFailure()));</span><br><span class="line">                   &#125;</span><br><span class="line">                   return BuildActionResult.failed(payloadSerializer.serialize(result.getClientFailure()));</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;);</span><br><span class="line">       &#125; finally &#123;</span><br><span class="line">           buildOperationNotificationValve.stop();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="image-box">
+                <a rel=Gradle打包流程-Gradle Wrapper href="http://nunu03.github.io/2021/07/07/Gradle打包流程/pretask3.png" title="时序图" data-fancybox="images"><img src="http://nunu03.github.io/2021/07/07/Gradle打包流程/pretask3.png" alt="时序图" title class></a>
+                <p>时序图</p>
+            </figure>
+<p>1.InProcessBuildActionExecuter</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    RootBuildState rootBuild = buildRegistry.createRootBuild(BuildDefinition.fromStartParameter(action.getStartParameter(), null));</span><br><span class="line">    return rootBuild.run(new Transformer&lt;BuildActionResult, BuildController&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public BuildActionResult transform(BuildController buildController) &#123;</span><br><span class="line">            BuildActionRunner.Result result = buildActionRunner.run(action, buildController);</span><br><span class="line">            ......</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">    buildOperationNotificationValve.stop();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.DefaultRootBuildState</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public &lt;T&gt; T run(Transformer&lt;T, ? super BuildController&gt; buildAction) &#123;</span><br><span class="line">    final GradleBuildController buildController = new GradleBuildController(gradleLauncher);</span><br><span class="line">    RootBuildLifecycleListener buildLifecycleListener = listenerManager.getBroadcaster(RootBuildLifecycleListener.class);</span><br><span class="line">    GradleInternal gradle = buildController.getGradle();</span><br><span class="line">    buildLifecycleListener.afterStart(gradle);</span><br><span class="line">    try &#123;</span><br><span class="line">        return buildAction.transform(buildController);</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        buildLifecycleListener.beforeComplete(gradle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.GradleBuildController</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public GradleInternal run() &#123;</span><br><span class="line">    return doBuild(GradleInternal.BuildType.TASKS, new Action&lt;GradleLauncher&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void execute(@Nonnull GradleLauncher gradleLauncher) &#123;</span><br><span class="line">            gradleLauncher.executeTasks();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4.DefaultGradleLauncher</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">private void doClassicBuildStages(Stage upTo) &#123;</span><br><span class="line">    if (stage == null) &#123;</span><br><span class="line">        instantExecution.prepareForBuildLogicExecution();</span><br><span class="line">    &#125;</span><br><span class="line">    prepareSettings();</span><br><span class="line">    if (upTo == Stage.LoadSettings) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    prepareProjects();</span><br><span class="line">    if (upTo == Stage.Configure) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    prepareTaskExecution();</span><br><span class="line">    if (upTo == Stage.TaskGraph) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    instantExecution.saveScheduledWork();</span><br><span class="line">    runWork();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Task源码对应"><a href="#Task源码对应" class="headerlink" title="Task源码对应"></a>Task源码对应</h2><table>
+<thead>
+<tr>
+<th>Task Name</th>
+<th>Class Name</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>preBuild</td>
+<td></td>
+<td>空 task，只做锚点使用</td>
+</tr>
+<tr>
+<td>preDebugBuild</td>
+<td></td>
+<td>空 task，只做锚点使用，与 preBuild 区别是这个 task 是 variant 的锚点</td>
+</tr>
+<tr>
+<td>compileDebugAidl</td>
+<td>AidlCompile</td>
+<td>处理 aidl</td>
+</tr>
+<tr>
+<td>compileDebugRenderscript</td>
+<td>RenderscriptCompile</td>
+<td>处理 renderscript</td>
+</tr>
+<tr>
+<td>checkDebugManifest</td>
+<td>CheckManifest</td>
+<td>检测 manifest 是否存在</td>
+</tr>
+<tr>
+<td>generateDebugBuildConfig</td>
+<td>GenerateBuildConfig</td>
+<td>生成 BuildConfig.java</td>
+</tr>
+<tr>
+<td>prepareLintJar</td>
+<td>PrepareLintJar</td>
+<td>拷贝 lint jar 包到指定位置</td>
+</tr>
+<tr>
+<td>generateDebugResValues</td>
+<td>GenerateResValues</td>
+<td>生成 resvalues，generated.xml</td>
+</tr>
+<tr>
+<td>generateDebugResources</td>
+<td></td>
+<td>空 task，锚点</td>
+</tr>
+<tr>
+<td>mergeDebugResources</td>
+<td>MergeResources</td>
+<td>合并资源文件</td>
+</tr>
+<tr>
+<td>createDebugCompatibleScreenManifests</td>
+<td>CompatibleScreensManifest</td>
+<td>manifest 文件中生成 compatible-screens，指定屏幕适配</td>
+</tr>
+<tr>
+<td>processDebugManifest</td>
+<td>MergeManifests</td>
+<td>合并 manifest 文件</td>
+</tr>
+<tr>
+<td>splitsDiscoveryTaskDebug</td>
+<td>SplitsDiscovery</td>
+<td>生成 split-list.json，用于 apk 分包</td>
+</tr>
+<tr>
+<td>processDebugResources</td>
+<td>ProcessAndroidResources</td>
+<td>aapt 打包资源</td>
+</tr>
+<tr>
+<td>generateDebugSources</td>
+<td></td>
+<td>空 task，锚点</td>
+</tr>
+<tr>
+<td>javaPreCompileDebug</td>
+<td>JavaPreCompileTask</td>
+<td>生成 annotationProcessors.json 文件</td>
+</tr>
+<tr>
+<td>compileDebugJavaWithJavac</td>
+<td>AndroidJavaCompile</td>
+<td>编译 java 文件</td>
+</tr>
+<tr>
+<td>compileDebugNdk</td>
+<td>NdkCompile</td>
+<td>编译 ndk</td>
+</tr>
+<tr>
+<td>compileDebugSources</td>
+<td></td>
+<td>空 task，锚点使用</td>
+</tr>
+<tr>
+<td>mergeDebugShaders</td>
+<td>MergeSourceSetFolders</td>
+<td>合并 shader 文件</td>
+</tr>
+<tr>
+<td>compileDebugShaders</td>
+<td>ShaderCompile</td>
+<td>编译 shaders</td>
+</tr>
+<tr>
+<td>generateDebugAssets</td>
+<td></td>
+<td>空 task，锚点</td>
+</tr>
+<tr>
+<td>mergeDebugAssets</td>
+<td>MergeSourceSetFolders</td>
+<td>合并 assets 文件</td>
+</tr>
+<tr>
+<td>transformClassesWithDexBuilderForDebug</td>
+<td>DexArchiveBuilderTransform</td>
+<td>class 打包 dex</td>
+</tr>
+<tr>
+<td>transformDexArchiveWithExternalLibsDexMergerForDebug</td>
+<td>ExternalLibsMergerTransform</td>
+<td>打包三方库的 dex，在 dex 增量的时候就不需要再 merge 了，节省时间</td>
+</tr>
+<tr>
+<td>transformDexArchiveWithDexMergerForDebug</td>
+<td>DexMergerTransform</td>
+<td>打包最终的 dex</td>
+</tr>
+<tr>
+<td>mergeDebugJniLibFolders</td>
+<td>MergeSouceSetFolders</td>
+<td>合并 jni lib 文件</td>
+</tr>
+<tr>
+<td>transformNativeLibsWithMergeJniLibsForDebug</td>
+<td>MergeJavaResourcesTransform</td>
+<td>合并 jnilibs</td>
+</tr>
+<tr>
+<td>transformNativeLibsWithStripDebugSymbolForDebug</td>
+<td>StripDebugSymbolTransform</td>
+<td>去掉 native lib 里的 debug 符号</td>
+</tr>
+<tr>
+<td>processDebugJavaRes</td>
+<td>ProcessJavaResConfigAction</td>
+<td>处理 java res</td>
+</tr>
+<tr>
+<td>transformResourcesWithMergeJavaResForDebug</td>
+<td>MergeJavaResourcesTransform</td>
+<td>合并 java res</td>
+</tr>
+<tr>
+<td>validateSigningDebug</td>
+<td>ValidateSigningTask</td>
+<td>验证签名</td>
+</tr>
+<tr>
+<td>packageDebug</td>
+<td>PackageApplication</td>
+<td>打包 apk</td>
+</tr>
+<tr>
+<td>assembleDebug</td>
+<td></td>
+<td>空 task，锚点</td>
+</tr>
+</tbody></table>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/jiangxinnju/p/8229129.html" target="_blank" rel="noopener">Gradle、Gradle Wrapper与Android Plugin for Gradle的区别和联系</a><br><a href="https://www.cnblogs.com/mingfeng002/p/11751309.html" target="_blank" rel="noopener">Gradle之Android Gradle Plugin 主要 Task 分析</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-13T13:10:59.000Z" itemprop="dateUpdated">2021-09-13 21:10:59</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2021/07/07/Gradle打包流程/" target="_blank" rel="external">http://nunu03.github.io/2021/07/07/Gradle打包流程/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/07/07/Gradle打包流程/&title=《Gradle打包流程-Gradle Wrapper》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/07/07/Gradle打包流程/&title=《Gradle打包流程-Gradle Wrapper》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2021/08/18/Gradle升级到4-0之图片压缩问题/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Gradle升级到4.0之图片压缩问题</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2021/04/27/人脸检测之Haar特征介绍/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">人脸检测之Haar特征介绍</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#主要概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">主要概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Gradle是什么？"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Gradle是什么？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Gradle-Wrapper是什么？"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Gradle Wrapper是什么？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Gradle插件又是什么？"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Gradle插件又是什么？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#依赖关系"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">依赖关系</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#断点调试"><span class="post-toc-number">2.</span> <span class="post-toc-text">断点调试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#执行流程"><span class="post-toc-number">3.</span> <span class="post-toc-text">执行流程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Task源码对应"><span class="post-toc-number">4.</span> <span class="post-toc-text">Task源码对应</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://handsomeliuyang.github.io/" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2019 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/07/07/Gradle打包流程/&title=《Gradle打包流程-Gradle Wrapper》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/07/07/Gradle打包流程/&title=《Gradle打包流程-Gradle Wrapper》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aS46DQAxFUfa/abKAiMp9NkSifBlF6TTUYWD5dxz4Or+u779e/Z7cef3NbZcMGTJeyziXFzkWf/D6Rayfu36VMmTImMBYH+7qMzkoD9P8WTJkyJBBGCRAk3Rw/b8yZMiQ0Q98JLEjaSghyZAhQwYPoKQQrTXj/lSLy5Ah44UM3ib7/+dH5hsyZMh4FeMMryfCJU8fL+8jQ4aMrRk8wKWH4A07ssyBRqEyZMjYlFFrbPE22fqepOhFMBkyZAxgpG2yp4/OR5uXGa4MGTK2Y5B1itq6GCmDa2miDBky5jBq48lOY44fOg7cMmTI2JpRK1Y7CxAEFhSxMmTI2JpBislaqy4dIXRKWRkyZOzNSEvKlMGDZu2lyJAhYwKj1txPU73O8DKowmXIkLE1I2208Z0HvuDV+o0MGTIGMHgY7Q87g5Ekfq4MGTKmMfhKRJzAha8jGDbIkCFjPKM/HeVrGWnBLEOGjAkMHiLT9JEUn4QUNARlyJAxhpGGVJ7MPfF9a8ohQ4aMLRjpwCBdeK01+Fp5rgwZMl7OIGEuXRfrHJSE4B8rFzJkyNiCcYbXvUOFfnGLYr8MGTJezuBXraFPksX+kocMGTImMNIRIw/N/VAeBFkZMmQMYKTjSf5g3qrjof9HLS5DhozxjH4ATUviI/XJkCFjPIMPDNKjkGHD5f1lyJAxgMHLUQJO1ybSgCtDhoxpjFrpmCaIJBzzEH9D+ihDhox3MD5JU4mHZPNM0gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

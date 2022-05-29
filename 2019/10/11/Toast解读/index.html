@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Toast源码解读 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Toast">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>4</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/nunu03/" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Toast源码解读</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">Toast源码解读</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-10-11T08:25:31.000Z" itemprop="datePublished" class="page-time">
+  2019-10-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-Toast解读"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">Toast源码解读</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-10-11 16:25:31" datetime="2019-10-11T08:25:31.000Z"  itemprop="datePublished">2019-10-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Toast(吐司)，这个控件的用词相当准确,它所表现出来的特征正是吐司似的弹出效果，使用非常简单便捷。<br>而且Toast开发时比较常用的一个类了，用它给用户弹提示信息和界面反馈，有时候也用它来作为辅助调试的手段。但是用得多了，有时候自然会遇到各种各样的问题，比如重复点击问题，弹框位置，显示时间等，这时候我们就要对运行机制以及源码进行了解。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>1.Toast不是View，它用于帮助创建并展示包含一条小消息的View；</p>
+<p>2.它的设计理念是尽量不惹眼，但又能展示想让用户看到的信息；</p>
+<p>3.被展示时，浮在应用界面之上；</p>
+<p>4.永远不会获取到焦点；</p>
+<p>5.大小取决于消息的长度；</p>
+<p>6.超时后会自动消失；</p>
+<p>7.可以自定义显示在屏幕上的位置（默认左右居中显示在靠近屏幕底部的位置；</p>
+<p>8.可以使用自定义布局，也只有在自定义布局的时候才需要直接调用Toast的构造方法，其它时候都是使用 makeText方法来创建Toast；</p>
+<p>9.Toast弹出后当前Activity会保持可见性和可交互性；</p>
+<p>10.使用cancel方法可以立即将已显示的Toast关闭让未显示的Toast不再显示；</p>
+<p>11.Toast 也算是一个「通知」，如果弹出状态消息后期望得到用户响应，应该使用 Notification。</p>
+<h2 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><h4 id="new-Toast"><a href="#new-Toast" class="headerlink" title="new Toast"></a>new Toast</h4><blockquote>
+<p>Toast.class</p>
+<p>这里面初始化了TN,TN是什么？一会下面会讲道</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Constructs an empty Toast object.  If looper is null, Looper.myLooper() is used.</span><br><span class="line"> * @hide</span><br><span class="line"> */</span><br><span class="line">public Toast(@NonNull Context context, @Nullable Looper looper) &#123;</span><br><span class="line">    mContext = context;</span><br><span class="line">    mTN = new TN(context.getPackageName(), looper);</span><br><span class="line">    mTN.mY = context.getResources().getDimensionPixelSize(</span><br><span class="line">            com.android.internal.R.dimen.toast_y_offset);</span><br><span class="line">    mTN.mGravity = context.getResources().getInteger(</span><br><span class="line">            com.android.internal.R.integer.config_toastDefaultGravity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Toast-makeText"><a href="#Toast-makeText" class="headerlink" title="Toast.makeText"></a>Toast.makeText</h4><blockquote>
+<p>Toast.class</p>
+<p>这里面蕴含了很多的信息,XML布局,text显示文案，显示时长等等</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Toast.class</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Make a standard toast to display using the specified looper.</span><br><span class="line"> * If looper is null, Looper.myLooper() is used.</span><br><span class="line"> * @hide</span><br><span class="line"> */</span><br><span class="line">public static Toast makeText(@NonNull Context context, @Nullable Looper looper,</span><br><span class="line">        @NonNull CharSequence text, @Duration int duration) &#123;</span><br><span class="line">    Toast result = new Toast(context, looper);</span><br><span class="line"></span><br><span class="line">    LayoutInflater inflate = (LayoutInflater)</span><br><span class="line">            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);</span><br><span class="line">    View v = inflate.inflate(com.android.internal.R.layout.transient_notification, null);</span><br><span class="line">    TextView tv = (TextView)v.findViewById(com.android.internal.R.id.message);</span><br><span class="line">    tv.setText(text);</span><br><span class="line"></span><br><span class="line">    result.mNextView = v;</span><br><span class="line">    result.mDuration = duration;</span><br><span class="line"></span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="显示"><a href="#显示" class="headerlink" title="显示"></a>显示</h3><blockquote>
+<p>Toast.class</p>
+<p>这里是show一个Toast,显示的时候把tn，和包名相关信息传递给service，将我们需要显示的toast放到这个服务的队列中进行显示。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Show the view for the specified duration.</span><br><span class="line"> */</span><br><span class="line">public void show() &#123;</span><br><span class="line">    if (mNextView == null) &#123;</span><br><span class="line">        throw new RuntimeException(&quot;setView must have been called&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    INotificationManager service = getService();</span><br><span class="line">    String pkg = mContext.getOpPackageName();</span><br><span class="line">    TN tn = mTN;</span><br><span class="line">    tn.mNextView = mNextView;</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        service.enqueueToast(pkg, tn, mDuration);</span><br><span class="line">    &#125; catch (RemoteException e) &#123;</span><br><span class="line">        // Empty</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>NotificationManagerService.class</p>
+<p>Toast入系统队列的方法:在Toast的TN对象中，会调用service.enqueueToast(String pkg,ItransientNotification callback,int duaraion)来将创建出来的Toast放入NotificationManagerService的ToastRecord队列中。<br>NotificationManagerService是一个运行在SystemServer进程中的一个守护进程，Android大部分的IPC通信都是通过Binder机制，这个守护进程像一个主管一样，所有的下面的人都必须让它进行调度，然后由它来进行显示或者是隐藏。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void enqueueToast(String pkg, ITransientNotification callback, int duration)</span><br><span class="line">&#123;</span><br><span class="line">    .........................................</span><br><span class="line"></span><br><span class="line">    synchronized (mToastQueue) &#123;</span><br><span class="line">        int callingPid = Binder.getCallingPid();</span><br><span class="line">        long callingId = Binder.clearCallingIdentity();</span><br><span class="line">        try &#123;</span><br><span class="line">            ToastRecord record;</span><br><span class="line">            int index;</span><br><span class="line">            // All packages aside from the android package can enqueue one toast at a time</span><br><span class="line">            //查看这个toast是否在当前队列中，有的话就返回索引</span><br><span class="line">            if (!isSystemToast) &#123;</span><br><span class="line">                index = indexOfToastPackageLocked(pkg);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                index = indexOfToastLocked(pkg, callback);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // If the package already has a toast, we update its toast</span><br><span class="line">            // in the queue, we don&apos;t move it to the end of the queue.</span><br><span class="line">            //如果这个index大于等于0，说明这个toast已经在这个队列中了，只需要更新显示时间就可以了</span><br><span class="line">            //当然这里callback是一个对象，pkg是一个String，所以比较的时候是对象的比较</span><br><span class="line">            if (index &gt;= 0) &#123;</span><br><span class="line">                record = mToastQueue.get(index);</span><br><span class="line">                record.update(duration);</span><br><span class="line">                try &#123;</span><br><span class="line">                    record.callback.hide();</span><br><span class="line">                &#125; catch (RemoteException e) &#123;</span><br><span class="line">                &#125;</span><br><span class="line">                record.update(callback);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">            		//将这个toast封装成ToastRecord对象，放到队列中</span><br><span class="line">                Binder token = new Binder();</span><br><span class="line">                mWindowManagerInternal.addWindowToken(token, TYPE_TOAST, DEFAULT_DISPLAY);</span><br><span class="line">                record = new ToastRecord(callingPid, pkg, callback, duration, token);</span><br><span class="line">                mToastQueue.add(record);</span><br><span class="line">                index = mToastQueue.size() - 1;</span><br><span class="line">            &#125;</span><br><span class="line">            keepProcessAliveIfNeededLocked(callingPid);</span><br><span class="line">            // If it&apos;s at index 0, it&apos;s the current toast.  It doesn&apos;t matter if it&apos;s</span><br><span class="line">            // new or just been updated.  Call back and tell it to show itself.</span><br><span class="line">            // If the callback fails, this will remove it from the list, so don&apos;t</span><br><span class="line">            // assume that it&apos;s valid after this.</span><br><span class="line">            //如果返回的索引是0，说明当前的这个存在的toast就在对头，直接显示</span><br><span class="line">            if (index == 0) &#123;</span><br><span class="line">                showNextToastLocked();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            Binder.restoreCallingIdentity(callingId);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void showNextToastLocked() &#123;</span><br><span class="line">    ToastRecord record = mToastQueue.get(0);</span><br><span class="line">    ....................................  </span><br><span class="line">    record.callback.show(record.token);</span><br><span class="line">    scheduleTimeoutLocked(record);</span><br><span class="line">    return;</span><br><span class="line">    ...................................    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void scheduleTimeoutLocked(ToastRecord r)</span><br><span class="line">&#123;</span><br><span class="line">    mHandler.removeCallbacksAndMessages(r);</span><br><span class="line">    Message m = Message.obtain(mHandler, MESSAGE_TIMEOUT, r);</span><br><span class="line">    long delay = r.duration == Toast.LENGTH_LONG ? LONG_DELAY : SHORT_DELAY;</span><br><span class="line">    mHandler.sendMessageDelayed(m, delay);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void handleTimeout(ToastRecord record)</span><br><span class="line">&#123;</span><br><span class="line">        int index = indexOfToastLocked(record.pkg, record.callback);</span><br><span class="line">        if (index &gt;= 0) &#123;</span><br><span class="line">            cancelToastLocked(index);</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="取消"><a href="#取消" class="headerlink" title="取消"></a>取消</h3><blockquote>
+<p>NotificationManagerService.class</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void cancelToastLocked(int index) &#123;</span><br><span class="line">    ToastRecord record = mToastQueue.get(index);</span><br><span class="line">    try &#123;</span><br><span class="line">        record.callback.hide();</span><br><span class="line">    &#125; catch (RemoteException e) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ToastRecord lastToast = mToastQueue.remove(index);</span><br><span class="line">    mWindowManagerInternal.removeWindowToken(lastToast.token, true, DEFAULT_DISPLAY);</span><br><span class="line"></span><br><span class="line">    keepProcessAliveIfNeededLocked(record.pid);</span><br><span class="line">    if (mToastQueue.size() &gt; 0) &#123;</span><br><span class="line">        // Show the next one. If the callback fails, this will remove</span><br><span class="line">        // it from the list, so don&apos;t assume that the list hasn&apos;t changed</span><br><span class="line">        // after this point.</span><br><span class="line">        showNextToastLocked();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="TN"><a href="#TN" class="headerlink" title="TN"></a>TN</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line">private static class TN extends ITransientNotification.Stub &#123;</span><br><span class="line">    private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();</span><br><span class="line">.................................................................</span><br><span class="line"></span><br><span class="line">    TN(String packageName, @Nullable Looper looper) &#123;</span><br><span class="line">        // XXX This should be changed to use a Dialog, with a Theme.Toast</span><br><span class="line">        // defined that sets up the layout params appropriately.</span><br><span class="line">        final WindowManager.LayoutParams params = mParams;</span><br><span class="line">        params.height = WindowManager.LayoutParams.WRAP_CONTENT;</span><br><span class="line">        params.width = WindowManager.LayoutParams.WRAP_CONTENT;</span><br><span class="line">        params.format = PixelFormat.TRANSLUCENT;</span><br><span class="line">        params.windowAnimations = com.android.internal.R.style.Animation_Toast;</span><br><span class="line">        params.type = WindowManager.LayoutParams.TYPE_TOAST;</span><br><span class="line">        params.setTitle(&quot;Toast&quot;);</span><br><span class="line">        params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON</span><br><span class="line">                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE</span><br><span class="line">                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;</span><br><span class="line"></span><br><span class="line">        mPackageName = packageName;</span><br><span class="line"></span><br><span class="line">        if (looper == null) &#123;</span><br><span class="line">            // Use Looper.myLooper() if looper is not specified.</span><br><span class="line">            looper = Looper.myLooper();</span><br><span class="line">            if (looper == null) &#123;</span><br><span class="line">                throw new RuntimeException(</span><br><span class="line">                        &quot;Can&apos;t toast on a thread that has not called Looper.prepare()&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        mHandler = new Handler(looper, null) &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void handleMessage(Message msg) &#123;</span><br><span class="line">                switch (msg.what) &#123;</span><br><span class="line">                    case SHOW: &#123;</span><br><span class="line">                        IBinder token = (IBinder) msg.obj;</span><br><span class="line">                        handleShow(token);</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                    case HIDE: &#123;</span><br><span class="line">                        handleHide();</span><br><span class="line">                        // Don&apos;t do this in handleHide() because it is also invoked by</span><br><span class="line">                        // handleShow()</span><br><span class="line">                        mNextView = null;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                    case CANCEL: &#123;</span><br><span class="line">                        handleHide();</span><br><span class="line">                        // Don&apos;t do this in handleHide() because it is also invoked by</span><br><span class="line">                        // handleShow()</span><br><span class="line">                        mNextView = null;</span><br><span class="line">                        try &#123;</span><br><span class="line">                            getService().cancelToast(mPackageName, TN.this);</span><br><span class="line">                        &#125; catch (RemoteException e) &#123;</span><br><span class="line">                        &#125;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * schedule handleShow into the right thread</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void show(IBinder windowToken) &#123;</span><br><span class="line">        if (localLOGV) Log.v(TAG, &quot;SHOW: &quot; + this);</span><br><span class="line">        mHandler.obtainMessage(SHOW, windowToken).sendToTarget();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * schedule handleHide into the right thread</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void hide() &#123;</span><br><span class="line">        if (localLOGV) Log.v(TAG, &quot;HIDE: &quot; + this);</span><br><span class="line">        mHandler.obtainMessage(HIDE).sendToTarget();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void cancel() &#123;</span><br><span class="line">        if (localLOGV) Log.v(TAG, &quot;CANCEL: &quot; + this);</span><br><span class="line">        mHandler.obtainMessage(CANCEL).sendToTarget();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void handleShow(IBinder windowToken) &#123;</span><br><span class="line">        .................................................</span><br><span class="line">            if (mView != mNextView) &#123;</span><br><span class="line">            // remove the old view if necessary</span><br><span class="line">            handleHide();</span><br><span class="line">            mView = mNextView;</span><br><span class="line">            Context context = mView.getContext().getApplicationContext();</span><br><span class="line">            String packageName = mView.getContext().getOpPackageName();</span><br><span class="line">            if (context == null) &#123;</span><br><span class="line">                context = mView.getContext();</span><br><span class="line">            &#125;</span><br><span class="line">            mWM = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);</span><br><span class="line">            // We can resolve the Gravity here by using the Locale for getting</span><br><span class="line">            // the layout direction</span><br><span class="line">            final Configuration config = mView.getContext().getResources().getConfiguration();</span><br><span class="line">            final int gravity = Gravity.getAbsoluteGravity(mGravity, config.getLayoutDirection());</span><br><span class="line">            mParams.gravity = gravity;</span><br><span class="line">            if ((gravity &amp; Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.FILL_HORIZONTAL) &#123;</span><br><span class="line">                mParams.horizontalWeight = 1.0f;</span><br><span class="line">            &#125;</span><br><span class="line">            if ((gravity &amp; Gravity.VERTICAL_GRAVITY_MASK) == Gravity.FILL_VERTICAL) &#123;</span><br><span class="line">                mParams.verticalWeight = 1.0f;</span><br><span class="line">            &#125;</span><br><span class="line">            mParams.x = mX;</span><br><span class="line">            mParams.y = mY;</span><br><span class="line">            mParams.verticalMargin = mVerticalMargin;</span><br><span class="line">            mParams.horizontalMargin = mHorizontalMargin;</span><br><span class="line">            mParams.packageName = packageName;</span><br><span class="line">            mParams.hideTimeoutMilliseconds = mDuration ==</span><br><span class="line">                Toast.LENGTH_LONG ? LONG_DURATION_TIMEOUT : SHORT_DURATION_TIMEOUT;</span><br><span class="line">            mParams.token = windowToken;</span><br><span class="line">            if (mView.getParent() != null) &#123;</span><br><span class="line">                if (localLOGV) Log.v(TAG, &quot;REMOVE! &quot; + mView + &quot; in &quot; + this);</span><br><span class="line">                mWM.removeView(mView);</span><br><span class="line">            &#125;</span><br><span class="line">            if (localLOGV) Log.v(TAG, &quot;ADD! &quot; + mView + &quot; in &quot; + this);</span><br><span class="line">            // Since the notification manager service cancels the token right</span><br><span class="line">            // after it notifies us to cancel the toast there is an inherent</span><br><span class="line">            // race and we may attempt to add a window after the token has been</span><br><span class="line">            // invalidated. Let us hedge against that.</span><br><span class="line">            try &#123;</span><br><span class="line">                mWM.addView(mView, mParams);</span><br><span class="line">                trySendAccessibilityEvent();</span><br><span class="line">            &#125; catch (WindowManager.BadTokenException e) &#123;</span><br><span class="line">                /* ignore */</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void trySendAccessibilityEvent() &#123;</span><br><span class="line">        AccessibilityManager accessibilityManager =</span><br><span class="line">                AccessibilityManager.getInstance(mView.getContext());</span><br><span class="line">        if (!accessibilityManager.isEnabled()) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        // treat toasts as notifications since they are used to</span><br><span class="line">        // announce a transient piece of information to the user</span><br><span class="line">        AccessibilityEvent event = AccessibilityEvent.obtain(</span><br><span class="line">                AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED);</span><br><span class="line">        event.setClassName(getClass().getName());</span><br><span class="line">        event.setPackageName(mView.getContext().getPackageName());</span><br><span class="line">        mView.dispatchPopulateAccessibilityEvent(event);</span><br><span class="line">        accessibilityManager.sendAccessibilityEvent(event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void handleHide() &#123;</span><br><span class="line">        if (localLOGV) Log.v(TAG, &quot;HANDLE HIDE: &quot; + this + &quot; mView=&quot; + mView);</span><br><span class="line">        if (mView != null) &#123;</span><br><span class="line">            // note: checking parent() just to make sure the view has</span><br><span class="line">            // been added...  i have seen cases where we get here when</span><br><span class="line">            // the view isn&apos;t yet added, so let&apos;s try not to crash.</span><br><span class="line">            if (mView.getParent() != null) &#123;</span><br><span class="line">                if (localLOGV) Log.v(TAG, &quot;REMOVE! &quot; + mView + &quot; in &quot; + this);</span><br><span class="line">                mWM.removeViewImmediate(mView);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            mView = null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="显示时长"><a href="#显示时长" class="headerlink" title="显示时长"></a>显示时长</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static final int LONG_DELAY = PhoneWindowManager.TOAST_WINDOW_TIMEOUT;</span><br><span class="line">public static final int TOAST_WINDOW_TIMEOUT = 3500; // 3.5 seconds</span><br><span class="line">static final int SHORT_DELAY = 2000; // 2 seconds</span><br></pre></td></tr></table></figure>
+
+<h3 id="超时时长"><a href="#超时时长" class="headerlink" title="超时时长"></a>超时时长</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">static final long SHORT_DURATION_TIMEOUT = 4000;</span><br><span class="line">static final long LONG_DURATION_TIMEOUT = 7000;</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题解答"><a href="#问题解答" class="headerlink" title="问题解答"></a>问题解答</h2><h3 id="能否在非-UI-线程调用"><a href="#能否在非-UI-线程调用" class="headerlink" title="能否在非 UI 线程调用"></a>能否在非 UI 线程调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        Toast.makeText(getContext(), &quot;Call toast on non-UI thread&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+
+<p>异常提示：Can’t create handler inside thread that has not called Looper.prepare()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        Looper.prepare();</span><br><span class="line">        Toast.makeText(getContext(), &quot;Call toast on non-UI thread&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line">        Looper.loop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Toast数量"><a href="#Toast数量" class="headerlink" title="Toast数量"></a>Toast数量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static final int MAX_PACKAGE_NOTIFICATIONS = 50;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Service中能否显示Toast"><a href="#Service中能否显示Toast" class="headerlink" title="Service中能否显示Toast"></a>Service中能否显示Toast</h3><p>可以。但是网上说IntentService不可以,因为IntentService运行在独立的线程中，所以Toast不正常需要通过Handler运行于主线程之上，但是我打印IntentService也是main线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Handler handler = new Handler(Looper.getMainLooper());  </span><br><span class="line">handler.post(new Runnable() &#123;  </span><br><span class="line">	public void run() &#123;  </span><br><span class="line">		dialog.show();  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><h3 id="源码差异"><a href="#源码差异" class="headerlink" title="源码差异"></a>源码差异</h3><blockquote>
+<p>8 以下</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (index &gt;= 0) &#123;</span><br><span class="line">    record = mToastQueue.get(index);</span><br><span class="line">    record.update(duration);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>9</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if (index &gt;= 0) &#123;</span><br><span class="line">    record = mToastQueue.get(index);</span><br><span class="line">    record.update(duration);</span><br><span class="line">    try &#123;</span><br><span class="line">        record.callback.hide();</span><br><span class="line">    &#125; catch (RemoteException e) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    record.update(callback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果9，快速点击，当toast弹框，再次点击立刻消失，然后到事件后，清除队列后才能再次显示。而8以下，则是toast弹框到时间消失后，再次点击才能显示。两者toast每次显示的时间不同。</p>
+<h3 id="系统问题"><a href="#系统问题" class="headerlink" title="系统问题"></a>系统问题</h3><p>某些手机系统源码做了修改，比如红米5p，如果一直点击，在toast消失后，则不会在弹提示。停下一段时间后，log会输入异常提示。初步认定是快速点击时的toast机制做了修改。这个困扰了我好长时间，最后根据日志，和其他的手机才发现这个问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2019-11-08 17:41:33.311 1632-1632/? W/WindowManager: Attempted to remove non-existing token: android.os.Binder@bc43f4e</span><br><span class="line">2019-11-08 17:41:33.315 1632-2685/? W/WindowManager: Failed looking up window</span><br><span class="line">    java.lang.IllegalArgumentException: Requested window android.os.BinderProxy@22ce86f does not exist</span><br><span class="line">        at com.android.server.wm.WindowManagerService.windowForClientLocked(WindowManagerService.java:9651)</span><br><span class="line">        at com.android.server.wm.WindowManagerService.windowForClientLocked(WindowManagerService.java:9642)</span><br><span class="line">        at com.android.server.wm.WindowManagerService.removeWindow(WindowManagerService.java:2420)</span><br><span class="line">        at com.android.server.wm.Session.remove(Session.java:202)</span><br><span class="line">        at android.view.IWindowSession$Stub.onTransact(IWindowSession.java:242)</span><br><span class="line">        at com.android.server.wm.Session.onTransact(Session.java:145)</span><br><span class="line">        at android.os.Binder.execTransact(Binder.java:567)</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>整个调研过程比较长，期间主要卡在了国内手机厂商的系统修改上，今后在遇到同样问题，还是要做测试，尽量早发现问题，今早提出解决和方案。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/mzlogin/article/details/78580687" target="_blank" rel="noopener">Android 源码分析 —— 从 Toast 出发</a></p>
+<p><a href="https://github.com/aosp-mirror/platform_frameworks_base/blob/master/services/core/java/com/android/server/notification/NotificationManagerService.java" target="_blank" rel="noopener">NotificationManagerService</a></p>
+<p><a href="https://github.com/aosp-mirror/platform_frameworks_base/blob/master/core/java/android/view/WindowManager.java" target="_blank" rel="noopener">WindowManager</a></p>
+<p><a href="https://github.com/aosp-mirror/platform_frameworks_base/blob/master/core/java/android/widget/Toast.java" target="_blank" rel="noopener">Toast</a></p>
+<p><a href="https://github.com/aosp-mirror/platform_frameworks_base/blob/master/services/core/java/com/android/server/policy/PhoneWindowManager.java" target="_blank" rel="noopener">PhoneWindowManager</a></p>
+<p><a href="https://blog.csdn.net/androidguy/article/details/90750688" target="_blank" rel="noopener">关于Binder中clearCallingIdentity()与restoreCallingIdentity()的作用及如何实现权限认证</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-11-12T12:30:42.000Z" itemprop="dateUpdated">2019-11-12 20:30:42</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/10/11/Toast解读/" target="_blank" rel="external">http://nunu03.github.io/2019/10/11/Toast解读/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Toast/">Toast</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/10/11/Toast解读/&title=《Toast源码解读》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/10/11/Toast解读/&title=《Toast源码解读》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/11/19/Android-沉浸式解析/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android 沉浸式解析</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/09/26/TextView图文混排居中、图片被截断问题/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">TextView图文混排居中、图片被截断、自动换行问题</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#特点"><span class="post-toc-number">2.</span> <span class="post-toc-text">特点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#源码解析"><span class="post-toc-number">3.</span> <span class="post-toc-text">源码解析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">创建</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#new-Toast"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">new Toast</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Toast-makeText"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">Toast.makeText</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#显示"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">显示</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#取消"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">取消</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#TN"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">TN</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#显示时长"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">显示时长</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#超时时长"><span class="post-toc-number">3.6.</span> <span class="post-toc-text">超时时长</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题解答"><span class="post-toc-number">4.</span> <span class="post-toc-text">问题解答</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#能否在非-UI-线程调用"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">能否在非 UI 线程调用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Toast数量"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">Toast数量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Service中能否显示Toast"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">Service中能否显示Toast</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#遇到问题"><span class="post-toc-number">5.</span> <span class="post-toc-text">遇到问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#源码差异"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">源码差异</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#系统问题"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">系统问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">6.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">7.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://handsomeliuyang.github.io/" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2019 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/10/11/Toast解读/&title=《Toast源码解读》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/10/11/Toast解读/&title=《Toast源码解读》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aUW7CMBAEUO5/aXqAFjqzDlVjv3xVKEr8qDTsev14xNczvl7d//6Z3z9/fOLCwMC4LWO2rHzRyZ3te3+gYmBgHMB4lWB5CL66vw3W5L0YGBgY7bLykjGPbwwMDIzPMZIe8waBi4GB8S8ZsxCcNZzJNtwHe3EMDIwbMvJd97//+yPzDQwMjFsxnuW10ojmg8x6VRgYGFsz2k3/9WFkMiqYrQcDA2NXRrtBlhSObcjmhzOK12NgYGzEaJvJlbYzL/KGkY2BgbEpYzYsbLf182fOfhIwMDBOYKwfg8jDMfk8b3QxMDBOYMyOOOSPThaX3z9sZTEwMG7OaI815EVhPlq4oAzFwMDYmnHtmas2uFfGDMUvCQYGxs0ZK0PKPEbzInJYJmJgYGzNaF/QHo/Ij1zMvkQMDIwTGHnl2AZre0SjjeBfSkMMDIztGEl0Jp8kxVwSvkszDQwMjO0YK7XkrPhb3/8b/n8wMDC2Y+SbYvlS2qctsTEwMLZjrG/uz0abbVv7/n4MDIwTGPlm2cqooN2YqycbGBgYWzNmRx9WWs3ZmAEDA+M0xlVF3rVfRFtcYmBg7M24KtPagWgyTpi1uBgYGLsyVkI2j8gcM1sDBgbGCYw2+PIUzwecS4c8MDAwMMoWtN3Im41RH7MFYWBgHMNoI3XlOVHEY2BgHMBImtg2BGeBm38dGBgY5zDy1jEfGLQtaLsNNxxkYmBg3I/xBUSkapg32ZpOAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

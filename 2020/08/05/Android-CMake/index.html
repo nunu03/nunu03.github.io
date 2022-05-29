@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Android CMake | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="CMake">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>4</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/nunu03/" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Android CMake</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">Android CMake</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-08-05T02:49:48.000Z" itemprop="datePublished" class="page-time">
+  2020-08-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NDK/">NDK</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-Android-CMake"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">Android CMake</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-08-05 10:49:48" datetime="2020-08-05T02:49:48.000Z"  itemprop="datePublished">2020-08-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NDK/">NDK</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>向您的项目添加 C 和 C++ 代码。提供 CMake 或 ndk-build 脚本文件的路径以配置 Gradle。Gradle 使用构建脚本将源代码导入您的 Android Studio 项目并将原生库（SO 文件）打包到 APK 中。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>CMake是一个跨平台的安装（编译）工具，可以用简单的语句来描述所有平摊的安装编译过程。它能够输出各种各样的makefile或者project文件，能测试编译器所支持的C++特性，类似UNIX下的automake。</p>
+<h2 id="配置CMake-3-6-0-或-3-10-2"><a href="#配置CMake-3-6-0-或-3-10-2" class="headerlink" title="配置CMake 3.6.0 或 3.10.2"></a>配置CMake 3.6.0 或 3.10.2</h2><h3 id="CMake-3-6-0-或-3-10-2"><a href="#CMake-3-6-0-或-3-10-2" class="headerlink" title="CMake 3.6.0 或 3.10.2"></a>CMake 3.6.0 或 3.10.2</h3><p>SDK 管理器包含 CMake 的 3.6.0 派生版本和版本 3.10.2。未在 build.gradle 中设置特定 CMake 版本的项目均使用 CMake 3.10.2 进行构建。要使用之前包含的版本，请在模块的 build.gradle 文件中指定 CMake 版本 3.6.0：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    externalNativeBuild &#123;</span><br><span class="line">        cmake &#123;</span><br><span class="line">            ...</span><br><span class="line">            version &quot;3.6.0&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>您可以指定此 CMake 版本作为最低版本，只需在 build.gradle 条目的末尾添加一个“+”即可，例如 3.10.2+。不过，这并非最佳做法。</p>
+<h3 id="使用自定义-CMake-版本"><a href="#使用自定义-CMake-版本" class="headerlink" title="使用自定义 CMake 版本"></a>使用自定义 CMake 版本</h3><p>如果您想使用 SDK 管理器中未包含的 CMake 版本 3.7 或更高版本，请按以下步骤操作：</p>
+<p>1.从官方 CMake 网站下载并安装 <a href="https://cmake.org/download/" target="_blank" rel="noopener">CMake 3.7 或更高版本</a>。<br>2.指定您想要让 Gradle 在模块的 build.gradle 文件中使用的 CMake 版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    externalNativeBuild &#123;</span><br><span class="line">        cmake &#123;</span><br><span class="line">            ...</span><br><span class="line">            version &quot;cmake-version&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.将 CMake 的安装路径添加到 PATH 环境变量，或将其添加到项目的 local.properties 文件中，具体步骤如下所示。如果 Gradle 找不到您在 build.gradle 文件中指定的 CMake 版本，您便会遇到构建错误。<br>    # If you set this property, Gradle no longer uses PATH to find CMake.<br>    cmake.dir=”path-to-cmake”</p>
+<p>4.如果您尚未在工作站上安装 Ninja 构建系统，请访问 Ninja 官方网站，然后下载并安装适用于您的操作系统的最新版 Ninja。此外，请务必将 Ninja 的安装路径也添加到 PATH 环境变量。</p>
+<h2 id="创建支持-C-C-的新项目"><a href="#创建支持-C-C-的新项目" class="headerlink" title="创建支持 C/C++ 的新项目"></a>创建支持 C/C++ 的新项目</h2><p>创建支持原生代码的新项目的步骤与创建任何其他 Android Studio 项目的步骤相似，但前者还需要执行一个额外的步骤：</p>
+<p>1.在向导的 Choose your project 部分中，选择 Native C++ 项目类型。<br>2.点击 Next。<br>3.填写向导下一部分中的所有其他字段。<br>4.点击 Next。<br>5.在向导的 Customize C++ Support 部分中，您可以使用 C++ Standard 字段来自定义项目。使用下拉列表选择您想要使用哪种 C++ 标准化。选择 Toolchain Default 可使用默认的 CMake 设置。<br>6.点击 Finish。</p>
+<figure class="image-box">
+                <a rel=Android CMake href="http://nunu03.github.io/2020/08/05/Android-CMake/cmake目录结构.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2020/08/05/Android-CMake/cmake目录结构.png" alt title class></a>
+                <p></p>
+            </figure>
+<h2 id="原有项目支持-C-C"><a href="#原有项目支持-C-C" class="headerlink" title="原有项目支持 C/C++"></a>原有项目支持 C/C++</h2><figure class="image-box">
+                <a rel=Android CMake href="http://nunu03.github.io/2020/08/05/Android-CMake/cmake加入目录结构.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2020/08/05/Android-CMake/cmake加入目录结构.png" alt title class></a>
+                <p></p>
+            </figure>
+<h2 id="配置-CMake"><a href="#配置-CMake" class="headerlink" title="配置 CMake"></a>配置 CMake</h2><p>CMake 构建脚本是一个纯文本文件，您必须将其命名为 CMakeLists.txt，并在其中包含 CMake 构建您的 C/C++ 库时需要使用的命令。如果您的原生源代码文件还没有 CMake 构建脚本，您需要自行创建一个，并在其中包含适当的 CMake 命令。</p>
+<p>本部分将介绍您应该在构建脚本中包含哪些基本命令，以便指示 CMake 在创建原生库时使用哪些源代码文件。如需了解详情，请参阅介绍 <a href="https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html" target="_blank" rel="noopener">CMake 命令的官方文档</a>。</p>
+<p>在配置新的 CMake 构建脚本后，您需要<a href="https://developer.android.com/studio/projects/gradle-external-native-builds" target="_blank" rel="noopener">配置 Gradle</a> 以将 CMake 项目作为构建依赖项包含在内，从而让 Gradle 构建原生库，并将其与应用的 APK 打包在一起。</p>
+<ul>
+<li>注意：如果项目使用的是 ndk-build，您不需要创建 CMake 构建脚本。您只需配置 Gradle 以包含现有的原生库项目即可；为此，您需要提供 Android.mk 文件的路径。</li>
+</ul>
+<h3 id="创建-CMake-构建脚本"><a href="#创建-CMake-构建脚本" class="headerlink" title="创建 CMake 构建脚本"></a>创建 CMake 构建脚本</h3><p>要创建一个可以用作 CMake 构建脚本的纯文本文件，请按以下步骤操作：</p>
+<p>1.从 IDE 的左侧打开 Project 窗格，然后从下拉菜单中选择 Project 视图。<br>2.右键点击 your-module 的根目录，然后依次选择 New &gt; File。</p>
+<ul>
+<li>注意：您可以在所需的任何位置创建构建脚本。不过，在配置构建脚本时，原生源代码文件和库的路径将与构建脚本的位置相关。</li>
+</ul>
+<p>3.输入“CMakeLists.txt”作为文件名，然后点击 OK。<br>现在，您可以通过添加 CMake 命令来配置您的构建脚本。要指示 CMake 根据原生源代码创建原生库，请向您的构建脚本添加 cmake_minimum_required() 和 add_library() 命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># Sets the minimum version of CMake required to build your native library.</span><br><span class="line"># This ensures that a certain set of CMake features is available to</span><br><span class="line"># your build.</span><br><span class="line"></span><br><span class="line">cmake_minimum_required(VERSION 3.4.1)</span><br><span class="line"></span><br><span class="line"># Specifies a library name, specifies whether the library is STATIC or</span><br><span class="line"># SHARED, and provides relative paths to the source code. You can</span><br><span class="line"># define multiple libraries by adding multiple add_library() commands,</span><br><span class="line"># and CMake builds them for you. When you build your app, Gradle</span><br><span class="line"># automatically packages shared libraries with your APK.</span><br><span class="line"></span><br><span class="line">add_library( # Specifies the name of the library.</span><br><span class="line">             native-lib</span><br><span class="line"></span><br><span class="line">             # Sets the library as a shared library.</span><br><span class="line">             SHARED</span><br><span class="line"></span><br><span class="line">             # Provides a relative path to your source file(s).</span><br><span class="line">             src/main/cpp/native-lib.cpp )</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>提示：与指示 CMake 根据源代码文件创建原生库的方式一样，您可以使用 add_executable() 命令指示 CMake 改为根据这些源代码文件来创建可执行文件。不过，根据原生源代码文件构建可执行文件是可选操作，构建原生库以将其打包到 APK 中即可满足大多数项目的要求。</li>
+</ul>
+<p>在使用 add_library() 向 CMake 构建脚本添加源代码文件或库时，Android Studio 还会在您同步项目后在 Project 视图中显示相关的头文件。不过，为了让 CMake 能够在编译时找到头文件，您需要向 CMake 构建脚本添加 include_directories() 命令，并指定头文件的路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add_library(...)</span><br><span class="line"></span><br><span class="line"># Specifies a path to native header files.</span><br><span class="line">include_directories(src/main/cpp/include/)</span><br></pre></td></tr></table></figure>
+
+<p>CMake 使用以下规范来为库文件命名：</p>
+<p>liblibrary-name.so<br>例如，如果您在构建脚本中指定“native-lib”作为共享库的名称，CMake 就会创建一个名为 libnative-lib.so 的文件。不过，在 Java 或 Kotlin 代码中加载此库时，请使用您在 CMake 构建脚本中指定的名称：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static &#123;</span><br><span class="line">    System.loadLibrary(&quot;native-lib&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意：如果重命名或移除了 CMake 构建脚本中的库，您需要在 Gradle 实施相关更改或从 APK 中移除旧版库之前清理您的项目。要清理项目，请在菜单栏中依次选择 Build &gt; Clean Project。</li>
+</ul>
+<p>Android Studio 会自动向 Project 窗格中的 cpp 群组添加源代码文件和头文件。通过使用多个 add_library() 命令，您可以为 CMake 定义要根据其他源代码文件构建的更多库。</p>
+<h3 id="添加-NDK-API"><a href="#添加-NDK-API" class="headerlink" title="添加 NDK API"></a>添加 NDK API</h3><p>Android NDK 提供了一套您可能会觉得非常实用的原生 API 和库。通过在项目的 CMakeLists.txt 脚本文件中包含 NDK 库，您可以使用其中任何 API。</p>
+<p>Android 平台上已存在预构建的 NDK 库，因此您无需构建它们或将它们打包到 APK 中。由于这些 NDK 库已位于 CMake 搜索路径中，因此您甚至无需指定本地安装的 NDK 库的位置，您只需为 CMake 提供您想要使用的库的名称，并将其与您自己的原生库相关联即可。</p>
+<p>向 CMake 构建脚本添加 find_library() 命令以找到 NDK 库并将其路径存储为一个变量。您可以使用此变量在构建脚本的其他部分引用 NDK 库。以下示例可以找到 Android 专有的日志支持库，并会将其路径存储在 log-lib 中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">find_library( # Defines the name of the path variable that stores the</span><br><span class="line">              # location of the NDK library.</span><br><span class="line">              log-lib</span><br><span class="line"></span><br><span class="line">              # Specifies the name of the NDK library that</span><br><span class="line">              # CMake needs to locate.</span><br><span class="line">              log )</span><br></pre></td></tr></table></figure>
+
+<p>为了让您的原生库能够调用 log 库中的函数，您需要使用 CMake 构建脚本中的 target_link_libraries() 命令来关联这些库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">find_library(...)</span><br><span class="line"></span><br><span class="line"># Links your native library against one or more other native libraries.</span><br><span class="line">target_link_libraries( # Specifies the target library.</span><br><span class="line">                       native-lib</span><br><span class="line"></span><br><span class="line">                       # Links the log library to the target library.</span><br><span class="line">                       $&#123;log-lib&#125; )</span><br></pre></td></tr></table></figure>
+
+<p>NDK 还以源代码的形式包含一些库，您将需要构建这些代码并将其关联到您的原生库。您可以使用 CMake 构建脚本中的 add_library() 命令将源代码编译到原生库中。如需提供本地 NDK 库的路径，您可以使用 Android Studio 自动为您定义的 ANDROID_NDK 路径变量。</p>
+<p>以下命令告诉 CMake 要构建 android_native_app_glue.c（负责管理 NativeActivity 生命周期事件和触摸输入），并将其链接到静态库 native-lib 中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">add_library( app-glue</span><br><span class="line">             STATIC</span><br><span class="line">             $&#123;ANDROID_NDK&#125;/sources/android/native_app_glue/android_native_app_glue.c )</span><br><span class="line"></span><br><span class="line"># You need to link static libraries against your shared native library.</span><br><span class="line">target_link_libraries( native-lib app-glue $&#123;log-lib&#125; )</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加其他预构建库"><a href="#添加其他预构建库" class="headerlink" title="添加其他预构建库"></a>添加其他预构建库</h3><p>添加预构建库的步骤与为 CMake 指定其他要构建的原生库的步骤相似。不过，由于库已构建，因此您需要使用 IMPORTED 标记告诉 CMake 您只想要将此库导入到您的项目中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add_library( imported-lib</span><br><span class="line">             SHARED</span><br><span class="line">             IMPORTED )</span><br></pre></td></tr></table></figure>
+
+<p>然后，您需要使用 set_target_properties() 命令指定库的路径，具体步骤如下所示。</p>
+<p>某些库会针对特定的 CPU 架构或应用二进制接口 (ABI) 提供单独的软件包，并将其整理到单独的目录中。此方法既有助于库充分利用特定的 CPU 架构，又能让您只使用所需的库版本。要向 CMake 构建脚本添加库的多个 ABI 版本，而不必为库的每个版本编写多个命令，您可以使用 ANDROID_ABI 路径变量。此变量使用的是 NDK 支持的一组默认 ABI，或者您手动配置 Gradle 以使用的一组经过过滤的 ABI。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">add_library(...)</span><br><span class="line">set_target_properties( # Specifies the target library.</span><br><span class="line">                       imported-lib</span><br><span class="line"></span><br><span class="line">                       # Specifies the parameter you want to define.</span><br><span class="line">                       PROPERTIES IMPORTED_LOCATION</span><br><span class="line"></span><br><span class="line">                       # Provides the path to the library you want to import.</span><br><span class="line">                       imported-lib/src/$&#123;ANDROID_ABI&#125;/libimported-lib.so )</span><br></pre></td></tr></table></figure>
+
+<p>为了让 CMake 能够在编译时定位您的头文件，您需要使用 include_directories() 命令并包含相应头文件的路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include_directories( imported-lib/include/ )</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意：如果您想要打包不属于构建时依赖项的预构建库（例如在添加属于 imported-lib 依赖项的预构建库时），则无需按以下说明操作来关联库。</li>
+</ul>
+<p>如需将预构建库关联到您自己的原生库，请将其添加到 CMake 构建脚本的 target_link_libraries() 命令中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target_link_libraries( native-lib imported-lib app-glue $&#123;log-lib&#125; )</span><br></pre></td></tr></table></figure>
+
+<p>如需将预构建库打包到 APK 中，您需要使用 sourceSets 块手动配置 Gradle 以包含 .so 文件的路径。构建 APK 后，您可以使用 APK 分析器验证 Gradle 会将哪些库打包到您的 APK 中。</p>
+<h3 id="包含其他-CMake-项目"><a href="#包含其他-CMake-项目" class="headerlink" title="包含其他 CMake 项目"></a>包含其他 CMake 项目</h3><p>如果想要构建多个 CMake 项目并在 Android 项目中包含它们的输出，您可以使用一个 CMakeLists.txt 文件（即您关联到 Gradle 的那个文件）作为顶级 CMake 构建脚本，并添加其他 CMake 项目作为此构建脚本的依赖项。以下顶级 CMake 构建脚本会使用 add_subdirectory() 命令将另一个 CMakeLists.txt 文件指定为构建依赖项，然后关联其输出，就像处理任何其他预构建库一样。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># Sets lib_src_DIR to the path of the target CMake project.</span><br><span class="line">set( lib_src_DIR ../gmath )</span><br><span class="line"></span><br><span class="line"># Sets lib_build_DIR to the path of the desired output directory.</span><br><span class="line">set( lib_build_DIR ../gmath/outputs )</span><br><span class="line">file(MAKE_DIRECTORY $&#123;lib_build_DIR&#125;)</span><br><span class="line"></span><br><span class="line"># Adds the CMakeLists.txt file located in the specified directory</span><br><span class="line"># as a build dependency.</span><br><span class="line">add_subdirectory( # Specifies the directory of the CMakeLists.txt file.</span><br><span class="line">                  $&#123;lib_src_DIR&#125;</span><br><span class="line"></span><br><span class="line">                  # Specifies the directory for the build outputs.</span><br><span class="line">                  $&#123;lib_build_DIR&#125; )</span><br><span class="line"></span><br><span class="line"># Adds the output of the additional CMake build as a prebuilt static</span><br><span class="line"># library and names it lib_gmath.</span><br><span class="line">add_library( lib_gmath STATIC IMPORTED )</span><br><span class="line">set_target_properties( lib_gmath PROPERTIES IMPORTED_LOCATION</span><br><span class="line">                       $&#123;lib_build_DIR&#125;/$&#123;ANDROID_ABI&#125;/lib_gmath.a )</span><br><span class="line">include_directories( $&#123;lib_src_DIR&#125;/include )</span><br><span class="line"></span><br><span class="line"># Links the top-level CMake build output against lib_gmath.</span><br><span class="line">target_link_libraries( native-lib ... lib_gmath )</span><br></pre></td></tr></table></figure>
+
+<h2 id="关联Gradle"><a href="#关联Gradle" class="headerlink" title="关联Gradle"></a>关联Gradle</h2><h3 id="手动配置-Gradle"><a href="#手动配置-Gradle" class="headerlink" title="手动配置 Gradle"></a>手动配置 Gradle</h3><p>要手动配置 Gradle 以关联到您的原生库，您需要将 externalNativeBuild 块添加到模块级 build.gradle 文件中，并使用 cmake 或 ndkBuild 块对其进行配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">  ...</span><br><span class="line">  defaultConfig &#123;...&#125;</span><br><span class="line">  buildTypes &#123;...&#125;</span><br><span class="line"></span><br><span class="line">  // Encapsulates your external native build configurations.</span><br><span class="line">  externalNativeBuild &#123;</span><br><span class="line"></span><br><span class="line">    // Encapsulates your CMake build configurations.</span><br><span class="line">    cmake &#123;</span><br><span class="line"></span><br><span class="line">      // Provides a relative path to your CMake build script.</span><br><span class="line">      path &quot;CMakeLists.txt&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意：如果您要将 Gradle 关联到现有的 ndk-build 项目，请使用 ndkBuild 块（而不是 cmake 块），并提供指向 Android.mk 文件的相对路径。如果 Application.mk 文件与您的 Android.mk 文件位于同一目录下，Gradle 也会包含此文件。</li>
+</ul>
+<h3 id="指定可选配置"><a href="#指定可选配置" class="headerlink" title="指定可选配置"></a>指定可选配置</h3><p>您可以在模块级 build.gradle 文件的 defaultConfig 块中配置另一个 externalNativeBuild 块，为 CMake 或 ndk-build 指定可选参数和标记。与 defaultConfig 块中的其他属性类似，您也可以在构建配置中为每种产品特性重写这些属性。</p>
+<p>例如，如果您的 CMake 或 ndk-build 项目定义多个原生库和可执行文件，您可以使用 targets 属性为指定产品特性构建和打包其中的部分工件。以下代码示例说明了您可以配置的部分属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">  ...</span><br><span class="line">  defaultConfig &#123;</span><br><span class="line">    ...</span><br><span class="line">    // This block is different from the one you use to link Gradle</span><br><span class="line">    // to your CMake or ndk-build script.</span><br><span class="line">    externalNativeBuild &#123;</span><br><span class="line"></span><br><span class="line">      // For ndk-build, instead use the ndkBuild block.</span><br><span class="line">      cmake &#123;</span><br><span class="line"></span><br><span class="line">        // Passes optional arguments to CMake.</span><br><span class="line">        arguments &quot;-DANDROID_ARM_NEON=TRUE&quot;, &quot;-DANDROID_TOOLCHAIN=clang&quot;</span><br><span class="line"></span><br><span class="line">        // Sets a flag to enable format macro constants for the C compiler.</span><br><span class="line">        cFlags &quot;-D__STDC_FORMAT_MACROS&quot;</span><br><span class="line"></span><br><span class="line">        // Sets optional flags for the C++ compiler.</span><br><span class="line">        cppFlags &quot;-fexceptions&quot;, &quot;-frtti&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  buildTypes &#123;...&#125;</span><br><span class="line"></span><br><span class="line">  productFlavors &#123;</span><br><span class="line">    ...</span><br><span class="line">    demo &#123;</span><br><span class="line">      ...</span><br><span class="line">      externalNativeBuild &#123;</span><br><span class="line">        cmake &#123;</span><br><span class="line">          ...</span><br><span class="line">          // Specifies which native libraries or executables to build and package</span><br><span class="line">          // for this product flavor. The following tells Gradle to build only the</span><br><span class="line">          // &quot;native-lib-demo&quot; and &quot;my-executible-demo&quot; outputs from the linked</span><br><span class="line">          // CMake project. If you don&apos;t configure this property, Gradle builds all</span><br><span class="line">          // executables and shared object libraries that you define in your CMake</span><br><span class="line">          // (or ndk-build) project. However, by default, Gradle packages only the</span><br><span class="line">          // shared libraries in your APK.</span><br><span class="line">          targets &quot;native-lib-demo&quot;,</span><br><span class="line">                  // You need to specify this executable and its sources in your CMakeLists.txt</span><br><span class="line">                  // using the add_executable() command. However, building executables from your</span><br><span class="line">                  // native sources is optional, and building native libraries to package into</span><br><span class="line">                  // your APK satisfies most project requirements.</span><br><span class="line">                  &quot;my-executible-demo&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    paid &#123;</span><br><span class="line">      ...</span><br><span class="line">      externalNativeBuild &#123;</span><br><span class="line">        cmake &#123;</span><br><span class="line">          ...</span><br><span class="line">          targets &quot;native-lib-paid&quot;,</span><br><span class="line">                  &quot;my-executible-paid&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Use this block to link Gradle to your CMake or ndk-build script.</span><br><span class="line">  externalNativeBuild &#123;</span><br><span class="line">    cmake &#123;...&#125;</span><br><span class="line">    // or ndkBuild &#123;...&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如需详细了解如何配置产品变种和构建变体，请参阅配置构建变体。如需了解您可以使用 arguments 属性为 CMake 配置的变量列表，请参阅使用 CMake 变量。</p>
+<h3 id="添加预构建的原生库"><a href="#添加预构建的原生库" class="headerlink" title="添加预构建的原生库"></a>添加预构建的原生库</h3><p>如果您希望 Gradle 将预构建的原生库打包到您的 APK 中，请修改默认的源代码集配置，以添加预构建 .so 文件所在的目录，如下所示。请注意，若要添加关联到 Gradle 的 CMake 构建脚本的工件，则无需执行此操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    sourceSets &#123;</span><br><span class="line">        main &#123;</span><br><span class="line">            jniLibs.srcDirs &apos;imported-lib/src/&apos;, &apos;more-imported-libs/src/&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="指定-ABI"><a href="#指定-ABI" class="headerlink" title="指定 ABI"></a>指定 ABI</h3><p>默认情况下，Gradle 会针对 NDK 支持的应用二进制接口 (ABI) 将您的原生库构建到单独的 .so 文件中，并将这些文件全部打包到您的 APK 中。如果您希望 Gradle 仅构建和打包原生库的部分 ABI 配置，则可以在模块级 build.gradle 文件中使用 ndk.abiFilters 标记指定这些配置，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">  ...</span><br><span class="line">  defaultConfig &#123;</span><br><span class="line">    ...</span><br><span class="line">    externalNativeBuild &#123;</span><br><span class="line">      cmake &#123;...&#125;</span><br><span class="line">      // or ndkBuild &#123;...&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Similar to other properties in the defaultConfig block,</span><br><span class="line">    // you can configure the ndk block for each product flavor</span><br><span class="line">    // in your build configuration.</span><br><span class="line">    ndk &#123;</span><br><span class="line">      // Specifies the ABI configurations of your native</span><br><span class="line">      // libraries Gradle should build and package with your APK.</span><br><span class="line">      abiFilters &apos;x86&apos;, &apos;x86_64&apos;, &apos;armeabi&apos;, &apos;armeabi-v7a&apos;,</span><br><span class="line">                   &apos;arm64-v8a&apos;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  buildTypes &#123;...&#125;</span><br><span class="line">  externalNativeBuild &#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在大多数情况下，您只需要在 ndk 块中指定 abiFilters（如上所示），因为它会指示 Gradle 构建和打包原生库的这些版本。但是，如果您想控制 Gradle 应当构建的配置，而不依赖于您希望其打包到 APK 中的配置，请在 defaultConfig.externalNativeBuild.cmake 块（或 defaultConfig.externalNativeBuild.ndkBuild 块）中配置另一个 abiFilters 标记。Gradle 会构建这些 ABI 配置，但只会打包您在 defaultConfig.ndk 块中指定的配置。</p>
+<p>为了进一步降低 APK 的大小，请考虑基于 ABI 配置多个 APK，而不是创建一个包含原生库所有版本的大型 APK。Gradle 会为您想要支持的每个 ABI 创建单独的 APK，并且仅打包每个 ABI 需要的文件。如果您为每个 ABI 配置多个 APK，而不像上面的代码示例中所示的那样指定 abiFilters 标记，则 Gradle 会为您的原生库构建所有受支持的 ABI 版本，但是仅打包您在多 APK 配置中指定的版本。为避免构建不想要的原生库版本，请为 abiFilters 标记和“一个 ABI 多个 APK”配置提供相同的 ABI 列表。</p>
+<h2 id="异常问题"><a href="#异常问题" class="headerlink" title="异常问题"></a>异常问题</h2><figure class="image-box">
+                <a rel=Android CMake href="http://nunu03.github.io/2020/08/05/Android-CMake/异常1.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2020/08/05/Android-CMake/异常1.png" alt title class></a>
+                <p></p>
+            </figure>
+<figure class="image-box">
+                <a rel=Android CMake href="http://nunu03.github.io/2020/08/05/Android-CMake/异常2.jpeg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2020/08/05/Android-CMake/异常2.jpeg" alt title class></a>
+                <p></p>
+            </figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://developer.android.com/studio/projects" target="_blank" rel="noopener">developer.android.com</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-01-06T02:30:53.000Z" itemprop="dateUpdated">2021-01-06 10:30:53</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2020/08/05/Android-CMake/" target="_blank" rel="external">http://nunu03.github.io/2020/08/05/Android-CMake/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMake/">CMake</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2020/08/05/Android-CMake/&title=《Android CMake》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2020/08/05/Android-CMake/&title=《Android CMake》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2020/08/05/美颜相关概念/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">美颜相关概念</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2020/07/07/Wireshark使用及数据分析/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Wireshark使用及数据分析</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#目的"><span class="post-toc-number">1.</span> <span class="post-toc-text">目的</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">2.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置CMake-3-6-0-或-3-10-2"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置CMake 3.6.0 或 3.10.2</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CMake-3-6-0-或-3-10-2"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">CMake 3.6.0 或 3.10.2</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用自定义-CMake-版本"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">使用自定义 CMake 版本</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建支持-C-C-的新项目"><span class="post-toc-number">4.</span> <span class="post-toc-text">创建支持 C/C++ 的新项目</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原有项目支持-C-C"><span class="post-toc-number">5.</span> <span class="post-toc-text">原有项目支持 C/C++</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置-CMake"><span class="post-toc-number">6.</span> <span class="post-toc-text">配置 CMake</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建-CMake-构建脚本"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">创建 CMake 构建脚本</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加-NDK-API"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">添加 NDK API</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加其他预构建库"><span class="post-toc-number">6.3.</span> <span class="post-toc-text">添加其他预构建库</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#包含其他-CMake-项目"><span class="post-toc-number">6.4.</span> <span class="post-toc-text">包含其他 CMake 项目</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关联Gradle"><span class="post-toc-number">7.</span> <span class="post-toc-text">关联Gradle</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#手动配置-Gradle"><span class="post-toc-number">7.1.</span> <span class="post-toc-text">手动配置 Gradle</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#指定可选配置"><span class="post-toc-number">7.2.</span> <span class="post-toc-text">指定可选配置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加预构建的原生库"><span class="post-toc-number">7.3.</span> <span class="post-toc-text">添加预构建的原生库</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#指定-ABI"><span class="post-toc-number">7.4.</span> <span class="post-toc-text">指定 ABI</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#异常问题"><span class="post-toc-number">8.</span> <span class="post-toc-text">异常问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">9.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://handsomeliuyang.github.io/" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2019 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2020/08/05/Android-CMake/&title=《Android CMake》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2020/08/05/Android-CMake/&title=《Android CMake》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aS47jMAwFwL7/pTPArBrosfNIKoO2VFoZjj8qLxiR4tdXPF5/x/fj7yO/5uczf/56df2CgYGB8VjG63ZcTfF+Qr1rks9x+WkwMDAOYCx7XDz1q1+rVAwMDIxqwE2oeUDHwMDAmATchJEH2eTzYWBgYCRT6b1g8uSP5OIYGBgPZPQ2Bv7P8cf3NzAwMH4941UcedF/7XvfzAoDA2NrRpJG5m0Qk62CSdKLgYFxAqMaFquJa77QTBjL2sUwMDAewpgX0fICWa/ZIgrrGBgYBzB6Bf1V25zVgP6PYwwMjGMYeaqZTz25t7q4vKwaYmBgbMqo3tY7k7dZ9D4iBgbGyYxq4pqH4Py9CwIuBgbGwxl52jkPzdUUNz+PgYGxN6O3GTAp91fbOPI0GwMDY2/GpGFiEkx7XRNvnoOBgXEYo9pskS8WJ1uk5YCLgYHxcMaqxoi8cF8NvtFHwcDAOICxqgksL41Vn3M/EwwMjL0Zebk/WSD2tiqri84oicXAwNiI0SvW54C8YFdt7yi/BgMD4+GM+/PVjYFJua15FwYGxtaMarGst6BMQnbvegwMjBMYr+KoLijXBuI3/xsYGBibMvJx/8peAjzvE8HAwDiHkQfZaiqbhNocWV7hYmBgbMeoLvLm2waTKzEwMDDmK81qw8S8UQwDAwOjV26bJLf3d30k4GJgYPx6Rr4ZkAfTtaX/KOBiYGBsypikmsmSbsLrbaNiYGBsxPgDaJGenMjwiNIAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>epic原理浅析 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Hook">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>4</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/nunu03/" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>epic原理浅析</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">epic原理浅析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2022-04-08T02:10:45.000Z" itemprop="datePublished" class="page-time">
+  2022-04-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-epic原理浅析"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">epic原理浅析</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2022-04-08 10:10:45" datetime="2022-04-08T02:10:45.000Z"  itemprop="datePublished">2022-04-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="Art-amp-Dalvik"><a href="#Art-amp-Dalvik" class="headerlink" title="Art &amp; Dalvik"></a>Art &amp; Dalvik</h2><p>Art（Android Runtime）虚拟机是 Android 4.4 发布的，用来替换 Dalvik 虚拟机，但是在Android 4.4 默认采用的还是Dalvik 虚拟机，但是可以选择使用Art。在Android 5.0版本中默认使用Art了，Dalvik退出了历史舞台，所以可以说是在Android在5.0开始正式使用Art虚拟机。<br>Dalvik中的应用每次运行时，字节码搜需要通过JIT编译器编译成机器码，这会使得应用程序的运行效率降低。而在 ART 中，系统在安装应用程序时会进行一次 AOT（ahead of time compilation, 预编译），将字节码预先编译成机器码并存储在本地，用于生成OAT文件，这个OAT文件既包含转化前的dex文件，又包含机器指令，这样应用程序每次运行时就不需要执行编译了，运行效率会大大提升，设备的耗电量也会降低。不过采用 AOT 也有缺点，主要有两个：第一个是 AOT 会使得应用程序的安装时间变长，尤其是一些复杂的应用；第二个是字节码预先编译成机器码，机器码需要的存储空间会多一些。为了弥补以上两个缺点，Android 7.0 版本的 ART 加入了即时编译器 JIT，引入了混合编译模式，作为 AOT 的一个补充，在应用程序安装时不会将字节码全部编译成机器码，而是在运行中将热点代码编译成机器码，从而缩短了应用程序的安装时间并节省了存储空间。<br>   <strong>基本概念和名词</strong></p>
+<ul>
+<li>.dex文件：App所有java源代码编译后生成众多class文件，由DX/D8，编译为一个/多个（multiDex）dex文件，由Android虚拟机编译执行</li>
+<li>.odex文件：dex文件经过验证和优化后的产物，art下的odex文件包含经过AOT编译后的代码以及dex的完整内容，但Android8.0之后odex中的dex内容移动到了.vdex文件</li>
+<li>.art文件：art下根据配置文件生成odex文件时同时生成.art文件，主要是为了提升运行时加载odex中热点代码的速度，包含了类信息和odex中热点方法的索引，运行App时会首先根据这个文件来加载odex中已经编译过的代码</li>
+<li>解释器（Interpreter）：用于程序运行时对代码进行逐行解释，翻译成对应平台的机器码执行</li>
+<li>JIT编译（Just In Time）：由于解释器方式运行太慢引入，对于<strong>频繁运行的热点代码（判定标准一般是在某个时间段内执行次数达到某个阈值）进行实时编译（在ART下以方法为粒度）执行，并且缓存JIT编译后的代码在内存中用于下次执行。由于以方法为粒度（ArtMethod）</strong>进行编译，JIT编较于解释器可以生成效率更高的代码，运行更快。</li>
+<li>AOT编译（Ahead-Of-Time）：应用安装时全量编译所有代码为本地机器码，运行时直接执行机器码。<figure class="image-box">
+                <a rel=epic原理浅析 href="http://nunu03.github.io/2022/04/08/epic原理浅析/art.jpg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2022/04/08/epic原理浅析/art.jpg" alt title class></a>
+                <p></p>
+            </figure>
+从这幅图中我们看到：<br>在Dalvik虚拟机上，APK中的Dex文件在安装时会被优化成odex文件，在运行时，会被JIT编译器编译成native代码。<br>而在ART虚拟机上安装时，Dex文件会直接由dex2oat工具翻译成oat格式的文件，oat文件中既包含了dex文件中原先的内容，也包含了已经编译好的native代码。<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><a href="https://blog.csdn.net/weixin_33928467/article/details/89614535" target="_blank" rel="noopener">Android上的ART虚拟机</a><br><a href="https://bbs.pediy.com/thread-250490.htm" target="_blank" rel="noopener">开源Hook框架-epic-实现浅析</a></li>
+</ul>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2022-04-11T02:15:59.000Z" itemprop="dateUpdated">2022-04-11 10:15:59</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2022/04/08/epic原理浅析/" target="_blank" rel="external">http://nunu03.github.io/2022/04/08/epic原理浅析/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hook/">Hook</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2022/04/08/epic原理浅析/&title=《epic原理浅析》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2022/04/08/epic原理浅析/&title=《epic原理浅析》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2022/05/29/hello-world/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Hexo 配置</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2022/02/16/python-设置Host代理/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Python设置Host代理</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Art-amp-Dalvik"><span class="post-toc-number">1.</span> <span class="post-toc-text">Art &amp; Dalvik</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">2.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://handsomeliuyang.github.io/" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2019 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2022/04/08/epic原理浅析/&title=《epic原理浅析》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2022/04/08/epic原理浅析/&title=《epic原理浅析》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aO3KDUAwFUO9/06RNY3wl4UwQh8pjM/BOCkW/1yu+jjfX71/f3Z88+fybyy4MDIzbMo7T69091Rf3np+cDQMD4zmM81CYH70aas+fnJwNAwMDI0/+zj8n32BgYGBcxTgnVe/MSRgYGBi9hlq1xK0e8Su1OAYGxg0Zedf97z9/Zb6BgYFxK8ZRvPKAmATipMSNToWBgbGa0RtATppu+dHL58HAwFjKSILgpKHfG1KevzHaLMPAwFjEyNv6ScDN2dV0MzoPBgbGAxiTYJcXosmvzeUzDAyM1Yx8GFAdLvZaab0MEAMDYytjMga4aghaLYYv2BbBwMC4FWOyDFEdWyYHSorkt/djYGAsZVQDbtJ6mwTNvKAdpYYYGBi3ZUyWKr49HP0QfDEwMB7DSJLCauWYt89G92BgYKxmJMExb+gnyWKeFI6WLTAwMBYxckDS0L+q0B2tU2BgYKxj5Jje4fLm/rw8xsDA2M2otvV7g8/e+LMciDEwMJYykiSsNzyYb20V/kwYGBgPYFx16CRY9/K6D2/HwMB4DCMPvtWA2xxM5uUuBgbGUsZRvHrhuMcrrIBgYGCsZsyDXTWB6xXMvX8MGBgYmxjVIJsXqNU1smrAxcDAeBojD3zJQsZkVNBryWFgYGBMVrWqCxbNMhUDAwMjXhrLk7/qyKE8icXAwFjHqK6N5mXtJFgXxqgYGBirGb28ax5SewtkF6ePGBgY/53xA2+islDyNsMQAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Android代码混淆语法 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Gradle">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>4</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/nunu03/" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Android代码混淆语法</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">Android代码混淆语法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-10-08T11:52:41.000Z" itemprop="datePublished" class="page-time">
+  2021-10-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Gradle/">Gradle</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-Android代码混淆语法"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">Android代码混淆语法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-10-08 19:52:41" datetime="2021-10-08T11:52:41.000Z"  itemprop="datePublished">2021-10-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Gradle/">Gradle</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="混淆设置参数"><a href="#混淆设置参数" class="headerlink" title="混淆设置参数"></a>混淆设置参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">-optimizationpasses 5                       # 代码混淆的压缩比例，值介于0-7，默认5</span><br><span class="line">-verbose                                    # 混淆时记录日志</span><br><span class="line">-dontoptimize                               # 不优化输入的类文件</span><br><span class="line">-dontshrink                                 # 关闭压缩</span><br><span class="line">-dontpreverify                              # 关闭预校验(作用于Java平台，Android不需要，去掉可加快混淆)</span><br><span class="line">-dontoptimize                               # 关闭代码优化</span><br><span class="line">-dontobfuscate                              # 关闭混淆</span><br><span class="line">-ignorewarnings                             # 忽略警告</span><br><span class="line">-dontwarn com.squareup.okhttp.**            # 指定类不输出警告信息</span><br><span class="line">-dontusemixedcaseclassnames                 # 混淆后类型都为小写</span><br><span class="line">-dontskipnonpubliclibraryclasses            # 不跳过非公共的库的类</span><br><span class="line">-printmapping mapping.txt                   # 生成原类名与混淆后类名的映射文件mapping.txt</span><br><span class="line">-useuniqueclassmembernames                  # 把混淆类中的方法名也混淆</span><br><span class="line">-allowaccessmodification                    # 优化时允许访问并修改有修饰符的类及类的成员</span><br><span class="line">-renamesourcefileattribute SourceFile       # 将源码中有意义的类名转换成SourceFile，用于混淆具体崩溃代码</span><br><span class="line">-keepattributes SourceFile,LineNumberTable  # 保留行号</span><br><span class="line">-keepattributes *Annotation*,InnerClasses,Signature,EnclosingMethod # 避免混淆注解、内部类、泛型、匿名类</span><br><span class="line">-optimizations !code/simplification/cast,!field/ ,!class/merging/   # 指定混淆时采用的算法</span><br></pre></td></tr></table></figure>
+
+<h2 id="保持不被混淆的设置"><a href="#保持不被混淆的设置" class="headerlink" title="保持不被混淆的设置"></a>保持不被混淆的设置</h2><h3 id="保持命令"><a href="#保持命令" class="headerlink" title="保持命令"></a>保持命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-keep                           # 防止类和类成员被移除或被混淆；</span><br><span class="line">-keepnames                      # 防止类和类成员被混淆；</span><br><span class="line">-keepclassmembers	            # 防止类成员被移除或被混淆；</span><br><span class="line">-keepclassmembernames           # 防止类成员被混淆；</span><br><span class="line">-keepclasseswithmembers         # 防止拥有该成员的类和类成员被移除或被混淆；</span><br><span class="line">-keepclasseswithmembernames     # 防止拥有该成员的类和类成员被混淆；</span><br></pre></td></tr></table></figure>
+
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">具体的类</span><br><span class="line">访问修饰符 → public、private、protected</span><br><span class="line">通配符(*) → 匹配任意长度字符，但不包含包名分隔符(.)</span><br><span class="line">通配符(**) → 匹配任意长度字符，且包含包名分隔符(.)</span><br><span class="line">extends → 匹配实现了某个父类的子类</span><br><span class="line">implements → 匹配实现了某接口的类</span><br><span class="line">$ → 内部类</span><br></pre></td></tr></table></figure>
+
+<h3 id="成员"><a href="#成员" class="headerlink" title="成员"></a>成员</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">匹配所有构造器 → &lt;init&gt;</span><br><span class="line">匹配所有域 → &lt;field&gt;</span><br><span class="line">匹配所有方法 → &lt;methods&gt;</span><br><span class="line">访问修饰符 → public、private、protected</span><br><span class="line">除了 * 和 ** 通配符外，还支持 *** 通配符，匹配任意参数类型</span><br><span class="line">... → 匹配任意长度的任意类型参数，如void test(...)可以匹配不同参数个数的test方法</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用自定义混淆规则范例"><a href="#常用自定义混淆规则范例" class="headerlink" title="常用自定义混淆规则范例"></a>常用自定义混淆规则范例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"># 不混淆某个类的类名，及类中的内容</span><br><span class="line">-keep class cn.coderpig.myapp.example.Test &#123; *; &#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定包名下的类名，不包括子包下的类名</span><br><span class="line">-keep class cn.coderpig.myapp*</span><br><span class="line"></span><br><span class="line"># 不混淆指定包名下的类名，及类里的内容</span><br><span class="line">-keep class cn.coderpig.myapp* &#123;*;&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定包名下的类名，包括子包下的类名</span><br><span class="line">-keep class cn.coderpig.myapp**</span><br><span class="line"></span><br><span class="line"># 不混淆某个类的子类</span><br><span class="line">-keep public class * extends cn.coderpig.myapp.base.BaseFragment</span><br><span class="line"></span><br><span class="line"># 不混淆实现了某个接口的类</span><br><span class="line">-keep class * implements cn.coderpig.myapp.dao.DaoImp</span><br><span class="line"></span><br><span class="line"># 不混淆类名中包含了&quot;entity&quot;的类，及类中内容</span><br><span class="line">-keep class **.*entity*.** &#123;*;&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆内部类中的所有public内容</span><br><span class="line">-keep class cn.coderpig.myapp.widget.CustomView$OnClickInterface &#123;</span><br><span class="line">    public *;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定类的所有方法</span><br><span class="line">-keep cn.coderpig.myapp.example.Test &#123;</span><br><span class="line">    public &lt;methods&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定类的所有字段</span><br><span class="line">-keep cn.coderpig.myapp.example.Test &#123;</span><br><span class="line">    public &lt;fields&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定类的所有构造方法</span><br><span class="line">-keep cn.coderpig.myapp.example.Test &#123;</span><br><span class="line">    public &lt;init&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定参数作为形参的方法</span><br><span class="line">-keep cn.coderpig.myapp.example.Test &#123;</span><br><span class="line">    public &lt;methods&gt;(java.lang.String);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆类的特定方法</span><br><span class="line">-keep cn.coderpig.myapp.example.Test &#123;</span><br><span class="line">    public test(java.lang.String);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆native方法</span><br><span class="line">-keepclasseswithmembernames class * &#123;</span><br><span class="line">    native &lt;methods&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆枚举类</span><br><span class="line">-keepclassmembers enum * &#123;</span><br><span class="line">  public static **[] values();</span><br><span class="line">  public static ** valueOf(java.lang.String);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#不混淆资源类</span><br><span class="line">-keepclassmembers class **.R$* &#123;</span><br><span class="line">    public static &lt;fields&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆自定义控件</span><br><span class="line">-keep public class * entends android.view.View &#123;</span><br><span class="line">    *** get*();</span><br><span class="line">    void set*(***);</span><br><span class="line">    public &lt;init&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆实现了Serializable接口的类成员，此处只是演示，也可以直接 *;</span><br><span class="line">-keepclassmembers class * implements java.io.Serializable &#123;</span><br><span class="line">    static final long serialVersionUID;</span><br><span class="line">    private static final java.io.ObjectStreamField[] serialPersistentFields;</span><br><span class="line">    private void writeObject(java.io.ObjectOutputStream);</span><br><span class="line">    private void readObject(java.io.ObjectInputStream);</span><br><span class="line">    java.lang.Object writeReplace();</span><br><span class="line">    java.lang.Object readResolve();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆实现了parcelable接口的类成员</span><br><span class="line">-keep class * implements android.os.Parcelable &#123;</span><br><span class="line">    public static final android.os.Parcelable$Creator *;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 注意事项：</span><br><span class="line">#</span><br><span class="line"># ① jni方法不可混淆，方法名需与native方法保持一致；</span><br><span class="line"># ② 反射用到的类不混淆，否则反射可能出问题；</span><br><span class="line"># ③ 四大组件、Application子类、Framework层下的类、自定义的View默认不会被混淆，无需另外配置；</span><br><span class="line"># ④ WebView的JS调用接口方法不可混淆；</span><br><span class="line"># ⑤ 注解相关的类不混淆；</span><br><span class="line"># ⑥ GSON、Fastjson等解析的Bean数据类不可混淆；</span><br><span class="line"># ⑦ 枚举enum类中的values和valuesof这两个方法不可混淆(反射调用)；</span><br><span class="line"># ⑧ 继承Parceable和Serializable等可序列化的类不可混淆；</span><br><span class="line"># ⑨ 第三方库或SDK，请参考第三方提供的混淆规则，没提供的话，建议第三方包全部不混淆；</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://juejin.cn/post/6966526844552085512#heading-5" target="_blank" rel="noopener">补齐Android技能树 - 从害怕到玩转Android代码混淆</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-10-08T11:57:51.000Z" itemprop="dateUpdated">2021-10-08 19:57:51</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2021/10/08/Android代码混淆语法/" target="_blank" rel="external">http://nunu03.github.io/2021/10/08/Android代码混淆语法/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/10/08/Android代码混淆语法/&title=《Android代码混淆语法》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/10/08/Android代码混淆语法/&title=《Android代码混淆语法》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2021/11/15/Gradle-4-0-jar包assets资源丢失原因分析/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Gradle 4.0 jar包assets资源丢失原因分析</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2021/09/06/自定义Gradle-Plugin发布到本地/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">自定义Gradle Plugin发布到本地</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#混淆设置参数"><span class="post-toc-number">1.</span> <span class="post-toc-text">混淆设置参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#保持不被混淆的设置"><span class="post-toc-number">2.</span> <span class="post-toc-text">保持不被混淆的设置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#保持命令"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">保持命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#类"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#成员"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">成员</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常用自定义混淆规则范例"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">常用自定义混淆规则范例</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://handsomeliuyang.github.io/" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2019 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/10/08/Android代码混淆语法/&title=《Android代码混淆语法》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/10/08/Android代码混淆语法/&title=《Android代码混淆语法》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3aS27CQBAFwNz/0skWCcW8Nz2J5HF5hWCEXSya/n19xdf3y/X6zvvr9/Pvn76fvH5n24WBgXFbxvfl9Rtj712S+374aTAwMB7AuA6F12euw3EbWPP7YmBgYOSJYB0c4+/HwMDA2MVYA/x2BgMDA2NSxCYNuDwpbL9zWy2OgYFxQ0beLPv/138y38DAwLgVY96sT8YGeSm7+FQYGBhHM/IAt6uJlpSv7fNgYGCczZisO6yNNvPmXQHDwMA4mpEfTRK4Sci+/uEiHgYGxqGMNiC26195WTtZ7MDAwDibsWHFofx00tSLAj0GBsahjMl4IA+jbdLZtvkwMDCew8iXLfKGWv5O20kb1eIYGBg3YbQ3y8cGRaAMWmwfEkcMDIyjGW0onDxo+1ijKhwDA+MgRj5EbJtfLWx0BgMD42hGfrVJ4a5/g2JnBAMD41BGktjljf58ADlp2xX5JgYGxhGMNvDlZ9qBZVtIY2BgPJORp255Ez9v2yUJaJHbYmBgHMdYa+u3tXIbQOtUFQMD48GMteK2jfRr/w8YGBhPY+TNtbXAunavbfNYDAyM2zIm66dt6y1v8V+XuB/+MTAwMI5jTCaDk/WINq38k50RDAyMWzHypn+SMuaMtbEBBgbGkxmThtpa9bw3ccTAwMBok7y1scHoh8PAwMAI6uAk7WuTy2vStoCLgYFxE0a7nJoPAPI1i8mCGgYGxtmMvHScP/okKE/GohgYGLdl/ACggQPxcJxvcAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

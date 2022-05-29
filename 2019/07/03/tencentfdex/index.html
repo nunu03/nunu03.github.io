@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>腾讯加固脱壳使用事例 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Xposed">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>4</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/nunu03/" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>腾讯加固脱壳使用事例</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">腾讯加固脱壳使用事例</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-03T12:23:01.000Z" itemprop="datePublished" class="page-time">
+  2019-07-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-tencentfdex"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">腾讯加固脱壳使用事例</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-03 20:23:01" datetime="2019-07-03T12:23:01.000Z"  itemprop="datePublished">2019-07-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>本文只介绍具体的原理和实现，不涉及Xposed相关技术点。想要了解Xposed具体配置和实现的请参考<a href="http://nunu03.github.io/2019/07/02/xposed/">Xposed的配置与简单使用</a></p>
+<a id="more"></a>
+
+<h3 id="直接反编译apk"><a href="#直接反编译apk" class="headerlink" title="直接反编译apk"></a>直接反编译apk</h3><figure class="image-box">
+                <a rel=腾讯加固脱壳使用事例 href="http://nunu03.github.io/2019/07/03/tencentfdex/apkjadx.jpg" title="apk-jadx" data-fancybox="images"><img src="http://nunu03.github.io/2019/07/03/tencentfdex/apkjadx.jpg" alt="apk-jadx" title class></a>
+                <p>apk-jadx</p>
+            </figure>
+
+
+<h2 id="脱壳工具FDex2"><a href="#脱壳工具FDex2" class="headerlink" title="脱壳工具FDex2"></a>脱壳工具FDex2</h2><figure class="image-box">
+                <a rel=腾讯加固脱壳使用事例 href="http://nunu03.github.io/2019/07/03/tencentfdex/fdex2.jpeg" title="fdex2" data-fancybox="images"><img src="http://nunu03.github.io/2019/07/03/tencentfdex/fdex2.jpeg" alt="fdex2" title class></a>
+                <p>fdex2</p>
+            </figure>
+<figure class="image-box">
+                <a rel=腾讯加固脱壳使用事例 href="http://nunu03.github.io/2019/07/03/tencentfdex/dexpath.jpeg" title="dexpath" data-fancybox="images"><img src="http://nunu03.github.io/2019/07/03/tencentfdex/dexpath.jpeg" alt="dexpath" title class></a>
+                <p>dexpath</p>
+            </figure>
+<h3 id="脱壳流程"><a href="#脱壳流程" class="headerlink" title="脱壳流程"></a>脱壳流程</h3><h4 id="第一步、激活"><a href="#第一步、激活" class="headerlink" title="第一步、激活"></a>第一步、激活</h4><p>FDex2和需要脱壳的应用都安装到手机上。在Xposed install模块中勾选FDex2，重启手机。</p>
+<h4 id="第二步、选择软件"><a href="#第二步、选择软件" class="headerlink" title="第二步、选择软件"></a>第二步、选择软件</h4><p>然后打开FDex2应用，在应用列表中选择需要脱壳的应用，保存dex即可。</p>
+<h4 id="第三步、运行软件"><a href="#第三步、运行软件" class="headerlink" title="第三步、运行软件"></a>第三步、运行软件</h4><p>运行要脱壳的软件，不打开运行软件是无法脱出壳的</p>
+<h4 id="第四步、dex目录"><a href="#第四步、dex目录" class="headerlink" title="第四步、dex目录"></a>第四步、dex目录</h4><p>找到dex目录，这里的dex就是脱壳后的dex文件，也就是我即将hook的dex文件。目录一般是/data/user/0/com.luhu.package.xxx。</p>
+<h2 id="hook过程"><a href="#hook过程" class="headerlink" title="hook过程"></a>hook过程</h2><p>由于被腾讯加固，所以第一步是需要获取对应ClassLoader；在之后的逆向过程中使用的ClassLoader都是这个ClassLoader。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">if(lpparam.packageName.startsWith(&quot;com.luhu.livexiuwu&quot;))&#123;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        //腾讯加固，需要获取对应classloader</span><br><span class="line">                        XposedHelpers.findAndHookMethod(&quot;com.tencent.StubShell.TxAppEntry&quot;, lpparam.classLoader,</span><br><span class="line">                                &quot;attachBaseContext&quot;, Context.class, new XC_MethodHook() &#123;</span><br><span class="line">                                    @Override</span><br><span class="line">                                    protected void afterHookedMethod(MethodHookParam param) throws Throwable &#123;</span><br><span class="line">                                        super.afterHookedMethod(param);</span><br><span class="line">                                        //获取到Context对象，通过这个对象来获取classloader</span><br><span class="line">                                        Context context = (Context) param.args[0];</span><br><span class="line">                                        //获取classloader，之后hook加固后的就使用这个classloader</span><br><span class="line">                                        SecApp.hookLuhu(lpparam,context.getClassLoader());                                </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                                    &#125;</span><br><span class="line"></span><br><span class="line">                                &#125;);</span><br><span class="line">                    &#125;catch (Exception e)&#123;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="脱壳原理"><a href="#脱壳原理" class="headerlink" title="脱壳原理"></a>脱壳原理</h2><p>通过Hook ClassLoader的loadClass方法，反射调用getDex方法取得Dex(com.android.dex.Dex类对象)，在将里面的dex写出。<br>脱壳获取dex的关键代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">private static  void fDex(XC_LoadPackage.LoadPackageParam loadPackageParam2)&#123;</span><br><span class="line"></span><br><span class="line">        if(loadPackageParam2.packageName.equals(&quot;com.luhu.livexiuwu&quot;))&#123;</span><br><span class="line"></span><br><span class="line">            try &#123;</span><br><span class="line">                Class Dex=Class.forName(&quot;com.android.dex.Dex&quot;);</span><br><span class="line">                Method Dex_getBytes=Dex.getDeclaredMethod(&quot;getBytes&quot;, new Class[0]);</span><br><span class="line">                Method getDex = Class.forName(&quot;java.lang.Class&quot;).getDeclaredMethod(&quot;getDex&quot;, new Class[0]);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                XposedHelpers.findAndHookMethod(&quot;java.lang.ClassLoader&quot;, loadPackageParam2.classLoader, &quot;loadClass&quot;, String.class,boolean.class,new XC_MethodHook()&#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    protected void afterHookedMethod(MethodHookParam param) throws Throwable &#123;</span><br><span class="line"></span><br><span class="line">                        Class cls = (Class) param.getResult();</span><br><span class="line">                     </span><br><span class="line"></span><br><span class="line">                        if (cls != null) &#123;</span><br><span class="line"></span><br><span class="line">                                try &#123;</span><br><span class="line">                                    byte[] bArr = (byte[]) Dex_getBytes.invoke(getDex.invoke(cls, new Object[0]), new Object[0]);</span><br><span class="line">                                   </span><br><span class="line"></span><br><span class="line">                                    if (bArr != null) &#123;</span><br><span class="line"></span><br><span class="line">                                        File apkFileDir = new File(CompatUtil.getSdcardSharedDir(), &quot;lulu&quot;);</span><br><span class="line"></span><br><span class="line">                                        if (!apkFileDir.exists()) &#123;</span><br><span class="line">                                            apkFileDir.mkdirs();</span><br><span class="line">                                        &#125;</span><br><span class="line"></span><br><span class="line">                                        String name = &quot;com.luhu.livexiuwu&quot;+bArr.length+&quot;.dex&quot;;</span><br><span class="line">                                        File file2 = new File(apkFileDir, name);</span><br><span class="line">                                       </span><br><span class="line">                                        if (!file2.exists()) &#123;</span><br><span class="line">                                            FileUtil.writeToFileBy(bArr, file2);</span><br><span class="line">                                        &#125;</span><br><span class="line">                                    &#125;</span><br><span class="line">                                &#125; catch (Exception e3) &#123;</span><br><span class="line">                                    </span><br><span class="line">                                &#125;</span><br><span class="line"></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; catch (Throwable e) &#123;</span><br><span class="line">                XposedBridge.log(e);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://mp.weixin.qq.com/s/C44M4XNIlZ43iwI7dl95jw" target="_blank" rel="noopener">java and android 架构</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-07-11T12:42:54.000Z" itemprop="dateUpdated">2019-07-11 20:42:54</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/07/03/tencentfdex/" target="_blank" rel="external">http://nunu03.github.io/2019/07/03/tencentfdex/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Xposed/">Xposed</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/07/03/tencentfdex/&title=《腾讯加固脱壳使用事例》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/07/03/tencentfdex/&title=《腾讯加固脱壳使用事例》 — chenyulong&source=概述本文只介绍具体的原理和实现，不涉及Xposed相关技术点。想要了解Xposed具体配置和实现的请参考Xposed的配置与简单使用" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/07/05/Android-API-Level对应Android版本一览表/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android API Level对应Android版本一览表</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/07/02/xposed/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Xposed的配置与简单使用</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#直接反编译apk"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">直接反编译apk</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#脱壳工具FDex2"><span class="post-toc-number">2.</span> <span class="post-toc-text">脱壳工具FDex2</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#脱壳流程"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">脱壳流程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第一步、激活"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">第一步、激活</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第二步、选择软件"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">第二步、选择软件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第三步、运行软件"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">第三步、运行软件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第四步、dex目录"><span class="post-toc-number">2.1.4.</span> <span class="post-toc-text">第四步、dex目录</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hook过程"><span class="post-toc-number">3.</span> <span class="post-toc-text">hook过程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#脱壳原理"><span class="post-toc-number">4.</span> <span class="post-toc-text">脱壳原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://handsomeliuyang.github.io/" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2019 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/07/03/tencentfdex/&title=《腾讯加固脱壳使用事例》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/07/03/tencentfdex/&title=《腾讯加固脱壳使用事例》 — chenyulong&source=概述本文只介绍具体的原理和实现，不涉及Xposed相关技术点。想要了解Xposed具体配置和实现的请参考Xposed的配置与简单使用" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHklEQVR42u3aMXJDIQwFQN//0kmbwp88SbgwLJXHIZil0ICk1yseP8vxd87T/PXK62+2DQwMjK9l5FvMx9O21nOqv4uBgXEbYx0K13Py4JtHznxvGBgYGMnnXgjO18fAwMDoBdxqSF1vPZ+DgYFxMyNPpe161s4DOgYGxj2MycPy058/Ut/AwMD4KsYkaPaKCvM9vPkVDAyMoxl5gEuKi5NSQfXah4GBcQ+jGgp7f+2tXCh/YmBgHM2oJt8LafpiW8Y8ZGNgYJzK6BULq+EySd5VDwgDA+MeRnXpatDsPXdzAAYGxg2MfOvJFbDaorEtDYeBgXEBY9L00Ct2Thos3vwXBgbG0Yz5ozQPwXupj1lDDAyM4xj5FvNN7C0PRK9wDAyMCxi9xojkZ6rhtdpHgYGBcRsjLygWWrWC612+k3+uhhgYGIcy8odotQCwKxmXHxYGBsY9jHmTVi+MVpstMDAw7mQkT9CkXWzy0pywMTAw7mFMrpLJEeQhvroOBgbGDYx8KxtSY8VwHB0xBgbGBYxdLV/Vxot8fuERi4GBcRDjpzjywmTenNFr7/inLQwDA+MgRj5yTM5LUv+T6yYGBsZJjLwkkAfKpFFjkmgrlzAxMDCOYOx6ZObBOn8wR7vCwMDAaF34qt/kB/eYdMPAwMCIr4C9wJq3nT0+YjEwMI5m7Gpd7QXc3nFgYGDcw+gFyt5C1cJANZ2HgYFxHOMXEz5qmC72BcIAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

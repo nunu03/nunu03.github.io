@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Android 沉浸式解析 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Title">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>4</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/nunu03/" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Android 沉浸式解析</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">Android 沉浸式解析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-19T02:50:44.000Z" itemprop="datePublished" class="page-time">
+  2019-11-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-Android-沉浸式解析"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">Android 沉浸式解析</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-19 10:50:44" datetime="2019-11-19T02:50:44.000Z"  itemprop="datePublished">2019-11-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>首先我们得了解什么是透明状态栏以及什么是沉浸式状态栏，以及其区别，国内习惯称变色状态栏为沉浸式状态栏，但是两者是有本质区别的:</p>
+<ul>
+<li>沉浸式：<br>Android 4.4中，沉浸式体验得到了再次强化，提供了一种“全屏模式”(Full-screen Immersive Mode)。全屏模式又分两种，一种叫后撤式 (Lean Back)，另一种叫做沉浸式(Immersive)。后撤式已经在之前的系统中被广泛使用了——当你在优酷APP中观看视频时，大部分时间手指是不会去碰屏幕的。这种情况下，虚拟键和状态栏都会自动隐藏，但当你触摸屏幕的时候，它们又会出现。而新加入的沉浸式则不太一样，在沉浸式全屏状态下，对屏幕的操作并不会唤出系统栏。想要唤出系统栏，你必须从屏幕的上/下边缘向屏幕内划入。沉浸式的全屏状态更适合游戏和阅读这样的应用。</li>
+</ul>
+<ul>
+<li>变色：<ul>
+<li>透明：<br>Android 4.4 一个很重要的改变就是透明系统栏.。新的系统栏是渐变透明的, 可以最大限度的允许屏幕显示更多内容, 也可以让系统栏和 Action Bar 融为一体, 仅仅留下最低限度的背景保护以免通知通知栏内容和 Action Bar 文字/图标难以识别。谷歌把这种效果称之为：Translucent Bar。<br>Translucent Bar 是 Android 对 Edge to Edge 尝试中的一个, 也是最容易被用户注意到的. 它的初始目的就是要最大化可视面积和淡化系统界面的存在感。</li>
+<li>变色：<br>Android 5.0后可以自由设置状态栏颜色，所以也可以称作变色状态栏。</li>
+</ul>
+</li>
+</ul>
+<p>所以我们这里讲的是变色状态栏，变色状态栏就是如何对 StatusBar（状态栏）的背景透明操作；当我们打开应用时，一般如果不对状态栏进行修改的话，在屏幕的顶部有一条默认的(黑色、灰色、其他)状态栏，和应用的风格非常不协调，为了提供更好的界面交互，然后在状态栏的位置显示我们自定义的颜色，通常为应用的TitleBar的颜色，或者是将应用的整体的一张图片也占据到状态栏中，这个时候我们就需要对状态栏的背景进行操作。<br><a href="http://www.androidchina.net/3520.html" target="_blank" rel="noopener">状态栏详解点击</a></p>
+<h2 id="StatusBar、TitleBar"><a href="#StatusBar、TitleBar" class="headerlink" title="StatusBar、TitleBar"></a>StatusBar、TitleBar</h2><p>StatusBar是状态栏，它处于屏幕的最顶部，正常情况下它是显示的，它和TitleBar之间没有直接的关系；</p>
+<p>TitleBar是标题栏，比如ActionBar、ToolBar，紧位于状态栏的下方显示。</p>
+<p>ActionBar（操作栏） 是在Android 3.0(API 11）中加入到SK中的。</p>
+<p>ToolBar（工具栏）是 Android 5.0 推出的一个 Material Design 风格的导航控件 ,用来取代之前的 Actionbar 。与 Actionbar 相比，Toolbar 明显要灵活的多。它不像 Actionbar 一样，一定要固定在Activity的顶部，而是可以放到界面的任意位置。与ActionBar相比显示效果跟ActionBar并没有区别。但优点是自定义视图的操作更加简单：</p>
+<ul>
+<li>1.设置导航栏图标；</li>
+<li>2.设置App的logo；</li>
+<li>3.支持设置标题和子标题；</li>
+<li>4.支持添加一个或多个的自定义控件；</li>
+<li>5.支持Action Menu；</li>
+</ul>
+<h3 id="ActionBar"><a href="#ActionBar" class="headerlink" title="ActionBar"></a>ActionBar</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=&quot;AppCompatActivity_ActionBarTheme&quot; parent=&quot;Theme.AppCompat.Light.DarkActionBar&quot;&gt;</span><br><span class="line">    &lt;!-- Customize your theme here. --&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimary&quot;&gt;@color/colorPrimary&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorAccent&quot;&gt;@color/colorAccent&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    ActionBar actionBar = getSupportActionBar();</span><br><span class="line">    actionBar.setTitle(&quot;ActionBar Title&quot;);</span><br><span class="line">actionBar.setBackgroundDrawable(getDrawable(R.drawable.ic_launcher_background));</span><br><span class="line">    actionBar.setCustomView(R.layout.activity_actionbar);</span><br><span class="line">    actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>备注</strong>是getSupportActionBar()还是默认的getActionBar()，还可以自定义title view</p>
+<h3 id="Toolbar"><a href="#Toolbar" class="headerlink" title="Toolbar"></a>Toolbar</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=&quot;AppCompatActivity_ToolBarTheme&quot; parent=&quot;Theme.AppCompat.Light&quot;&gt;</span><br><span class="line">    &lt;item name=&quot;windowActionBar&quot;&gt;false&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;windowNoTitle&quot;&gt;true&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimary&quot;&gt;@color/colorPrimary&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorAccent&quot;&gt;@color/colorAccent&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;android:textAllCaps&quot;&gt;false&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;android.support.v7.widget.Toolbar</span><br><span class="line">    android:id=&quot;@+id/toolbar&quot;</span><br><span class="line">    android:orientation=&quot;vertical&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:background=&quot;?attr/colorPrimary&quot;</span><br><span class="line">    android:layout_height=&quot;200dp&quot;</span><br><span class="line">    app:title=&quot;标题&quot;</span><br><span class="line">    android:minHeight=&quot;?attr/actionBarSize&quot;&gt;</span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=&quot;@+id/toolbar_view&quot;</span><br><span class="line">        android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:textColor=&quot;#ff0000&quot;</span><br><span class="line">        android:text=&quot;自定义View&quot;/&gt;</span><br><span class="line">&lt;/android.support.v7.widget.Toolbar&gt;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">	//也可以这里设置toolbar</span><br><span class="line">    Toolbar toolBar = findViewById(R.id.toolbar);</span><br><span class="line">    //主标题，必须在setSupportActionBar之前设置，否则无效，如果放在其他位置，则直接setTitle即可</span><br><span class="line">    toolBar.setTitle(&quot;ToolBar Title&quot;);</span><br><span class="line">    //用toolbar替换actionbar</span><br><span class="line">    setSupportActionBar(toolBar);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>备注</strong>可以在xml设置属性，也以在代码中设置；还可以在xml添加view；还可以对Toolbar自定义；使用Toolbar要隐藏ActionBar；</p>
+<p><a href="https://www.jianshu.com/p/81d0bcb282cb" target="_blank" rel="noopener">ActionBar和ToolBar：使用详细点击</a></p>
+<h3 id="item属性释义"><a href="#item属性释义" class="headerlink" title="item属性释义"></a>item属性释义</h3><figure class="image-box">
+                <a rel=Android 沉浸式解析 href="http://nunu03.github.io/2019/11/19/Android-沉浸式解析/item.png" title="item" data-fancybox="images"><img src="http://nunu03.github.io/2019/11/19/Android-沉浸式解析/item.png" alt="item" title class></a>
+                <p>item</p>
+            </figure>
+<p>比较通用的几个属性，引用了网上的一个截图；更多详细见：<br><a href="https://blog.csdn.net/jinmie0193/article/details/80723724" target="_blank" rel="noopener">各属性指定颜色的位置</a></p>
+<h2 id="状态栏背景色"><a href="#状态栏背景色" class="headerlink" title="状态栏背景色"></a>状态栏背景色</h2><h3 id="Android4-4（-lt-API-19）"><a href="#Android4-4（-lt-API-19）" class="headerlink" title="Android4.4（&lt; API 19）"></a>Android4.4（&lt; API 19）</h3><p>在Android系统4.4以前，状态栏的背景色和字体颜色都是不能改变的，我们可以对 StatusBar 进行全屏或隐藏操作。</p>
+<ul>
+<li><p>配置theme</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:theme=&quot;@android:style/Theme.NoTitleBar.Fullscreen&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码全屏</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,</span><br><span class="line">                WindowManager.LayoutParams. FLAG_FULLSCREEN);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Android4-4（API-19）-Android-5-0（-lt-API-21）"><a href="#Android4-4（API-19）-Android-5-0（-lt-API-21）" class="headerlink" title="Android4.4（API 19）- Android 5.0（&lt; API 21）"></a>Android4.4（API 19）- Android 5.0（&lt; API 21）</h3><ul>
+<li><p>theme：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=&quot;android:windowTranslucentStatus&quot;&gt;true&lt;/item&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 失效 --&gt;</span><br><span class="line">   &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimary&lt;/item&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>设置如上属性后，我们会发现状态栏的背景变了，其实不是变了，而是标题栏的布局延伸到了状态栏里。</p>
+<figure class="image-box">
+                <a rel=Android 沉浸式解析 href="http://nunu03.github.io/2019/11/19/Android-沉浸式解析/translu.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2019/11/19/Android-沉浸式解析/translu.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>如果是图片浸入的话：直接给TitleBar或者自定义view设置背景图即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Toolbar toolBar = findViewById(R.id.toolbar);</span><br><span class="line">toolBar.setBackgroundResource(R.mipmap.title_back);</span><br></pre></td></tr></table></figure>
+
+<figure class="image-box">
+                <a rel=Android 沉浸式解析 href="http://nunu03.github.io/2019/11/19/Android-沉浸式解析/img_header.jpg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2019/11/19/Android-沉浸式解析/img_header.jpg" alt title class></a>
+                <p></p>
+            </figure>
+<h3 id="Android-5-0（-gt-API-21）"><a href="#Android-5-0（-gt-API-21）" class="headerlink" title="Android 5.0（&gt;= API 21）"></a>Android 5.0（&gt;= API 21）</h3><ul>
+<li><p>theme：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimary&lt;/item&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getWindow().setStatusBarColor(getResources().getColor(android.R.color.holo_red_light));</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>如果是图片浸入的话：直接在主题中设置状态栏背景色透明即可,同理直接给TitleBar或者自定义view设置背景图即可；效果图同上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=&quot;android:windowTranslucentStatus&quot;&gt;true&lt;/item&gt;</span><br><span class="line">&lt;item name = &quot;android:statusBarColor&quot;&gt;@android:color/transparent&lt;/item&gt;</span><br><span class="line">	</span><br><span class="line">Toolbar toolBar = findViewById(R.id.toolbar);</span><br><span class="line">toolBar.setBackgroundResource(R.mipmap.title_back);</span><br></pre></td></tr></table></figure>
+
+<h3 id="android-fitsSystemWindows-”true”"><a href="#android-fitsSystemWindows-”true”" class="headerlink" title="android:fitsSystemWindows=”true”"></a>android:fitsSystemWindows=”true”</h3><p>当我们设置了android:windowTranslucentStatus=true后，我们发现Toolbar内容被StatusBar覆盖，相当于Toolbar整体布局上移了，怎么解决？我们可以设置android:fitsSystemWindows=”true”，但是这时候我们发现，我们的StatusBar的背景色实效了。如何解决？我们就可以通过往Window窗口的decorView添加一个View,让它大小与系统状态栏一样，然后设置这个view的背景，就可以实现修改状态栏颜色的效果了。但是这种只适合修改StatusBar的背景色，如果是图片浸入，就不可以了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ViewGroup decorViewGroup = (ViewGroup) getWindow().getDecorView();</span><br><span class="line">View statusBarView = new View(getWindow().getContext());</span><br><span class="line">int statusBarHeight = getStatusBarHeight(getWindow().getContext());</span><br><span class="line">FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, statusBarHeight);</span><br><span class="line">params.gravity = Gravity.TOP;</span><br><span class="line">statusBarView.setLayoutParams(params);</span><br><span class="line">statusBarView.setBackgroundResource(R.color.colorPrimary);</span><br><span class="line">decorViewGroup.addView(statusBarView);</span><br><span class="line">        </span><br><span class="line">private static int getStatusBarHeight(Context context) &#123;</span><br><span class="line">    int statusBarHeight = 0;</span><br><span class="line">    Resources res = context.getResources();</span><br><span class="line">    int resourceId = res.getIdentifier(&quot;status_bar_height&quot;, &quot;dimen&quot;, &quot;android&quot;);</span><br><span class="line">    if (resourceId &gt; 0) &#123;</span><br><span class="line">        statusBarHeight = res.getDimensionPixelSize(resourceId);</span><br><span class="line">    &#125;</span><br><span class="line">    return statusBarHeight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="TitleBar图片浸入"><a href="#TitleBar图片浸入" class="headerlink" title="TitleBar图片浸入"></a>TitleBar图片浸入</h3><p>我们从上面的效果图，可以看出，图片浸入时，相当于TitleBar移动到了状态栏的下面，这个时候我们标题可能与状态栏的图标重叠，那怎么办呢？上边说了android:fitsSystemWindows=”true”不行，需要设置状态栏背景色失效，其实我们这个时候，可以在TitleBar上添加一个和状态栏大小的透明view即可，TitleBar设置paddingTop 也可以，但是你需要重新设置TitleBar的高度，这样的话就不如第一种方案合适了。<br>设计一个xml，这个包含了TitleBar和默认的StatusBar的替代view。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">    android:orientation=&quot;vertical&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ImageView</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_alignBottom=&quot;@+id/toolbar&quot;</span><br><span class="line">        android:layout_alignTop=&quot;@+id/statusBartop&quot;</span><br><span class="line">        android:scaleType=&quot;fitXY&quot;</span><br><span class="line">        android:src=&quot;@mipmap/title_back&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        android:id=&quot;@+id/statusBartop&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:background=&quot;#00000000&quot;</span><br><span class="line">        android:orientation=&quot;horizontal&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.v7.widget.Toolbar</span><br><span class="line">        android:id=&quot;@+id/toolbar&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_below=&quot;@+id/statusBartop&quot;</span><br><span class="line">        &gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;match_parent&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot; dkfslfjslfsjflsjflsf&quot;</span><br><span class="line">            android:textColor=&quot;@android:color/holo_red_dark&quot;</span><br><span class="line"></span><br><span class="line">            android:textSize=&quot;16dp&quot; /&gt;</span><br><span class="line">    &lt;/android.support.v7.widget.Toolbar&gt;</span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们在代码中进行设置即可：版本大于18，即4.4以上即可，4.4一下不存在沉浸式模式；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int sysVersion = Build.VERSION.SDK_INT;</span><br><span class="line">if (sysVersion &gt; Build.VERSION_CODES.JELLY_BEAN_MR2 ) &#123;</span><br><span class="line">    int result = 0;</span><br><span class="line">    int resourceId = getResources().getIdentifier(&quot;status_bar_height&quot;, &quot;dimen&quot;, &quot;android&quot;);</span><br><span class="line">    if (resourceId &gt; 0) &#123;</span><br><span class="line">        result = getResources().getDimensionPixelSize(resourceId);</span><br><span class="line">    &#125;</span><br><span class="line">    LinearLayout toptop = this.findViewById(R.id.statusBartop);</span><br><span class="line">    RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(this.getWindowManager().getDefaultDisplay().getWidth(), result);</span><br><span class="line">    //设置修改后的布局。</span><br><span class="line">    toptop.setLayoutParams(para);</span><br><span class="line"></span><br><span class="line">    Toolbar toolbar = this.findViewById(R.id.toolbar);</span><br><span class="line">    RelativeLayout.LayoutParams paraBar = new RelativeLayout.LayoutParams(this.getWindowManager().getDefaultDisplay().getWidth(), 150);</span><br><span class="line">    paraBar.addRule(RelativeLayout.BELOW,R.id.statusBartop);</span><br><span class="line">    toolbar.setLayoutParams(paraBar);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后别忘记设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=&quot;android:windowTranslucentStatus&quot;&gt;true&lt;/item&gt;</span><br><span class="line">或者在代码中：</span><br><span class="line">getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</span><br></pre></td></tr></table></figure>
+
+<p>看下效果图：</p>
+<figure class="image-box">
+                <a rel=Android 沉浸式解析 href="http://nunu03.github.io/2019/11/19/Android-沉浸式解析/image.jpg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2019/11/19/Android-沉浸式解析/image.jpg" alt title class></a>
+                <p></p>
+            </figure>
+
+
+
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-11-22T09:49:25.000Z" itemprop="dateUpdated">2019-11-22 17:49:25</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/11/19/Android-沉浸式解析/" target="_blank" rel="external">http://nunu03.github.io/2019/11/19/Android-沉浸式解析/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Title/">Title</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/11/19/Android-沉浸式解析/&title=《Android 沉浸式解析》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/11/19/Android-沉浸式解析/&title=《Android 沉浸式解析》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/12/06/颜色透明度十六进制/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">颜色透明度十六进制</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/10/11/Toast解读/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Toast源码解读</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#StatusBar、TitleBar"><span class="post-toc-number">2.</span> <span class="post-toc-text">StatusBar、TitleBar</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ActionBar"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">ActionBar</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Toolbar"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Toolbar</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#item属性释义"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">item属性释义</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#状态栏背景色"><span class="post-toc-number">3.</span> <span class="post-toc-text">状态栏背景色</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Android4-4（-lt-API-19）"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Android4.4（&lt; API 19）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Android4-4（API-19）-Android-5-0（-lt-API-21）"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Android4.4（API 19）- Android 5.0（&lt; API 21）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Android-5-0（-gt-API-21）"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">Android 5.0（&gt;= API 21）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#android-fitsSystemWindows-”true”"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">android:fitsSystemWindows=”true”</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#TitleBar图片浸入"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">TitleBar图片浸入</span></a></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://handsomeliuyang.github.io/" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2019 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/11/19/Android-沉浸式解析/&title=《Android 沉浸式解析》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/11/19/Android-沉浸式解析/&title=《Android 沉浸式解析》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3aQW7DMAwEwPz/0+m5KGzsUk1RS+NT0TiyxgeGIvl6xdc7vn7en6x8/59fuzAwMB7LmG3r6vH321p5HVf3YGBgnMO4D4X39yTI++/OnouBgYFxtVwbHJOV29eBgYGBkQS+2ZH13/1uYGBgPIrRBr72aBptpVwZAwPjHEYeHP/+74/0NzAwMB7FeJdXnhrmieOsbfBtTQwMjK0ZsyJ+vukc1qZ9GBgYpzHyNsBs8GL26bCQh4GBsR3j/uP8kDkL2W3wvfwWBgbGAYwkLM6ajm0Qb0tvGBgYJzDWRxzyMJoH09kKGBgYJzCSklYelFfuT1oFwwYnBgbGAxntKNiwWB8X0YYDZBgYGMcw8m2tjGIkz8pLbxgYGKcx2vyxbWrmL6hui2JgYGzNyM+As8CavJq8/VlkphgYGNsxVjBtsM4LbbP7MTAw9mO0bcv1TbRF/+IXAwMDY2tGnsC15bmWMWwSYGBgbM3Ii2jJ4Fd+fF1pdkZpKAYGxnaMpEyWP3iWes4CbtTlwMDA2I6RV9qTtuVKCG5bqhgYGCcwkv8nx9SVxsBScRADA2NTxru8kmRuNnKRlPYwMDDOZORXmz4mxbuVoFwnjhgYGA9ntAfU9hC70got1sfAwDiAsXLgbMcmPpE4YmBgYLRtg1k62Ibvj/RRMTAwtmDkG5oNZ7QhGwMD4xxGGzrbsYlkqCJPEzEwME5j5EfHlRDZbqId9cDAwNiU8QWJtbJQGE/4XAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>
