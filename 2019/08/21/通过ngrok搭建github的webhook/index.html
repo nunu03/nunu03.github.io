@@ -1,228 +1,148 @@
 <!DOCTYPE html>
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    
-    
-    <title>通过ngrok搭建github的webhook | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="keywords" content="ngrok,WebHook">
-    <link rel="shortcut icon" href="/img/favicon.ico">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
-    
-    <script type="text/javascript">
-        // Data Center
-        var DC = {
-            reward:	false,
-            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
-            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
-            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
-            d: JSON.parse('{"app_id":null}')
-        };
-    </script>
-    <script type="text/javascript">
-        window.lazyScripts=[];
-    </script>
-    
+  <meta charset="utf-8">
+  
+  
+  <title>通过ngrok搭建github的webhook | chenyulong</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <meta name="description" content="Nunu&#39;s blog!">
+  
+  
+    <meta name="keywords" content="Nunu">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="chenyulong">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" href="/localshare/css/share.css">
+  
+  
+  
 </head>
 
-
 <body>
-    <div id="loading" class="active"></div>
-
-    <aside id="menu" class="">
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap">
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chenyulong</a>
+      </h1>
       
-      <img src="/img/brand.jpg" class="brand-bg">
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</a>
+        </h2>
       
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">Nunu Long</h5>
-          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
-            
-              <span>5</span>
-            
-              <span>9</span>
-            
-              <span>4</span>
-            
-              <span>5</span>
-            
-              <span>3</span>
-            
-              <span>1</span>
-            
-              <span>2</span>
-            
-              <span>6</span>
-            
-              <span>1</span>
-            
-              <span>@</span>
-            
-              <span>q</span>
-            
-              <span>q</span>
-            
-              <span>.</span>
-            
-              <span>c</span>
-            
-              <span>o</span>
-            
-              <span>m</span>
-            
-          </a>
-        </hgroup>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
         
-        <ul class="menu-link">
-          
-              <li>
-                <a href="https://github.com/nunu03/" target="_blank">
-                  <i class="icon icon-lg icon-github"></i>
-                </a>
-              </li>
-            
-        </ul>
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> Home</a>
         
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> Archive</a>
+        
+          <a class="main-nav-link" href="/about/"><i class="fa fa-user"></i> About</a>
+        
+          <a class="main-nav-link" href="/atom.xml"><i class="fa fa-rss"></i> RSS</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="search"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
       </div>
     </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                首页
-              </a>
-            </li>
-        
-            <li class="">
-              <a href="/categories"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                分类
-              </a>
-            </li>
-        
-            <li class="">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                标签
-              </a>
-            </li>
-        
-            <li class="">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                归档
-              </a>
-            </li>
-        
-      </ul>
-    </div>
   </div>
-</aside>
-
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row clearfix">
-        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">
-            <span>通过ngrok搭建github的webhook</span>
-            
-        </div>
-        
-        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
-            <i class="icon icon-lg icon-search"></i>
-        </a>
-        
-    </div>
 </header>
-<header class="content-header post-header">
-    <img src="/img/banner.jpg" class="header-bg">
-    <div class="container fade-scale">
-        <h1 class="title">通过ngrok搭建github的webhook</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2019-08-21T11:58:27.000Z" itemprop="datePublished" class="page-time">
-  2019-08-21
-</time>
 
-
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WebHook/">WebHook</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WebHook/ngrok/">ngrok</a></li></ul></li></ul>
-
-            
-        </h5>
-        
-    </div>
+      <div class="outer">
+        <section id="main"><article id="post-通过ngrok搭建github的webhook" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
     
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      通过ngrok搭建github的webhook
+    </h1>
+  
 
-</header>
 
-<div id="site_search">
-    <div class="search-title clearfix">
-        <span class="pull-left">
-          <i class="icon icon-lg icon-search"></i>
-        </span>
-        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
-        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
-          <i class="icon icon-lg icon-close"></i>
-        </a>
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2019-08-21T11:58:27.000Z" itemprop="datePublished">2019年08月21日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/WebHook/">WebHook</a> > <a class="article-category-link" href="/categories/WebHook/ngrok/">ngrok</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2019/08/21/通过ngrok搭建github的webhook/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+  
+  <i class="fa fa-commt"></i>
+  Guestbook
+</a>
+
+
     </div>
-    <div id="local-search-result"></div>
-</div>
-
-
-<div class="container body-wrap">
-    <article id="post-通过ngrok搭建github的webhook"
-  class="post-article article-type-post" itemprop="blogPost">
-    <div class="post-card">
-        <h1 class="post-card-title">通过ngrok搭建github的webhook</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2019-08-21 19:58:27" datetime="2019-08-21T11:58:27.000Z"  itemprop="datePublished">2019-08-21</time>
-
-            
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WebHook/">WebHook</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/WebHook/ngrok/">ngrok</a></li></ul></li></ul>
-
-
-
-            
-
-            
-
-
-            
-        </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            
-            <h2 id="WebHook"><a href="#WebHook" class="headerlink" title="WebHook"></a>WebHook</h2><h3 id="webhook概述"><a href="#webhook概述" class="headerlink" title="webhook概述"></a>webhook概述</h3><p>When one of those events is triggered, we’ll send a HTTP POST payload to the webhook’s configured URL. Webhooks can be used to update an external issue tracker, trigger CI builds, update a backup mirror, or even deploy to your production server. You’re only limited by your imagination.</p>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="WebHook"><a href="#WebHook" class="headerlink" title="WebHook"></a>WebHook</h2><h3 id="webhook概述"><a href="#webhook概述" class="headerlink" title="webhook概述"></a>webhook概述</h3><p>When one of those events is triggered, we’ll send a HTTP POST payload to the webhook’s configured URL. Webhooks can be used to update an external issue tracker, trigger CI builds, update a backup mirror, or even deploy to your production server. You’re only limited by your imagination.</p>
 <p>Webhooks can be installed on an organization, a specific repository, or a GitHub App. Once installed, the webhook will be sent each time one or more subscribed events occurs.</p>
 <p>You can create up to 20 webhooks for each event on each installation target (specific organization or specific repository).<br>Learn more in our <a href="https://developer.github.com/webhooks/" target="_blank" rel="noopener">Webhooks Guide</a>.</p>
 <p>当触发其中一个事件时，我们将向webhook配置的URL发送httppost负载。webhook可以用于更新外部问题跟踪程序、触发CI构建、更新备份镜像，甚至可以部署到生产服务器。webhook不能做的的，可能是受到想象力的限制。</p>
 <p>webhook可以安装在组织、特定存储库或GitHub应用程序上。一旦安装，webhook将在每次发生一个或多个订阅事件时发送。</p>
 <p>您可以为每个安装目标（特定组织或特定存储库）上的每个事件创建最多20个webhook。</p>
 <p>所以，Webhook顾名思义，其实就是一钩子。当我们在Github上做出某些特定操作时，可以触发钩子，去进行一些我们事先设定好的脚本，以达到某些特定功能（例如–前端项目自动发布）。</p>
-<h3 id="github上webhook设置"><a href="#github上webhook设置" class="headerlink" title="github上webhook设置"></a>github上webhook设置</h3><p>在配置webhook的时候，你可以选择自己想要接收的事件。你甚至可以选择参加触发所有事件。只有订阅特殊的需要的事件，可以有效限制服务器HTTP请求数。可以通过API或者UR随时订阅事件。默认情况下，webhook只订阅push事件。</p>
-<figure class="image-box">
-                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhooks.png" title="webhooks position" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhooks.png" alt="webhooks position" title class></a>
-                <p>webhooks position</p>
-            </figure>
-<figure class="image-box">
-                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhooksuc.png" title="add webhook" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhooksuc.png" alt="add webhook" title class></a>
-                <p>add webhook</p>
-            </figure>
-<p>上图是我设置的好的webhook：可以看到我设置好了Payload URL和Content type.</p>
+<h3 id="github上webhook设置"><a href="#github上webhook设置" class="headerlink" title="github上webhook设置"></a>github上webhook设置</h3><p>在配置webhook的时候，你可以选择自己想要接收的事件。你甚至可以选择参加触发所有事件。只有订阅特殊的需要的事件，可以有效限制服务器HTTP请求数。可以通过API或者UR随时订阅事件。默认情况下，webhook只订阅push事件。<br><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/webhooks.png" alt="webhooks position"><br><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/webhooksuc.png" alt="add webhook"><br>上图是我设置的好的webhook：可以看到我设置好了Payload URL和Content type.</p>
 <p>Payload URL：就是我们要设置的钩子。</p>
 <p>Content type：是在通知我们时传递的内容类型，一般情况下我们选择json数据格式。还有另外一种类型：application/x-www-form-urlencoded。</p>
 <p>Which events would you like to trigger this webhook?：这个选择比较重要，直接决定了当仓库发生什么变化时才对我们进行通知。</p>
@@ -276,25 +196,11 @@
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload----request.headers.X-GitHub-Event:push</span><br><span class="line">payload----request.headers.X-GitHub-Delivery:7a8185c4-c40a-11e9-8ed7-401aabcf3ce7</span><br></pre></td></tr></table></figure>
 
-<p>事件的驱动信息可以在webhook中查看：</p>
-<figure class="image-box">
-                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhookimage.jpg" title="webhook deliveries" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/webhookimage.jpg" alt="webhook deliveries" title class></a>
-                <p>webhook deliveries</p>
-            </figure>
-
+<p>事件的驱动信息可以在webhook中查看：<br><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/webhookimage.jpg" alt="webhook deliveries"></p>
 <p><a href="https://igit.58corp.com/help/api/README.md" target="_blank" rel="noopener">igit api help</a></p>
-<h2 id="ngrok配置"><a href="#ngrok配置" class="headerlink" title="ngrok配置"></a>ngrok配置</h2><p>你设置好了钩子，那就需要当收到通知的时候进行接收处理。这个时候要注意，我们的钩子里要求你的服务器能连接到外网上。那怎么办，我们本地做服务器，肯定就收不到通知了。这个时候推荐一个神器ngrok，它就可以让你在本地就有一个外网地址。<a href="https://ngrok.com/download" target="_blank" rel="noopener">ngrok下载地址</a>.下载之后，在ngrok目录执行cmd：./ngrok http 4567，弹出下面的界面：</p>
-<figure class="image-box">
-                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/ngrok.png" title="ngrok start" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/ngrok.png" alt="ngrok start" title class></a>
-                <p>ngrok start</p>
-            </figure>
-<p>可以看到我们本地服务器的地址被映射到了一个外网的地址。而这个<a href="http://4c8a9e3f.ngrok.io/就是上图中我们设置好的Payload" target="_blank" rel="noopener">http://4c8a9e3f.ngrok.io/就是上图中我们设置好的Payload</a> URL。</p>
+<h2 id="ngrok配置"><a href="#ngrok配置" class="headerlink" title="ngrok配置"></a>ngrok配置</h2><p>你设置好了钩子，那就需要当收到通知的时候进行接收处理。这个时候要注意，我们的钩子里要求你的服务器能连接到外网上。那怎么办，我们本地做服务器，肯定就收不到通知了。这个时候推荐一个神器ngrok，它就可以让你在本地就有一个外网地址。<a href="https://ngrok.com/download" target="_blank" rel="noopener">ngrok下载地址</a>.下载之后，在ngrok目录执行cmd：./ngrok http 4567，弹出下面的界面：<br><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/ngrok.png" alt="ngrok start"><br>可以看到我们本地服务器的地址被映射到了一个外网的地址。而这个<a href="http://4c8a9e3f.ngrok.io/就是上图中我们设置好的Payload" target="_blank" rel="noopener">http://4c8a9e3f.ngrok.io/就是上图中我们设置好的Payload</a> URL。</p>
 <p>需要注意的是，当我们调试程序的时候，ngrok要打开，并且每次启动ngrok，外网地址都不同，每次启动有效时间为8小时。</p>
-<h3 id="ngrok注册"><a href="#ngrok注册" class="headerlink" title="ngrok注册"></a>ngrok注册</h3><figure class="image-box">
-                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/authtoken.png" title="ngrok register" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/authtoken.png" alt="ngrok register" title class></a>
-                <p>ngrok register</p>
-            </figure>
-
+<h3 id="ngrok注册"><a href="#ngrok注册" class="headerlink" title="ngrok注册"></a>ngrok注册</h3><p><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/authtoken.png" alt="ngrok register"></p>
 <p>通过官网注册，拿到了authtoken，然后保存即可。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01deMacBook-Pro:ngrok chenyulong01$ ./ngrok authtoken 1mg5VxMW7jhF3J90SBAerxFulVJ_7YWWYmNVX4C3jYyYoz5xR</span><br><span class="line">Authtoken saved to configuration file: /Users/chenyulong01/.ngrok2/ngrok.yml</span><br><span class="line"></span><br><span class="line">chenyulong01deMacBook-Pro:ngrok chenyulong01$ ./ngrok http 4567</span><br></pre></td></tr></table></figure>
 
@@ -458,10 +364,7 @@ auto</td>
 <p>print(r):&lt;Response [200]&gt;<br>print(r.json):{‘id’: 132968, ‘iid’: 2182437, ‘project_id’: 15509,<br>print(r.text):{“id”:132968,”iid”:2182437,”project_id”:15509,<br>json.dumps(r.json())</p>
 <p>3.can only concatenate str (not “int”) to str</p>
 <p>print(‘payload—-projectid:%d’ % projectid)</p>
-<h2 id="MR方案"><a href="#MR方案" class="headerlink" title="MR方案"></a>MR方案</h2><figure class="image-box">
-                <a rel=通过ngrok搭建github的webhook href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/automr.png" title="MR流程图" data-fancybox="images"><img src="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/automr.png" alt="MR流程图" title class></a>
-                <p>MR流程图</p>
-            </figure>
+<h2 id="MR方案"><a href="#MR方案" class="headerlink" title="MR方案"></a>MR方案</h2><p><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/automr.png" alt="MR流程图"></p>
 <h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><p>1.Could not fetch URL <a href="https://pypi.python.org/simple/requests/" target="_blank" rel="noopener">https://pypi.python.org/simple/requests/</a>: There was a problem confirming the ssl certificate: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:777) - skipping<br>  Could not find a version that satisfies the requirement requests (from versions: )<br>No matching distribution found for requests</p>
 <p>解决方法：pip3 install requests  -i  <a href="http://pypi.douban.com/simple" target="_blank" rel="noopener">http://pypi.douban.com/simple</a> –trusted-host=pypi.douban.com</p>
 <p>2.升级pip</p>
@@ -478,273 +381,260 @@ auto</td>
 <p><a href="https://www.cnblogs.com/handsome1013/p/7390849.html" target="_blank" rel="noopener">反向代理</a></p>
 <p><a href="https://www.jianshu.com/p/b11d70d9dd52" target="_blank" rel="noopener">映射公网花生壳、PubYun、NoIP、DynDNS、Ngrok、Tunnel、localtunnel、pagekite</a></p>
 
-        </div>
         
-<blockquote class="post-copyright">
-    <div class="content">
-        
-<span class="post-time">
-    最后更新时间：<time datetime="2021-01-15T02:40:30.000Z" itemprop="dateUpdated">2021-01-15 10:40:30</time>
-</span><br>
-
-
-        
-        转载注明出处，原文地址：<a href="/2019/08/21/通过ngrok搭建github的webhook/" target="_blank" rel="external">http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/</a>
-        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> Contents</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WebHook"><span class="toc-text">WebHook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#webhook概述"><span class="toc-text">webhook概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#github上webhook设置"><span class="toc-text">github上webhook设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#负载数据属性"><span class="toc-text">负载数据属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#报文头"><span class="toc-text">报文头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事例"><span class="toc-text">事例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ngrok配置"><span class="toc-text">ngrok配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ngrok注册"><span class="toc-text">ngrok注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他反代理工具"><span class="toc-text">其他反代理工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置服务器"><span class="toc-text">配置服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bottle"><span class="toc-text">bottle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#paste"><span class="toc-text">paste</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动"><span class="toc-text">启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注意点"><span class="toc-text">注意点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MR方案"><span class="toc-text">MR方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到问题"><span class="toc-text">遇到问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
     </div>
-    <footer>
-        <a href="http://nunu03.github.io">
-            <img src="/img/avatar.jpg" alt="Nunu Long">
-            Nunu Long
-        </a>
-    </footer>
-</blockquote>
+  </div>
 
+
+            </div>
         
-        <div class="post-footer">
-            
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebHook/">WebHook</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ngrok/">ngrok</a></li></ul>
-
-            <div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
+        
+          <blockquote id="copyright">
+              <p>Original link: <a href="http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/">http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/</a></p>
+              <p>Copyright Notice: 转载请注明出处.</p>
+          </blockquote>
+        
       
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/&title=《通过ngrok搭建github的webhook》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
+    </div>
+    <footer class="article-footer">
       
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/&title=《通过ngrok搭建github的webhook》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      
-    </ul>
- </div>
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebHook/">WebHook</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ngrok/">ngrok</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>Share:</span>
+    </div>
 
 
 
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2019/08/16/charles修改请求参数/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          Charles设置
+        
+      </div>
     </a>
-</div>
-
-        </div>
+  
+  
+    <a href="/2019/08/29/gitlab-api-使用问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
         
-            
-
-
+          gitlab api 使用问题
         
-    </div>
-    
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="prev">
-      <a href="/2019/08/29/gitlab-api-使用问题/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">gitlab api 使用问题</h4>
-      </a>
-    </div>
-  
-
-  
-    <div class="next">
-      <a href="/2019/08/16/charles修改请求参数/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Charles设置</h4>
-      </a>
-    </div>
+      </div>
+    </a>
   
 </nav>
 
+      
+      
+        
 
-    
-    
-        <aside class="post-widget">
-            <nav class="post-toc-wrap" id="post-toc">
-                <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#WebHook"><span class="post-toc-number">1.</span> <span class="post-toc-text">WebHook</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#webhook概述"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">webhook概述</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#github上webhook设置"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">github上webhook设置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#负载数据属性"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">负载数据属性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#报文头"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">报文头</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#事例"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">事例</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ngrok配置"><span class="post-toc-number">2.</span> <span class="post-toc-text">ngrok配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ngrok注册"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">ngrok注册</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#其他反代理工具"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">其他反代理工具</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置服务器"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置服务器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#bottle"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">bottle</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#paste"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">paste</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#启动"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">启动</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#注意点"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">注意点</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MR方案"><span class="post-toc-number">4.</span> <span class="post-toc-text">MR方案</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#遇到问题"><span class="post-toc-number">5.</span> <span class="post-toc-text">遇到问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">6.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
-            </nav>
-            <div class="toc-bar"><div>
-        </aside>
-    
+
+
+
+
+
+
+
+      
+    </footer>
+  </div>
 </article>
-
-
-</div>
-
-    </main>
-    <footer class="footer ">
-    
-    <div class="top">
+</section>
         
-            <p>
-    <span>Links：</span>
+          <aside id="sidebar">
+  
     
-    <span class="blogroll-item">
-        <a href="https://handsomeliuyang.github.io/" target="_blank">liuyang</a>
-    </span>
-    
-    <span class="blogroll-item">
-        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
-    </span>
-    
-</p>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Recent</h3>
+    <div class="widget">
+      <ul>
         
+          <li>
+            <a href="/2022/05/29/Android知识点整理/">Android知识点整理</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/29/hello-world/">Hexo 配置</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/08/epic原理浅析/">epic原理浅析</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/16/python-设置Host代理/">Python设置Host代理</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/27/Pngquant-图片压缩/">Pngquant-图片压缩</a>
+          </li>
+        
+      </ul>
     </div>
+  </div>
+
+
+  
     
-    <div class="bottom">
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/Charles/" style="font-size: 13.33px;">Charles</a> <a href="/tags/Color/" style="font-size: 10px;">Color</a> <a href="/tags/FaceUnity/" style="font-size: 16.67px;">FaceUnity</a> <a href="/tags/Fix/" style="font-size: 10px;">Fix</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/GitLab/" style="font-size: 10px;">GitLab</a> <a href="/tags/Gradle/" style="font-size: 20px;">Gradle</a> <a href="/tags/Haar/" style="font-size: 10px;">Haar</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hook/" style="font-size: 10px;">Hook</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Log/" style="font-size: 10px;">Log</a> <a href="/tags/OpenCV/" style="font-size: 10px;">OpenCV</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Title/" style="font-size: 10px;">Title</a> <a href="/tags/Toast/" style="font-size: 10px;">Toast</a> <a href="/tags/View/" style="font-size: 10px;">View</a> <a href="/tags/WebHook/" style="font-size: 10px;">WebHook</a> <a href="/tags/Wireshark/" style="font-size: 10px;">Wireshark</a> <a href="/tags/Xposed/" style="font-size: 13.33px;">Xposed</a> <a href="/tags/aar/" style="font-size: 10px;">aar</a> <a href="/tags/cmd/" style="font-size: 10px;">cmd</a> <a href="/tags/ngrok/" style="font-size: 13.33px;">ngrok</a> <a href="/tags/nps/" style="font-size: 10px;">nps</a> <a href="/tags/人脸检测/" style="font-size: 10px;">人脸检测</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> Archive</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Charles/">Charles</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Color/">Color</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FaceUnity/">FaceUnity</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fix/">Fix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitLab/">GitLab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haar/">Haar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hook/">Hook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Log/">Log</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Title/">Title</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Toast/">Toast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebHook/">WebHook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireshark/">Wireshark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Xposed/">Xposed</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aar/">aar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok/">ngrok</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nps/">nps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸检测/">人脸检测</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-link"></i> Blogroll</h3>
+    <div class="widget">
+      <ul>
+      
+        <li>
+          <a href="http://www.example1.com/">site-name1</a>
+        </li>
+      
+        <li>
+          <a href="http://www.example2.com/">site-name2</a>
+        </li>
+      
+        <li>
+          <a href="http://www.example3.com/">site-name3</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">Site Map</a>
+        <span> | </span><a href="/atom.xml">Subscribe to this site</a>
+        <span> | </span><a href="/about/">Contact the blogger</a>
+      </p>
+      
         <p>
-            <span>
-                Nunu Long &copy; 2019 - 2022
-            </span>
-        		
-           	
-            
-            
-            <span>
-	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
-            </span>
-            
-            
-            
-
-            
-                
-<span class="site-uv" title="总访客量">
-    <i class="icon icon-user"></i>
-    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
-</span>
-
-
-<span class="site-pv" title="总访问量">
-    <i class="icon icon-eye"></i>
-    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
-</span>
-
-            
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
         </p>
+      
+      <p>
+        <span>Copyright &copy; 2022 Nunu Long.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
     </div>
+  </div>
 </footer>
 
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+    </div>
+  </div>
+  <script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/search.json.js"></script>
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/&title=《通过ngrok搭建github的webhook》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/08/21/通过ngrok搭建github的webhook/&title=《通过ngrok搭建github的webhook》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3aUY7qMAwF0O5/07wFoJZ744THSKdfaIA2JyPFxvZ1xdfr7boG1/sd7u6/97l4eHh4u577erzeF/S8iLs73/Hyp7ffwsPDwzvNez6+717Pj/WWka8ZDw8P79d4z8d9vYiYioeHh/e3eHnSPP9WG5zw8PDwvs9rywF58FhLmtv7b6i14OHh4cW8tmX1C6+P9Pfw8PDwxl31tjibJ9Z5OWO0Wjw8PLwDvMnoQDtKNSlwTMoZeHh4eOd4SQLdpr95QysPOfU/AA8PD+8A79zi2jCwVoqNPo+Hh4e3iZcvem24atJmK5Lmu+3Dw8PDO8ZrA8Pk3XmRoigN4+Hh4R3jrQ0zTcae1j5TFynw8PDwjvHallLeKps0w9pUuy7d4uHh4S3x5s2ntpAxH9taHCnAw8PD28RbO3zz0mp+6CeYvHV3TWILHh4eXjyPlDx+kkCvpdGT8ICHh4d3gtf+vH/F12TIYK2e8KEBhoeHh3eA15ImaXQefkbbh4eHh/efeNEP/rJmnJcb2nZXNBmBh4eHN+C1Cet8CKAdSsg3MZqSwMPDwxvzkrS1LSK0wwdrTa+o/YaHh4d3jLdWDmi3Zm/giTYUDw8P7wCvDQ+TxLfFTBpyi9EPDw8PL+Ylj1kLAG0LLd/WetPx8PDwtvLa0kNSLGib/cVAQFsiwcPDwzvGS477vH2VD1pNEuU6mcbDw8PbymuP3Tzhbptha60vPDw8vO/wJm2tvEe/a4CgLmfg4eHhHeCtHb7PSfP8kW2AGcHw8PDwlnh5WnzucE/KGWsNNjw8PLxzvPnhPh8d2HXh4eHh/SYvDyFrR/+knFFXqfHw8PC+yFurduQp+wiGh4eHd5i3qxjRpuD5oNXz3z8EBjw8PLytvPbnfXu7dhyhDQ/b+nt4eHh4n3n/AB0u9FGQhW1eAAAAAElFTkSuQmCC" alt="微信分享二维码">
-</div>
-
-
-    
-    <!-- main-js -->
-<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
-<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
-<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
-
-<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-
-<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
-<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
-
-<!-- third-party -->
+<script src="/js/script.js"></script>
 
 
 
 
 
-
-<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
-<script type="text/javascript">
-	var search_path = "search.xml";
-	if (search_path.length === 0) {
-		search_path = "search.xml";
-	}
-	var path = "/" + search_path;
-	searchFunc(path, "local-search-input", "local-search-result");
-</script>
+  <script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+    <script src="/localshare/js/social-share.js"></script>
+    <script src="/localshare/js/qrcode.js"></script>
+  
+  
 
 
 
-    
-    
+  
 
+  
 
+  
 
+  
 
+  
 
-    <!-- mathjax config similar to math.stackexchange -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-            processEscapes: true,
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-    });
-</script>
+  
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
+  
 
-<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  
 
 
 
 
 
-
-
-    
 </body>
 </html>

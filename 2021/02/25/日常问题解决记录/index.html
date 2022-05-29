@@ -1,212 +1,141 @@
 <!DOCTYPE html>
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    
-    
-    <title>日常问题解决记录 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="keywords" content="Log,Fix">
-    <link rel="shortcut icon" href="/img/favicon.ico">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
-    
-    <script type="text/javascript">
-        // Data Center
-        var DC = {
-            reward:	false,
-            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
-            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
-            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
-            d: JSON.parse('{"app_id":null}')
-        };
-    </script>
-    <script type="text/javascript">
-        window.lazyScripts=[];
-    </script>
-    
+  <meta charset="utf-8">
+  
+  
+  <title>日常问题解决记录 | chenyulong</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <meta name="description" content="Nunu&#39;s blog!">
+  
+  
+    <meta name="keywords" content="Nunu">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="chenyulong">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" href="/localshare/css/share.css">
+  
+  
+  
 </head>
 
-
 <body>
-    <div id="loading" class="active"></div>
-
-    <aside id="menu" class="">
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap">
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chenyulong</a>
+      </h1>
       
-      <img src="/img/brand.jpg" class="brand-bg">
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</a>
+        </h2>
       
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">Nunu Long</h5>
-          <a href="mailto:594531261@qq.com" title="594531261@qq.com" class="mail">
-            
-              <span>5</span>
-            
-              <span>9</span>
-            
-              <span>4</span>
-            
-              <span>5</span>
-            
-              <span>3</span>
-            
-              <span>1</span>
-            
-              <span>2</span>
-            
-              <span>6</span>
-            
-              <span>1</span>
-            
-              <span>@</span>
-            
-              <span>q</span>
-            
-              <span>q</span>
-            
-              <span>.</span>
-            
-              <span>c</span>
-            
-              <span>o</span>
-            
-              <span>m</span>
-            
-          </a>
-        </hgroup>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
         
-        <ul class="menu-link">
-          
-              <li>
-                <a href="https://github.com/nunu03/" target="_blank">
-                  <i class="icon icon-lg icon-github"></i>
-                </a>
-              </li>
-            
-        </ul>
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> Home</a>
         
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> Archive</a>
+        
+          <a class="main-nav-link" href="/about/"><i class="fa fa-user"></i> About</a>
+        
+          <a class="main-nav-link" href="/atom.xml"><i class="fa fa-rss"></i> RSS</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="search"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
       </div>
     </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                首页
-              </a>
-            </li>
-        
-            <li class="">
-              <a href="/categories"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                分类
-              </a>
-            </li>
-        
-            <li class="">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                标签
-              </a>
-            </li>
-        
-            <li class="">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                归档
-              </a>
-            </li>
-        
-      </ul>
-    </div>
   </div>
-</aside>
-
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row clearfix">
-        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">
-            <span>日常问题解决记录</span>
-            
-        </div>
-        
-        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
-            <i class="icon icon-lg icon-search"></i>
-        </a>
-        
-    </div>
 </header>
-<header class="content-header post-header">
-    <img src="/img/banner.jpg" class="header-bg">
-    <div class="container fade-scale">
-        <h1 class="title">日常问题解决记录</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2021-02-25T03:02:40.000Z" itemprop="datePublished" class="page-time">
-  2021-02-25
-</time>
 
-
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Log/">Log</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Log/Fix/">Fix</a></li></ul></li></ul>
-
-            
-        </h5>
-        
-    </div>
+      <div class="outer">
+        <section id="main"><article id="post-日常问题解决记录" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
     
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      日常问题解决记录
+    </h1>
+  
 
-</header>
 
-<div id="site_search">
-    <div class="search-title clearfix">
-        <span class="pull-left">
-          <i class="icon icon-lg icon-search"></i>
-        </span>
-        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
-        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
-          <i class="icon icon-lg icon-close"></i>
-        </a>
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2021-02-25T03:02:40.000Z" itemprop="datePublished">2021年02月25日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/Log/">Log</a> > <a class="article-category-link" href="/categories/Log/Fix/">Fix</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2021/02/25/日常问题解决记录/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+  
+  <i class="fa fa-commt"></i>
+  Guestbook
+</a>
+
+
     </div>
-    <div id="local-search-result"></div>
-</div>
-
-
-<div class="container body-wrap">
-    <article id="post-日常问题解决记录"
-  class="post-article article-type-post" itemprop="blogPost">
-    <div class="post-card">
-        <h1 class="post-card-title">日常问题解决记录</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2021-02-25 11:02:40" datetime="2021-02-25T03:02:40.000Z"  itemprop="datePublished">2021-02-25</time>
-
-            
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Log/">Log</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Log/Fix/">Fix</a></li></ul></li></ul>
-
-
-
-            
-
-            
-
-
-            
-        </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            
-            <h1 id="指令配置相关"><a href="#指令配置相关" class="headerlink" title="指令配置相关"></a>指令配置相关</h1><h2 id="Git相关"><a href="#Git相关" class="headerlink" title="Git相关"></a>Git相关</h2><h3 id="撤销commit"><a href="#撤销commit" class="headerlink" title="撤销commit"></a>撤销commit</h3><p>1.git reset HEAD^ 撤销最后一次commit</p>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="指令配置相关"><a href="#指令配置相关" class="headerlink" title="指令配置相关"></a>指令配置相关</h1><h2 id="Git相关"><a href="#Git相关" class="headerlink" title="Git相关"></a>Git相关</h2><h3 id="撤销commit"><a href="#撤销commit" class="headerlink" title="撤销commit"></a>撤销commit</h3><p>1.git reset HEAD^ 撤销最后一次commit</p>
 <h3 id="查看远端仓库地址"><a href="#查看远端仓库地址" class="headerlink" title="查看远端仓库地址"></a>查看远端仓库地址</h3><p>2.git remote -v 查看远端仓库地址</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01$ git remote -v</span><br><span class="line">origin  https://github.com/danengz/OpenCVDemo.git (fetch)</span><br><span class="line">origin  https://github.com/danengz/OpenCVDemo.git (push)</span><br></pre></td></tr></table></figure>
 
@@ -216,12 +145,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   &quot;\347\211\210\346\234\254\347\256\241\347\220\206/.DS_Store&quot;</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line"></span><br><span class="line">        &quot;\347\211\210\346\234\254\347\256\241\347\220\206/\350\264\250\351\207\217\344\277\235\350\257\201/\346\265\213\350\257\225\347\224\250\344\276\213\351\233\206/\346\224\257\344\273\230\347\233\270\345\205\263.numbers&quot;</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br><span class="line"></span><br><span class="line">chenyulong01deMacBook-Pro:WbuDoc chenyulong01$ git config --global core.quotepath false</span><br><span class="line">chenyulong01deMacBook-Pro:WbuDoc chenyulong01$ git status</span><br><span class="line">On branch master</span><br><span class="line">Your branch is up-to-date with &apos;origin/master&apos;.</span><br><span class="line"></span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   .DS_Store</span><br><span class="line">        modified:   版本管理/.DS_Store</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br></pre></td></tr></table></figure>
 
 <p>解决方案： <strong>git config –global core.quotepath false</strong></p>
-<h3 id="github-token"><a href="#github-token" class="headerlink" title="github token"></a>github token</h3><p><a href="https://docs.github.com/cn/get-started/getting-started-with-git/updating-credentials-from-the-macos-keychain" target="_blank" rel="noopener">Mac修改网址</a><br>在钥匙串中搜索github.com，点显示密码：修改密码改成token即可：</p>
-<figure class="image-box">
-                <a rel=日常问题解决记录 href="http://nunu03.github.io/2021/02/25/日常问题解决记录/github-password.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/02/25/日常问题解决记录/github-password.png" alt title class></a>
-                <p></p>
-            </figure>
-
+<h3 id="github-token"><a href="#github-token" class="headerlink" title="github token"></a>github token</h3><p><a href="https://docs.github.com/cn/get-started/getting-started-with-git/updating-credentials-from-the-macos-keychain" target="_blank" rel="noopener">Mac修改网址</a><br>在钥匙串中搜索github.com，点显示密码：修改密码改成token即可：<br><img src="http://nunu03.github.io/2021/02/25/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E8%AE%B0%E5%BD%95/github-password.png" alt></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chenyuddddeMacBook-Pro:nunu03.github.io chenxxx$ git remote set-url origin https://ghp_fGtnlW3RO2ncOdCwi1UVNStf9l3eSE2Jjsdsfsd@github.com/chesdsd/nunu03.github.io.git/</span><br></pre></td></tr></table></figure>
 
 <h2 id="gradle相关"><a href="#gradle相关" class="headerlink" title="gradle相关"></a>gradle相关</h2><h3 id="查看Gradle-Task对应源码类"><a href="#查看Gradle-Task对应源码类" class="headerlink" title="查看Gradle Task对应源码类"></a>查看Gradle Task对应源码类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01$ ./gradlew -q help --task app:mergeReleaseResources</span><br><span class="line">Detailed task information for app:mergeReleaseResources</span><br><span class="line">Path</span><br><span class="line">     :app:mergeReleaseResources</span><br><span class="line">Type</span><br><span class="line">     MergeResources (com.android.build.gradle.tasks.MergeResources)</span><br><span class="line">Description</span><br><span class="line">     -</span><br><span class="line">Group</span><br><span class="line">     -</span><br><span class="line">chenyulong01deMacBook-Pro:MyActivityTest chenyulong01$</span><br></pre></td></tr></table></figure>
@@ -337,11 +261,7 @@
 <p>解决方案：在gradle.properties配置文件中添加，android.jetifier.blacklist = common-27.1.0.jar,bundletool-0.14.0.jar</p>
 <h2 id="Duplicate-jar-entry-a-class"><a href="#Duplicate-jar-entry-a-class" class="headerlink" title="Duplicate jar entry [a.class])"></a>Duplicate jar entry [a.class])</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Execution failed for task &apos;:58WuxianClient:minifyReleaseWithProguard&apos;.</span><br><span class="line">&gt; java.io.IOException: Can&apos;t write [/Users/chenyulong01/AndroidStudioProjects/58/58town/58ClientProject/58WuxianClient/build/intermediates/shrunk_jar/release/minified.jar] (Can&apos;t read [/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/1749dbd4dcd5d376e66539c8b1f84b24/jetified-asm-analysis-7.0.jar(;;;;;;;**.class)] (Duplicate jar entry [a.class]))</span><br></pre></td></tr></table></figure>
 
-<p>解决方案：在gradle task 中，点击执行androidDependencies,打印出所有依赖列表，查找出重复对组，然后去去除依赖即可。</p>
-<figure class="image-box">
-                <a rel=日常问题解决记录 href="http://nunu03.github.io/2021/02/25/日常问题解决记录/dependencies.jpg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/02/25/日常问题解决记录/dependencies.jpg" alt title class></a>
-                <p></p>
-            </figure>
+<p>解决方案：在gradle task 中，点击执行androidDependencies,打印出所有依赖列表，查找出重复对组，然后去去除依赖即可。<br><img src="http://nunu03.github.io/2021/02/25/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E8%AE%B0%E5%BD%95/dependencies.jpg" alt></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">+--- org.ow2.asm:asm-commons:7.0@jar</span><br><span class="line">+--- org.ow2.asm:asm-util:7.0@jar</span><br><span class="line">+--- org.ow2.asm:asm-analysis:7.0@jar</span><br><span class="line">+--- org.ow2.asm:asm-tree:7.0@jar</span><br><span class="line"></span><br><span class="line">implementation (&apos;com.android.tools.build:gradle:4.0.2&apos;)</span><br><span class="line">            &#123;</span><br><span class="line">                exclude group: &apos;javax.activation&apos;</span><br><span class="line">                exclude group: &apos;org.apache.httpcomponents&apos;</span><br><span class="line">                exclude group: &apos;org.ow2.asm&apos;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="Duplicate-class-javax-activation-ActivationDataFlavor-found-in-modules"><a href="#Duplicate-class-javax-activation-ActivationDataFlavor-found-in-modules" class="headerlink" title="Duplicate class javax.activation.ActivationDataFlavor found in modules"></a>Duplicate class javax.activation.ActivationDataFlavor found in modules</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.lang.RuntimeException: Duplicate class javax.activation.ActivationDataFlavor found in modules javax.activation-1.2.0.jar (com.sun.activation:javax.activation:1.2.0) and javax.activation-api-1.2.0.jar (javax.activation:javax.activation-api:1.2.0)</span><br></pre></td></tr></table></figure>
@@ -350,273 +270,260 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">implementation (&apos;com.android.tools.lint:lint-gradle:27.0.2&apos;)</span><br><span class="line">            &#123;</span><br><span class="line">                exclude group: &apos;com.sun.activation&apos;, module: &apos;javax.activations&apos;</span><br><span class="line">                exclude group: &apos;com.google.code.findbugs&apos;</span><br><span class="line">                exclude group: &apos;javax.inject&apos;</span><br><span class="line">                exclude group: &apos;com.android.tools.external.com-intellij&apos;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
 
 
-        </div>
         
-<blockquote class="post-copyright">
-    <div class="content">
-        
-<span class="post-time">
-    最后更新时间：<time datetime="2022-02-18T07:59:01.000Z" itemprop="dateUpdated">2022-02-18 15:59:01</time>
-</span><br>
-
-
-        
-        转载注明出处，原文地址：<a href="/2021/02/25/日常问题解决记录/" target="_blank" rel="external">http://nunu03.github.io/2021/02/25/日常问题解决记录/</a>
-        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> Contents</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#指令配置相关"><span class="toc-text">指令配置相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git相关"><span class="toc-text">Git相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销commit"><span class="toc-text">撤销commit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看远端仓库地址"><span class="toc-text">查看远端仓库地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-stash"><span class="toc-text">git stash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux下Git命令中文显示乱码"><span class="toc-text">Linux下Git命令中文显示乱码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#github-token"><span class="toc-text">github token</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gradle相关"><span class="toc-text">gradle相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看Gradle-Task对应源码类"><span class="toc-text">查看Gradle Task对应源码类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bash-gradlew-Permission-denied"><span class="toc-text">bash: ./gradlew: Permission denied</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sdkman"><span class="toc-text">sdkman</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装groovy"><span class="toc-text">安装groovy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置路径使idea容易找到"><span class="toc-text">配置路径使idea容易找到</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装目录"><span class="toc-text">安装目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mac系统如何显示隐藏文件？"><span class="toc-text">Mac系统如何显示隐藏文件？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-Mac下统计当前文件夹下的文件个数、目录个数"><span class="toc-text">Linux/Mac下统计当前文件夹下的文件个数、目录个数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#adb-backup"><span class="toc-text">adb backup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#adb多用户操作"><span class="toc-text">adb多用户操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境变量设置"><span class="toc-text">环境变量设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#端口查看"><span class="toc-text">端口查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#npm-install-https-certificate"><span class="toc-text">npm install https certificate</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nps穿透"><span class="toc-text">nps穿透</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#异常相关"><span class="toc-text">异常相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-Studio-不能调试"><span class="toc-text">Android Studio 不能调试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-Studio-Connect-to-127-0-0-1-8888-127-0-0-1-failed-Connection-refused-Connection-refused"><span class="toc-text">Android Studio - Connect to 127.0.0.1:8888 [/127.0.0.1] failed: Connection refused (Connection refused)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Xposed去hook方法TestArray-Person-person"><span class="toc-text">使用Xposed去hook方法TestArray(Person[] person)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Execution-failed-for-JetifyTransform"><span class="toc-text">Execution failed for JetifyTransform</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Duplicate-jar-entry-a-class"><span class="toc-text">Duplicate jar entry [a.class])</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Duplicate-class-javax-activation-ActivationDataFlavor-found-in-modules"><span class="toc-text">Duplicate class javax.activation.ActivationDataFlavor found in modules</span></a></li></ol></li></ol>
     </div>
-    <footer>
-        <a href="http://nunu03.github.io">
-            <img src="/img/avatar.jpg" alt="Nunu Long">
-            Nunu Long
-        </a>
-    </footer>
-</blockquote>
+  </div>
 
+
+            </div>
         
-        <div class="post-footer">
-            
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fix/">Fix</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Log/">Log</a></li></ul>
-
-            <div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
+        
+          <blockquote id="copyright">
+              <p>Original link: <a href="http://nunu03.github.io/2021/02/25/日常问题解决记录/">http://nunu03.github.io/2021/02/25/日常问题解决记录/</a></p>
+              <p>Copyright Notice: 转载请注明出处.</p>
+          </blockquote>
+        
       
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/02/25/日常问题解决记录/&title=《日常问题解决记录》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
+    </div>
+    <footer class="article-footer">
       
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/02/25/日常问题解决记录/&title=《日常问题解决记录》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      
-    </ul>
- </div>
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fix/">Fix</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Log/">Log</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>Share:</span>
+    </div>
 
 
 
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2021/01/06/nps-内网穿透/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          nps 内网穿透
+        
+      </div>
     </a>
-</div>
-
-        </div>
+  
+  
+    <a href="/2021/03/24/OpenCV学习/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
         
-            
-
-
+          OpenCV学习
         
-    </div>
-    
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="prev">
-      <a href="/2021/03/24/OpenCV学习/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">OpenCV学习</h4>
-      </a>
-    </div>
-  
-
-  
-    <div class="next">
-      <a href="/2021/01/06/nps-内网穿透/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">nps 内网穿透</h4>
-      </a>
-    </div>
+      </div>
+    </a>
   
 </nav>
 
+      
+      
+        
 
-    
-    
-        <aside class="post-widget">
-            <nav class="post-toc-wrap" id="post-toc">
-                <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#指令配置相关"><span class="post-toc-number">1.</span> <span class="post-toc-text">指令配置相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Git相关"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Git相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#撤销commit"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">撤销commit</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#查看远端仓库地址"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">查看远端仓库地址</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#git-stash"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">git stash</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Linux下Git命令中文显示乱码"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">Linux下Git命令中文显示乱码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#github-token"><span class="post-toc-number">1.1.5.</span> <span class="post-toc-text">github token</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gradle相关"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">gradle相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#查看Gradle-Task对应源码类"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">查看Gradle Task对应源码类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#bash-gradlew-Permission-denied"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">bash: ./gradlew: Permission denied</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#sdkman"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">sdkman</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装groovy"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">安装groovy</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#配置路径使idea容易找到"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">配置路径使idea容易找到</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装目录"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">安装目录</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Mac系统如何显示隐藏文件？"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Mac系统如何显示隐藏文件？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Linux-Mac下统计当前文件夹下的文件个数、目录个数"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Linux/Mac下统计当前文件夹下的文件个数、目录个数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#adb-backup"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">adb backup</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#adb多用户操作"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">adb多用户操作</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#环境变量设置"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">环境变量设置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#端口查看"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">端口查看</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#npm-install-https-certificate"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">npm install https certificate</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#nps穿透"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">nps穿透</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#异常相关"><span class="post-toc-number">2.</span> <span class="post-toc-text">异常相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Android-Studio-不能调试"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Android Studio 不能调试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Android-Studio-Connect-to-127-0-0-1-8888-127-0-0-1-failed-Connection-refused-Connection-refused"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Android Studio - Connect to 127.0.0.1:8888 [/127.0.0.1] failed: Connection refused (Connection refused)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用Xposed去hook方法TestArray-Person-person"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">使用Xposed去hook方法TestArray(Person[] person)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Execution-failed-for-JetifyTransform"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">Execution failed for JetifyTransform</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Duplicate-jar-entry-a-class"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">Duplicate jar entry [a.class])</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Duplicate-class-javax-activation-ActivationDataFlavor-found-in-modules"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">Duplicate class javax.activation.ActivationDataFlavor found in modules</span></a></li></ol></li></ol>
-            </nav>
-            <div class="toc-bar"><div>
-        </aside>
-    
+
+
+
+
+
+
+
+      
+    </footer>
+  </div>
 </article>
-
-
-</div>
-
-    </main>
-    <footer class="footer ">
-    
-    <div class="top">
+</section>
         
-            <p>
-    <span>Links：</span>
+          <aside id="sidebar">
+  
     
-    <span class="blogroll-item">
-        <a href="https://handsomeliuyang.github.io/" target="_blank">liuyang</a>
-    </span>
-    
-    <span class="blogroll-item">
-        <a href="https://www.kotlincn.net/docs/reference/map-operations.html" target="_blank">kotlincn</a>
-    </span>
-    
-</p>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Recent</h3>
+    <div class="widget">
+      <ul>
         
+          <li>
+            <a href="/2022/05/29/Android知识点整理/">Android知识点整理</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/29/hello-world/">Hexo 配置</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/08/epic原理浅析/">epic原理浅析</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/16/python-设置Host代理/">Python设置Host代理</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/27/Pngquant-图片压缩/">Pngquant-图片压缩</a>
+          </li>
+        
+      </ul>
     </div>
+  </div>
+
+
+  
     
-    <div class="bottom">
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/Charles/" style="font-size: 13.33px;">Charles</a> <a href="/tags/Color/" style="font-size: 10px;">Color</a> <a href="/tags/FaceUnity/" style="font-size: 16.67px;">FaceUnity</a> <a href="/tags/Fix/" style="font-size: 10px;">Fix</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/GitLab/" style="font-size: 10px;">GitLab</a> <a href="/tags/Gradle/" style="font-size: 20px;">Gradle</a> <a href="/tags/Haar/" style="font-size: 10px;">Haar</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hook/" style="font-size: 10px;">Hook</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Log/" style="font-size: 10px;">Log</a> <a href="/tags/OpenCV/" style="font-size: 10px;">OpenCV</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Title/" style="font-size: 10px;">Title</a> <a href="/tags/Toast/" style="font-size: 10px;">Toast</a> <a href="/tags/View/" style="font-size: 10px;">View</a> <a href="/tags/WebHook/" style="font-size: 10px;">WebHook</a> <a href="/tags/Wireshark/" style="font-size: 10px;">Wireshark</a> <a href="/tags/Xposed/" style="font-size: 13.33px;">Xposed</a> <a href="/tags/aar/" style="font-size: 10px;">aar</a> <a href="/tags/cmd/" style="font-size: 10px;">cmd</a> <a href="/tags/ngrok/" style="font-size: 13.33px;">ngrok</a> <a href="/tags/nps/" style="font-size: 10px;">nps</a> <a href="/tags/人脸检测/" style="font-size: 10px;">人脸检测</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> Archive</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Charles/">Charles</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Color/">Color</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FaceUnity/">FaceUnity</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fix/">Fix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitLab/">GitLab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haar/">Haar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hook/">Hook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Log/">Log</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Title/">Title</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Toast/">Toast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebHook/">WebHook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireshark/">Wireshark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Xposed/">Xposed</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aar/">aar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok/">ngrok</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nps/">nps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸检测/">人脸检测</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-link"></i> Blogroll</h3>
+    <div class="widget">
+      <ul>
+      
+        <li>
+          <a href="http://www.example1.com/">site-name1</a>
+        </li>
+      
+        <li>
+          <a href="http://www.example2.com/">site-name2</a>
+        </li>
+      
+        <li>
+          <a href="http://www.example3.com/">site-name3</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">Site Map</a>
+        <span> | </span><a href="/atom.xml">Subscribe to this site</a>
+        <span> | </span><a href="/about/">Contact the blogger</a>
+      </p>
+      
         <p>
-            <span>
-                Nunu Long &copy; 2019 - 2022
-            </span>
-        		
-           	
-            
-            
-            <span>
-	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
-            </span>
-            
-            
-            
-
-            
-                
-<span class="site-uv" title="总访客量">
-    <i class="icon icon-user"></i>
-    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
-</span>
-
-
-<span class="site-pv" title="总访问量">
-    <i class="icon icon-eye"></i>
-    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
-</span>
-
-            
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
         </p>
+      
+      <p>
+        <span>Copyright &copy; 2022 Nunu Long.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
     </div>
+  </div>
 </footer>
 
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+    </div>
+  </div>
+  <script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/search.json.js"></script>
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/02/25/日常问题解决记录/&title=《日常问题解决记录》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/02/25/日常问题解决记录/&title=《日常问题解决记录》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMUlEQVR42u3aQW7DMAwF0dz/0u62QGtnPqkEEDVeBYFi5WlBkCJfL/xcv56/3z+vJ2vIOxc8MmTI2JZxPT58Te04lu0rQ4aMAxh3Wz5/7oTRdN83v5UhQ4aMMAjefUPSRxkyZMj4RMAlf4ivlyFDhoxOEZv+ivyWHN/iWlyGDBkbMvg12fc/f6S/IUOGjK0YV/isKmhr4fV2FxkyZIxm8ADHE7K0GdnfRYYMGbMZvDTlYxO1IEtCMMpbZciQMY7Bw2Xtor9zfdY5JhkyZExi9ANuOgq2Kk18k9vKkCFjKKMWatNhi86Axe1eMmTIOIBBwi4pOEm4TItStFKGDBkHMNKkkJev5GqPX//dvlOGDBmjGaSwXBt8edrHG6IyZMiYzehfrqXNRX66PGGVIUPGaYznYQhyKdYJr8VSVoYMGaMZvK3YH/niV3v8EIMMV4YMGdsyOoNcnRGKWtlc7G/IkCFjBCOF8bGJWhGbNhhkyJAxm5FeqPGAS4re2rXdm/UyZMgYyuBpWdpi5A3OtOj9550yZMg4hlELoLURCp56oiRShgwZBzPSzWptg2W5rQwZMsYxrvBZ205IxzWKua0MGTI2Z3SCHXkpOQJepqZNCBkyZExi8CDbL27TS73g4GTIkHEAIy04Sejsj5rxxFGGDBky0lEMXr7yJijyyZAhQwaug2vXYTxZXBxwZciQsQkjbQagAYhwFIO0P2XIkHEmI827Vg1M8Iu2ZWFdhgwZ+zF+ABit+gj7l/aLAAAAAElFTkSuQmCC" alt="微信分享二维码">
-</div>
-
-
-    
-    <!-- main-js -->
-<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
-<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
-<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
-
-<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-
-<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
-<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
-
-<!-- third-party -->
+<script src="/js/script.js"></script>
 
 
 
 
 
-
-<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
-<script type="text/javascript">
-	var search_path = "search.xml";
-	if (search_path.length === 0) {
-		search_path = "search.xml";
-	}
-	var path = "/" + search_path;
-	searchFunc(path, "local-search-input", "local-search-result");
-</script>
+  <script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+    <script src="/localshare/js/social-share.js"></script>
+    <script src="/localshare/js/qrcode.js"></script>
+  
+  
 
 
 
-    
-    
+  
 
+  
 
+  
 
+  
 
+  
 
-    <!-- mathjax config similar to math.stackexchange -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-            processEscapes: true,
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-    });
-</script>
+  
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
+  
 
-<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  
 
 
 
 
 
-
-
-    
 </body>
 </html>
