@@ -5,21 +5,995 @@
     <entry>
       <title><![CDATA[Android知识点整理]]></title>
       <url>/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</url>
-      <content type="html"><![CDATA[<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>循序表（数组arraylist）和linklist （ 双向链表）链表的插入、删除、查询的效率？<br>如果一个数组反复插入删除怎么降低时间复杂度？</p>
-<h3 id="A-数组插入、删除："><a href="#A-数组插入、删除：" class="headerlink" title="A.数组插入、删除："></a>A.数组插入、删除：</h3><p>是在下标i的地方，后边的数组整体system.copy一份，然后插入到i位置。Copy是一个循环。<br>链表插入、删除：是一个节点node，node包含两部分，数组和指针，当前指针指向下一个数组。</p>
-<p>数组，查找快，直接用下标获取。<br>链表，查找慢，需要循环获取。</p>
-<h3 id="B-标记-查找："><a href="#B-标记-查找：" class="headerlink" title="B.标记-查找："></a>B.标记-查找：</h3><p>删除的时候不删除，赋值为null或者标记其他，这个下次在插入的时候直接赋值即可。然后在适当的机会，循环删除值为null的数组即可。这样就可以优化了对象的反复创建和删除。</p>
-<h3 id="C-linkedlist，"><a href="#C-linkedlist，" class="headerlink" title="C.linkedlist，"></a>C.linkedlist，</h3><p>查询第一个和最后一个时间复杂度一样？一样，查询第一个和倒数第二个一样吗？不一样，liankedlist是双向链表。倒数第二个需要两步。</p>
+      <content type="html"><![CDATA[<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><h3 id="循序表（数组arraylist）和linklist-（-双向链表）链表的插入、删除、查询的效率？"><a href="#循序表（数组arraylist）和linklist-（-双向链表）链表的插入、删除、查询的效率？" class="headerlink" title="循序表（数组arraylist）和linklist （ 双向链表）链表的插入、删除、查询的效率？"></a>循序表（数组arraylist）和linklist （ 双向链表）链表的插入、删除、查询的效率？</h3><h3 id="如果一个数组反复插入删除怎么降低时间复杂度？"><a href="#如果一个数组反复插入删除怎么降低时间复杂度？" class="headerlink" title="如果一个数组反复插入删除怎么降低时间复杂度？"></a>如果一个数组反复插入删除怎么降低时间复杂度？</h3><p>A.数组插入、删除：是在下标i的地方，后边的数组整体system.copy一份，然后插入到i位置。Copy是一个循环。</p>
+<p>链表插入、删除：是一个节点node，node包含两部分，数组和指针，当前指针指向下一个数组。</p>
+<p>数组，查找快，直接用下标获取。</p>
+<p>链表，查找慢，需要循环获取。</p>
+<p>B.标记-查找：删除的时候不删除，赋值为null或者标记其他，这个下次在插入的时候直接赋值即可。然后在适当的机会，循环删除值为null的数组即可。这样就可以优化了对象的反复创建和删除。</p>
+<p>C.linkedlist，查询第一个和最后一个时间复杂度一样？一样，查询第一个和倒数第二个一样吗？不一样，liankedlist是双向链表。倒数第二个需要两步。</p>
 <figure class="image-box">
-                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/hashmap-1.png" alt title class>
-                <p></p>
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/2354eb28445e06f90aa01870843db321.png" alt="descript" title class>
+                <p>descript</p>
             </figure>
-<h3 id="hashmap？长度默认16"><a href="#hashmap？长度默认16" class="headerlink" title="hashmap？长度默认16"></a>hashmap？长度默认16</h3><h3 id="jdk-1-7-为什么用链表？用的是hash碰撞原理"><a href="#jdk-1-7-为什么用链表？用的是hash碰撞原理" class="headerlink" title="jdk 1.7:为什么用链表？用的是hash碰撞原理"></a>jdk 1.7:为什么用链表？用的是hash碰撞原理</h3><p>A。把key通过hashcode对length取模，设置下标。所以hashmap的table表是顺序的。然后创建一个节点（数据hashmapentry），放到这个下标的位置。同时每个下表对应的所有节点是一个单链表。<br>B。Hashcode的获取，就是一个hash碰撞的过程。比如hashcode=1和hashcode=17，是在一个下标上。<br>C。Get一个数据，就是用过key获取链表，然后在通过key循环具体的值，循环过程中要判断hashcode一致，判断key一致。<br>D。Hash表在什么情况性能最差？所有数据在一个节点上，那链表久非常大，效率就非常低了。<br>E。什么长度是16？因为在hash下标的过程中。16的二进制是10000.<br> <figure class="image-box">
-                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/hashmap-2.png" alt title class>
-                <p></p>
-            </figure></p>
-<h3 id="jdk1-8-每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。"><a href="#jdk1-8-每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。" class="headerlink" title="jdk1.8:每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。"></a>jdk1.8:每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。</h3><p>A。hash冲突后不在用链表保存相同的index节点，而是采用红黑树保存冲突节点。<br>B。红黑树构建的时候很复杂、效率很低（旋转）。所以当链表超过8个才使用红黑树。</p>
-<h3 id="hashmap线程安全问题：不安全"><a href="#hashmap线程安全问题：不安全" class="headerlink" title="hashmap线程安全问题：不安全"></a>hashmap线程安全问题：不安全</h3><p>如果链表被同时操作就会出现问题。<br>Hashtable线程安全；所有函数（put、get，remove）的时候用到了synchronized。但是这样的任何访问都加了锁，包括所有hashcode上。<br>Synchronized，内置锁，开锁和关锁都是jvm完成的。所以get时候不能put。只能执行其中一个。<br>Concurrenthashmap：是基于hashtable的优化，它是在具体的链表上锁，也是用到了synchronized，但是它只是锁在了链表上。</p>
+
+
+<h3 id="hashmap？长度默认16"><a href="#hashmap？长度默认16" class="headerlink" title="hashmap？长度默认16"></a>hashmap？长度默认16</h3><h4 id="jdk-1-7-为什么用链表？用的是hash碰撞原理"><a href="#jdk-1-7-为什么用链表？用的是hash碰撞原理" class="headerlink" title="jdk 1.7:为什么用链表？用的是hash碰撞原理"></a>jdk 1.7:为什么用链表？用的是hash碰撞原理</h4><p>A。把key通过hashcode对length取模，设置下标。所以hashmap的table表是顺序的。然后创建一个节点（数据hashmapentry），放到这个下标的位置。同时每个下表对应的所有节点是一个单链表。</p>
+<p>B。Hashcode的获取，就是一个hash碰撞的过程。比如hashcode=1和hashcode=17，是在一个下标上。</p>
+<p>C。Get一个数据，就是用过key获取链表，然后在通过key循环具体的值，循环过程中要判断hashcode一致，判断key一致。</p>
+<p>D。Hash表在什么情况性能最差？所有数据在一个节点上，那链表久非常大，效率就非常低了。</p>
+<p>E。什么长度是16？因为在hash下标的过程中。16的二进制是10000.</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/98a374c9642bd13c072c8df2daa3c646.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h4 id="jdk1-8-每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。"><a href="#jdk1-8-每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。" class="headerlink" title="jdk1.8:每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。"></a>jdk1.8:每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。</h4><p>A。hash冲突后不在用链表保存相同的index节点，而是采用红黑树保存冲突节点。</p>
+<p>B。红黑树构建的时候很复杂、效率很低（旋转）。所以当链表超过8个才使用红黑树。</p>
+<p>hashmap线程安全问题：不安全。</p>
+<p>如果链表被同时操作就会出现问题。</p>
+<p>Hashtable线程安全；所有函数（put、get，remove）的时候用到了synchronized。但是这样的任何访问都加了锁，包括所有hashcode上。</p>
+<p>Synchronized，内置锁，开锁和关锁都是jvm完成的。所以get时候不能put。只能执行其中一个。</p>
+<p>Concurrenthashmap：是基于hashtable的优化，它是在具体的链表上锁，也是用到了synchronized，但是它只是锁在了链表上。</p>
+<h2 id="2-广播注册方式？有什么不同？通信原理是什么？"><a href="#2-广播注册方式？有什么不同？通信原理是什么？" class="headerlink" title="2.广播注册方式？有什么不同？通信原理是什么？"></a>2.广播注册方式？有什么不同？通信原理是什么？</h2><p>动态，静态。原理都是Binder。静态广播不需要手动取消注册，周期是整个app期间。动态广播需要。</p>
+<h2 id="3-hashmap和sparsearray哪个更优？"><a href="#3-hashmap和sparsearray哪个更优？" class="headerlink" title="3.hashmap和sparsearray哪个更优？"></a>3.hashmap和sparsearray哪个更优？</h2><p>Hashmap：hashcode操作，耗时。Hashmap是任意对象。装载因子（阀值）是0.75。达到16*0.75=12，开始扩容，也是耗时操作。浪费了4个空间，所以耗内存。Get是遍历获取链表，耗时。</p>
+<p><strong>Sparsearray：两个数组：默认空间10；key[],value[]. Key与value是一一对应的。Sparsearray是int，节省内存空间。对应的key应该存在数组的哪里？采用了二分查找，找到数组中的位置，然后通过system。Copy移动数组插入。</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/66fc84f2a6a39740d7143af12213dbab.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>get？通过二分查找找到下标，然后就可以了。速度快。</p>
+<p>拷贝效率也低啊？但是这里，remove时是没有具体删除的，而是标记一个delete。这样插入的时候直接赋值就可以了。而hashmap是循环。</p>
+<p>所以，<strong>sparsearray</strong>时间更快。但是hashmap空间更小。</p>
+<h2 id="4-单例模式："><a href="#4-单例模式：" class="headerlink" title="4.单例模式："></a>4.单例模式：</h2><h3 id="A：双重校验："><a href="#A：双重校验：" class="headerlink" title="A：双重校验："></a>A：双重校验：</h3><h4 id="如何防止指令重排，添加volatile。"><a href="#如何防止指令重排，添加volatile。" class="headerlink" title="如何防止指令重排，添加volatile。"></a>如何防止指令重排，添加volatile。</h4><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/10be1191f3475ec1fdefec72e0668d45.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="B-懒汉式单利"><a href="#B-懒汉式单利" class="headerlink" title="B:懒汉式单利"></a>B:懒汉式单利</h3><h4 id="线程不安全"><a href="#线程不安全" class="headerlink" title="线程不安全"></a>线程不安全</h4><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/5cbd42da18a01320e01436dd6e9ce19c.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h4 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h4><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/48fe275d98c3eb469652933e10a72617.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>但是同步锁粒度太大：下边的粒度就小很多；
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/74efdc6c4e5cb88666f1ad66ce7750eb.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="C-饿汉式单例：线程安全"><a href="#C-饿汉式单例：线程安全" class="headerlink" title="C.饿汉式单例：线程安全"></a>C.饿汉式单例：线程安全</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/644b0d78d0f1b1e88a263b90ad976567.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="D-静态内部类单例：线程安全的："><a href="#D-静态内部类单例：线程安全的：" class="headerlink" title="D.静态内部类单例：线程安全的："></a>D.静态内部类单例：线程安全的：</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/773c5d7794f7a708bdaab1927d05111a.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="E-采用枚举：枚举默认线程安全；"><a href="#E-采用枚举：枚举默认线程安全；" class="headerlink" title="E.采用枚举：枚举默认线程安全；"></a>E.采用枚举：枚举默认线程安全；</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a5d69258dd6bb64fef4fbf71942dc5a1.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="F-使用容器实现单例："><a href="#F-使用容器实现单例：" class="headerlink" title="F.使用容器实现单例："></a>F.使用容器实现单例：</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/02ef798bd8a121e1afc05bd67aaf4d9c.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="5-string-的-与equals的区别？"><a href="#5-string-的-与equals的区别？" class="headerlink" title="5.string 的== 与equals的区别？"></a>5.string 的== 与equals的区别？</h2><p>String str1 = “a”常量池是在堆内存里的。==比较的是内存存放的位置。但是他们对hanshcode是相等的。</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/459264b8012eb9e62c17eda6fc85302d.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>equals比较的是字符串的序列，是具体的字字符比较。</p>
+<p>Stirng str = “阿”。str = str+“阿”。与string ds = new string （“阿阿”）；str和ds是一个对象，string是不可变的，因为string类里的方法，都是final。</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/52f7e8888b5476de8457a5008857ce45.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="6-volatile："><a href="#6-volatile：" class="headerlink" title="6.volatile："></a>6.volatile：</h2><h3 id="A-多线程可见"><a href="#A-多线程可见" class="headerlink" title="A.多线程可见"></a>A.多线程可见</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/97b51f640aa7d54114060bba0eeb81e0.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/d20dcdfe6c476ecd5c1339738c31901e.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/dec4eee4d976bed18eba9d17faddfdef.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/3bd1f9f4b7ffc671a609f6255866bdbf.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/dec4eee4d976bed18eba9d17faddfdef.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/3bd1f9f4b7ffc671a609f6255866bdbf.png)![descript</p>
+            </figure>**所以，volatile就相当于一个总线嗅探机制，当其中一个线程变化后，会修改主内存的值，其他线程会被通知，从新从主内存获取数据。并且8个操作是原子性的，其中一个指令执行，其他不会操作的。原理是：当一个线程执行write时，是被加了锁的（如下图的lock）。**
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/d848ab1e8edc6cdebe123e1c49e41e49.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/15d6be9cef1c056686289c51c56b1309.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="B：禁止指令重排（半初始化），原理是内存屏障。"><a href="#B：禁止指令重排（半初始化），原理是内存屏障。" class="headerlink" title="B：禁止指令重排（半初始化），原理是内存屏障。"></a>B：禁止指令重排（半初始化），原理是内存屏障。</h3><p><strong>双重检测的单例，为啥加volatile？就是禁止指令重排。顺序如下：</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/fe8052d5f7c4b30c7f1923f2858c4651.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>但是在cpu执行过程中，这个顺序会改变。如果在单线程里，这个顺序改变了也没关系，但是在多线程中，如果在一个线程创建了引用，而另一个线程在执行时，就会拿到这个引用，从而，拿到的值有可能是第一个线程未赋值的初始值0，而第二个还在初始化对象。</p>
+<h2 id="7-锁"><a href="#7-锁" class="headerlink" title="7.锁"></a>7.锁</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/fd841b7835ce24d859bd0f9bec799f5e.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/71eb21ec07af0113c280da265c13619d.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/b4b7fbfe5930e8ceeb2df9b92d10166e.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/b4b7fbfe5930e8ceeb2df9b92d10166e.png)![descript</p>
+            </figure>
+
+<p><strong>上述代码：多线程并发问题。会出现i–，最后不为0的情况。</strong></p>
+<h3 id="A．synchronized：内置锁，重量级锁"><a href="#A．synchronized：内置锁，重量级锁" class="headerlink" title="A．synchronized：内置锁，重量级锁"></a>A．synchronized：内置锁，重量级锁</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/838f183a70ef127976756a9c26cb3d31.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/7671fb42b8ab08a0242b16ca3255486b.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/da5750fc9016f156bec0b0a69b35561b.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/046bcab402e983036d50f5737c779c55.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/68547c4a3bd8971bae7521ccc6631ad0.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="B．AtomicInteger：乐观锁：无锁机制"><a href="#B．AtomicInteger：乐观锁：无锁机制" class="headerlink" title="B．AtomicInteger：乐观锁：无锁机制."></a>B．AtomicInteger：乐观锁：无锁机制.</h3><p>比synchronized快。<strong>缺点是：i.decrementAndGet的i—是可操作的。</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/ba8063b2ae18ed7d6358d9b37466b00b.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>原理：根据堆内存中的偏移量来获取value，比通过对象.value的拷贝方式要快。
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/3983caf6f9c91c28896dc421c065c8c8.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="C-ReentrantLock：可重入锁，也叫显示锁"><a href="#C-ReentrantLock：可重入锁，也叫显示锁" class="headerlink" title="C.ReentrantLock：可重入锁，也叫显示锁"></a>C.ReentrantLock：可重入锁，也叫显示锁</h3><p><strong>是接口lock锁的实现类。也可以自己实现公平锁或者不公平锁，因为队列线程是我们自己的。也是重量级锁。</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/1ae7cddbd38e40899d68c1bb77efe995.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>原理、执行过程：</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/807a85b110a59cc44fab3b7b8b28b238.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="D-CAS：先比较再交换。也是一种乐观锁，无锁机制。"><a href="#D-CAS：先比较再交换。也是一种乐观锁，无锁机制。" class="headerlink" title="D.CAS：先比较再交换。也是一种乐观锁，无锁机制。"></a>D.CAS：先比较再交换。也是一种乐观锁，无锁机制。</h3><p><strong>高并发不适合。但是如果只有几个线程，速度非常快。</strong></p>
+<p><strong>而且CAS有ABA问题：尤其是对象操作的时候。</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/923a0c790e4887ac2522ad868c47b2da.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="8-Context是什么？抽象类"><a href="#8-Context是什么？抽象类" class="headerlink" title="8.Context是什么？抽象类"></a>8.Context是什么？抽象类</h2><p>A.上下文，贯穿整个应用。</p>
+<p>B．运行环境：提供了一个应用运行所需要的信息、资源、系统服务等。</p>
+<p>C．场景：用户操作和系统交互这一过程就是一个场景。比如Activity之间的切换、服务的启动等都离不开Context。</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/f1aec1b60d5fb8b251e5f7c6366fe109.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/dd1bdce2ec3a15c50cdb3f31b336c191.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/1854e4b259dbab826ac133d2fc1fa5d0.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/0cd76fb4f3da0531d0f64d209f5cbc75.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/dd1bdce2ec3a15c50cdb3f31b336c191.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/1854e4b259dbab826ac133d2fc1fa5d0.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/0cd76fb4f3da0531d0f64d209f5cbc75.png)![descript</p>
+            </figure>
+
+<h2 id="9-什么是Activit、View、Window？"><a href="#9-什么是Activit、View、Window？" class="headerlink" title="9.什么是Activit、View、Window？"></a>9.什么是Activit、View、Window？</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/914b2724138ef7381142762ae6f73651.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/3f223045ae4a60aa1753642f9df25c50.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/3f223045ae4a60aa1753642f9df25c50.png)![descript</p>
+            </figure>
+
+<h2 id="10．Dex文件"><a href="#10．Dex文件" class="headerlink" title="10．Dex文件"></a>10．Dex文件</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/5061be4497ea2dc76626057bf0ee910b.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="11-APK打包流程"><a href="#11-APK打包流程" class="headerlink" title="11..APK打包流程"></a>11..APK打包流程</h2><p><strong>Xml通过aapt编译成R.JAVA</strong></p>
+<p><strong>Aidl通过aidl文件生成java文件</strong></p>
+<p><strong>然后通过javaCompiler把java文件转化为class文件。</strong></p>
+<p><strong>然后通过dex把class打包成.Dex文件。</strong></p>
+<p><strong>用apkbuild把所有文件，包括资源，图片文件通过zip压缩打包成apk，然后通过对齐，签名形成一个可运行的apk。</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/9cf4771de7e387e22c75fc4052511d42.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="12-事件分发处理机制"><a href="#12-事件分发处理机制" class="headerlink" title="12.事件分发处理机制"></a>12.事件分发处理机制</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/ea05017670bab7fd803e422e2d7373c9.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/88c0a2afb4981b79d034e8c67b46d19a.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/d9fe85dbe0218bb757875b3899ae1d94.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="Down事件的分发流程"><a href="#Down事件的分发流程" class="headerlink" title="Down事件的分发流程"></a>Down事件的分发流程</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/be635e4cec123a1908da7c4db6a8a67a.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="13-measureSpec是什么？原理是什么？"><a href="#13-measureSpec是什么？原理是什么？" class="headerlink" title="13.measureSpec是什么？原理是什么？"></a>13.measureSpec是什么？原理是什么？</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/e0131b0ad4b2f1caaded3ff72ced90d7.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p><strong>测量主要解决parent和wrap的测量。</strong></p>
+<p><strong>FlowLayout-》onMeasure：</strong></p>
+<p><strong>//计算孩子的宽/高:</strong></p>
+<p><strong>Width=100;height=300;</strong></p>
+<p><strong>//设置自己的宽/高：</strong></p>
+<p><strong>setMeasureDimension（width，height）</strong></p>
+<p><strong>那如何计算孩子的宽高？如何度量？其中view的大小，不是int，而是MeasureSpec。</strong></p>
+<p><strong>所有通过childView.getMeasureWidth(),childView.getMeasureheigth(),但是需要在获取之前设置度量孩子的大小childView.measure(widthMeasureSpec,heightMeasureSpec), widthMeasureSpec,heightMeasureSpec是什么？可以认为是父类宽高，childView的最大宽度，就是父类的宽高减去padding。那MeasureSpec如何得到？因为当前的子view也有可能有子view，所以.measure的时候，还需要通过getChildMeasureSpec获取widthMeasureSpec,heightMeasureSpec。</strong></p>
+<p><strong>通俗的说？widthMeasureSpec,heightMeasureSpec就是能给chaildView的具体的大小。</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/48d6d5718255cba3d97c87f4f31f348e.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p><strong>那为什要measure？因为只有把父类的具体大小给孩子，才能测量出孩子的具体宽高。</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/f76030a1d33b9cec8be961434904f3cd.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="14-layout自定义View布局原理？"><a href="#14-layout自定义View布局原理？" class="headerlink" title="14.layout自定义View布局原理？"></a>14.layout自定义View布局原理？</h2><p><strong>就是确定每一个view的left，top，right，bottom。</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/543de1ef139cc3b29c1fa2a93c9f365c.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>**onLayout是用的视图坐标系：因为你布局的时候，是根据父布局进行布局的。**
+
+<p><strong>Layoutparams保存了view的坐标。</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/3aac2163213b1687e10a5fa536f15873.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/3204210597a90c40f9183661222f43f9.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/2adb5515b610efc599bd7c37fa3be5cb.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>## </p>
+<h2 id="15-inflate解析xml过程？"><a href="#15-inflate解析xml过程？" class="headerlink" title="15.inflate解析xml过程？"></a>15.inflate解析xml过程？</h2><p><strong>Xml-》解析-？然后创建view，通过反射创建，比如自定义view在xml中使用，需要全路径名-》创建view后，会把解析的属性给view。</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/7f8958e7e49458f6ab8405e4f914579e.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/17127d6dfeeda274e264f023570785e6.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/7d7e522690b1332b3a393f5dcb3f395c.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/db859dea09d4f9f958d8ace4c6f07bd2.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/7d7e522690b1332b3a393f5dcb3f395c.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/db859dea09d4f9f958d8ace4c6f07bd2.png)![descript</p>
+            </figure>
+
+<h2 id="18-沉浸式开发原理？状态栏和ui一致背景？"><a href="#18-沉浸式开发原理？状态栏和ui一致背景？" class="headerlink" title="18.沉浸式开发原理？状态栏和ui一致背景？"></a>18.沉浸式开发原理？状态栏和ui一致背景？</h2><h2 id="19-ViewPage？默认缓存3个界面。"><a href="#19-ViewPage？默认缓存3个界面。" class="headerlink" title="19.ViewPage？默认缓存3个界面。"></a>19.ViewPage？默认缓存3个界面。</h2><p>Setoffscreenpagelimit（1）， Limint为1.他的意思是最多缓存当前界面的左右两个界面，加上当前就是3个界面。</p>
+<p>预加载：问题？缓存，会耗费更多内存，时间？会耗费更多时间。</p>
+<p>所以采用懒加载方案，就是loading或者白屏的时候。</p>
+<p>所以解决这个问题的原理：populate：填充+fragment adapter适配器模式。</p>
+<p>缓存：就是创建fragment放入到arraylist里。</p>
+<p>适配：当左右滑动时，先处理左边或右边的界面？如何处理，初始化（instantiateItem）一个fragment（放入arraylist）和销毁（destroyItem）掉一个fragment（从arraylist中删除）。</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/bd4ed3c5cb23a36045848bc825ae204a.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/65b13e836a3a44450a536e66ee0bff70.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>Attch，fragment不会立即执行。这个时候，首先还要把刚初始化的页面设置为不可见setUerVisibleHint，也就是即将要缓存起来的item不可见。
+
+<p>看下图：首先要缓存tab4，把tab1设为不可见，设置当前的目标tab3设为可见，并且直接用的FragmentCompat，。但是这个可见是在finishUpdate的commit之前执行的，所以，viewpage的fragment的生命周期，第一个是setUserVisibleHint。如下下图。</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/ca1082bdee1ec80dd6f3c190346a205e.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/91b2b685a083675d8d50d870b7d87ff9.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/91b2b685a083675d8d50d870b7d87ff9.png)![descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/d751a058b3cb0be13cab98114068c28e.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>setPrimaryItem会执行两个动作：之前的item设置为不可见，新的item设为可见。
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/4e47cd4f410f9eefdd6fefbd8043ae08.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>只有执行fragment的CommitAllowingStateLoss之后才会走fragment生命周期。</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/948c3c01ae485bf5a7ba2a58ea1ed80a.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/0e3fd078dba2c55ad0e3588d3e4835de.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/0e3fd078dba2c55ad0e3588d3e4835de.png)![descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/311c922df3a027ebc3ada7afa53bf422.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/430f2bada823b24413bc51adb5070675.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="20-RecycleView"><a href="#20-RecycleView" class="headerlink" title="20.RecycleView"></a>20.RecycleView</h2><p>缓存和复用都是ViewHolder。其实就是一个itemView。那缓存有几级？</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/07ebef7e90f4badae58976b345ab25ea.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>以下就是处理复用机制：</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/0d3638b50174dc4deaab14a2f7a1f072.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/987d0997e9ef341174e1216861fb8ea0.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/668659b35581382ec091a572e6e89889.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/1317567285774c88e4af660821ce9042.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>**从滑动看复用填充流程：**
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a52dc82434afcb4864b7e02ae442a3c4.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/d854812d61c8aa3e50a4fb8b76d9b7c5.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a40fafe272966be716dc5929d8c1806b.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/a3df54f181c1a07bde7cb509d37583f5.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/a3df54f181c1a07bde7cb509d37583f5.png)![descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a589026286ef062d4e198cac4eb4823f.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p><strong>从onLayout看复用填充流程：最终也会到fill入口，跟之前一样。</strong></p>
+<p><strong>缓存？=========================================================================</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/1c563da00d4883f8e6b741cb5a12b30b.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/447c41fc97a4f9fe14c81335f6af2f49.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/1af42ed9ce59f8fd8e8e72aa94a45d88.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/1af42ed9ce59f8fd8e8e72aa94a45d88.png)![descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/65649e3b4b2acf026819ac58fb7fc3c4.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/fd2453949e93532eaa90eb7ce4034ad2.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/3970f166048626b19c75284830d6c73d.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/ea6cab41f3c237e0dded4b1ca2ab43e9.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/ea6cab41f3c237e0dded4b1ca2ab43e9.png)![descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/cb42b87159dadeef9f3a6ac477ee31a6.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a5731d7b0173bb237fe1877bd7fc4943.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/ea75310a241454f4dba09e8b18645c2c.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="20-OOM是如何发生的？"><a href="#20-OOM是如何发生的？" class="headerlink" title="20.OOM是如何发生的？"></a>20.OOM是如何发生的？</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/575a2a1abdcf2634bdfb6d22cc351b0a.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="21-Java回收机制？如何减少OOM的概率？"><a href="#21-Java回收机制？如何减少OOM的概率？" class="headerlink" title="21.Java回收机制？如何减少OOM的概率？"></a>21.Java回收机制？如何减少OOM的概率？</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/0dcfb462ed52c5eedeed7ac5c7d9b2bf.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="21-如何排除应用崩溃原因？ANR？"><a href="#21-如何排除应用崩溃原因？ANR？" class="headerlink" title="21.如何排除应用崩溃原因？ANR？"></a>21.如何排除应用崩溃原因？ANR？</h2><p><strong>1.把崩溃堆栈传到服务。</strong></p>
+<ol>
+<li><p><strong>使用第三方开源库。</strong></p>
+<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/edcf259e74b9ac4ba28396d06bb6605c.png" alt="descript"></p>
+</li>
+</ol>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/ac6380ec8de6a9d4859c5e3e2f2d0788.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/b25a3ffd98a6278558e86bcc87487d51.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/3da26c11d9d71428a03f1e814279597a.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/76c8bf211224d76c2487b80d2f712c73.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/3da26c11d9d71428a03f1e814279597a.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/76c8bf211224d76c2487b80d2f712c73.png)![descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/c805a1f591455134dccaad6a9ddbf641.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="21-App启动优化，速度优化？"><a href="#21-App启动优化，速度优化？" class="headerlink" title="21.App启动优化，速度优化？"></a>21.App启动优化，速度优化？</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/7078146c6ab06539faed8078e244d62f.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/7f8dfa18d380d7138d4168a8593df813.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/27850ea8a3f0120b7c17dcf49a50de86.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/6a262da28456b323b396dc2e2ff25a39.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/0d0935b6e3ba27c2d27a45cd0a2275ea.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/b81ce39e216eb9089e9040b8d324c284.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/0d0935b6e3ba27c2d27a45cd0a2275ea.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/b81ce39e216eb9089e9040b8d324c284.png)![descript</p>
+            </figure>
+
+<h2 id="22-热修复原理？"><a href="#22-热修复原理？" class="headerlink" title="22.热修复原理？"></a>22.热修复原理？</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/dff5a74d4ec95b8d4c4e5653c7b6fac1.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="AndFix："><a href="#AndFix：" class="headerlink" title="AndFix："></a>AndFix：</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/d105740dbf0f8cf4899fa85cb7175231.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/6f560ddb1327c4a9d04ed308a6bfbd29.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/6f560ddb1327c4a9d04ed308a6bfbd29.png)![descript</p>
+            </figure>
+
+<h3 id="Robust："><a href="#Robust：" class="headerlink" title="Robust："></a>Robust：</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/444c15764f2d15d1a411f9e50488037b.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="Tinker-amp-类加载机制"><a href="#Tinker-amp-类加载机制" class="headerlink" title="Tinker&amp;类加载机制:"></a>Tinker&amp;类加载机制:</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/395088494eb8803e301054672bd40862.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h4 id="Bsdiff差分工具："><a href="#Bsdiff差分工具：" class="headerlink" title="Bsdiff差分工具："></a>Bsdiff差分工具：</h4><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/ec935385d5019548913111cb73824e11.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>如何拿当前的apk问价：PackageManager
+
+<h4 id="CalssLoader："><a href="#CalssLoader：" class="headerlink" title="CalssLoader："></a>CalssLoader：</h4><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/9b816c989988a4d68cd147b1deeadd83.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>**自己写的类，用的PathClassLoader（mainactivity），系统的类，就是BootClassLoader（application，activity）。**
+
+<p><strong>加载一个类方法：PathClassLoader.loadClass();-&gt;BaseDexClassLoader-&gt;ClassLoader.loadClass(),所以通过一个类全路径，获取Class对象。</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/87ad9b5c28554f7631ba4d68a3510dac.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>所有的类在dex文件里。FindLoadedClass从缓存获取class对象。如果没有，在通过parent .loadClass();parent也是一个ClassLoader。这里用的就是双亲委托机制。为什么要有这个机制：一是安全，而是避免重复加载。但是如果是我们的自己的类，parent肯定加载不到，所以执行findClass（）。而这个classloader，是pathclassloader。所以最后看到baseDexClassLoader。</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/626820d057048fc5cb5b6280fd10436d.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>然后看到，通过for循环找，dexElements，是一个数组【class1.dex，class2.dex，。。。。。。】。从而拿到了dex中的Class类对象。所以，我们得到了修复之后的dex，那怎么办，只要把这个dex放到数组的最前面即可，因为是顺序的，所以在使用的时候，拿到这个正确的之后，就直接return了，不会在查询class2.dex……..。最后，先getClassLoader拿到pathclassloader，通过反射，拿到DexPathList，在拿到这个类里的dexElements数组，把这个dex，放到dexElements里即可。</p>
+<h4 id="双亲委托机制："><a href="#双亲委托机制：" class="headerlink" title="双亲委托机制："></a>双亲委托机制：</h4><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/d0b7b8f33f239510d8f733f5f21ada3b.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>在用户的加载类里，如果要加载Activity系统类，这个时候，不需要自己加载，由parent=BootClassLoader加载了。
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/042fe19c111690d7d93a975547b4cbc0.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="Qzone："><a href="#Qzone：" class="headerlink" title="Qzone："></a>Qzone：</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/5d1d7b52a9d787a009e58786de105603.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="23-如何判断文件的一致性？"><a href="#23-如何判断文件的一致性？" class="headerlink" title="23.如何判断文件的一致性？"></a>23.如何判断文件的一致性？</h2><p>crc方法。CRC32 即循环冗余校验码（Cyclic Redundancy Check）：是数据通信领域中最常用的一种查错校验码，其特征是信息字段和校验字段的长度可以任意选定。循环冗余检查（CRC ）是一种数据传输检错功能，对数据进行多项式计算，并将得到的结果附在帧的后面，接收设备也执行类似的算法，以保证数据传输的正确性和完整性。</p>
+<h2 id="24-多进程-文件共享"><a href="#24-多进程-文件共享" class="headerlink" title="24.多进程-文件共享"></a>24.多进程-文件共享</h2><p>Messenger，Bundle，文件共享，Content Provider……</p>
+<h2 id="25-sp、mmkv、mmap"><a href="#25-sp、mmkv、mmap" class="headerlink" title="25.sp、mmkv、mmap"></a>25.sp、mmkv、mmap</h2><h3 id="SharedPreference："><a href="#SharedPreference：" class="headerlink" title="SharedPreference："></a>SharedPreference：</h3><p>map持久化： 在内存中时，在文件中序列化是xml。</p>
+<p>初始化：在子线程里，通过io，获取xml文件，反序列化成map。</p>
+<p>如果数据比较大时：读写数据时，awaitLoadedLocket：等待加载完成。所以数据大，需要解析时间长，如果没有解析完，就读写，这个时候需要等待子线程初始化数据完成。</p>
+<p>并且sp创建后无法被回收。</p>
+<p>写新数据：map-》序列化xml，写入文件。commit同步提交，会阻塞调用线程。Apply异步，无法获取结果，没有事务性api。无法保证数据一致性。同时哪怕异步提交都可能会导致<strong>ANR</strong>的发生。</p>
+<p>更新数据：sp没有更新的概念，是整体的读写操作。哪怕只修改了1条数组，sp也需要全部序列化为xml，覆盖文件进行保存。（全量更新）</p>
+<p><strong>优化点：</strong></p>
+<p>高效的文件操作；MMAP;</p>
+<p>数据格式更精简；二进制；</p>
+<p>String一个字节占8位，如“1”（0000 0001）浪费了7位，其实只需要1位就可以；而二进制，一个字节就可以8个数据；</p>
+<p>更优的数据更新方式；</p>
+<h3 id="FileChannel："><a href="#FileChannel：" class="headerlink" title="FileChannel："></a>FileChannel：</h3><p>拷贝文件比IO快6-7倍。为什么这么快？底层用到了零拷贝技术;如sendfile,mmap。</p>
+<h3 id="MMKV：速度非常快。并且实现了sp和sp-editor接口。用了mmap技术。"><a href="#MMKV：速度非常快。并且实现了sp和sp-editor接口。用了mmap技术。" class="headerlink" title="MMKV：速度非常快。并且实现了sp和sp.editor接口。用了mmap技术。"></a>MMKV：速度非常快。并且实现了sp和sp.editor接口。用了mmap技术。</h3><p>零拷贝：是不需要CPU参与的技术。DMA COPY是从内存拷贝到Disk。</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/4eb4e93c97ad7e6f4ee1b416d7e1d187.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/95e6b3ca2fc96177f4560c8c528d2262.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/6b88a4d20e9f9b298babd4ccd4c8386a.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/6b88a4d20e9f9b298babd4ccd4c8386a.png)![descript</p>
+            </figure>映射内存是通过Vma：vm_area_struct-》内存结构。
+
+<p>HTTP2:多路复用。</p>
+<p>http1=字符串、文本</p>
+<p>http2=二进制。</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/93cd1f2bc2a028ffca9d24c825bdf047.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>总长度（key长度+key值+value长度 +value值 ……）长度数据不一定是一个字节。</p>
+<p>那map数据存到文件的过程要通过序列化。</p>
+<p>那数据格式Protobuf：比json更加精简。Protobuf编码是一个变长编码，就是有可能把int原有4个字节，编码成1，2，3，4，5个字节。</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/8e06fb9023f3729afa57afb600c9c6be.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/b96b2764b40ffe5a5c2322b4964f8027.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/b96b2764b40ffe5a5c2322b4964f8027.png)![descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/99f8f989467495b5f9fdff7e252c5e3f.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="26-Serializable"><a href="#26-Serializable" class="headerlink" title="26.Serializable"></a>26.Serializable</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/17d37bf4880d2c8cb04eb11637cf638c.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>1. 不会。
+
+<p>2. 深拷贝。Equal</p>
+<p>3. Budle用的是Parcel，为什么不用map，bundle是跨进程传输一些小的对象。</p>
+<p>4. 版本控制。</p>
+<p>5. 原理：binder，binder大小就是1M-8kb；binder创建的线程池默认15个（我记得是31个）。内核中映射的最大内核空间，只有4M。有没有办法Intent突破1M？mmap的大小可以修改，但是不可以超过4M.还可以把数据写入数据库或者文件，传递数据的文件名。</p>
+<p>6. Activity的启动流程要和AMS打交道，是要跨进程。两个不同进程，数据只有序列化之后才能带过去。</p>
+<p>7. 序列化是跨进程通信使用的。持久化是保存数据。</p>
+<h2 id="27-Glide"><a href="#27-Glide" class="headerlink" title="27.Glide"></a>27.Glide</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/e576dab941e4cade11bf7ae1899df72d.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/cb65dfa0bcca85478e30d6676af9c96a.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/cb65dfa0bcca85478e30d6676af9c96a.png)![descript</p>
+            </figure>
+
+<p><strong>面试题：为什么glide不能再子线程中with？再子线程中不会添加生命周期管理，只有再主线程中才会用空白的Fragment监听Activity或者Fragment的生命周期。看下面源码：4.11</strong></p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/87341e6c8978a866c74713d9ce7d9b37.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>正在显示的是活动缓存，然后是内存缓存。</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/c985abd398ff3ae0f5e5393969b86361.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/4d023604873a430955342f5076b7c011.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/4d023604873a430955342f5076b7c011.png)![descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a67afd5010e0a779f7c1c090cc228274.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/40bc8a8e04973ac12a35bec2c370df1b.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="28-注解"><a href="#28-注解" class="headerlink" title="28. 注解"></a>28. 注解</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/f630917431e2dee24662c7eaf02f83d1.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/b94c0d49b02351f8632c2b6eab3c9878.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/97fd31e5db9f00917bf4c774e4d36b1d.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/7a415daf91f1c482c4f917198ea93a38.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/bdc70d79f8df0613963e2ba34b02d271.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/e14d98891dbc58ff9e64b1f7c3cc8b2c.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/6c4e1a43ed7348d4ef934356f87d61fc.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/bc669550b92f8d10c2fe05046676cbb2.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a1abf478ae2ff98b85d52874a5c9b2e2.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/550c497b21ea96d924a8bd0c273b2e8b.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/4c84e163cb533f6a34cb11a94740f7a2.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p><strong>所有javac处理自定义注解类，也是通过ServiceLoader（spi）的方式处理生成实现类的。</strong></p>
+<p><strong><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/4cadd6a2c158acff4657a4b6a8f8e1a8.png" alt="descript" title class>
+                <p>descript</p>
+            </figure></strong></p>
+<h2 id="29-SPI"><a href="#29-SPI" class="headerlink" title="29.SPI"></a>29.SPI</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/7a7bcbc4d3c64c67244c02b86038bc50.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/f7c78f92e4117d7bd36fc5ef79e4f414.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/f7c78f92e4117d7bd36fc5ef79e4f414.png)![descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/37c73c38bc033cc3f6273e2bf513890d.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="30-ASM字节码插桩"><a href="#30-ASM字节码插桩" class="headerlink" title="30.ASM字节码插桩"></a>30.ASM字节码插桩</h2><h2 id="31-动画"><a href="#31-动画" class="headerlink" title="31.动画"></a>31.动画</h2><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/f9ac20500d65766902ae8e16c9964362.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/0c8ad188faf52772f993a412975a0d8d.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/4588df91bfcd812e37af8c7a4dbf5077.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/4588df91bfcd812e37af8c7a4dbf5077.png)![descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/73c5f05c4afa6fc2da249e86b6beafd9.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h2 id="32-插件化"><a href="#32-插件化" class="headerlink" title="32.插件化"></a>32.插件化</h2><h3 id="类加载机制：双亲委派机制"><a href="#类加载机制：双亲委派机制" class="headerlink" title="类加载机制：双亲委派机制"></a>类加载机制：双亲委派机制</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/245496a2b11ae3c7a7675af174cc1ed0.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/e12292eff45077a698f91e8c93b3b93f.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/c451e60f6b6385a0983566fe1a276380.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/5d18d28bf057b294735cbeb327aefae0.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/65ba33652d6dacb94c53c0c834706dce.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/066c66d28c1b1f94ce8456bb3f84e9c7.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/066c66d28c1b1f94ce8456bb3f84e9c7.png)![descript</p>
+            </figure>
+
+<h3 id="findClass流程"><a href="#findClass流程" class="headerlink" title="findClass流程"></a>findClass流程</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/50e22c6be224a4059344788331e16b21.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/cfa50202ee8a1ab52d0757750a9bc2ce.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/d679aef524bbeacf9291bec387b56764.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/d679aef524bbeacf9291bec387b56764.png)![descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a254d9fc5628bfd7775a960bbe027961.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="合并第三方Dex"><a href="#合并第三方Dex" class="headerlink" title="合并第三方Dex"></a>合并第三方Dex</h3><p>思路：</p>
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/9c709c1cbe71044d9427156752dbed20.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/eba45c4804a05cd2520db40c05d729ff.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/93097b8654d6c663b897fc8fb4c7b411.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/818f87241d934cd60c1fa6b7e69544b5.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/bb01c55815b7bfd643e92d83b7d291c6.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="Hook-Activity"><a href="#Hook-Activity" class="headerlink" title="Hook Activity"></a>Hook Activity</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/faa99012c413a386cb911a79a4c41f04.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/c93e9bd01b21b1b25206d2f11f203525.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/deea25f55f63c53da5751618042b8fa3.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/ef1a8708b3b3d2122d36c68d4d3d9c68.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<p>代码流程：</p>
+<h4 id="先实现"><a href="#先实现" class="headerlink" title="先实现"></a>先实现</h4><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/f5ba44f99df815fad5ba3acb68a32ba4.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/1e21aeeb53f84215fef750f738959a47.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/0c2d721b0a2749d6306e80eb98c6468e.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/2ff790c4784d43966807cd8b4d06b061.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/c9ec0a3dc223dcec292f8efc6333b325.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/6eaa21a63ffbaeb945e801c97534686c.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/423791c6337f65c1e89f7be39caa2bee.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a21f4ceeb103a242c95bc431cc473578.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/8a374352380f9a927eb711d55fc6a14c.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h4 id="再实现"><a href="#再实现" class="headerlink" title="再实现"></a>再实现</h4><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a227d8a6a3bf52a3d03ba2c80d3ac8f0.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a73c647ed7aa225bddb18b5b3e463f6d.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/8518f606181552e494de9d22939667d3.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/8b5f89f180d5a09ae296ec07dc058879.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/43cf24d2e84bde43eb5e0afb11392538.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/219ef2df52aaf8540eefe3c05d10ac51.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/0c7a9cd671e05f869fa7604358c0946a.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/b22ac4fde49a6d5ae50a8443d3f58c12.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/6a97da7c803efa2e4bcf8961d8b1654d.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/2e823d4997e7ec7c1e788138956767dd.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h4 id="版本适配"><a href="#版本适配" class="headerlink" title="版本适配"></a>版本适配</h4><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/51ea360b77953be42859d544e6338829.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/17325f14527e598e37498204eacbf069.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/f9c41de16f6ef873b197c4ac3a57a0f4.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/8ce717d61520d015dcb5df46646795a7.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/3aa9821dac70d9430d53cda63fbef6f2.png" alt="descript](http://nunu03.github.io/2022/05/29/Android知识点整理/76f638e3724f5d740d9574caa8938f17.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/664f93481eeb0ea2ef8c0c146b4eea71.png)![descript" title class>
+                <p>descript](http://nunu03.github.io/2022/05/29/Android知识点整理/76f638e3724f5d740d9574caa8938f17.png)![descript](http://nunu03.github.io/2022/05/29/Android知识点整理/664f93481eeb0ea2ef8c0c146b4eea71.png)![descript</p>
+            </figure>
+
+<h3 id="资源加载"><a href="#资源加载" class="headerlink" title="资源加载"></a>资源加载</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/ed443be21b351498ff31086ea0f1ef8c.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/fcdd29ef256af515e1fffb482cc12481.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/a9fde05805195b9c98fbe040061f8bae.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/2134005ae83b1d7e6d3c5e8f7f6c6000.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h3 id="资源插件：创建"><a href="#资源插件：创建" class="headerlink" title="资源插件：创建"></a>资源插件：创建</h3><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/3f034f7a00b15e9807e093aeb60908b7.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/7e9639c0347b363f32083a5fd61440da.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/ab6fe04bd29b4968aafdfc435d2c2ff1.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/bcda7e0cd5eb0cc77bdbe29bfc3970b2.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/24e86439ed7206f7e7e28392a124858a.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h4 id="解决资源文件冲突："><a href="#解决资源文件冲突：" class="headerlink" title="解决资源文件冲突："></a>解决资源文件冲突：</h4><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/537d9e6e845dc09a689ec2f041718da9.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/d10b35aade1612e4072d385390939841.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/4f378f1ffc86a6c73b6fb25dbb747b9c.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<h4 id="具体冲突：改变插件Context的mResources"><a href="#具体冲突：改变插件Context的mResources" class="headerlink" title="具体冲突：改变插件Context的mResources"></a>具体冲突：改变插件Context的mResources</h4><figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/16403b183da60875225158c20e7467e7.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/8a108ef2e26261a4e15185663b3af422.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
+
+<figure class="image-box">
+                <img src="http://nunu03.github.io/2022/05/29/Android知识点整理/82642ad0b23412bf9b14ce23848894ed.png" alt="descript" title class>
+                <p>descript</p>
+            </figure>
 ]]></content>
       
         <categories>
