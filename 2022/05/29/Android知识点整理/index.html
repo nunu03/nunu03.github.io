@@ -218,7 +218,14 @@
 <p>数组，查找快，直接用下标获取。<br>链表，查找慢，需要循环获取。</p>
 <h3 id="B。标记-查找："><a href="#B。标记-查找：" class="headerlink" title="B。标记-查找："></a>B。标记-查找：</h3><p>删除的时候不删除，赋值为null或者标记其他，这个下次在插入的时候直接赋值即可。然后在适当的机会，循环删除值为null的数组即可。这样就可以优化了对象的反复创建和删除。</p>
 <h3 id="C。linkedlist，"><a href="#C。linkedlist，" class="headerlink" title="C。linkedlist，"></a>C。linkedlist，</h3><p>查询第一个和最后一个时间复杂度一样？一样，查询第一个和倒数第二个一样吗？不一样，liankedlist是双向链表。倒数第二个需要两步。</p>
-<h3 id="hashmap？长度默认16"><a href="#hashmap？长度默认16" class="headerlink" title="hashmap？长度默认16"></a>hashmap？长度默认16</h3><h3 id="jdk-1-7-为什么用链表？用的是hash碰撞原理"><a href="#jdk-1-7-为什么用链表？用的是hash碰撞原理" class="headerlink" title="jdk 1.7:为什么用链表？用的是hash碰撞原理"></a>jdk 1.7:为什么用链表？用的是hash碰撞原理</h3><p>A。把key通过hashcode对length取模，设置下标。所以hashmap的table表是顺序的。然后创建一个节点（数据hashmapentry），放到这个下标的位置。同时每个下表对应的所有节点是一个单链表。<br>B。Hashcode的获取，就是一个hash碰撞的过程。比如hashcode=1和hashcode=17，是在一个下标上。<br>C。Get一个数据，就是用过key获取链表，然后在通过key循环具体的值，循环过程中要判断hashcode一致，判断key一致。<br>D。Hash表在什么情况性能最差？所有数据在一个节点上，那链表久非常大，效率就非常低了。<br>E。什么长度是16？因为在hash下标的过程中。16的二进制是10000.</p>
+<figure class="image-box">
+                <a rel=Android知识点整理 href="http://nunu03.github.io/2022/05/29/Android知识点整理/hashmap-1.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2022/05/29/Android知识点整理/hashmap-1.png" alt title class></a>
+                <p></p>
+            </figure>
+<h3 id="hashmap？长度默认16"><a href="#hashmap？长度默认16" class="headerlink" title="hashmap？长度默认16"></a>hashmap？长度默认16</h3><h3 id="jdk-1-7-为什么用链表？用的是hash碰撞原理"><a href="#jdk-1-7-为什么用链表？用的是hash碰撞原理" class="headerlink" title="jdk 1.7:为什么用链表？用的是hash碰撞原理"></a>jdk 1.7:为什么用链表？用的是hash碰撞原理</h3><p>A。把key通过hashcode对length取模，设置下标。所以hashmap的table表是顺序的。然后创建一个节点（数据hashmapentry），放到这个下标的位置。同时每个下表对应的所有节点是一个单链表。<br>B。Hashcode的获取，就是一个hash碰撞的过程。比如hashcode=1和hashcode=17，是在一个下标上。<br>C。Get一个数据，就是用过key获取链表，然后在通过key循环具体的值，循环过程中要判断hashcode一致，判断key一致。<br>D。Hash表在什么情况性能最差？所有数据在一个节点上，那链表久非常大，效率就非常低了。<br>E。什么长度是16？因为在hash下标的过程中。16的二进制是10000.<br> <figure class="image-box">
+                <a rel=Android知识点整理 href="http://nunu03.github.io/2022/05/29/Android知识点整理/hashmap-2.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2022/05/29/Android知识点整理/hashmap-2.png" alt title class></a>
+                <p></p>
+            </figure></p>
 <h3 id="jdk1-8-每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。"><a href="#jdk1-8-每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。" class="headerlink" title="jdk1.8:每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。"></a>jdk1.8:每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。</h3><p>A。hash冲突后不在用链表保存相同的index节点，而是采用红黑树保存冲突节点。<br>B。红黑树构建的时候很复杂、效率很低（旋转）。所以当链表超过8个才使用红黑树。</p>
 <h3 id="hashmap线程安全问题：不安全。"><a href="#hashmap线程安全问题：不安全。" class="headerlink" title="hashmap线程安全问题：不安全。"></a>hashmap线程安全问题：不安全。</h3><p>如果链表被同时操作就会出现问题。<br>Hashtable线程安全；所有函数（put、get，remove）的时候用到了synchronized。但是这样的任何访问都加了锁，包括所有hashcode上。<br>Synchronized，内置锁，开锁和关锁都是jvm完成的。所以get时候不能put。只能执行其中一个。<br>Concurrenthashmap：是基于hashtable的优化，它是在具体的链表上锁，也是用到了synchronized，但是它只是锁在了链表上。</p>
 
@@ -228,7 +235,7 @@
     <div class="content">
         
 <span class="post-time">
-    最後更新時間：<time datetime="2022-05-29T03:37:15.801Z" itemprop="dateUpdated">2022-05-29 11:37:15</time>
+    Last updated: <time datetime="2022-05-29T03:55:55.247Z" itemprop="dateUpdated">2022-05-29 11:55:55</time>
 </span><br>
 
 
