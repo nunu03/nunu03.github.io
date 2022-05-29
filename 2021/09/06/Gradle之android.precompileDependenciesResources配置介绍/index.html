@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Gradle之android.precompileDependenciesResources配置介绍 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Gradle">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:277133779@qq.com" title="277133779@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>9</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/codefine" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Gradle之android.precompileDependenciesResources配置介绍</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">Gradle之android.precompileDependenciesResources配置介绍</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-09-06T09:38:06.000Z" itemprop="datePublished" class="page-time">
+  2021-09-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Gradle/">Gradle</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-Gradle之android.precompileDependenciesResources配置介绍"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">Gradle之android.precompileDependenciesResources配置介绍</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-09-06 17:38:06" datetime="2021-09-06T09:38:06.000Z"  itemprop="datePublished">2021-09-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Gradle/">Gradle</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>本地版用了一个第三方图片压缩插件，用来减少包大小大约2.6兆，但是在gradle升级后，并没有达到预期的效果。之后在gradle.properties中设置了android.precompileDependenciesResources=false后，解决了该问题。android.precompileDependenciesResources是Gradle 3.6版本以后增加的一个配置，并且默认是打开的，但是不知道他具体的作用。我们在开发过程中也很少用到关闭的情况。 所以本次具体介绍一下它的作用，主要从以下几个方面介绍：</p>
+<blockquote>
+<ul>
+<li>precompileDependenciesResources的配置</li>
+<li>MergeResources任务流程解析</li>
+<li>McImage图片压缩插件问题解决</li>
+<li>总结</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="precompileDependenciesResources在依赖逻辑中的处理"><a href="#precompileDependenciesResources在依赖逻辑中的处理" class="headerlink" title="precompileDependenciesResources在依赖逻辑中的处理"></a>precompileDependenciesResources在依赖逻辑中的处理</h2><hr>
+<p>在BooleanOption中可以看到默认设置是true:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PRECOMPILE_DEPENDENCIES_RESOURCES(&quot;android.precompileDependenciesResources&quot;, true, FeatureStage.Supported)</span><br></pre></td></tr></table></figure>
+
+<p>看一下调用的地方，在这里可以看到其实返回是和图片压缩一起判断的，所以这里的注释要注意下：意思是<strong>如果使用图片压缩就需要所有的资源都能通过MergeResources任务过程</strong>，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* 这里也判断了shrinkResources，我们默认资源缩减是false，所以在不配置android.precompileDependenciesResources=false的情况下，一直返回true，如果</span><br><span class="line">* android.precompileDependenciesResources设置false或者shrinkResources=true，都会返回false。</span><br><span class="line">*/</span><br><span class="line">public boolean isPrecompileDependenciesResourcesEnabled() &#123;</span><br><span class="line">        // Resource shrinker expects MergeResources task to have all the resources merged and with</span><br><span class="line">        // overlay rules applied, so we have to go through the MergeResources pipeline in case it&apos;s</span><br><span class="line">        // enabled, see b/134766811.</span><br><span class="line">        return globalScope.getProjectOptions().get(BooleanOption.PRECOMPILE_DEPENDENCIES_RESOURCES)</span><br><span class="line">                &amp;&amp; !useResourceShrinker();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时在为true的情况下，在依赖处理的逻辑中注册了转化flat的Transform</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> if (globalScope.projectOptions[BooleanOption.PRECOMPILE_DEPENDENCIES_RESOURCES]) &#123;</span><br><span class="line">    dependencies.registerTransform(</span><br><span class="line">        AarResourcesCompilerTransform::class.java</span><br><span class="line">    )</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="MergeResources"><a href="#MergeResources" class="headerlink" title="MergeResources"></a>MergeResources</h2><hr>
+<p>我们先找出mergeReleaseResourcesTask对应的类：根据下面命令可以拿到具体的处理在类MergeResources中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01deMacBook-Pro:MyActivityTest chenyulong01$ ./gradlew -q help --task app:mergeReleaseResources</span><br><span class="line">Detailed task information for app:mergeReleaseResources</span><br><span class="line">Path</span><br><span class="line">     :app:mergeReleaseResources</span><br><span class="line">Type</span><br><span class="line">     MergeResources (com.android.build.gradle.tasks.MergeResources)</span><br><span class="line">Description</span><br><span class="line">     -</span><br><span class="line">Group</span><br><span class="line">     -</span><br><span class="line">chenyulong01deMacBook-Pro:MyActivityTest chenyulong01$</span><br></pre></td></tr></table></figure>
+
+<p>任务执行开始doFullTaskAction方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">protected void doFullTaskAction() throws IOException, JAXBException &#123;</span><br><span class="line">     ResourcePreprocessor preprocessor = getPreprocessor();</span><br><span class="line"></span><br><span class="line">     // this is full run, clean the previous outputs</span><br><span class="line">     File destinationDir = getOutputDir().get().getAsFile();</span><br><span class="line">     FileUtils.cleanOutputDir(destinationDir);</span><br><span class="line">     if (getDataBindingLayoutInfoOutFolder().isPresent()) &#123;</span><br><span class="line">          FileUtils.deleteDirectoryContents(getDataBindingLayoutInfoOutFolder().get().getAsFile());</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     //获取所有的 ResourceSet  </span><br><span class="line">     List&lt;ResourceSet&gt; resourceSets = getConfiguredResourceSets(preprocessor);</span><br><span class="line"></span><br><span class="line">     // create a new merger and populate it with the sets.</span><br><span class="line">     ResourceMerger merger = new ResourceMerger(getMinSdk().get());</span><br><span class="line">     .....</span><br><span class="line">     try (WorkerExecutorFacade workerExecutorFacade = getAaptWorkerFacade();</span><br><span class="line">          ResourceCompilationService resourceCompiler = getResourceProcessor() &#123;</span><br><span class="line">          ......</span><br><span class="line">          //过滤ResourceSet，设置了setAllowedFolderPrefix(FD_RES_VALUES)的非values资源（drawable、layout、。。。。。）不走下面流程      </span><br><span class="line">          for (ResourceSet resourceSet : resourceSets) &#123;</span><br><span class="line">               resourceSet.loadFromFiles(new LoggerWrapper(getLogger()));</span><br><span class="line">               merger.addDataSet(resourceSet);</span><br><span class="line">          &#125;</span><br><span class="line">          ......        </span><br><span class="line">          MergedResourceWriter writer = new MergedResourceWriter();</span><br><span class="line">          ......</span><br><span class="line">          merger.mergeData(writer, false /*doCleanUp*/));</span><br><span class="line">          .....</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看一下如何获取所有ResourceSet：getConfiguredResourceSets方法里调用了compute方法，这个方法很重要，尤其时注释，说明的很清楚，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private List&lt;ResourceSet&gt; getConfiguredResourceSets(ResourcePreprocessor preprocessor) &#123;</span><br><span class="line">processedInputs = getResourcesComputer().compute(precompileDependenciesResources);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>compute方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* Computes resource sets for merging, if [precompileDependenciesResources] flag is enabled we</span><br><span class="line">* filter out the non-values resources as it&apos;s precompiled and is consumed directly in the</span><br><span class="line">* linking step.</span><br><span class="line">* 计算用于合并的资源集，如果启用[PrecompiledDependenciesResources]标志，</span><br><span class="line">* 我们将在预编译时过滤掉非值资源，并在链接步骤中直接使用。</span><br><span class="line">*/</span><br><span class="line">@JvmOverloads</span><br><span class="line">fun compute(precompileDependenciesResources: Boolean = false): List&lt;ResourceSet&gt; &#123;</span><br><span class="line">     ......</span><br><span class="line">     val resourceSetList = ArrayList&lt;ResourceSet&gt;(size)</span><br><span class="line">     // 这里要注意，过滤的是libraries库的资源。</span><br><span class="line">     addLibraryResources(libraries, resourceSetList,                       precompileDependenciesResources)</span><br><span class="line">     ......</span><br><span class="line">    return resourceSetList</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个时候我们知道在compute处理了非值资源，其实就是非values资源。其实这里不是过滤，是给所有的文件都设置了value标记。<br>setAllowedFolderPrefix(FD_RES_VALUES)，这个标记在读取的时候会用到。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">private fun addLibraryResources(</span><br><span class="line">     libraries: ArtifactCollection?,</span><br><span class="line">     resourceSetList: MutableList&lt;ResourceSet&gt;,</span><br><span class="line">     resourceArePrecompiled: Boolean</span><br><span class="line">) &#123;</span><br><span class="line">     // add at the beginning since the libraries are less important than the folder based</span><br><span class="line">     // resource sets.</span><br><span class="line">     // get the dependencies first</span><br><span class="line">     libraries?.let &#123;</span><br><span class="line">          val libArtifacts = it.artifacts</span><br><span class="line">          // the order of the artifact is descending order, so we need to reverse it.</span><br><span class="line">          for (artifact in libArtifacts) &#123;</span><br><span class="line">               val resourceSet = ResourceSet()</span><br><span class="line">               .......</span><br><span class="line">               resourceSet.isFromDependency = true</span><br><span class="line">               //我们在loadFromFiles处理resourceSet时，会遍历这个set</span><br><span class="line">               resourceSet.addSource(artifact.file)</span><br><span class="line"></span><br><span class="line">               if (resourceArePrecompiled) &#123;</span><br><span class="line">               // For values resources we impose stricter rules different from aapt so they need to go</span><br><span class="line">               // through the merging step.</span><br><span class="line">               // 设置了setAllowedFolderPrefix(FD_RES_VALUES)</span><br><span class="line">               resourceSet.setAllowedFolderPrefix(FD_RES_VALUES)</span><br><span class="line">               &#125;</span><br><span class="line">               // add to 0 always, since we need to reverse the order.</span><br><span class="line">               resourceSetList.add(0, resourceSet)</span><br><span class="line">          &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>综上其实都是对资源文件的配置，看一下读取，读取开始就是resourceSet.loadFromFiles方法，最近进入readSourceFolder方法，对文件进行处理、过滤，看下面debug图比较清晰，<br><a rel=Gradle之android.precompileDependenciesResources配置介绍 href="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/readfiles.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/readfiles.png" alt></a></p>
+<p><a rel=Gradle之android.precompileDependenciesResources配置介绍 href="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/ignorefiles.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/ignorefiles.png" alt></a></p>
+<p>然后我们看一下，分别设置precompileDependenciesResources后mergerReleaseResources执行完后的/build/res/merged/debug/文件数量对比：<br><a rel=Gradle之android.precompileDependenciesResources配置介绍 href="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/comp.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/comp.png" alt></a><br>我们发现，未设置false时.flat文件比设置后少了好多，那在processRleaseResources时，这些文件从哪里来呢？肯定不会丢失.我们打印一下processRleaseResources时，task.inputs.files输入文件：执行./gradlew :app:processReleaseResources</p>
+<p>precompileDependenciesResources = true</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/5f74d6550e3a0049fba9165d4efc08e0/androidx.appcompat</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/2efc557459e42f3d4a45ed4fdeadd8e6/android.support.constraint</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/b26cf8ef1b89aa3b84e14c53ba7689f8/androidx.fragment</span><br><span class="line">......</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/aa6c769bb172babdd442b10f9ded6c0f/androidx.arch.core</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/3d7ded961afb1450efaaf93a54ba3962/androidx.interpolator</span><br><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/res/merged/release</span><br><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/merged_manifests/release</span><br></pre></td></tr></table></figure>
+
+<p>precompileDependenciesResources = false</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/res/merged/release</span><br><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/merged_manifests/release</span><br></pre></td></tr></table></figure>
+
+<p>所以，precompileDependenciesResources = true时，libraries的非values资源都是从caches中获取<br>最后我们看一下gradle 4.0的mergeReleaseResources的Task任务流程：</p>
+<p><a rel=Gradle之android.precompileDependenciesResources配置介绍 href="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/mergeResources.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/mergeResources.png" alt></a></p>
+<h2 id="图片压缩"><a href="#图片压缩" class="headerlink" title="图片压缩"></a>图片压缩</h2><hr>
+<p>McImage是无侵入式的全量压缩资源图片插件，包括Jar包中的图、AAR中的图、Module中的图。使用了三种算法：pngquant算法压缩png、guetzli算法压缩jpg、cwebp算法转webp。<a href="https://github.com/smallSohoSolo/McImage" target="_blank" rel="noopener">https://github.com/smallSohoSolo/McImage</a>。</p>
+<p><a rel=Gradle之android.precompileDependenciesResources配置介绍 href="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/compress-blank.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/compress-blank.png" alt></a></p>
+<p>Gradle未升级前，由于引入了McImage图片压缩插件，会降低包大小2.6M,但是在升级到4.0.2后，只降低了1.4M。那问题出现在了哪里？为社么会有1.2M左右的差值，当时第一反应就是，压缩失败，插件没有适配Gradle版本。所以在开始就研究了一下McImage的插件源码，然后在工程中直接使用McImage源码。但是根据打印信息来看，跟直接依赖插件输出也完全一样。那么说明插件没有问题。那么到底问题出现在了哪里？</p>
+<p>在未解决问题之前，曾想找一个替代插件，看到了<a href="https://booster.johnsonlee.io/preface/" target="_blank" rel="noopener">https://booster.johnsonlee.io/preface/</a>。 介绍到，Booster是一款专门为移动应用设计的易用、轻量级且可扩展的质量优化框架，其目标主要是为了解决随着APP复杂度的提升而带来的性能、稳定性、包体积等一系列质量问题。这里我们只关注包体积相关模块即可。包体积优化，包含资源去冗余、<strong>资源压缩</strong>等功能模块。<br>在看到图片压缩时，实现思路是选择在mergeResources和processResources任务之间插入PNG压缩任务，如下图所示：</p>
+<p><a rel=Gradle之android.precompileDependenciesResources配置介绍 href="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/noun.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/noun.png" alt></a></p>
+<p>根据这个思路，查看一下McImage相关源码：源码中有这么一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mergeResourcesTask.dependsOn(project.tasks.findByName(mcPicTask.name))</span><br></pre></td></tr></table></figure>
+
+<p>好吧，源码错了，修改，移动压缩task到mergerResourcesTask后面，结果就是压缩没有问题。但是包大小还是不对。继续往下看booster文档，在看到图片压缩时，看到有这么一个注释：</p>
+<blockquote>
+<p>WARNING<br>Android Gradle Plugin 3.6 及以上版本，需要在 gradle.properties 中设置：<br>android.precompileDependenciesResources=false</p>
+</blockquote>
+<p>好吧，尝试一下：结果成功了。那为什么压缩处理的Task是在mergeResources的Task之前执行，跟思路图不同，但是有效呢。我们知道从agp3.0开始，google默认开启了aapt2作为资源编译的编译器，如果是使用aapt，上面的思路就没问题，但是我们已经开启了aapt2编译，那就只能说明上边的思路和当前的的图片压缩思路不一致，不是当前的思路图。因为我们在升级前，agp版本是3.4.3，也没有关闭aapt2，再次证明上述思路针对当前agp版本是错误的。插件代码是没问题的。</p>
+<p>agp版本从3.3开始，通过getAllRawAndroidResources获取所有的资源文件，包括来自传递依赖项的资源，举例几个来源：</p>
+<pre><code>res/,
+app/src/main/res,
+app/src/debug/res,
+intermediates/packaged_res/debug,
+catche/aeec173e09252e6f19e949e00c8c5eec/jetified-XXXX-10010.4.36/res,
+build/generated/res/,
+build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">     * Returns file collection containing all raw Android resources, including the ones from</span><br><span class="line">     * transitive dependencies.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt;&lt;strong&gt;This is an incubating API, and it can be changed or removed without</span><br><span class="line">     * notice.&lt;/strong&gt;</span><br><span class="line">     */</span><br><span class="line">    @Incubating</span><br><span class="line">    @NonNull</span><br><span class="line">    FileCollection getAllRawAndroidResources();</span><br></pre></td></tr></table></figure>
+
+<h2 id="缓存flat生成"><a href="#缓存flat生成" class="headerlink" title="缓存flat生成"></a>缓存flat生成</h2><hr>
+<p>上述说到aar的flat资源不是在mergeResourceTask生成的。但是在processResources中，发现aar的flat来自catch，那缓存中的flat是什么时候生成的呢？在开始将依赖逻辑处理时我们注册了一个AarResourcesCompilerTransform。这个Transform就是处理aar资源flat转换的。所以，当我们在mergeResourceTask之前处理图片的时候，其实aar的资源和图片，都已经转换成了flat。虽然我们压缩没问题，但是我们的flat在压缩之前就完成了转换。所以，我们的包大小并没有减少。也就是1.2M差距的原因。<br><a rel=Gradle之android.precompileDependenciesResources配置介绍 href="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/compress.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/compress.png" alt></a></p>
+<h2 id="gradle断点调试"><a href="#gradle断点调试" class="headerlink" title="gradle断点调试"></a>gradle断点调试</h2><hr>
+<ol>
+<li>打开Edit Configurations</li>
+<li>选中Remote，点击+，Remote</li>
+<li>输入Name，拷贝Command line agruments for remote JVM:</li>
+<li>打开gradle.properties</li>
+<li>修改替换org.gradle.jvmargs值为3中拷贝内容。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
+<ul>
+<li>1.Gradle升级版本差距较大的情况下，有问题首先看源码，多调试，更新文档一般不会提及这种小点。</li>
+<li>2.precompileDependenciesResources默认true情况下，默认开启aapt2会减少构建时间。</li>
+<li>3.图片压缩插件可指定具体压缩文件，减少构建时间，可以作为优化构建时间的一个优化点。</li>
+<li>4.MergerResources是合并生成flat文件。<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><a href="https://blog.csdn.net/dbs1215/category_10281748.html" target="_blank" rel="noopener">Android构建流程</a><br><a href="https://www.cnblogs.com/mingfeng002/p/11751309.html" target="_blank" rel="noopener">Gradle之Android Gradle Plugin 主要 Task分析</a></li>
+</ul>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2021-09-07T12:28:04.000Z" itemprop="dateUpdated">2021-09-07 20:28:04</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2021/09/06/Gradle之android.precompileDependenciesResources配置介绍/" target="_blank" rel="external">http://nunu03.github.io/2021/09/06/Gradle之android.precompileDependenciesResources配置介绍/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/09/06/Gradle之android.precompileDependenciesResources配置介绍/&title=《Gradle之android.precompileDependenciesResources配置介绍》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/09/06/Gradle之android.precompileDependenciesResources配置介绍/&title=《Gradle之android.precompileDependenciesResources配置介绍》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2021/09/06/自定义Gradle-Plugin发布到本地/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">自定义Gradle Plugin发布到本地</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2021/08/18/Gradle升级到4-0之图片压缩问题/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Gradle升级到4.0之图片压缩问题</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#precompileDependenciesResources在依赖逻辑中的处理"><span class="post-toc-number">1.</span> <span class="post-toc-text">precompileDependenciesResources在依赖逻辑中的处理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MergeResources"><span class="post-toc-number">2.</span> <span class="post-toc-text">MergeResources</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#图片压缩"><span class="post-toc-number">3.</span> <span class="post-toc-text">图片压缩</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#缓存flat生成"><span class="post-toc-number">4.</span> <span class="post-toc-text">缓存flat生成</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gradle断点调试"><span class="post-toc-number">5.</span> <span class="post-toc-text">gradle断点调试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">6.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">7.</span> <span class="post-toc-text">参考</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.lujingtao.com" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2017 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/09/06/Gradle之android.precompileDependenciesResources配置介绍/&title=《Gradle之android.precompileDependenciesResources配置介绍》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/09/06/Gradle之android.precompileDependenciesResources配置介绍/&title=《Gradle之android.precompileDependenciesResources配置介绍》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADNklEQVR42u3aQW7DMAwEwP7/0+61RRBnSdqApYxPQdy4GhUow6V+fuLreLn+vv/6+vVT589897Tzz777vZdd2NjY2Iuwj9Mr/5lk6Tly8pPJOrGxsbH3Y+dFIqdWN/F8Db21vX0fGxsb+4vZSXOS3K32CPldbGxsbOxq0bpqQZPmBBsbGxs7X/QkxM9HBb0NvSVLw8bGxn48O5+KPv/1LfNtbGxs7Aezj+KVb01efvJSl7wfKbCxsbE3YucFII+Kqk+rUq/6jdjY2Nh7sJM4Ph8MJBFPb0g8P9ZTyLqwsbGxl2LnC51sTW/k0EuECi0QNjY29kbsakmr3s0Zk0CqN4rGxsbG3pXdKzbV5mESD503Rc2eDBsbG3tZdvULfQ7OA6letNQLxbCxsbF3ZVfj9erwNS88o6Yi/6NiY2Njb8GehD7zxuOqcUJ5VdjY2NjbsZMP9EpU/oResayWun8FDBsbG3sLdv5Vvvd+DuttXLKqXgODjY2NvQo7PwTTazDua2l6hfZDqISNjY29IDsftfbi+OrIYVLq8pYJGxsbez92Qj3iq5fA9yKnSYyFjY2NvRM7WVD10GQvlK8e30zWUD5zio2Njb0sezIwyFuXvLDln0qKXOHMKTY2NvaC7El8MyohxRgoH1dMhs3Y2NjYK7LvOARZHdn2xg9JvPUhVMLGxsZenF39p58Um2q0lDQn820a1TpsbGzsB7N7DUbefiTDg8nm5iHXhywNGxsbe1l2dZiaH9PpbUfS3pw3J1FzhY2Njb0Ruzc36MVJvSI0L28XZGnY2NjYj2f34vhe0TrflGopugWMjY2NvSB7cpyxGjklDUa1IemtGRsbG3tXdvVBk7B+vqHVbcLGxsbem31t0FONnJJGKBkVFI7vYGNjY2/BPopXdWwwHxj0QqsPG42NjY29EXs+JJgcvskHzPndyXOwsbGx12VXD1ZWYfcNDKpHhbCxsbH3ZvcGAPkhnjwSSraj2hphY2NjY+dLr0ZI1fCousK3G4SNjY39xezqCDZf0ORudWCMjY2NvR87j4F65W3ezPQK5wXjAWxsbOzHs/MCUG02klFxb1l3hFnY2NjYC7J/ATslxHDEYdaWAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

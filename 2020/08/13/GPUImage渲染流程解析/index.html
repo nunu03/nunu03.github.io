@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>GPUImage渲染流程解析 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="FaceUnity">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:277133779@qq.com" title="277133779@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>9</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/codefine" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>GPUImage渲染流程解析</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">GPUImage渲染流程解析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-08-13T09:25:22.000Z" itemprop="datePublished" class="page-time">
+  2020-08-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-GPUImage渲染流程解析"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">GPUImage渲染流程解析</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-08-13 17:25:22" datetime="2020-08-13T09:25:22.000Z"  itemprop="datePublished">2020-08-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="渲染"><a href="#渲染" class="headerlink" title="渲染"></a>渲染</h2><h3 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//版本</span><br><span class="line">mGlSurfaceView.setEGLContextClientVersion(2);</span><br><span class="line">// 设置渲染器(这个渲染器的类非常重要)</span><br><span class="line">mGlSurfaceView.setRenderer(mRenderer);</span><br><span class="line">// 设置渲染模式为根据需要来渲染（RENDERMODE_CONTINUOUSLY）</span><br><span class="line">mGlSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);</span><br><span class="line">mGlSurfaceView.requestRender();</span><br></pre></td></tr></table></figure>
+
+<h3 id="坐标"><a href="#坐标" class="headerlink" title="坐标"></a>坐标</h3><ul>
+<li><p>顶点坐标：在OpenGL中，顶点坐标使用的是笛卡尔右手坐标系（世界坐标系）。分X Y Z 3个轴，X轴朝右为正，Y轴朝上为正，Z轴垂直屏幕朝外为正。X Y Z 3个轴的最大与最小值为 1 和 -1。</p>
+<figure class="image-box">
+                <a rel=GPUImage渲染流程解析 href="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/顶点坐标.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/顶点坐标.png" alt title class></a>
+                <p></p>
+            </figure>
+</li>
+<li><p>屏幕坐标：屏幕坐标系，就是应用在设备屏幕上的坐标系，也就是图形最终显示的地方。X轴朝右为正，Y轴朝下为正。</p>
+<figure class="image-box">
+                <a rel=GPUImage渲染流程解析 href="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/屏幕坐标.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/屏幕坐标.png" alt title class></a>
+                <p></p>
+            </figure></li>
+<li><p>纹理坐标：原点在左下角，X轴朝右为正，Y轴朝上为正，X Y 轴的最大与最小值为 0 和 1。</p>
+<figure class="image-box">
+                <a rel=GPUImage渲染流程解析 href="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/纹理坐标.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/纹理坐标.png" alt title class></a>
+                <p></p>
+            </figure>
+
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//顶点坐标</span><br><span class="line">static final float VERTICE[] = &#123;</span><br><span class="line">            -1.0f, -1.0f,</span><br><span class="line">            1.0f, -1.0f,</span><br><span class="line">            -1.0f, 1.0f,</span><br><span class="line">            1.0f, 1.0f,</span><br><span class="line">    &#125;;</span><br><span class="line">//纹理坐标  对应顶点坐标  与之映射</span><br><span class="line">static final float TEXTURE[] = &#123;</span><br><span class="line">        0.0f, 0.0f,</span><br><span class="line">        1.0f, 0.0f,</span><br><span class="line">        0.0f, 1.0f,</span><br><span class="line">        1.0f, 1.0f,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：纹理坐标与顶点坐标非必需一一对应，纹理的坐标会导致图片的缩放显示。</strong>  </p>
+<h3 id="顶点着色器-Vertex-Shader-，片元着色器（Fragment-Shader）"><a href="#顶点着色器-Vertex-Shader-，片元着色器（Fragment-Shader）" class="headerlink" title="顶点着色器(Vertex Shader)，片元着色器（Fragment Shader）"></a>顶点着色器(Vertex Shader)，片元着色器（Fragment Shader）</h3><p>顶点着色器处理传入的顶点数据，包括顶点位置、顶点颜色、光照等，每个顶点都会执行一次。</p>
+<p>片元着色器主要目的是计算一个像素的最终颜色。片元并不是真正意义上的像素。而是包含了很多状态的集合，这些状态用来计算最终颜色。这些状态包括但不限于它的屏幕坐标，深度信息，法线，纹理坐标等。</p>
+<p>所以，顶点着色器用于绘制顶点，片元着色器用于给顶点连线后所包围的区域填充颜色，可以简单的理解成windows中画图的填充工具。所以下边是生成简单着色器的两个源码： <a href="https://www.jianshu.com/p/66b10062bd67" target="_blank" rel="noopener">GLSL基础语法介绍</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public static final String NO_FILTER_VERTEX_SHADER = &quot;&quot; +</span><br><span class="line">	//顶点在画布中的位置</span><br><span class="line">	&quot;attribute vec4 position;\n&quot; + </span><br><span class="line">	// 纹理映射,纹理坐标是纹理映射的一部分。这意味着你想要对你的纹理进行某种滤镜操作的时候会用到它。</span><br><span class="line">	&quot;attribute vec4 inputTextureCoordinate;\n&quot; +</span><br><span class="line">	&quot; \n&quot; +</span><br><span class="line">	//变量,负责顶点着色器负责和片段着色器交流，以及信息的共享</span><br><span class="line">	&quot;varying vec2 textureCoordinate;\n&quot; +</span><br><span class="line">	&quot; \n&quot; +</span><br><span class="line">	&quot;void main()\n&quot; +</span><br><span class="line">	&quot;&#123;\n&quot; +</span><br><span class="line">	&quot;    gl_Position = position;\n&quot; +</span><br><span class="line">	//我们取出这个顶点中纹理坐标的 X 和 Y 的位置。我们只关心 inputTextureCoordinate 中的前两个参数，X 和 Y。这个坐标最开始是通过 4 个属性存在顶点着色器里的，但我们只需要其中的两个。</span><br><span class="line">	&quot;    textureCoordinate = inputTextureCoordinate.xy;\n&quot; +</span><br><span class="line">	&quot;&#125;&quot;;</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">     * 这个着色器实际上不会改变图像中的任何东西。它是一个直通着色器，意味着我们输入每一个像素，然后输出完全相同的像素。</span><br><span class="line">     */</span><br><span class="line">public static final String NO_FILTER_FRAGMENT_SHADER = &quot;&quot; +</span><br><span class="line"></span><br><span class="line">   //因为片段着色器作用在每一个像素上，我们需要一个方法来确定我们当前在分析哪一个像素/片段。它需要存储像素的 X 和 Y 坐标。我们接收到的是当前在顶点着色器被设置好的纹理坐标。</span><br><span class="line">    &quot;varying highp vec2 textureCoordinate;\n&quot; +</span><br><span class="line">    &quot; \n&quot; +</span><br><span class="line">    //为了处理图像，我们从应用中接收一个图片的引用，我们把它当做一个 2D 的纹理。这个数据类型被叫做 sampler2D ，这是因为我们要从这个 2D 纹理中采样出一个点来进行处理。</span><br><span class="line">    &quot;uniform sampler2D inputImageTexture;\n&quot; +</span><br><span class="line">    &quot; \n&quot; +</span><br><span class="line">    &quot;void main()\n&quot; +</span><br><span class="line">    &quot;&#123;\n&quot; +</span><br><span class="line">    //这是一个 GLSL 特有的方法：texture2D，顾名思义，创建一个 2D 的纹理。它采用我们之前声明过的属性作为参数来决定被处理的像素的颜色。这个颜色然后被设置给另外一个内建变量，gl_FragColor。因为片段着色器的唯一目的就是确定一个像素的颜色，gl_FragColor 本质上就是我们片段着色器的返回语句。</span><br><span class="line">    &quot;     gl_FragColor = texture2D(inputImageTexture, textureCoordinate);\n&quot; +</span><br><span class="line">        &quot;&#125;&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>有了源码，我们就可以创建着色器：<br>我们首先要做的是创建一个着色器对象，注意还是用ID来引用的，所以我们储存这个顶点着色器的ID为unsigned int，然后用glCreateShader创建这个着色器，我们把需要创建的着色器类型以参数形式提供给glCreateShader，由于我们正在创建一个顶点着色器，传递的参数是GLES20.GL_VERTEX_SHADER</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int iShader = GLES20.glCreateShader(GLES20.GL_VERTEX_SHADER);</span><br></pre></td></tr></table></figure>
+
+<p>下一步我们把这个着色器源码附加到着色器对象上，然后编译它：第一个参数是要编译的着色器对象,第二参数指定了传递的源码字符串.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GLES20.glShaderSource(iShader, strSource);</span><br><span class="line">GLES20.glCompileShader(iShader);</span><br></pre></td></tr></table></figure>
+
+<p>同时，我们要检测在调用glCompileShader后编译是否成功了，如果没成功的话，也希望知道错误是什么，这以便修复它们.如果结果非0，即编译成功。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int[] compiled = new int[1]；</span><br><span class="line">GLES20.glGetShaderiv(iShader, GLES20.GL_COMPILE_STATUS, compiled, 0);</span><br><span class="line">        if (compiled[0] == 0) &#123;</span><br><span class="line">            Log.d(&quot;Load Shader Failed&quot;, &quot;Compilation\n&quot; + GLES20.glGetShaderInfoLog(iShader));</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>片元着色器的创建和顶点一样，知识参数不同和源码不同。参数类型是GLES20.GL_FRAGMENT_SHADER</p>
+<h3 id="着色器程序"><a href="#着色器程序" class="headerlink" title="着色器程序"></a>着色器程序</h3><p>通过glCreateProgram函数创建一个程序，并返回新创建程序对象的ID引用，然后我们需要把之前编译的着色器附加到程序对象上，最后用glLinkProgram链接它们。着色器对象链接到程序对象以后，删除着色器对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 创建程序,返回对象的ID</span><br><span class="line">iProgId = GLES20.glCreateProgram();</span><br><span class="line">// 向程序中加入顶点着色器</span><br><span class="line">GLES20.glAttachShader(iProgId, iVShader);</span><br><span class="line">// 向程序中加入片元着色器</span><br><span class="line">GLES20.glAttachShader(iProgId, iFShader);</span><br><span class="line">// 链接程序</span><br><span class="line">GLES20.glLinkProgram(iProgId);</span><br><span class="line">// 获取program的链接情况</span><br><span class="line">GLES20.glGetProgramiv(iProgId, GLES20.GL_LINK_STATUS, link, 0);</span><br><span class="line">if (link[0] &lt;= 0) &#123;</span><br><span class="line">    Log.d(&quot;Load Program&quot;, &quot;Linking Failed&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">GLES20.glDeleteShader(iVShader);</span><br><span class="line">GLES20.glDeleteShader(iFShader);</span><br><span class="line">// 获取着色器中的属性引用id(传入的字符串就是我们着色器脚本中的属性名)</span><br><span class="line">mGLAttribPosition = GLES20.glGetAttribLocation(mGLProgId, &quot;position&quot;);</span><br><span class="line">mGLUniformTexture = GLES20.glGetUniformLocation(mGLProgId, &quot;inputImageTexture&quot;);</span><br><span class="line">mGLAttribTextureCoordinate = GLES20.glGetAttribLocation(mGLProgId,</span><br><span class="line">                &quot;inputTextureCoordinate&quot;);</span><br><span class="line">//glClearColor为glClear清除颜色缓冲区时指定RGBA值（也就是所有的颜色都会被替换成指定的RGBA值）。每个值的取值范围都是0.0~1.0，超出范围的将被截断。</span><br><span class="line">GLES20.glClearColor(0, 0, 0, 1);</span><br></pre></td></tr></table></figure>
+
+<h3 id="纹理ID"><a href="#纹理ID" class="headerlink" title="纹理ID"></a>纹理ID</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public static int loadTexture(final IntBuffer data, final Size size, final int usedTexId) &#123;</span><br><span class="line">        int textures[] = new int[1];</span><br><span class="line">        if (usedTexId == NO_TEXTURE) &#123;</span><br><span class="line">            GLES20.glGenTextures(1, textures, 0);</span><br><span class="line">            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0]);</span><br><span class="line">            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,</span><br><span class="line">                    GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);</span><br><span class="line">            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,</span><br><span class="line">                    GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);</span><br><span class="line">            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,</span><br><span class="line">                    GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);</span><br><span class="line">            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,</span><br><span class="line">                    GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);</span><br><span class="line">            GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, size.width, size.height,</span><br><span class="line">                    0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, data);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, usedTexId);</span><br><span class="line">            GLES20.glTexSubImage2D(GLES20.GL_TEXTURE_2D, 0, 0, 0, size.width,</span><br><span class="line">                    size.height, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, data);</span><br><span class="line">            textures[0] = usedTexId;</span><br><span class="line">        &#125;</span><br><span class="line">        return textures[0];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="绘制"><a href="#绘制" class="headerlink" title="绘制"></a>绘制</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// 使用某套shader程序</span><br><span class="line">GLES20.glUseProgram(mGLProgId);</span><br><span class="line">// 设置缓冲区起始位置</span><br><span class="line">cubeBuffer.position(0);</span><br><span class="line">// 顶点位置数据传入着色器,为画笔指定顶点位置数据(mGLAttribPosition)</span><br><span class="line">GLES20.glVertexAttribPointer(mGLAttribPosition, 2, GLES20.GL_FLOAT, false, 0, cubeBuffer);</span><br><span class="line">// 允许使用顶点坐标数组</span><br><span class="line">GLES20.glEnableVertexAttribArray(mGLAttribPosition);</span><br><span class="line">textureBuffer.position(0);</span><br><span class="line">// 纹理坐标数据传入着色器,为画笔指定纹理数据</span><br><span class="line">GLES20.glVertexAttribPointer(mGLAttribTextureCoordinate, 2, GLES20.GL_FLOAT, false, 0,</span><br><span class="line">        textureBuffer);</span><br><span class="line">GLES20.glEnableVertexAttribArray(mGLAttribTextureCoordinate);</span><br><span class="line">if (textureId != OpenGlUtils.NO_TEXTURE) &#123;</span><br><span class="line">	//设置纹理单元(sampler2D)</span><br><span class="line">    GLES20.glActiveTexture(GLES20.GL_TEXTURE0);</span><br><span class="line">    GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);</span><br><span class="line">    //设置uniform采样器的位置值, 也就是mGLUniformTexture纹理单元。</span><br><span class="line">    GLES20.glUniform1i(mGLUniformTexture, 0);</span><br><span class="line">&#125;</span><br><span class="line">onDrawArraysPre();</span><br><span class="line">//// 绘制</span><br><span class="line">GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);</span><br><span class="line">GLES20.glDisableVertexAttribArray(mGLAttribPosition);</span><br><span class="line">GLES20.glDisableVertexAttribArray(mGLAttribTextureCoordinate);</span><br></pre></td></tr></table></figure>
+
+<h3 id="滤镜纹理"><a href="#滤镜纹理" class="headerlink" title="滤镜纹理"></a>滤镜纹理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> protected void onDrawArraysPre() &#123;</span><br><span class="line">    if (mToneCurveTexture[0] != OpenGlUtils.NO_TEXTURE) &#123;</span><br><span class="line">        GLES20.glActiveTexture(GLES20.GL_TEXTURE3);</span><br><span class="line">        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mToneCurveTexture[0]);</span><br><span class="line">        GLES20.glUniform1i(mToneCurveTextureUniformLocation, 3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过上述代码就可以实现纹理滤镜的效果了。但是这个滤镜的纹理是如何获取到的呢？<br>简单介绍两种方式：</p>
+<h4 id="ps-acv-文件"><a href="#ps-acv-文件" class="headerlink" title="ps acv 文件"></a>ps acv 文件</h4><p>acv文件是ps用来设置曲线效果，不同曲线参数可以呈现出不同的滤镜效果。我们可以对acv文件进行读取，可以得到：Curves曲线信息数组，每个curvers可以分别获取到R,G,B 的PointF数组信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public void setFromCurveFileInputStream(InputStream input) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        int version = readShort(input);</span><br><span class="line">        int totalCurves = readShort(input);</span><br><span class="line">        ArrayList&lt;PointF[]&gt; curves = new ArrayList&lt;PointF[]&gt;(totalCurves);</span><br><span class="line">        float pointRate = 1.0f / 255;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; totalCurves; i++) &#123;</span><br><span class="line">            // 2 bytes, Count of points in the curve (short integer from 2...19)</span><br><span class="line">            short pointCount = readShort(input);</span><br><span class="line">            PointF[] points = new PointF[pointCount];</span><br><span class="line">            // point count * 4</span><br><span class="line">            // Curve points. Each curve point is a pair of short integers where</span><br><span class="line">            // the first number is the output value (vertical coordinate on the</span><br><span class="line">            // Curves dialog graph) and the second is the input value. All coordinates have range 0 to 255.</span><br><span class="line">            for (int j = 0; j &lt; pointCount; j++) &#123;</span><br><span class="line">                short y = readShort(input);</span><br><span class="line">                short x = readShort(input);</span><br><span class="line"></span><br><span class="line">                points[j] = new PointF(x * pointRate, y * pointRate);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            curves.add(points);</span><br><span class="line">        &#125;</span><br><span class="line">        input.close();</span><br><span class="line"></span><br><span class="line">        mRgbCompositeControlPoints = curves.get(0);</span><br><span class="line">        mRedControlPoints = curves.get(1);</span><br><span class="line">        mGreenControlPoints = curves.get(2);</span><br><span class="line">        mBlueControlPoints = curves.get(3);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后根据RGB信息生成纹理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> // 设置纹理单元</span><br><span class="line">GLES20.glActiveTexture(GLES20.GL_TEXTURE3);</span><br><span class="line">// 绑定纹理</span><br><span class="line">GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mToneCurveTexture[0]);</span><br><span class="line"></span><br><span class="line">if ((mRedCurve.size() &gt;= 256) &amp;&amp; (mGreenCurve.size() &gt;= 256) &amp;&amp; (mBlueCurve.size() &gt;= 256) &amp;&amp; (mRgbCompositeCurve.size() &gt;= 256)) &#123;</span><br><span class="line">    byte[] toneCurveByteArray = new byte[256 * 4];</span><br><span class="line">    for (int currentCurveIndex = 0; currentCurveIndex &lt; 256; currentCurveIndex++) &#123;</span><br><span class="line">        // BGRA for upload to texture</span><br><span class="line">        toneCurveByteArray[currentCurveIndex * 4 + 2] = (byte) ((int) Math.min(Math.max(currentCurveIndex + mBlueCurve.get(currentCurveIndex) + mRgbCompositeCurve.get(currentCurveIndex), 0), 255) &amp; 0xff);</span><br><span class="line">        toneCurveByteArray[currentCurveIndex * 4 + 1] = (byte) ((int) Math.min(Math.max(currentCurveIndex + mGreenCurve.get(currentCurveIndex) + mRgbCompositeCurve.get(currentCurveIndex), 0), 255) &amp; 0xff);</span><br><span class="line">        toneCurveByteArray[currentCurveIndex * 4] = (byte) ((int) Math.min(Math.max(currentCurveIndex + mRedCurve.get(currentCurveIndex) + mRgbCompositeCurve.get(currentCurveIndex), 0), 255) &amp; 0xff);</span><br><span class="line">        toneCurveByteArray[currentCurveIndex * 4 + 3] = (byte) (255 &amp; 0xff);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, 256 /*width*/, 1 /*height*/, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, ByteBuffer.wrap(toneCurveByteArray));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="图片纹理"><a href="#图片纹理" class="headerlink" title="图片纹理"></a>图片纹理</h4><p>通过图片生成纹理ID,也就是滤镜图片：看一看资源文件目录信息：</p>
+<figure class="image-box">
+                <a rel=GPUImage渲染流程解析 href="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/纹理图片.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/纹理图片.png" alt title class></a>
+                <p></p>
+            </figure>
+
+<p>下面是json和着色器源码：</p>
+<ul>
+<li><p>json</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;filterList&quot;: [&#123;</span><br><span class="line">        &quot;type&quot;: &quot;filter&quot;,</span><br><span class="line">        &quot;name&quot;: &quot;amaro&quot;,</span><br><span class="line">        &quot;vertexShader&quot;: &quot;&quot;,</span><br><span class="line">        &quot;fragmentShader&quot;: &quot;fragment.glsl&quot;,</span><br><span class="line">        &quot;uniformList&quot;:[&quot;blowoutTexture&quot;, &quot;overlayTexture&quot;, &quot;mapTexture&quot;],</span><br><span class="line">        &quot;uniformData&quot;: &#123;</span><br><span class="line">            &quot;blowoutTexture&quot;: &quot;blowout.png&quot;,</span><br><span class="line">            &quot;overlayTexture&quot;: &quot;overlay.png&quot;,</span><br><span class="line">            &quot;mapTexture&quot;: &quot;map.png&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;strength&quot;: 1.0,</span><br><span class="line">        &quot;texelOffset&quot;: 0,</span><br><span class="line">        &quot;audioPath&quot;: &quot;&quot;,</span><br><span class="line">        &quot;audioLooping&quot;: 1</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>fragment.glsl内容</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">precision mediump float;</span><br><span class="line"> </span><br><span class="line">varying mediump vec2 textureCoordinate;</span><br><span class="line"> </span><br><span class="line">uniform sampler2D inputTexture;</span><br><span class="line">uniform sampler2D blowoutTexture; //blowout;</span><br><span class="line">uniform sampler2D overlayTexture; //overlay;</span><br><span class="line">uniform sampler2D mapTexture; //map</span><br><span class="line"> </span><br><span class="line">uniform float strength;</span><br><span class="line"></span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">    vec4 originColor = texture2D(inputTexture, textureCoordinate.xy);</span><br><span class="line">    vec4 texel = texture2D(inputTexture, textureCoordinate.xy);</span><br><span class="line">    vec3 bbTexel = texture2D(blowoutTexture, textureCoordinate.xy).rgb;</span><br><span class="line"></span><br><span class="line">    texel.r = texture2D(overlayTexture, vec2(bbTexel.r, texel.r)).r;</span><br><span class="line">    texel.g = texture2D(overlayTexture, vec2(bbTexel.g, texel.g)).g;</span><br><span class="line">    texel.b = texture2D(overlayTexture, vec2(bbTexel.b, texel.b)).b;</span><br><span class="line"></span><br><span class="line">    vec4 mapped;</span><br><span class="line">    mapped.r = texture2D(mapTexture, vec2(texel.r, 0.16666)).r;</span><br><span class="line">    mapped.g = texture2D(mapTexture, vec2(texel.g, 0.5)).g;</span><br><span class="line">    mapped.b = texture2D(mapTexture, vec2(texel.b, 0.83333)).b;</span><br><span class="line">    mapped.a = 1.0;</span><br><span class="line"></span><br><span class="line">    mapped.rgb = mix(originColor.rgb, mapped.rgb, strength);</span><br><span class="line"></span><br><span class="line">    gl_FragColor = mapped;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><figure class="image-box">
+                <a rel=GPUImage渲染流程解析 href="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/效果图.jpg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/效果图.jpg" alt title class></a>
+                <p></p>
+            </figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">static final float TEXTURE[] = &#123;</span><br><span class="line">            0.0f, 1.0f,</span><br><span class="line">            1.0f, 1.0f,</span><br><span class="line">            0.0f, 0.0f,</span><br><span class="line">            1.0f, 0.0f,</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="image-box">
+                <a rel=GPUImage渲染流程解析 href="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/正确纹理.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/正确纹理.png" alt title class></a>
+                <p></p>
+            </figure>
+
+<h3 id="渲染流程总结"><a href="#渲染流程总结" class="headerlink" title="渲染流程总结"></a>渲染流程总结</h3><figure class="image-box">
+                <a rel=GPUImage渲染流程解析 href="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/渲染流程.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/渲染流程.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>染流程如下：顶点数据(Vertices) &gt; 顶点着色器(Vertex Shader) &gt; 图元装配(Assembly) &gt; 几何着色器(Geometry Shader) &gt; 光栅化(Rasterization) &gt; 片元着色器(Fragment Shader) &gt; 逐片元处理(Per-Fragment Operations) &gt; 帧缓冲(FrameBuffer)。再经过双缓冲的交换(SwapBuffer)，渲染内容就显示到了屏幕上。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>根据渲染流程，我们知道，美颜的操作即是对着色器编码的源码进行编写。采用不同的算法，实现不同的美颜功能。同时滤镜的纹理，可以是ps的acv文件，也可以是图片，着色器源码针对不同的 资源分别解析和使用。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://juejin.im/post/6844903878740148231#heading-0" target="_blank" rel="noopener">OpenGL ES</a></p>
+<p><a href="https://www.cnblogs.com/zhxmdefj/p/11192408.html" target="_blank" rel="noopener">OpenGL入门1.2：渲染管线简介，画三角形</a></p>
+<p><a href="https://blog.csdn.net/dengchukun/category_9281212.html" target="_blank" rel="noopener">GLES2.0中文API</a></p>
+<p><a href="https://www.jianshu.com/p/cb55d8f2b4d0" target="_blank" rel="noopener">OpenGLES 绘制图片纹理</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-08-21T02:35:02.000Z" itemprop="dateUpdated">2020-08-21 10:35:02</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2020/08/13/GPUImage渲染流程解析/" target="_blank" rel="external">http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FaceUnity/">FaceUnity</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/&title=《GPUImage渲染流程解析》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/&title=《GPUImage渲染流程解析》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2020/11/12/Uri获取资源文件/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Uri获取资源文件</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2020/08/05/美颜相关概念/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">美颜相关概念</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#渲染"><span class="post-toc-number">1.</span> <span class="post-toc-text">渲染</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建视图"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">创建视图</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#坐标"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">坐标</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#顶点着色器-Vertex-Shader-，片元着色器（Fragment-Shader）"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">顶点着色器(Vertex Shader)，片元着色器（Fragment Shader）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#着色器程序"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">着色器程序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#纹理ID"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">纹理ID</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#绘制"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">绘制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#滤镜纹理"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">滤镜纹理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ps-acv-文件"><span class="post-toc-number">1.7.1.</span> <span class="post-toc-text">ps acv 文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#图片纹理"><span class="post-toc-number">1.7.2.</span> <span class="post-toc-text">图片纹理</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#效果图"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">效果图</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#渲染流程总结"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">渲染流程总结</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">2.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.lujingtao.com" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2017 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/&title=《GPUImage渲染流程解析》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2020/08/13/GPUImage渲染流程解析/&title=《GPUImage渲染流程解析》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACPUlEQVR42u3aQU7DQBAEQP7/6SBxQgqxu8cGkd3yKTKO7cqh2dmZj4/4eHwd3z9/P/N8ZfLX53s+f775wMDAeFvG4/A4fsyrl87PJM89vgYDA2MfRhKySbwmL3TXczEwMDDa5WB+frZkxMDAwMiDLwnT9nxb0GJgYOzJaIvJJC7bqD3+yW6rxTEwMN6QMWsM/M3nX+9vYGBg/HvGY3S0xWq7QKzfBwMDY2lGspU2G8I4bmG2i9EoiDEwMLZhzAa2Zgu72WDZyztgYGBswGhvNCO17YRL/Q0MDIzlGO1oV76MS4ZZZ6MeJ0UsBgbGEoy7lnHtt4rfOPk3gIGBsRlj1h7IB8WSbyWB+0N/AwMDY2nGXY3JZDlYvFycpRgYGDsw8p5guxx8XD6ijTwMDIylGfmswmwbLlnwzbbhTgpaDAyMRRmzUrbuQpQBOhvjwMDAWInRhuP1wG2DuwhWDAyMpRntwu56pOY/ULTZh4GBsQHjeiHaLvLaTbqTkQsMDIylGfkCcbZNn0dnvpX28hoMDIwNGO0j8yoyH+moXz1KYgwMjNUYbbDOCtoZ/gSMgYGxNCOP4FmY5o2BWZMVAwNjbcZsqKItONtXP47gH+6PgYGxNKMNuHZEox22yBufGBgYuzGSkG0LyLaUbQM3qsUxMDCWY9wVsnmJ22b/yYIVAwMD494t+/g+xcYcBgYGRrwZN2tM5ptrJ8MWGBgYSzNmo12za/JILfYFMTAwlma0jYFZC7NtDFwKXwwMjHUYnxlWdHJEAWi3AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

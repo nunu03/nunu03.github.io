@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>日常问题解决记录 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Log,Fix">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:277133779@qq.com" title="277133779@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>9</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/codefine" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>日常问题解决记录</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">日常问题解决记录</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-02-25T03:02:40.000Z" itemprop="datePublished" class="page-time">
+  2021-02-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Log/">Log</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Log/Fix/">Fix</a></li></ul></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-日常问题解决记录"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">日常问题解决记录</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-02-25 11:02:40" datetime="2021-02-25T03:02:40.000Z"  itemprop="datePublished">2021-02-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Log/">Log</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Log/Fix/">Fix</a></li></ul></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h1 id="指令配置相关"><a href="#指令配置相关" class="headerlink" title="指令配置相关"></a>指令配置相关</h1><h2 id="Git相关"><a href="#Git相关" class="headerlink" title="Git相关"></a>Git相关</h2><h3 id="撤销commit"><a href="#撤销commit" class="headerlink" title="撤销commit"></a>撤销commit</h3><p>1.git reset HEAD^ 撤销最后一次commit</p>
+<h3 id="查看远端仓库地址"><a href="#查看远端仓库地址" class="headerlink" title="查看远端仓库地址"></a>查看远端仓库地址</h3><p>2.git remote -v 查看远端仓库地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01$ git remote -v</span><br><span class="line">origin  https://github.com/danengz/OpenCVDemo.git (fetch)</span><br><span class="line">origin  https://github.com/danengz/OpenCVDemo.git (push)</span><br></pre></td></tr></table></figure>
+
+<h3 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01$ git stash list</span><br><span class="line">stash@&#123;0&#125;: On f-jy-10.16.0-teg-video-cyl: 接入teg video</span><br><span class="line">chenyulong01$ git stash clear</span><br><span class="line">chenyulong01$ git stash save &quot;接入teg video-jiaoyou&quot;</span><br><span class="line">chenyulong01$ git stash pop</span><br><span class="line">chenyulong01$ git stash apply 0</span><br><span class="line">chenyulong01$ git stash apply stash@&#123;0&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Linux下Git命令中文显示乱码"><a href="#Linux下Git命令中文显示乱码" class="headerlink" title="Linux下Git命令中文显示乱码"></a>Linux下Git命令中文显示乱码</h3><p>提示异常：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   &quot;\347\211\210\346\234\254\347\256\241\347\220\206/.DS_Store&quot;</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line"></span><br><span class="line">        &quot;\347\211\210\346\234\254\347\256\241\347\220\206/\350\264\250\351\207\217\344\277\235\350\257\201/\346\265\213\350\257\225\347\224\250\344\276\213\351\233\206/\346\224\257\344\273\230\347\233\270\345\205\263.numbers&quot;</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br><span class="line"></span><br><span class="line">chenyulong01deMacBook-Pro:WbuDoc chenyulong01$ git config --global core.quotepath false</span><br><span class="line">chenyulong01deMacBook-Pro:WbuDoc chenyulong01$ git status</span><br><span class="line">On branch master</span><br><span class="line">Your branch is up-to-date with &apos;origin/master&apos;.</span><br><span class="line"></span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   .DS_Store</span><br><span class="line">        modified:   版本管理/.DS_Store</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br></pre></td></tr></table></figure>
+
+<p>解决方案： <strong>git config –global core.quotepath false</strong></p>
+<h3 id="github-token"><a href="#github-token" class="headerlink" title="github token"></a>github token</h3><p><a href="https://docs.github.com/cn/get-started/getting-started-with-git/updating-credentials-from-the-macos-keychain" target="_blank" rel="noopener">Mac修改网址</a><br>在钥匙串中搜索github.com，点显示密码：修改密码改成token即可：</p>
+<figure class="image-box">
+                <a rel=日常问题解决记录 href="http://nunu03.github.io/2021/02/25/日常问题解决记录/github-password.png" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/02/25/日常问题解决记录/github-password.png" alt title class></a>
+                <p></p>
+            </figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chenyuddddeMacBook-Pro:nunu03.github.io chenxxx$ git remote set-url origin https://ghp_fGtnlW3RO2ncOdCwi1UVNStf9l3eSE2Jjsdsfsd@github.com/chesdsd/nunu03.github.io.git/</span><br></pre></td></tr></table></figure>
+
+<h2 id="gradle相关"><a href="#gradle相关" class="headerlink" title="gradle相关"></a>gradle相关</h2><h3 id="查看Gradle-Task对应源码类"><a href="#查看Gradle-Task对应源码类" class="headerlink" title="查看Gradle Task对应源码类"></a>查看Gradle Task对应源码类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01$ ./gradlew -q help --task app:mergeReleaseResources</span><br><span class="line">Detailed task information for app:mergeReleaseResources</span><br><span class="line">Path</span><br><span class="line">     :app:mergeReleaseResources</span><br><span class="line">Type</span><br><span class="line">     MergeResources (com.android.build.gradle.tasks.MergeResources)</span><br><span class="line">Description</span><br><span class="line">     -</span><br><span class="line">Group</span><br><span class="line">     -</span><br><span class="line">chenyulong01deMacBook-Pro:MyActivityTest chenyulong01$</span><br></pre></td></tr></table></figure>
+
+<h3 id="bash-gradlew-Permission-denied"><a href="#bash-gradlew-Permission-denied" class="headerlink" title="bash: ./gradlew: Permission denied"></a>bash: ./gradlew: Permission denied</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x gradlew</span><br></pre></td></tr></table></figure>
+
+<h2 id="sdkman"><a href="#sdkman" class="headerlink" title="sdkman"></a>sdkman</h2><h3 id="安装groovy"><a href="#安装groovy" class="headerlink" title="安装groovy"></a>安装groovy</h3><p>Simply open a new terminal and enter:<br>$ curl -s get.sdkman.io | bash<br>Follow the instructions on-screen to complete installation.<br>Open a new terminal or type the command:<br>$ source “$HOME/.sdkman/bin/sdkman-init.sh”<br>Then install the latest stable Groovy:<br>$ sdk install groovy<br>After installation is complete and you’ve made it your default version, test it with:<br>$ groovy -version<br>That’s all there is to it!</p>
+<h3 id="配置路径使idea容易找到"><a href="#配置路径使idea容易找到" class="headerlink" title="配置路径使idea容易找到"></a>配置路径使idea容易找到</h3><p>sudo ln -s /usr/local/opt/groovy/libexec /Library/Groovy</p>
+<h3 id="安装目录"><a href="#安装目录" class="headerlink" title="安装目录"></a>安装目录</h3><p>所有sdk都安装在了sdkman目录下：~/.sdkman/candidates/<br><a href="https://zhuanlan.zhihu.com/p/82315812" target="_blank" rel="noopener">sdkman介绍</a></p>
+<h2 id="Mac系统如何显示隐藏文件？"><a href="#Mac系统如何显示隐藏文件？" class="headerlink" title="Mac系统如何显示隐藏文件？"></a>Mac系统如何显示隐藏文件？</h2><p>Command+Shift+. 可以显示隐藏文件、文件夹，再按一次，恢复隐藏；</p>
+<h2 id="Linux-Mac下统计当前文件夹下的文件个数、目录个数"><a href="#Linux-Mac下统计当前文件夹下的文件个数、目录个数" class="headerlink" title="Linux/Mac下统计当前文件夹下的文件个数、目录个数"></a>Linux/Mac下统计当前文件夹下的文件个数、目录个数</h2><p>1.统计当前文件夹下文件的个数</p>
+<pre><code>ls -l |grep &quot;^-&quot;|wc -l</code></pre><p>2、 统计当前文件夹下目录的个数</p>
+<pre><code>ls -l |grep &quot;^d&quot;|wc -l</code></pre><p>3、 统计当前文件夹下文件的个数，包括子文件夹里的</p>
+<pre><code>ls -lR|grep &quot;^-&quot;|wc -l</code></pre><p>4、统计文件夹下目录的个数，包括子文件夹里的</p>
+<pre><code>ls -lR|grep &quot;^d&quot;|wc -l</code></pre><p>5、 说明</p>
+<p>  代码如下:</p>
+<pre><code>ls -l</code></pre><p>  长列表输出当前文件夹下文件信息(注意这里的文件，不同于一般的文件，可能是目录、链接、设备文件等)</p>
+<p>  代码如下:</p>
+<pre><code>grep &quot;^-&quot;</code></pre><p>  这里将长列表输出信息过滤一部分，只保留一般文件，如果只保留目录就是 ^d<br>  代码如下:</p>
+<pre><code>wc -l</code></pre><p>  统计输出信息的行数，因为已经过滤得只剩一般文件了，所以统计结果就是一般文件信息的行数，又由于一行信息对应一个文件，所以也就是文件的个数。</p>
+<h2 id="adb-backup"><a href="#adb-backup" class="headerlink" title="adb backup"></a>adb backup</h2><p>  1.备份：adb backup -f /Users/xxx/Desktop/photo/clientbackup.ab 包名<br>  2.Android backup extractor<br>  <a href="https://github.com/nelenkov/android-backup-extractor/releases" target="_blank" rel="noopener">下载abe.jar</a><br>  执行： java -jar /Users/xxx/Desktop/photo/abe.jar unpack /Users/xxx/Desktop/photo/clientbackup.ab   /Users/xxx/Desktop/photo/clientbackup.tar<br>  3.恢复：adb restore clientbackup.ab</p>
+<h2 id="adb多用户操作"><a href="#adb多用户操作" class="headerlink" title="adb多用户操作"></a>adb多用户操作</h2><p>查看用户列表</p>
+<blockquote>
+<p>adb shell pm list users</p>
+</blockquote>
+<p>创建新用户</p>
+<blockquote>
+<p>adb shell pm create-user [–profileOf USER_ID] [–managed] USER_NAME</p>
+</blockquote>
+<blockquote>
+<p>adb shell pm create-user 10 godv</p>
+</blockquote>
+<p>启动和切换用户</p>
+<blockquote>
+<p>adb shell am switch-user USER_ID</p>
+</blockquote>
+<blockquote>
+<p>adb shell am start-user USER_ID</p>
+</blockquote>
+<p>安装应用到某个用户下</p>
+<blockquote>
+<p>adb install –user USER_ID name.apk</p>
+</blockquote>
+<p>删除用户</p>
+<blockquote>
+<p>adb shell pm remove-user USER_ID</p>
+</blockquote>
+<p>为了多用户下的数据安全性，在每个新用户创建之初，不管是外部存储（External Storage）还是app data目录，Android都为其准备了独立的文件存储</p>
+<p>/storage/emulated/下拥有不同的用户分区</p>
+<blockquote>
+<p>/storage/emulated/0</p>
+</blockquote>
+<blockquote>
+<p>/storage/emulated/10</p>
+</blockquote>
+<p>代码查看不同用户 以SDK为例 反射获取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int uid = -1;</span><br><span class="line">try &#123;</span><br><span class="line">     Class clz = Class.forName(&quot;android.os.UserHandle&quot;);</span><br><span class="line">     Method m = clz.getDeclaredMethod(&quot;myUserId&quot;);</span><br><span class="line">     uid = (int) m.invoke(null);</span><br><span class="line">     &#125; catch (Exception e) &#123;</span><br><span class="line">         e.printStackTrace();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>ContentResolver下的uri</p>
+<blockquote>
+<p>content:// USER_ID @media/external/audio/media</p>
+</blockquote>
+<p>即可获取不同用户下的不同数据<br><a href="https://blog.csdn.net/we1less/article/details/108280882?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~aggregatepage~first_rank_v2~rank_aggregation-5-108280882.pc_agg_rank_aggregation&utm_term=adb+shell%E7%94%A8%E6%88%B7id&spm=1000.2123.3001.4430" target="_blank" rel="noopener">安卓adb多用户操作</a><br><a href="https://mazhuang.org/awesome-adb/" target="_blank" rel="noopener">awesome-adb</a><br><a href="https://www.cnblogs.com/onelikeone/p/11083983.html" target="_blank" rel="noopener">Android 多用户</a></p>
+<h2 id="环境变量设置"><a href="#环境变量设置" class="headerlink" title="环境变量设置"></a>环境变量设置</h2><p>手动设置：</p>
+<blockquote>
+<p>chenyudeMacBook-Pro:~ chenyu$ open .bash_profile</p>
+</blockquote>
+<blockquote>
+<p>chenyudeMacBook-Pro:~ chenyu$ source .bash_profile</p>
+</blockquote>
+<p>自动设置：</p>
+<blockquote>
+<p>export PATH=$PATH:/Users/chenyulong01/gradle/gradle-7.3/bin</p>
+</blockquote>
+<h2 id="端口查看"><a href="#端口查看" class="headerlink" title="端口查看"></a>端口查看</h2><blockquote>
+<p>sudo lsof -i :8088 // 查看端口使用情况<br>sudo kill -9 47862 // 杀死展示的PID</p>
+</blockquote>
+<h2 id="npm-install-https-certificate"><a href="#npm-install-https-certificate" class="headerlink" title="npm install https certificate"></a>npm install https certificate</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chenyudeMacBook-Pro:Robot chenyu$ npm install</span><br><span class="line">npm ERR! request to https://registry.cnpmjs.org/base-64 failed, reason: Hostname/IP doesn&apos;t match certificate&apos;s altnames: &quot;Host: registry.cnpmjs.org. is not in the cert&apos;s altnames: DNS:r.cnpmjs.org&quot;</span><br><span class="line"></span><br><span class="line">npm ERR! A complete log of this run can be found in:</span><br><span class="line">npm ERR!     /Users/chenyu/.npm/_logs/2021-08-09T06_53_57_119Z-debug.log</span><br></pre></td></tr></table></figure>
+
+<p>解决方案：关闭https认证：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chenyudeMacBook-Pro:Robot chenyu$ npm config set strict-ssl false</span><br></pre></td></tr></table></figure>
+
+<h2 id="nps穿透"><a href="#nps穿透" class="headerlink" title="nps穿透"></a>nps穿透</h2><p><strong>安装</strong></p>
+<p>$ cd /opt/nps</p>
+<p>$ ./nps install -config=/etc/nps/nps.conf</p>
+<p><strong>启动</strong></p>
+<p>$ sudo nps start</p>
+<p><strong>其他命令</strong></p>
+<p><strong>停止</strong></p>
+<p>$ sudo nps stop</p>
+<p><strong>客户端更新</strong></p>
+<p>$ sudo nps-update update</p>
+<p><strong>修改配置</strong></p>
+<p>如果需要更换命令内容需要先卸载./nps uninstall，再重新安装</p>
+<p>$ cd /opt/nps</p>
+<p>$ ./nps uninstall</p>
+<p><strong>成功后再重新安装</strong></p>
+<p>$ ./nps install -config=/etc/nps/nps.conf</p>
+<p><a href="https://blog.csdn.net/weixin_39992665/article/details/116770933?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.control" target="_blank" rel="noopener">linux卸载nps,CentOS安装nps</a></p>
+<h1 id="异常相关"><a href="#异常相关" class="headerlink" title="异常相关"></a>异常相关</h1><h2 id="Android-Studio-不能调试"><a href="#Android-Studio-不能调试" class="headerlink" title="Android Studio 不能调试"></a>Android Studio 不能调试</h2><p>提示异常：Attention! No symbol directories found - please check your native debug configuration</p>
+<p>解决方案：在Android studio， file–&gt;settering—&gt;plugins—-android NDK support插件的选项去掉。重新编译后再debug就可以了。</p>
+<p><a href="https://www.jianshu.com/p/3d8ddf8df1b6" target="_blank" rel="noopener">android studio无法debug解决方法</a></p>
+<h2 id="Android-Studio-Connect-to-127-0-0-1-8888-127-0-0-1-failed-Connection-refused-Connection-refused"><a href="#Android-Studio-Connect-to-127-0-0-1-8888-127-0-0-1-failed-Connection-refused-Connection-refused" class="headerlink" title="Android Studio - Connect to 127.0.0.1:8888 [/127.0.0.1] failed: Connection refused (Connection refused)"></a>Android Studio - Connect to 127.0.0.1:8888 [/127.0.0.1] failed: Connection refused (Connection refused)</h2><blockquote>
+<p>Could not resolve com.anjuke.android.community:communitymodule:1014-1.0.0.<br>Could not get resource ‘<a href="http://artifactory.58corp.com:8081/artifactory/android-public/com/anjuke/android/community/communitymodule/1014-1.0.0/communitymodule-1014-1.0.0.pom&#39;" target="_blank" rel="noopener">http://artifactory.58corp.com:8081/artifactory/android-public/com/anjuke/android/community/communitymodule/1014-1.0.0/communitymodule-1014-1.0.0.pom&#39;</a>.<br>Could not GET ‘<a href="http://artifactory.58corp.com:8081/artifactory/android-public/com/anjuke/android/community/communitymodule/1014-1.0.0/communitymodule-1014-1.0.0.pom&#39;" target="_blank" rel="noopener">http://artifactory.58corp.com:8081/artifactory/android-public/com/anjuke/android/community/communitymodule/1014-1.0.0/communitymodule-1014-1.0.0.pom&#39;</a>.<br>Connect to 127.0.0.1:8888 [/127.0.0.1] failed: Connection refused (Connection refused)</p>
+</blockquote>
+<p>解决方案：cmd：lsof -i，找到COMMAND java 对应的 PID，然后kill 98087  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01deMacBook-Pro:~ chenyulong01$ lsof -i</span><br><span class="line">COMMAND     PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME</span><br><span class="line">java      77690 chenyulong01  211u  IPv6 0x426c9f64949f384b      0t0  TCP *:65337 (LISTEN)</span><br><span class="line">chenyulong01deMacBook-Pro:~ chenyulong01$ </span><br><span class="line">chenyulong01deMacBook-Pro:~ chenyulong01$ kill 77690</span><br><span class="line">chenyulong01deMacBook-Pro:~ chenyulong01$</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用Xposed去hook方法TestArray-Person-person"><a href="#使用Xposed去hook方法TestArray-Person-person" class="headerlink" title="使用Xposed去hook方法TestArray(Person[] person)"></a>使用Xposed去hook方法TestArray(Person[] person)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;?&gt; personClass = findClass(&quot;com.zq.inputmethodtest.Person&quot;,lpparam.classLoader);</span><br><span class="line">findAndHookMethod(&quot;com.zq.inputmethodtest.MainActivity&quot;, lpparam.classLoader,</span><br><span class="line">        &quot;TestArray&quot;,java.lang.reflect.Array.newInstance(personClass, 2).getClass(), new XC_MethodHook() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            protected void afterHookedMethod(MethodHookParam param) throws Throwable &#123;</span><br><span class="line">                param.setResult(&quot;person数组被修改&quot;);</span><br><span class="line">                Log.d(&quot;InputTest--&gt;after &quot;,&quot;&quot;+ param.getResult());</span><br><span class="line">            &#125;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Execution-failed-for-JetifyTransform"><a href="#Execution-failed-for-JetifyTransform" class="headerlink" title="Execution failed for JetifyTransform"></a>Execution failed for JetifyTransform</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Suggestions:</span><br><span class="line">            - If you believe this library doesn&apos;t need to be jetified (e.g., if it already supports AndroidX, or if it doesn&apos;t use support libraries/AndroidX at all), add android.jetifier.blacklist = &#123;&lt;!-- --&gt;comma-separated list of regular expressions (or simply names) of the libraries that you don&apos;t want to be jetified&#125; to the gradle.properties file.</span><br><span class="line">            - If you believe this library needs to be jetified (e.g., if it uses old support libraries and breaks your app if it isn&apos;t jetified), contact the library&apos;s authors to update this library to support AndroidX and use the supported version once it is released.</span><br></pre></td></tr></table></figure>
+
+<p>解决方案：在gradle.properties配置文件中添加，android.jetifier.blacklist = common-27.1.0.jar,bundletool-0.14.0.jar</p>
+<h2 id="Duplicate-jar-entry-a-class"><a href="#Duplicate-jar-entry-a-class" class="headerlink" title="Duplicate jar entry [a.class])"></a>Duplicate jar entry [a.class])</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Execution failed for task &apos;:58WuxianClient:minifyReleaseWithProguard&apos;.</span><br><span class="line">&gt; java.io.IOException: Can&apos;t write [/Users/chenyulong01/AndroidStudioProjects/58/58town/58ClientProject/58WuxianClient/build/intermediates/shrunk_jar/release/minified.jar] (Can&apos;t read [/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/1749dbd4dcd5d376e66539c8b1f84b24/jetified-asm-analysis-7.0.jar(;;;;;;;**.class)] (Duplicate jar entry [a.class]))</span><br></pre></td></tr></table></figure>
+
+<p>解决方案：在gradle task 中，点击执行androidDependencies,打印出所有依赖列表，查找出重复对组，然后去去除依赖即可。</p>
+<figure class="image-box">
+                <a rel=日常问题解决记录 href="http://nunu03.github.io/2021/02/25/日常问题解决记录/dependencies.jpg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/02/25/日常问题解决记录/dependencies.jpg" alt title class></a>
+                <p></p>
+            </figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">+--- org.ow2.asm:asm-commons:7.0@jar</span><br><span class="line">+--- org.ow2.asm:asm-util:7.0@jar</span><br><span class="line">+--- org.ow2.asm:asm-analysis:7.0@jar</span><br><span class="line">+--- org.ow2.asm:asm-tree:7.0@jar</span><br><span class="line"></span><br><span class="line">implementation (&apos;com.android.tools.build:gradle:4.0.2&apos;)</span><br><span class="line">            &#123;</span><br><span class="line">                exclude group: &apos;javax.activation&apos;</span><br><span class="line">                exclude group: &apos;org.apache.httpcomponents&apos;</span><br><span class="line">                exclude group: &apos;org.ow2.asm&apos;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Duplicate-class-javax-activation-ActivationDataFlavor-found-in-modules"><a href="#Duplicate-class-javax-activation-ActivationDataFlavor-found-in-modules" class="headerlink" title="Duplicate class javax.activation.ActivationDataFlavor found in modules"></a>Duplicate class javax.activation.ActivationDataFlavor found in modules</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.lang.RuntimeException: Duplicate class javax.activation.ActivationDataFlavor found in modules javax.activation-1.2.0.jar (com.sun.activation:javax.activation:1.2.0) and javax.activation-api-1.2.0.jar (javax.activation:javax.activation-api:1.2.0)</span><br></pre></td></tr></table></figure>
+
+<p>解决方案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">implementation (&apos;com.android.tools.lint:lint-gradle:27.0.2&apos;)</span><br><span class="line">            &#123;</span><br><span class="line">                exclude group: &apos;com.sun.activation&apos;, module: &apos;javax.activations&apos;</span><br><span class="line">                exclude group: &apos;com.google.code.findbugs&apos;</span><br><span class="line">                exclude group: &apos;javax.inject&apos;</span><br><span class="line">                exclude group: &apos;com.android.tools.external.com-intellij&apos;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2022-02-18T07:59:01.000Z" itemprop="dateUpdated">2022-02-18 15:59:01</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2021/02/25/日常问题解决记录/" target="_blank" rel="external">http://nunu03.github.io/2021/02/25/日常问题解决记录/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fix/">Fix</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Log/">Log</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/02/25/日常问题解决记录/&title=《日常问题解决记录》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/02/25/日常问题解决记录/&title=《日常问题解决记录》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2021/03/24/OpenCV学习/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">OpenCV学习</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2021/01/06/nps-内网穿透/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">nps 内网穿透</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#指令配置相关"><span class="post-toc-number">1.</span> <span class="post-toc-text">指令配置相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Git相关"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Git相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#撤销commit"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">撤销commit</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#查看远端仓库地址"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">查看远端仓库地址</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#git-stash"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">git stash</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Linux下Git命令中文显示乱码"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">Linux下Git命令中文显示乱码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#github-token"><span class="post-toc-number">1.1.5.</span> <span class="post-toc-text">github token</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gradle相关"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">gradle相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#查看Gradle-Task对应源码类"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">查看Gradle Task对应源码类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#bash-gradlew-Permission-denied"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">bash: ./gradlew: Permission denied</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#sdkman"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">sdkman</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装groovy"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">安装groovy</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#配置路径使idea容易找到"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">配置路径使idea容易找到</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装目录"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">安装目录</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Mac系统如何显示隐藏文件？"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Mac系统如何显示隐藏文件？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Linux-Mac下统计当前文件夹下的文件个数、目录个数"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Linux/Mac下统计当前文件夹下的文件个数、目录个数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#adb-backup"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">adb backup</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#adb多用户操作"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">adb多用户操作</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#环境变量设置"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">环境变量设置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#端口查看"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">端口查看</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#npm-install-https-certificate"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">npm install https certificate</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#nps穿透"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">nps穿透</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#异常相关"><span class="post-toc-number">2.</span> <span class="post-toc-text">异常相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Android-Studio-不能调试"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Android Studio 不能调试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Android-Studio-Connect-to-127-0-0-1-8888-127-0-0-1-failed-Connection-refused-Connection-refused"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Android Studio - Connect to 127.0.0.1:8888 [/127.0.0.1] failed: Connection refused (Connection refused)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用Xposed去hook方法TestArray-Person-person"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">使用Xposed去hook方法TestArray(Person[] person)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Execution-failed-for-JetifyTransform"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">Execution failed for JetifyTransform</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Duplicate-jar-entry-a-class"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">Duplicate jar entry [a.class])</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Duplicate-class-javax-activation-ActivationDataFlavor-found-in-modules"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">Duplicate class javax.activation.ActivationDataFlavor found in modules</span></a></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.lujingtao.com" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2017 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/02/25/日常问题解决记录/&title=《日常问题解决记录》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/02/25/日常问题解决记录/&title=《日常问题解决记录》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMUlEQVR42u3aQW7DMAwF0dz/0u62QGtnPqkEEDVeBYFi5WlBkCJfL/xcv56/3z+vJ2vIOxc8MmTI2JZxPT58Te04lu0rQ4aMAxh3Wz5/7oTRdN83v5UhQ4aMMAjefUPSRxkyZMj4RMAlf4ivlyFDhoxOEZv+ivyWHN/iWlyGDBkbMvg12fc/f6S/IUOGjK0YV/isKmhr4fV2FxkyZIxm8ADHE7K0GdnfRYYMGbMZvDTlYxO1IEtCMMpbZciQMY7Bw2Xtor9zfdY5JhkyZExi9ANuOgq2Kk18k9vKkCFjKKMWatNhi86Axe1eMmTIOIBBwi4pOEm4TItStFKGDBkHMNKkkJev5GqPX//dvlOGDBmjGaSwXBt8edrHG6IyZMiYzehfrqXNRX66PGGVIUPGaYznYQhyKdYJr8VSVoYMGaMZvK3YH/niV3v8EIMMV4YMGdsyOoNcnRGKWtlc7G/IkCFjBCOF8bGJWhGbNhhkyJAxm5FeqPGAS4re2rXdm/UyZMgYyuBpWdpi5A3OtOj9550yZMg4hlELoLURCp56oiRShgwZBzPSzWptg2W5rQwZMsYxrvBZ205IxzWKua0MGTI2Z3SCHXkpOQJepqZNCBkyZExi8CDbL27TS73g4GTIkHEAIy04Sejsj5rxxFGGDBky0lEMXr7yJijyyZAhQwaug2vXYTxZXBxwZciQsQkjbQagAYhwFIO0P2XIkHEmI827Vg1M8Iu2ZWFdhgwZ+zF+ABit+gj7l/aLAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

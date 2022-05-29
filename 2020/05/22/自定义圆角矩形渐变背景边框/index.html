@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>自定义圆角矩形渐变背景边框 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="View">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:277133779@qq.com" title="277133779@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>9</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/codefine" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>自定义圆角矩形渐变背景边框</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">自定义圆角矩形渐变背景边框</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-05-22T03:05:10.000Z" itemprop="datePublished" class="page-time">
+  2020-05-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-自定义圆角矩形渐变背景边框"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">自定义圆角矩形渐变背景边框</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-05-22 11:05:10" datetime="2020-05-22T03:05:10.000Z"  itemprop="datePublished">2020-05-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>自定义一个layout实现背景的渐变以及边框的渐变，同时半圆角。效果图如下：</p>
+<figure class="image-box">
+                <a rel=自定义圆角矩形渐变背景边框 href="http://nunu03.github.io/2020/05/22/自定义圆角矩形渐变背景边框/image.jpg" title="image" data-fancybox="images"><img src="http://nunu03.github.io/2020/05/22/自定义圆角矩形渐变背景边框/image.jpg" alt="image" title class></a>
+                <p>image</p>
+            </figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">import android.content.Context</span><br><span class="line">import android.graphics.*</span><br><span class="line">import android.util.AttributeSet</span><br><span class="line">import android.widget.LinearLayout</span><br><span class="line"></span><br><span class="line">class GradientBackgroundView  @JvmOverloads constructor(</span><br><span class="line">        context: Context,</span><br><span class="line">        attrs: AttributeSet? = null,</span><br><span class="line">        defStyleAttr: Int = 0</span><br><span class="line">) : LinearLayout(context, attrs, defStyleAttr)  &#123;</span><br><span class="line">    private val mPaint = Paint(Paint.ANTI_ALIAS_FLAG)</span><br><span class="line">    private var mPath = Path()</span><br><span class="line">    private var backGradient: LinearGradient? = null</span><br><span class="line">    private var strokeGradient: LinearGradient? = null</span><br><span class="line">    private val radiusArray = floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        //设置抗锯齿</span><br><span class="line">        mPaint.isAntiAlias = true</span><br><span class="line">        //设置防抖动</span><br><span class="line">        mPaint.isDither = true</span><br><span class="line">        mPaint.style = Paint.Style.FILL</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * 设置四个角的圆角半径</span><br><span class="line">     */</span><br><span class="line">    fun setRadius(leftTop: Float, rightTop: Float, rightBottom: Float, leftBottom: Float) &#123;</span><br><span class="line">        radiusArray[0] = leftTop</span><br><span class="line">        radiusArray[1] = leftTop</span><br><span class="line">        radiusArray[2] = rightTop</span><br><span class="line">        radiusArray[3] = rightTop</span><br><span class="line">        radiusArray[4] = rightBottom</span><br><span class="line">        radiusArray[5] = rightBottom</span><br><span class="line">        radiusArray[6] = leftBottom</span><br><span class="line">        radiusArray[7] = leftBottom</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun setGradient(backGradientColors: IntArray?, strokeGradientcolors: IntArray?) &#123;</span><br><span class="line">        backGradient = LinearGradient(0f, 0f, width.toFloat(), 0f, backGradientColors, null, Shader.TileMode.CLAMP)</span><br><span class="line">        strokeGradient = LinearGradient(0f, 0f, width.toFloat(), 0f, strokeGradientcolors, null, Shader.TileMode.CLAMP)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun showBackgroundColor() &#123;</span><br><span class="line">        setBackgroundColor(Color.TRANSPARENT)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun onDraw(canvas: Canvas) &#123;</span><br><span class="line">        super.onDraw(canvas)</span><br><span class="line">        if (canvas == null) &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        canvas.save()</span><br><span class="line">        //渐变边框</span><br><span class="line">        mPaint.shader = strokeGradient</span><br><span class="line">        mPaint.style = Paint.Style.STROKE</span><br><span class="line">        mPaint.strokeWidth = 4f</span><br><span class="line">        mPath = Path()</span><br><span class="line">        mPath.addRoundRect(RectF(0f, 0f, width.toFloat(), height.toFloat()), radiusArray, Path.Direction.CW)</span><br><span class="line">        canvas.clipPath(mPath)</span><br><span class="line">        canvas.drawPath(mPath, mPaint)</span><br><span class="line"></span><br><span class="line">        //渐变背景色</span><br><span class="line">        mPaint.shader = backGradient</span><br><span class="line">        mPaint.style = Paint.Style.FILL</span><br><span class="line">        mPath = Path()</span><br><span class="line">        mPath.addRoundRect(RectF(2f, 2f, (width - 2).toFloat(), (height - 2).toFloat()), radiusArray, Path.Direction.CW)</span><br><span class="line">        canvas.clipPath(mPath)</span><br><span class="line">        canvas.drawPath(mPath, mPaint)</span><br><span class="line">        canvas.restore()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mBarrageLayout.setRadius(mRadius,0,0,mRadius);</span><br><span class="line">mBarrageLayout.setGradient(new int[]&#123;0xffff53a3,0xfd316a&#125;,new int[]&#123;0xffFFC92B,0x979797&#125;);</span><br><span class="line">mBarrageLayout.showBackgroundColor();</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.cnblogs.com/everhad/p/6161083.html" target="_blank" rel="noopener">一种android中实现“圆角矩形”的方法</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-05-22T05:07:37.000Z" itemprop="dateUpdated">2020-05-22 13:07:37</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2020/05/22/自定义圆角矩形渐变背景边框/" target="_blank" rel="external">http://nunu03.github.io/2020/05/22/自定义圆角矩形渐变背景边框/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/View/">View</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2020/05/22/自定义圆角矩形渐变背景边框/&title=《自定义圆角矩形渐变背景边框》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2020/05/22/自定义圆角矩形渐变背景边框/&title=《自定义圆角矩形渐变背景边框》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2020/06/06/Android接入实时美颜/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android接入实时美颜</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/12/06/颜色透明度十六进制/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">颜色透明度十六进制</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">2.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.lujingtao.com" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2017 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2020/05/22/自定义圆角矩形渐变背景边框/&title=《自定义圆角矩形渐变背景边框》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2020/05/22/自定义圆角矩形渐变背景边框/&title=《自定义圆角矩形渐变背景边框》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACx0lEQVR42u3awW7bMBAEUP3/TydATwEayTNL0nWBp1MRWxYfD+J2dq8rvr7+XM9/+fn3n5/e3fv3N+8+vfvmtgsPDw9vtPTnn3teyvPv5NvUblm0BXh4eHjHeM+Hwa7Xff4OT9aTHGB4eHh4/5bX4nNwuwY8PDy8/5HXltr58bBefOPh4eG9h5eEEQkpKb53bdPmrAUPDw/vQBfpc/59sL+Hh4eHt9BVn8Wy7TEwGyCIVouHh4d3gLdSCuejBm0AsX7vtV7p4+Hh4d3w8ibWrGpNYtn8KXWhj4eHh3eMNwsFZgNSSSNtFh//8h08PDy8A7y8SZ8/flZS582tOvDFw8PDO8bLC+K9x0kSZDyX4y+iEzw8PLxjvPUXdHsAzMYX8oYZHh4e3gleGyi0Ee1scKoNOG7vxcPDwzvGWymv8yI734K2SfYipcbDw8M7xmv/878yXtAW2flYGB4eHt5p3qwdtatebReX/H60ZXh4eHibeHnAmocL7QjCbFAg2iA8PDy8Tby2kT9r3uftsTaAeIHHw8PDO8DLC9Z26bPDY1Y6R9/Hw8PD28TL49crvmbblAcfSTl+tQ/Dw8PDG/GSl/vwMWWxXqfOs9QEDw8Pb4GXLHr2Wp81wPIt3hbj4uHh4ZV1cr6sNjjIF7TybsfDw8P7BN6sRJ610NojIQkp8PDw8M7xkiZT+4C2EE/unTXD8PDw8E7z6lmD0ZxCXprnmxudeHh4eHibeLMhqjY4SI6BWWOsjnrx8PDwlnlf5ZVHCSdaXPkgFx4eHt453mw8a6UcbwF5wFGT8PDw8BZ4e5eV/3J+8CSBxe29eHh4eMd4eVNq1iRrw4U2Pq4/xsPDw3sLb++g1UoAUQTHeHh4eB/My+/Ki/g28L2dj8DDw8M7wFsZlqofGW9iPlZ1uzV4eHh4B3izwab8SMjvaocS2pgDDw8Pb5n3DYczc6iN3JAAAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

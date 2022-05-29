@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>MIUI权限检测之路 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Android">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:277133779@qq.com" title="277133779@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>9</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/codefine" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>MIUI权限检测之路</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">MIUI权限检测之路</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-02T05:12:26.000Z" itemprop="datePublished" class="page-time">
+  2019-07-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-permissioncheck"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">MIUI权限检测之路</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-02 13:12:26" datetime="2019-07-02T05:12:26.000Z"  itemprop="datePublished">2019-07-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Android/">Android</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="问题与需求"><a href="#问题与需求" class="headerlink" title="问题与需求"></a>问题与需求</h2><p>在业务线在使用过程中，发生了一些权限状态丢失的情况。而在我们的群控平台中，如果某些权限的设置状态丢失，则群控平台绝大多数功能不能执行。尤其是HRG业务人员，它们不仅需要群控自动执行功能指令，还不能影响手动操作。所以在权限状态丢失后，产品提出了一个权限检测的需求。这个需求就是在我们的平台中检测应用的权限列表，获取权限的当前状态。用于提示使用者，当前的群控在权限设置上是否已经被允许。</p>
+<a id="more"></a>
+<h2 id="权限介绍"><a href="#权限介绍" class="headerlink" title="权限介绍"></a>权限介绍</h2><p>一个Android应用默认情况下是不拥有任何权限的,  在默认情况下, 一个应用是没有权利去进行一些可能会造成不好影响的操作的. 这些不好的影响可能是对其它应用,操作系统,或者是用户.<br>如果应用需要某些额外的能力,则需要在AndroidManifest.xml中静态地声明相应的权限.<br>也就是我们在AndroidManifest.xml注册了一系列uses-permission，这些permission就是我们需要申请的权限。</p>
+<p>在Android 6.0发布之前, 所有的权限都在安装应用的时候显示给用户,用户选择安装则表示全部接受这些权限, 之后无法撤销对这些权限的授权.<br>但是从Android 6.0开始, 一部分比较危险的权限需要在程序运行请求用户授权.<br>至于什么时候需要授权,由应用程序自己决定.而这些权限，就是我们所说的运行时权限。<br>而对于其他权限,认为不是很危险,所以仍然保持原来的做法,在用户安装应用程序时就予以授权.<br>需要注意的是,在设置中,对于应用的危险权限,用户可以选择性地进行授权或者关闭.</p>
+<p>Dangerous Permissions主要有：</p>
+<table style="margin-left: auto; margin-right: auto;">
+<tbody>
+<tr><th>Permission Group</th><th>Permissions</th></tr>
+<tr>
+<td><code><a href="https://developer.android.com/reference/android/Manifest.permission_group.html#CALENDAR" target="_blank" rel="noopener">CALENDAR</a></code></td>
+<td>
+<ul>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#READ_CALENDAR" target="_blank" rel="noopener">READ_CALENDAR</a></code></li>
+</ul>
+<ul>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#WRITE_CALENDAR" target="_blank" rel="noopener">WRITE_CALENDAR</a></code></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><code><a href="https://developer.android.com/reference/android/Manifest.permission_group.html#CAMERA" target="_blank" rel="noopener">CAMERA</a></code></td>
+<td>
+<ul>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#CAMERA" target="_blank" rel="noopener">CAMERA</a></code></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><code><a href="https://developer.android.com/reference/android/Manifest.permission_group.html#CONTACTS" target="_blank" rel="noopener">CONTACTS</a></code></td>
+<td>
+<ul>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#READ_CONTACTS" target="_blank" rel="noopener">READ_CONTACTS</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#WRITE_CONTACTS" target="_blank" rel="noopener">WRITE_CONTACTS</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#GET_ACCOUNTS" target="_blank" rel="noopener">GET_ACCOUNTS</a></code></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><code><a href="https://developer.android.com/reference/android/Manifest.permission_group.html#LOCATION" target="_blank" rel="noopener">LOCATION</a></code></td>
+<td>
+<ul>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#ACCESS_FINE_LOCATION" target="_blank" rel="noopener">ACCESS_FINE_LOCATION</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#ACCESS_COARSE_LOCATION" target="_blank" rel="noopener">ACCESS_COARSE_LOCATION</a></code></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><code><a href="https://developer.android.com/reference/android/Manifest.permission_group.html#MICROPHONE" target="_blank" rel="noopener">MICROPHONE</a></code></td>
+<td>
+<ul>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#RECORD_AUDIO" target="_blank" rel="noopener">RECORD_AUDIO</a></code></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><code><a href="https://developer.android.com/reference/android/Manifest.permission_group.html#PHONE" target="_blank" rel="noopener">PHONE</a></code></td>
+<td>
+<ul>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#READ_PHONE_STATE" target="_blank" rel="noopener">READ_PHONE_STATE</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#CALL_PHONE" target="_blank" rel="noopener">CALL_PHONE</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#READ_CALL_LOG" target="_blank" rel="noopener">READ_CALL_LOG</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#WRITE_CALL_LOG" target="_blank" rel="noopener">WRITE_CALL_LOG</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#ADD_VOICEMAIL" target="_blank" rel="noopener">ADD_VOICEMAIL</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#USE_SIP" target="_blank" rel="noopener">USE_SIP</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#PROCESS_OUTGOING_CALLS" target="_blank" rel="noopener">PROCESS_OUTGOING_CALLS</a></code></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><code><a href="https://developer.android.com/reference/android/Manifest.permission_group.html#SENSORS" target="_blank" rel="noopener">SENSORS</a></code></td>
+<td>
+<ul>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#BODY_SENSORS" target="_blank" rel="noopener">BODY_SENSORS</a></code></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><code><a href="https://developer.android.com/reference/android/Manifest.permission_group.html#SMS" target="_blank" rel="noopener">SMS</a></code></td>
+<td>
+<ul>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#SEND_SMS" target="_blank" rel="noopener">SEND_SMS</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#RECEIVE_SMS" target="_blank" rel="noopener">RECEIVE_SMS</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#READ_SMS" target="_blank" rel="noopener">READ_SMS</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#RECEIVE_WAP_PUSH" target="_blank" rel="noopener">RECEIVE_WAP_PUSH</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#RECEIVE_MMS" target="_blank" rel="noopener">RECEIVE_MMS</a></code></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><code><a href="https://developer.android.com/reference/android/Manifest.permission_group.html#STORAGE" target="_blank" rel="noopener">STORAGE</a></code></td>
+<td>
+<ul>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#READ_EXTERNAL_STORAGE" target="_blank" rel="noopener">READ_EXTERNAL_STORAGE</a></code></li>
+<li><code><a href="https://developer.android.com/reference/android/Manifest.permission.html#WRITE_EXTERNAL_STORAGE" target="_blank" rel="noopener">WRITE_EXTERNAL_STORAGE</a></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>        
+
+<p>而通过上述危险权限来看，是有了组的概念，只要我们授权了其中一个权限，那就授权当前组的所有全新啊。而我们可以通过下面的方法获取到所有的申请权限：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PackageManager packageManager = this.getPackageManager();</span><br><span class="line">PackageInfo packageInfo =packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);</span><br><span class="line">String[] usesPermissionsArray = packageInfo.requestedPermissions;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实现历程"><a href="#实现历程" class="headerlink" title="实现历程"></a>实现历程</h2><h3 id="App-Ops"><a href="#App-Ops" class="headerlink" title="App Ops"></a>App Ops</h3><p>Google在SDK19中引入了AppOps的权限管理方式，AppOpsManager是对外的管理接口，真正实现功能的是AppOpsService。AppOpsManager里面有两个比较重要的方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AppOpsManager::checkOp(int op ,int uid ,String packageName) （hide方法)</span><br><span class="line">AppOpsManager::checkOp(String op,int uid ,String packageName)（public方法）</span><br></pre></td></tr></table></figure>
+
+<p>所以我们可以用第二个方式检测权限的状态，uid和packageName我们可以拿到，但是op是什么呢，通过查找我们发现AppOpsManager提供了一个函数permissionToOp，通过这个函数我们可以，我们可以把标题1中获取到的uses-permission转换成op，然后我们就可以利用checkOp获取到权限的状态结果了。<br>但是在实际的操作中我们发现。发生了一个SecurityException异常。这个是为什么呢，我们通过查看源码发现。permissionToOp可能为空，这个是因为，我们标题1中获取到的permission，不一定有对应的op值。部分展示如下所示：我们发现其中有好多null值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * This maps each operation to the public string constant for it.</span><br><span class="line"> * If it doesn&apos;t have a public string constant, it maps to null.</span><br><span class="line"> */</span><br><span class="line">private static String[] sOpToString = new String[] &#123;</span><br><span class="line">        OPSTR_COARSE_LOCATION,</span><br><span class="line">        OPSTR_FINE_LOCATION,</span><br><span class="line">        null,</span><br><span class="line">        null,</span><br><span class="line">        OPSTR_READ_CONTACTS,</span><br><span class="line">        OPSTR_WRITE_CONTACTS,</span><br><span class="line">        OPSTR_READ_CALL_LOG,</span><br><span class="line">        ......,</span><br><span class="line">        ......,</span><br><span class="line">        ......,</span><br><span class="line">        ......,</span><br><span class="line">        ......,</span><br><span class="line">        null,</span><br><span class="line">        OPSTR_USE_FINGERPRINT,</span><br><span class="line">        OPSTR_BODY_SENSORS,</span><br><span class="line">        OPSTR_READ_CELL_BROADCASTS,</span><br><span class="line">        OPSTR_MOCK_LOCATION,</span><br><span class="line">        OPSTR_READ_EXTERNAL_STORAGE,</span><br><span class="line">        OPSTR_WRITE_EXTERNAL_STORAGE,</span><br><span class="line">        null,</span><br><span class="line">        OPSTR_GET_ACCOUNTS,</span><br><span class="line">        null,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>结论：</p>
+<p>1、通过permissionToOp和checkOp将不能满足我们的需求。</p>
+<p>2、我们发现AndroidManifest.xml中的权限要比小米手机权限列表中的要多。</p>
+<h3 id="SecurityCenter"><a href="#SecurityCenter" class="headerlink" title="SecurityCenter"></a>SecurityCenter</h3><p>SecurityCenter是什么，它是小米手机权限管理的apk，通过反编译，我们可以一步步的发现小米手机获取权限列表状态的实现方式。粘一下小米的实现核心代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public PermissionList loadInBackground() &#123;</span><br><span class="line">        PermissionList permissionList = new PermissionList();</span><br><span class="line">        permissionList.isEnabled = isEnabled();</span><br><span class="line">        HashMap cB = packagePermisson(this.mContext, packageName);</span><br><span class="line"></span><br><span class="line">        ArrayList&lt;PermissionBean&gt; arrayList = new ArrayList();</span><br><span class="line">        permissionList.hashMap = cB;</span><br><span class="line">        permissionList.PermissionBeanList = arrayList;</span><br><span class="line">        if (cB != null) &#123;</span><br><span class="line">            Iterable&lt;PermissionGroupInfo&gt; boo = mo5980boo(0);</span><br><span class="line">            Iterable&lt;PermissionInfo&gt; bop = mo5981bop(0);</span><br><span class="line">            Set keySet = cB.keySet();</span><br><span class="line">            HashMap hashMap = new HashMap();</span><br><span class="line">            for (PermissionGroupInfo permissionGroupInfo : boo) &#123;</span><br><span class="line">                PermissionBean permissionBean = new PermissionBean();</span><br><span class="line">                permissionBean.permissionGroupInfo = permissionGroupInfo;</span><br><span class="line">                hashMap.put(Integer.valueOf(permissionGroupInfo.getId()), permissionBean);</span><br><span class="line">                arrayList.add(permissionBean);</span><br><span class="line">            &#125;</span><br><span class="line">            for (PermissionInfo permissionInfo : bop) &#123;</span><br><span class="line">                if (keySet.contains(Long.valueOf(permissionInfo.getId()))) &#123;</span><br><span class="line">                    PermissionBean permissionBean2 = (PermissionBean) hashMap.get(Integer.valueOf(permissionInfo.getGroup()));</span><br><span class="line">                    if (permissionBean2 != null) &#123;</span><br><span class="line">                        permissionBean2.permissionInfoArrayList.add(permissionInfo);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ArrayList&lt;PermissionBean&gt; arrayList2 = new ArrayList();</span><br><span class="line">            for (PermissionBean permissionBean3 : arrayList) &#123;</span><br><span class="line">                if (permissionBean3.permissionInfoArrayList.size() == 0) &#123;</span><br><span class="line">                    arrayList2.add(permissionBean3);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            for (PermissionBean permissionBean32 : arrayList2) &#123;</span><br><span class="line">                arrayList.remove(permissionBean32);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return permissionList;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中，packagePermisson，mo5980boo，mo5981bop，都是通过ContentResolver跨进程获取到的，然后把获取到的权限分组拼装即可。所以，通过这种方式，我们获取到的权限状态和小米手机的权限列表是一致的。</p>
+<p>结论：</p>
+<p>因为上述实现是基于note 4x手机的安全中心获取的，所以没有问题。但是我们的手机型号不止是4x手机，还有其他小米手机，但我在其他手机上运行的时候，发现报错，出现没有miui.permission.READ_AND_WIRTE_PERMISSION_MANAGER的异常。所以，这种实现方式，不能支撑所有手机。</p>
+<h3 id="AppOpsX"><a href="#AppOpsX" class="headerlink" title="AppOpsX"></a>AppOpsX</h3><p>是一个第三方权限管理的实现，通过调用appops的权限管理器，控制权限管理。<br>[Github:<a href="https://github.com/8enet/AppOpsX]" target="_blank" rel="noopener">https://github.com/8enet/AppOpsX]</a> (<a href="https://github.com/8enet/AppOpsX),接入AppOpsX后，可以支撑所有小米手机，但是获取到的权限列表不能和小米手机的权限中心一致，这个会导致产品和运营有一定的误解，并且接入比较困难，可能对今天版本的兼容也会有问题。" target="_blank" rel="noopener">https://github.com/8enet/AppOpsX),接入AppOpsX后，可以支撑所有小米手机，但是获取到的权限列表不能和小米手机的权限中心一致，这个会导致产品和运营有一定的误解，并且接入比较困难，可能对今天版本的兼容也会有问题。</a></p>
+<h3 id="checkSelfPermission"><a href="#checkSelfPermission" class="headerlink" title="checkSelfPermission"></a>checkSelfPermission</h3><h4 id="ContextCompat"><a href="#ContextCompat" class="headerlink" title="ContextCompat"></a>ContextCompat</h4><p>Android 6.0 变更:<br>此版本引入了一种新的权限模式，如今，用户可直接在运行时管理应用权限。这种模式让用户能够更好地了解和控制权限，同时为应用开发者精简了安装和自动更新过程。用户可为所安装的各个应用分别授予或撤销权限。</p>
+<p>对于以 Android 6.0（API 级别 23）或更高版本为目标平台的应用，请务必在运行时检查和请求权限。要确定您的应用是否已被授予权限，请调用新增的 checkSelfPermission() 方法。要请求权限，请调用新增的 requestPermissions() 方法。即使您的应用并不以 Android 6.0（API 级别 23）为目标平台，您也应该在新权限模式下测试您的应用。</p>
+<p>如需了解有关在您的应用中支持新权限模式的详情，请参阅使用系统权限。如需了解有关如何评估新模式对应用的影响的提示，请参阅权限最佳做法。</p>
+<figure class="image-box">
+                <a rel=MIUI权限检测之路 href="http://nunu03.github.io/2019/07/02/permissioncheck/checkSelfPermission.png" title="checkSelfPermission" data-fancybox="images"><img src="http://nunu03.github.io/2019/07/02/permissioncheck/checkSelfPermission.png" alt="checkSelfPermission" title class></a>
+                <p>checkSelfPermission</p>
+            </figure>
+<p>从上图可知，最终的check会到PackageManagerService. checkComponentPermission,而checkComponentPermission最终调用了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public int checkUidPermission(String permName, int uid) &#123;</span><br><span class="line">    final int userId = UserHandle.getUserId(uid);</span><br><span class="line"></span><br><span class="line">    if (!sUserManager.exists(userId)) &#123;</span><br><span class="line">        return PackageManager.PERMISSION_DENIED;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    synchronized (mPackages) &#123;</span><br><span class="line">        Object obj = mSettings.getUserIdLPr(UserHandle.getAppId(uid));</span><br><span class="line">        if (obj != null) &#123;</span><br><span class="line">            final SettingBase ps = (SettingBase) obj;</span><br><span class="line">            final PermissionsState permissionsState = ps.getPermissionsState();</span><br><span class="line">            if (permissionsState.hasPermission(permName, userId)) &#123;</span><br><span class="line">                return PackageManager.PERMISSION_GRANTED;</span><br><span class="line">            &#125;</span><br><span class="line">            // Special case: ACCESS_FINE_LOCATION permission includes ACCESS_COARSE_LOCATION</span><br><span class="line"> if (Manifest.permission.ACCESS_COARSE_LOCATION.equals(permName) &amp;&amp; permissionsState</span><br><span class="line">                    .hasPermission(Manifest.permission.ACCESS_FINE_LOCATION, userId)) &#123;</span><br><span class="line">                return PackageManager.PERMISSION_GRANTED;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            ArraySet&lt;String&gt; perms = mSystemPermissions.get(uid);</span><br><span class="line">            if (perms != null) &#123;</span><br><span class="line">                if (perms.contains(permName)) &#123;</span><br><span class="line">                    return PackageManager.PERMISSION_GRANTED;</span><br><span class="line">                &#125;</span><br><span class="line">                if (Manifest.permission.ACCESS_COARSE_LOCATION.equals(permName) &amp;&amp; perms</span><br><span class="line">                        .contains(Manifest.permission.ACCESS_FINE_LOCATION)) &#123;</span><br><span class="line">                    return PackageManager.PERMISSION_GRANTED;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return PackageManager.PERMISSION_DENIED;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里最重要的就是mSettings，所有的权限信息都通过mSettings来获取，但是mSettings是都做了什么操作呢？看下边的图：</p>
+<figure class="image-box">
+                <a rel=MIUI权限检测之路 href="http://nunu03.github.io/2019/07/02/permissioncheck/setting.png" title="setting" data-fancybox="images"><img src="http://nunu03.github.io/2019/07/02/permissioncheck/setting.png" alt="setting" title class></a>
+                <p>setting</p>
+            </figure>
+<p>Android6.0之前会吧所有的权限都放置在data/system/packages.xml文件中。Android6.0之后，分为运行时权限跟普通权限，普通权限还是放在data/system/packages.xml中，运行时权限防止在data/system/users/0/runtime-permissions.xml文件中。根据运行时是否动态申请去更新权限。而对于普通权限，一直都为true。<br>具体的实例信息如下：</p>
+<p><strong><em>packages.xml</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;package name=&quot;com.permisison.naga&quot; codePath=&quot;/data/app/com.wuba.tinyhand-2&quot; nativeLibraryPath=&quot;/data/app/com.wuba.tinyhand-2/lib&quot; primaryCpuAbi=&quot;armeabi&quot; publicFlags=&quot;944291398&quot; privateFlags=&quot;0&quot; ft=&quot;166817e48c8&quot; it=&quot;16615425c49&quot; ut=&quot;166817e51fc&quot; version=&quot;2540&quot; userId=&quot;10141&quot;&gt;</span><br><span class="line">        &lt;sigs count=&quot;1&quot;&gt;</span><br><span class="line">            &lt;cert index=&quot;11&quot; /&gt;</span><br><span class="line">        &lt;/sigs&gt;</span><br><span class="line">        &lt;perms&gt;</span><br><span class="line">            &lt;item name=&quot;android.permission.WRITE_SETTINGS&quot; granted=&quot;true&quot; flags=&quot;0&quot; /&gt;</span><br><span class="line">            &lt;item name=&quot;android.permission.RESTART_PACKAGES&quot; granted=&quot;true&quot; flags=&quot;0&quot; /&gt;</span><br><span class="line">            &lt;item name=&quot;android.permission.SYSTEM_ALERT_WINDOW&quot; granted=&quot;true&quot; flags=&quot;0&quot; /&gt;</span><br><span class="line">        &lt;/perms&gt;</span><br><span class="line">        &lt;proper-signing-keyset identifier=&quot;28&quot; /&gt;</span><br><span class="line">    &lt;/package&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong><em>runtime-permissions.xml</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;pkg name=&quot;com.permisison.naga&quot;&gt;</span><br><span class="line">    &lt;item name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot; granted=&quot;true&quot; flags=&quot;2&quot; /&gt;</span><br><span class="line">    &lt;item name=&quot;android.permission.READ_PHONE_STATE&quot; granted=&quot;true&quot; flags=&quot;2&quot; /&gt;</span><br><span class="line">    &lt;item name=&quot;android.permission.SEND_SMS&quot; granted=&quot;false&quot; flags=&quot;2&quot; /&gt;</span><br><span class="line">    &lt;item name=&quot;android.permission.PROCESS_OUTGOING_CALLS&quot; granted=&quot;true&quot; flags=&quot;2&quot; /&gt;</span><br><span class="line">    &lt;item name=&quot;android.permission.GET_ACCOUNTS&quot; granted=&quot;true&quot; flags=&quot;2&quot; /&gt;</span><br><span class="line">    &lt;item name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; granted=&quot;true&quot; flags=&quot;2&quot; /&gt;</span><br><span class="line">  &lt;/pkg&gt;</span><br></pre></td></tr></table></figure>
+
+<p>结论：</p>
+<p>1、checkSelfPermission会分别判断两个xml文件，packages.xml是普通权限，并且一直返回true，runtime-permissions.xml返回的是动态权限的状态，会根据当前设置返回0和-1，0是授予，-1是未被授予权限。</p>
+<p>2、国内手机厂商的rom都是修改过了，并且增加了不少自定义的权限，所以这个方法获取的结果是不全的。</p>
+<h4 id="PermissionChecker"><a href="#PermissionChecker" class="headerlink" title="PermissionChecker"></a>PermissionChecker</h4><p>直接看下关键代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public static int checkPermission(@NonNull Context context, @NonNull String permission,</span><br><span class="line">        int pid, int uid, String packageName) &#123;</span><br><span class="line">    if (context.checkPermission(permission, pid, uid) == PackageManager.PERMISSION_DENIED) &#123;</span><br><span class="line">        return PERMISSION_DENIED;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    String op = AppOpsManagerCompat.permissionToOp(permission);</span><br><span class="line">    if (op == null) &#123;</span><br><span class="line">        return PERMISSION_GRANTED;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (packageName == null) &#123;</span><br><span class="line">        String[] packageNames = context.getPackageManager().getPackagesForUid(uid);</span><br><span class="line">        if (packageNames == null || packageNames.length &lt;= 0) &#123;</span><br><span class="line">            return PERMISSION_DENIED;</span><br><span class="line">        &#125;</span><br><span class="line">        packageName = packageNames[0];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (AppOpsManagerCompat.noteProxyOp(context, op, packageName)</span><br><span class="line">            != AppOpsManagerCompat.MODE_ALLOWED) &#123;</span><br><span class="line">        return PERMISSION_DENIED_APP_OP;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return PERMISSION_GRANTED;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>里面有这么一句判断</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String op = AppOpsManagerCompat.permissionToOp(permission);</span><br><span class="line">if (op == null) &#123;</span><br><span class="line">        return PERMISSION_GRANTED;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p> AppOpsManager返回为null的permission，都返回PERMISSION_GRANTED=0；这个判断就不准确了，如果一个运行时权限，没有在这个里面，那就永远为o了。即使设置了拒绝，也获取不到PERMISSION_DENIED=1。并且，小米手机设置好多10000以上都op自定义权限，肯定是获取不到，并且有些权限还没有permission。</p>
+<p>结论：完全不可用。继续尝试</p>
+<h3 id="AuthManager"><a href="#AuthManager" class="headerlink" title="AuthManager"></a>AuthManager</h3><p>通过上述一些列的验证，都是不可以采用的结论。最终我们再次回到note 4x的实现方案上来。由于再标题2的时候，我们只是调研了获取权限状态的方式，但是没有深入的调研底层实现。所以我们通过一些列跟踪，最终找到具体的实现地方在AuthManager这个app下。</p>
+<figure class="image-box">
+                <a rel=MIUI权限检测之路 href="http://nunu03.github.io/2019/07/02/permissioncheck/authmanager.png" title="authmanager" data-fancybox="images"><img src="http://nunu03.github.io/2019/07/02/permissioncheck/authmanager.png" alt="authmanager" title class></a>
+                <p>authmanager</p>
+            </figure>
+<p>结论：</p>
+<p>1、由上图可以看出，小米手机完全自己封装了一层权限管理，它的权限状态都存储在了miui_ngen.db数据库里，并且通过PermissionManager管理并定义了权限的op和android.permission值。</p>
+<p>2、既然update时完全操作了db和xml三个文件。那我们是不是可以用反射的方法实现呢？经过实现，利用反射checkOpNoThrow虽然可以获取到具体状态值，但是我们只能获取到当前的权限，不能获取到第三方app的权限，报<br>java.lang.SecurityException: uid 10141 does not have android.permission.UPDATE_APP_OPS_STATS异常。</p>
+<p>3、开发过程中，发现某些运行权限op=59的权限不能改变，一致获取到的是0.即授权的状态。<br>所以利用反射我们也不能实现我们的需求，继续。</p>
+<h3 id="runtime-permissions-xml与appops-xml"><a href="#runtime-permissions-xml与appops-xml" class="headerlink" title="runtime-permissions.xml与appops.xml"></a>runtime-permissions.xml与appops.xml</h3><p>经过调研后发现，当我们在修改权限的状态值时，不仅appops.xml里面的状态值在该比那，而且运行权限runtime-permissions.xml的值也在改变，那我们是不是可以比较两个文件的内容进行获取状态值呢。 首先，我们需要读取文件，但是我们没有读取文件权限，我们需要copy到sdcard进行解析。解析过程如下图：</p>
+<figure class="image-box">
+                <a rel=MIUI权限检测之路 href="http://nunu03.github.io/2019/07/02/permissioncheck/verify.png" title="verify" data-fancybox="images"><img src="http://nunu03.github.io/2019/07/02/permissioncheck/verify.png" alt="verify" title class></a>
+                <p>verify</p>
+            </figure>
+
+<h3 id="miui-ngen-db"><a href="#miui-ngen-db" class="headerlink" title="miui_ngen.db"></a>miui_ngen.db</h3><p>miui_ngen.db是什么？我们都知道是一个数据库文件，而且这个是miui的权限状态管理文件。任何的App权限状态都一一对应的存在了这个文件里。从而由上述6种的操作，我们受到了一定的启发，既然能够拿到xml文件，那我们是不是也可以直接拿到这个db文件，然后直接读取db，获取状态信息呢？经过尝试，好吧，权限检测的最终方案决定下来了，我们完全可以直接读取这个db文件，获取到准确的，和miui权限管理中心一一对应，完全匹配的权限状态。</p>
+<p><strong>总结：通过以上步骤的实现过程，我们发现由于国内厂商对rom的定制，可能完全修改或者封装了权限的实现和检测机制，我们通过一步步的测试和添坑，最终还是回到了手机原本自身的检测机制上来，并且这种方式是最准确的方式。</strong></p>
+<h2 id="对权限的处理场景"><a href="#对权限的处理场景" class="headerlink" title="对权限的处理场景"></a>对权限的处理场景</h2><p>如果设备运行的是 Android 6.0（API 级别 23）或更高版本，并且应用的 targetSdkVersion 是 23 或更高版本，则应用在运行时向用户请求权限。用户可随时调用权限，因此应用在每次运行时均需检查自身是否具备所需的权限。</p>
+<p>如果设备运行的是 Android 5.1（API 级别 22）或更低版本，并且应用的 targetSdkVersion 是 22 或更低版本，则系统会在用户安装应用时要求用户授予权限。如果将新权限添加到更新的应用版本，系统会在用户更新应用时要求授予该权限。用户一旦安装应用，他们撤销权限的唯一方式是卸载应用。</p>
+<p>如果设备运行的是 Android 6.0（API 级别 23）或更高版本，并且应用的 targetSdkVersion 是 22 或更低版本， 此时Android系统会把你申请的全部权限都给你 。 用户依然可以进入App的设置界面把权限关闭 ！</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://developer.android.com/about/versions/marshmallow/android-6.0-changes?hl=zh-cn#behavior-runtime-permissions" target="_blank" rel="noopener">https://developer.android.com/about/versions/marshmallow/android-6.0-changes?hl=zh-cn#behavior-runtime-permissions</a><br><a href="https://blog.csdn.net/lewif/article/details/49124757" target="_blank" rel="noopener">https://blog.csdn.net/lewif/article/details/49124757</a><br><a href="https://blog.csdn.net/happylishang/article/details/53813779" target="_blank" rel="noopener">https://blog.csdn.net/happylishang/article/details/53813779</a><br><a href="https://mp.weixin.qq.com/s/OQRHEufCUXBA3d3DMZXMKQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/OQRHEufCUXBA3d3DMZXMKQ</a><br><a href="https://developer.android.com/reference/android/support/v4/content/ContextCompat#checkSelfPermission(android.content.Context,%20java.lang.String)" target="_blank" rel="noopener">https://developer.android.com/reference/android/support/v4/content/ContextCompat#checkSelfPermission(android.content.Context,%20java.lang.String)</a><br><a href="https://developer.android.com/reference/android/content/pm/PackageManager#PERMISSION_DENIED" target="_blank" rel="noopener">https://developer.android.com/reference/android/content/pm/PackageManager#PERMISSION_DENIED</a><br><a href="https://www.jianshu.com/p/0ddd129dd32b" target="_blank" rel="noopener">https://www.jianshu.com/p/0ddd129dd32b</a><br><a href="https://blog.csdn.net/happylishang/article/details/78222788" target="_blank" rel="noopener">https://blog.csdn.net/happylishang/article/details/78222788</a><br><a href="https://www.cnblogs.com/neo-java/p/7117482.html" target="_blank" rel="noopener">https://www.cnblogs.com/neo-java/p/7117482.html</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-08-09T02:42:08.000Z" itemprop="dateUpdated">2019-08-09 10:42:08</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/07/02/permissioncheck/" target="_blank" rel="external">http://nunu03.github.io/2019/07/02/permissioncheck/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/07/02/permissioncheck/&title=《MIUI权限检测之路》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/07/02/permissioncheck/&title=《MIUI权限检测之路》 — chenyulong&source=问题与需求在业务线在使用过程中，发生了一些权限状态丢失的情况。而在我们的群控平台中，如果某些权限的设置状态丢失，则群控平台绝大多数功能不能执行。尤其是HR..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/07/02/xposed/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Xposed的配置与简单使用</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/07/02/kotlinnotes/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Kotlin新手使用笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题与需求"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题与需求</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#权限介绍"><span class="post-toc-number">2.</span> <span class="post-toc-text">权限介绍</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现历程"><span class="post-toc-number">3.</span> <span class="post-toc-text">实现历程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#App-Ops"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">App Ops</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#SecurityCenter"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">SecurityCenter</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#AppOpsX"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">AppOpsX</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#checkSelfPermission"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">checkSelfPermission</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ContextCompat"><span class="post-toc-number">3.4.1.</span> <span class="post-toc-text">ContextCompat</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#PermissionChecker"><span class="post-toc-number">3.4.2.</span> <span class="post-toc-text">PermissionChecker</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#AuthManager"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">AuthManager</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#runtime-permissions-xml与appops-xml"><span class="post-toc-number">3.6.</span> <span class="post-toc-text">runtime-permissions.xml与appops.xml</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#miui-ngen-db"><span class="post-toc-number">3.7.</span> <span class="post-toc-text">miui_ngen.db</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对权限的处理场景"><span class="post-toc-number">4.</span> <span class="post-toc-text">对权限的处理场景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.lujingtao.com" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2017 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2019/07/02/permissioncheck/&title=《MIUI权限检测之路》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2019/07/02/permissioncheck/&title=《MIUI权限检测之路》 — chenyulong&source=问题与需求在业务线在使用过程中，发生了一些权限状态丢失的情况。而在我们的群控平台中，如果某些权限的设置状态丢失，则群控平台绝大多数功能不能执行。尤其是HR..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3awY7CMAxFUf7/p8sWCajuswNSnJvVqLRpThceO/Hjgcf1Mu6vvP/6ev1+zvd5Fg8ZMmRsy7hux/09ZNHkzvS9H6gyZMg4gPEtgvEgSILv/VP8vTJkyJBBpvt2hQRHklbKkCFDRoeRvjItg2XIkCGjU8T+OuD+qRaXIUPGhgy+6/7/v39yviFDhoytGFc4CI8kfHwGtCoZMmSMZqSb/jxc8lYM0n6BGjVkyJBxGKO2LL4gXh4HJasMGTKGMvgWG28R61SaxQYOGTJkjGbUltsJprVjhjg1lCFDxjgGCWfpsWLnfvIJZMiQcSajEwo7xS35fHGDhQwZMsYxOoUo+RA1QDqDDBkyZjN4eE3bKXi4rIVpGTJknMCohc5iYQmyOI4J/mPIkCFjc0aazNVSvdr88QeVIUPGUEa8G1d6TRpG04YPGTJkzGaQJO8+dJL0jswQV9tpripDhoxtGf3N/XRvL222QE0YMmTIGM3gj/VLzVWYICmUIUPGIEa/gORLrKWGqO1MhgwZhzFIIbqKvepYVIYMGecwVh0MpKnkgsYOGTJkDGVc4egkgv3vHSeFMmTIGMGoHW2STTQO5oF4wTmtDBkytmX8rkCtHTPwY4OgT0SGDBkjGGngIy1faRNGWjB/CLgyZMiQ0ThU6IfXxQFXhgwZBzD64TItlVERK0OGjNGMWuhMN+DSpDMAy5AhYzSjVjrWJlr1bPEgU4YMGfsxnoDlA/Gcab9FAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

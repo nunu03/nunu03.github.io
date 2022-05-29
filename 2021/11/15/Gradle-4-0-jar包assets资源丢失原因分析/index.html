@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Gradle 4.0 jar包assets资源丢失原因分析 | chenyulong | 理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Gradle">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Nunu Long</h5>
+          <a href="mailto:277133779@qq.com" title="277133779@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>7</span>
+            
+              <span>7</span>
+            
+              <span>9</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/codefine" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Gradle 4.0 jar包assets资源丢失原因分析</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">Gradle 4.0 jar包assets资源丢失原因分析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-11-15T06:32:54.000Z" itemprop="datePublished" class="page-time">
+  2021-11-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Gradle/">Gradle</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-Gradle-4-0-jar包assets资源丢失原因分析"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">Gradle 4.0 jar包assets资源丢失原因分析</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-11-15 14:32:54" datetime="2021-11-15T06:32:54.000Z"  itemprop="datePublished">2021-11-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Gradle/">Gradle</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在gradle升级到4.0.2时遇到了release包构建成功，并且在构建过程中无异常提示，但是百度地图BaiduLBS_Android.jar中assets下文件丢失，导致地图相应功能丢失，app崩溃情况。在解决问题的过程中，耗费时间较长，一度以为是混淆问题，因为debug包没问题，并且release在打开R8的情况下，也可以解决，gradle升级到4.1也可以解决。但是具体原因是什么呢？到底是混淆问题，还是其他原因，带着这个问题我们分析下第三方jar包assets下资源文件是如何打包到apk中的。</p>
+<h2 id="总流程"><a href="#总流程" class="headerlink" title="总流程"></a>总流程</h2><p>第三方jar包assets下资源文件构建总流程如下：<br><a rel=Gradle 4.0 jar包assets资源丢失原因分析 href="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/jar-assets-general-flow-chart.jpg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/jar-assets-general-flow-chart.jpg" alt></a><br>主要是分为以下几步：</p>
+<ol>
+<li>jar包中的assets下资源文件在生成aar后，不是在aar的assets目录下，而是在classed.jar的assets目录下，同时aar中libs下的jar包，不在包含assets目录,只有源码目录文件。</li>
+<li>在构建过程中，通过mergeReleaseJavaResource合并java资源Task解析classes.jar并生成out.jar文件，out.jar中包含所有的非res文件，以及源码目录非claaes文件。例如：out/com/baidu/pano/platform/res/indoor_in.png </li>
+<li>在minifyReleaseWithProguard的Task中，out.jar会被解析重新生成一个minified.jar文件，这个minified.jar文件不仅包含了out.jar内容，也包含了所有的classes文件。</li>
+<li>在最后打包packageRelease的Task中，读取minified.jar文件中的assets目录文件，直接add到apk中。</li>
+</ol>
+<h2 id="PackageRelease-分析"><a href="#PackageRelease-分析" class="headerlink" title="PackageRelease 分析"></a>PackageRelease 分析</h2><p>先看下如下构建时序图：<br><a rel=Gradle 4.0 jar包assets资源丢失原因分析 href="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/pack-release-time.jpg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/pack-release-time.jpg" alt></a></p>
+<ol>
+<li>run:主要读取文件信息，manifest、dex、javaRes、assets、res、so、……等等。</li>
+<li>updateFiles:更新所有存档中所有新的、更改的和删除的文件，也就是dex、android res、java res、assets、so等等。</li>
+<li>addFiles:写入andoid 资源文件，和java资源文件。</li>
+</ol>
+<p>在最后一步我们看到有两种文件处理方式：那么4.0版本我们用的是ApkZFileCreator，4.1版本我们用的是ApkFlinger。我们还可以通过设置android.useNewApkCreator配置决定使用哪个打包工具，值为true用ApkFlinger，否则用ApkZFileCreator，并且android.useNewApkCreator默认值为true，那么我们在4.0版本应该使用的是否则用ApkZFileCreator，然后我们跟踪一下4.0源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (!apkFormatIsFile || !debuggableBuild) &#123;</span><br><span class="line">    mApkCreatorType = ApkCreatorType.APK_Z_FILE_CREATOR;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    mApkCreatorType = apkCreatorType;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以发现，无论我们如何，release构建都是用的ApkZFileCreator，debug用的是ApkFlinger。然后我们在看一下4.1源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (!apkFormatIsFile) &#123;</span><br><span class="line">    mApkCreatorType = ApkCreatorType.APK_Z_FILE_CREATOR;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    mApkCreatorType = apkCreatorType;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以发现，无论我们如何，release构建都是用的ApkFlinger。</p>
+<p>通过以上比较，和通过4.1进行构建打包，发现4.1是正常的，所以我们定位到4.0构建打包jar下assets目录文件和使用ApkZFileCreator文件有关。</p>
+<h2 id="ApkZFileCreator分析"><a href="#ApkZFileCreator分析" class="headerlink" title="ApkZFileCreator分析"></a>ApkZFileCreator分析</h2><p>下面的源码片段展示了写入的主要逻辑，分为如下 3 步：</p>
+<ol>
+<li>创建 ZFile 对象，读取 zip 文件将 central directory 中的每项加入到 entries 中;</li>
+<li>遍历 ZFile 中的 entries，将压缩的资源文件合并到 APK 文件中;</li>
+<li>遍历 ZFile 中的 entries，将非压缩的资源文件写入到 APK 文件中;</li>
+</ol>
+<p>ApkZFileCreator:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public void writeZip(File zip, @Nullable Function&lt;String, String&gt; transform, @Nullable Predicate&lt;String&gt; isIgnored) throws IOException &#123;</span><br><span class="line">    Closer closer = Closer.create();</span><br><span class="line">    try &#123;</span><br><span class="line">      ZFile toMerge = closer.register(ZFile.openReadWrite(zip));</span><br><span class="line">    </span><br><span class="line">      Predicate&lt;String&gt; ignorePredicate;</span><br><span class="line">      if (isIgnored == null) &#123;</span><br><span class="line">        ignorePredicate = s -&gt; false;</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        ignorePredicate = isIgnored;</span><br><span class="line">      &#125;</span><br><span class="line">    </span><br><span class="line">      // Files that *must* be uncompressed in the result should not be merged and should be</span><br><span class="line">      // added after. This is just very slightly less efficient than ignoring just the ones</span><br><span class="line">      // that were compressed and must be uncompressed, but it is a lot simpler :)</span><br><span class="line">      Predicate&lt;String&gt; noMergePredicate =</span><br><span class="line">          v -&gt; ignorePredicate.apply(v) || noCompressPredicate.apply(v);</span><br><span class="line">    </span><br><span class="line">      this.zip.mergeFrom(toMerge, noMergePredicate);</span><br><span class="line">    </span><br><span class="line">      for (StoredEntry toMergeEntry : toMerge.entries()) &#123;</span><br><span class="line">        String path = toMergeEntry.getCentralDirectoryHeader().getName();</span><br><span class="line">        if (noCompressPredicate.apply(path) &amp;&amp; !ignorePredicate.apply(path)) &#123;</span><br><span class="line">          // This entry *must* be uncompressed so it was ignored in the merge and should</span><br><span class="line">          // now be added to the apk.</span><br><span class="line">          try (InputStream ignoredData = toMergeEntry.open()) &#123;</span><br><span class="line">            this.zip.add(path, ignoredData, false);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; catch (Throwable t) &#123;</span><br><span class="line">      throw closer.rethrow(t);</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">      closer.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ZFile.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">private void readData() throws IOException &#123;</span><br><span class="line">  // ...</span><br><span class="line">  readEocd();</span><br><span class="line">  readCentralDirectory();</span><br><span class="line">  // ...</span><br><span class="line">  if (directoryEntry != null) &#123;</span><br><span class="line"> // ...</span><br><span class="line"> for (StoredEntry entry : directory.getEntries().values()) &#123;</span><br><span class="line">   // ...</span><br><span class="line">   entries.put(entry.getCentralDirectoryHeader().getName(), mapEntry);</span><br><span class="line">   //...</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> directoryStartOffset = directoryEntry.getStart();</span><br><span class="line">  &#125; else &#123;</span><br><span class="line"> // ...</span><br><span class="line">  &#125;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void mergeFrom(ZFile src, Predicate&lt;String&gt; ignoreFilter) throws IOException &#123;</span><br><span class="line">  // ...</span><br><span class="line">  for (StoredEntry fromEntry : src.entries()) &#123;</span><br><span class="line"> if (ignoreFilter.apply(fromEntry.getCentralDirectoryHeader().getName())) &#123;</span><br><span class="line">   continue;</span><br><span class="line"> &#125;</span><br><span class="line"> // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在调试过程中发现读取minified.jar文件创建的ZFile中的entries中文件读取不全，没有 Java 资源文件，而在前面 IncrementalSplitterRunnable.execute 中调 PackageAndroidArtifact.getChangedJavaResources获取改变的Java资源文件时，使用ZipCentralDirectory能正常读取到Java资源文件，由此说明ZFile存在缺陷。图示如下：<br>ZipCentralDirectory读取minified.jar:<br><a rel=Gradle 4.0 jar包assets资源丢失原因分析 href="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/zifcenter-minified.jpg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/zifcenter-minified.jpg" alt></a><br>ZFile读取minified.jar:<br><a rel=Gradle 4.0 jar包assets资源丢失原因分析 href="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/zif-minified.jpg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/zif-minified.jpg" alt></a><br><strong>ZipCentralDirectory读取minified.jar:获取changeJavaResources文件数是101377</strong>，</p>
+<p><strong>ZFile读取minified.jar:获取entries文件数是35841</strong>，</p>
+<p>两种方式读取的文件数完全不一样。</p>
+<p>而且ZFile注释中所述,它不是通用的 zip 工具类，对 zip 格式和不支持的特性有严格的要求；它在某些特殊条件下存在限制，可能会出现读取文件缺失等问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* &lt;p&gt;Because &#123;@code ZFile&#125; was designed to be used in a build system and not as general-purpose zip</span><br><span class="line"> * utility, it is very strict (and unforgiving) about the zip format and unsupported features.</span><br></pre></td></tr></table></figure>
+
+<p>那么为啥开启R8就没问题了呢？看一下R8的流程图：可以看到开启R8后，生成的java 资源文件是shrunkJavaRes.jar，这个shrunkJavaRes.jar文件和minified.jar相比仅仅包含了out.jar内容，不包含classes文件。<br><a rel=Gradle 4.0 jar包assets资源丢失原因分析 href="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/jar-assets-general-flow-chart-r8.jpg" title="" data-fancybox="images"><img src="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/jar-assets-general-flow-chart-r8.jpg" alt></a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>4.0版本构建release包不管如何设置打包方式，都是执行的ApkZFileCreator;</li>
+<li>4.0版本构建debug包，执行的新打包方式ApkFlinger;</li>
+<li>4.1版本构建release包，可以通过android.useNewApkCreator设置打包方式（ApkZFileCreator/ApkFlinger），默认为true，执行ApkFlinger;</li>
+<li>4.0版本构建release包虽然打包方式是ApkZFileCreator，但是经过了R8混淆，生成的java资源文件shrunkJavaRes.jar，并且此文件和minified.jar相比仅仅包含了out.jar内容，不包含classes文件;</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://segmentfault.com/a/1190000040612479" target="_blank" rel="noopener">AGP 升级之旅</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2021-11-17T11:42:37.000Z" itemprop="dateUpdated">2021-11-17 19:42:37</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2021/11/15/Gradle-4-0-jar包assets资源丢失原因分析/" target="_blank" rel="external">http://nunu03.github.io/2021/11/15/Gradle-4-0-jar包assets资源丢失原因分析/</a>
+        
+    </div>
+    <footer>
+        <a href="http://nunu03.github.io">
+            <img src="/img/avatar.jpg" alt="Nunu Long">
+            Nunu Long
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/11/15/Gradle-4-0-jar包assets资源丢失原因分析/&title=《Gradle 4.0 jar包assets资源丢失原因分析》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/11/15/Gradle-4-0-jar包assets资源丢失原因分析/&title=《Gradle 4.0 jar包assets资源丢失原因分析》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2021/12/27/Pngquant-图片压缩/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Pngquant-图片压缩</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2021/10/08/Android代码混淆语法/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android代码混淆语法</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总流程"><span class="post-toc-number">2.</span> <span class="post-toc-text">总流程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PackageRelease-分析"><span class="post-toc-number">3.</span> <span class="post-toc-text">PackageRelease 分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ApkZFileCreator分析"><span class="post-toc-number">4.</span> <span class="post-toc-text">ApkZFileCreator分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">5.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">6.</span> <span class="post-toc-text">参考</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.lujingtao.com" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Nunu Long &copy; 2017 - 2022
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://nunu03.github.io/2021/11/15/Gradle-4-0-jar包assets资源丢失原因分析/&title=《Gradle 4.0 jar包assets资源丢失原因分析》 — chenyulong&pic=http://nunu03.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://nunu03.github.io/2021/11/15/Gradle-4-0-jar包assets资源丢失原因分析/&title=《Gradle 4.0 jar包assets资源丢失原因分析》 — chenyulong&source=Nunu's blog!" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACq0lEQVR42u3ay07tMAwFUP7/p8+V7hRO2H6kgLQ6QlDSrA5i1/bHR3y9/l/JX1+frs93nn+fr7Z24eHh4bW2/u4633NGvns15zvz9ZNd4eHh4d3jJcd9FXNe4byHd6843zMeHh7eb+Cd78xDS5JkJ6k2Hh4e3l/hnTedh5PzCsnLwsPDw/tZXnW5XXy+2sVaCx4eHl7MqzbAfsPPF/t7eHh4eIOu+iRgJMWF6rBCeYd4eHh4F3iT5n3y4HmwmaTseHh4eLd51ZZVtUHVK15M9omHh4d3g7fbzs8xeWMsCUtv78HDw8O7wMuRkwrxWlmhuBoeHh7ePV7v0D+Dq5uYpPKFAjEeHh7eEq/3sGrZNwf00u4oGODh4eGNeTcaV8kbTVpfC+UJPDw8vAu8PAnOg0R1K9UyR+/peHh4eFu8ra1XG1TVMYVqWo+Hh4d3j1ctTOQl3Xlzq1lZyd8uHh4eXos3aUr1wkA+3jrZJx4eHt4zvN6B3mv55+l1NVR88cWAh4eHd5lXTWe32HmaXmik4eHh4f0QLw8b1ZZ/Xg5uFnDx8PDwHuTNyw290nB1AKswU4aHh4e3xJu383vI6ivIqd+EBzw8PLwLvDwVTlpWvYGqyX6+2BUeHh7eKq/5kR+PQFWDQTldTkYH8PDw8FZ5kyJFtdg6b2717sHDw8Pb5eXJcT4ckDTJ8hGE3rACHh4e3j3e5GjupchJOaOaUuPh4eE9yXsVry32vEgRhQQ8PDy8C7zesZu3+ef3V/8LDw8P7xleHgwmCXE+dlANJ9+ECjw8PLxrvF4wqKbX1WBQDV3l0Ss8PDy8B3nnNLd6iFcD0vXAgIeHh7fE61G3hgCaz8XDw8O7xqsevvlswlZinRdBRrUWPDw8vKXv/d5Wqq+vmqbnxWU8PDy8Jd4/km4iFhRw2AQAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>
