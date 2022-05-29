@@ -16,7 +16,7 @@
     <link rel="alternate" href="/atom.xml" title="chenyulong">
   
   
-    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="shortcut icon" href="/css/images/avatar.jpg">
   
   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
@@ -50,19 +50,19 @@
     <div id="header-inner" class="inner">
       <nav id="main-nav">
         
-          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> Home</a>
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
         
-          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> Archive</a>
+          <a class="main-nav-link" href="/archives"><i class="fa fa-rss"></i> 归档</a>
         
-          <a class="main-nav-link" href="/about/"><i class="fa fa-user"></i> About</a>
+          <a class="main-nav-link" href="/categories/"><i class="fa fa-archive"></i> 分类</a>
         
-          <a class="main-nav-link" href="/atom.xml"><i class="fa fa-rss"></i> RSS</a>
+          <a class="main-nav-link" href="/tags/"><i class="fa fa-user"></i> 标签</a>
         
       </nav>
     </div>
     <div id="search-form">
       <div id="result-mask" class="hide"></div>
-      <label><input id="search-key" type="text" autocomplete="off" placeholder="search"></label>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="Búsqueda"></label>
       <div id="result-wrap" class="hide">
         <div id="search-result"></div>
       </div>
@@ -115,7 +115,7 @@
 <a href="/2020/06/11/Mac清空DNS缓存/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -125,39 +125,16 @@
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>开发过程中偶尔发现某些网络地址不能加载问题。</p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>清除dns缓存：<br>Tiger或更低版本 Mac OS：</p>
 <p>sudo lookupd -flushcache</p>
-<p>Leopard和Snow Leopard：</p>
-<p>sudo dscacheutil -flushcache</p>
-<p>而到了Lion、Mountain Lion和Mavericks：</p>
-<p>sudo killall -HUP mDNSResponder</p>
-<p>最后是Yosemite:</p>
-<p>sudo discoveryutil mdnsflushcache</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/code_liujun/article/details/51661391" target="_blank" rel="noopener">Mac下清空DNS缓存</a></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/page/3/index.html">http://nunu03.github.io/page/3/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cmd/">cmd</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2020/06/11/Mac清空DNS缓存/#more">Read More</a>
+        </p>
       
       
       
@@ -198,7 +175,7 @@
 <a href="/2020/06/06/Android接入实时美颜/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -206,51 +183,16 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>相亲项目从3月份上线至今，不管从DAU,UV,留存还是Roi,Arpu等多个方面都有了极速的增长。但是在使用过程中，同样也遇到了一些比较重要的问题。比如美颜问题，在项目初始，我们使用了Agora RTC SDK独有的美颜方案，可是我们的用户一直反馈现有的美颜效果很不好，美颜效果不能调节等问题。从而我们决定接入第三方相芯美颜sdk，来满足我们项目在美颜方面的缺陷。</p>
-<h2 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h2><p><img src="http://nunu03.github.io/2020/06/06/Android%E6%8E%A5%E5%85%A5%E5%AE%9E%E6%97%B6%E7%BE%8E%E9%A2%9C/facejr.png" alt><br>通过之上方案图，我们可以看出，整个的实现方案就是在相机数据采集后，对数据进行实时美颜处理，处理完成后，及时渲染展示。同时，我们会把渲染后对NV21数据推流到CDN服务器。原理很简单，主要是美颜so的实现方法是关键知识点，这次我们不做讲解，只描述下接入的方法和业务逻辑。</p>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fuSetup(context, path, authpack.A());</span><br><span class="line">byte[] buffer = FileUtils.readFile(context, bundlePath);</span><br><span class="line">if (buffer != null) &#123;</span><br><span class="line">	faceunity.fuLoadAIModelFromPackage(buffer, type);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="转化"><a href="#转化" class="headerlink" title="转化"></a>转化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *</span><br><span class="line"> * @param img NV21数据</span><br><span class="line"> * @param tex 纹理ID</span><br><span class="line"> * @param w</span><br><span class="line"> * @param h</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">public int onDrawFrame(byte[] img, int tex, int w, int h) &#123;</span><br><span class="line">    if (tex &lt;= 0 || img == null || w &lt;= 0 || h &lt;= 0) &#123;</span><br><span class="line">        Log.e(TAG, &quot;onDrawFrame data null&quot;);</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line"> ...</span><br><span class="line">    int fuTex = faceunity.fuDualInputToTexture(img, tex, flags, w, h, mFrameId++, mItemsArray);</span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>其中 img 和 tex纹理是我们传入的原始数据，mItemsArray 则是需要用到的美颜效果数组，当该方法返回时，得到的数据便是经过美颜处理的数据，该数据会写回到我们传入的 img 数组中，而返回的 fuTex 则是经过美颜处理的新的纹理标识。</p>
-<h3 id="推流"><a href="#推流" class="headerlink" title="推流"></a>推流</h3><p>美颜处理后，推举到服务器。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mConsumer.consumeTextureFrame(data.mEffectTextureId,</span><br><span class="line">                        MediaIO.PixelFormat.TEXTURE_2D.intValue(), needsFixWidthAndHeight ? data.videoHeight : data.videoWidth,</span><br><span class="line">                        needsFixWidthAndHeight ? data.videoWidth : data.videoHeight, 0, data.mTimeStamp, data.mTexMatrix);</span><br></pre></td></tr></table></figure>
-
-<h3 id="美颜调整"><a href="#美颜调整" class="headerlink" title="美颜调整"></a>美颜调整</h3><p>而相应的美颜效果可以通过如下方法进行调节(均在 faceunity 当中)，由于我们在对每一帧的时候进行了美颜参数设置，所以我们的美颜设置可以随时的调节并生效。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">faceunity.fuItemSetParam(itemBeauty, BeautificationParams.IS_BEAUTY_ON, 1.0);</span><br><span class="line">// filter_name 滤镜名称</span><br><span class="line">faceunity.fuItemSetParam(itemBeauty, BeautificationParams.FILTER_NAME, mFilterName);</span><br><span class="line">// filter_level 滤镜强度 范围 0~1 SDK 默认为 1</span><br><span class="line">faceunity.fuItemSetParam(itemBeauty, BeautificationParams.FILTER_LEVEL, mFilterLevel);</span><br></pre></td></tr></table></figure>
-
-<h2 id="相亲接入"><a href="#相亲接入" class="headerlink" title="相亲接入"></a>相亲接入</h2><p><img src="http://nunu03.github.io/2020/06/06/Android%E6%8E%A5%E5%85%A5%E5%AE%9E%E6%97%B6%E7%BE%8E%E9%A2%9C/faceman.png" alt></p>
-<p>关键代码如下：直接看注释即可。这里需要注意的是，美颜的sdk，在初始化的时候，加载了证书信息和ai的bundle文件，这个很容易产生误导，实际上，ai的bundle并不是必须在这里进行加载，在直播的过程中也可以再加载生效。所以我把美颜的initFuRender中的ai bundle拆分了出来。这样我们可以提前加载证书，任何时候加载并开启美颜功能。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">private fun startBroadcast(uid: Int, local: Boolean, type: Int, userInfo: LiveUserInfo) &#123;</span><br><span class="line">		//创建SurfaceView，本地view=GLSurfaceView 远端view=SurfaceView</span><br><span class="line">        var surfaceView = getSurfaceView(uid,local)</span><br><span class="line">        //初始化美颜，以及设置参数</span><br><span class="line">        initFaceUnityParam(local, type, surfaceView)</span><br><span class="line">        //321倒计时直播开始</span><br><span class="line">       mVideoItemAnchor?.showLoading(local, surfaceView, type)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 美颜初始化，设置美颜参数</span><br><span class="line"> */</span><br><span class="line">private fun initFaceUnityParam(local: Boolean, type: Int,surfaceViewLocal: Surf</span><br><span class="line">    //初始化</span><br><span class="line">    faceunityManager?.initFuRender(this)</span><br><span class="line">    //设置view</span><br><span class="line">    faceunityManager?.setGLSurfaceView(surfaceViewLocal as GLSurfaceView)</span><br><span class="line">    //设置美颜参数</span><br><span class="line">    mVideoItemAnchor?.setFaceunity()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>美颜的管理都在FaceunityManager中进行设置：代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">class FaceunityManager &#123;</span><br><span class="line">   </span><br><span class="line">    //初始化美颜sdk，以及相关管理类</span><br><span class="line">    fun initFuRender(context: Context) &#123;</span><br><span class="line">        // The settings of FURender may be slightly different,</span><br><span class="line">        FURenderer.initFURenderer(context)</span><br><span class="line">       </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //设计camera数据相关采集参数,宽，高，帧率，是否推流......</span><br><span class="line">    fun setFaceUnityParam(width: Int, height: Int) &#123;</span><br><span class="line">        // set capture width</span><br><span class="line">        mVideoCaptureConfigInfo?.videoCaptureWidth = width</span><br><span class="line">        // set capture height</span><br><span class="line">        mVideoCaptureConfigInfo?.videoCaptureHeight = height</span><br><span class="line">        // set capture fps</span><br><span class="line">        mVideoCaptureConfigInfo?.videoCaptureFps = 30</span><br><span class="line">        // set capture camera</span><br><span class="line">        mVideoCaptureConfigInfo?.cameraFace = Constant.CAMERA_FACING_FRONT</span><br><span class="line">        // set agora consumer format</span><br><span class="line">        mVideoCaptureConfigInfo?.videoCaptureFormat = VideoCaptureConfigInfo.CaptureFormat.TEXTURE_2D</span><br><span class="line">        // set agora consumer type</span><br><span class="line">  		......</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 设置并开启美颜，当上麦倒计时，直接调用</span><br><span class="line">     */</span><br><span class="line">    fun setBeauty() &#123;</span><br><span class="line">        if (this.mGLSurfaceViewLocal == null) &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        if (mVideoManager?.videoRender != null) &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        isShowVideo = true</span><br><span class="line">        mVideoManager?.allocate(mVideoCaptureConfigInfo)</span><br><span class="line">        mVideoManager?.setRenderView(this.mGLSurfaceViewLocal)</span><br><span class="line">        startBundle()</span><br><span class="line">        mVideoManager?.attachConnectorToRender(mVideoSource)</span><br><span class="line">        mVideoManager?.startCapture()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 开启美颜，对bundle进行校验，校验成功，加载bundle，开启美颜功能</span><br><span class="line">     * 如果bundle下载成功后，也使用此方法开启美颜功能</span><br><span class="line">     */</span><br><span class="line">    fun startBundle(fileName: String) &#123;</span><br><span class="line">            val isVerity = isVerify(mFaceBundlePath, fileName + &quot;_md5&quot;)</span><br><span class="line">            if (isVerity) &#123;</span><br><span class="line">                mVideoManager?.runInRenderThread &#123;</span><br><span class="line">                    if (!mFUInit) &#123;</span><br><span class="line">                        mFURenderer?.onSurfaceCreated()</span><br><span class="line">                        mFUInit = true</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            mVideoManager?.connectEffectHandler(mEffectHandler)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/page/3/index.html">http://nunu03.github.io/page/3/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FaceUnity/">FaceUnity</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2020/06/06/Android接入实时美颜/#more">Read More</a>
+        </p>
       
       
       
@@ -291,7 +233,7 @@
 <a href="/2020/05/22/自定义圆角矩形渐变背景边框/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -300,37 +242,16 @@
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>自定义一个layout实现背景的渐变以及边框的渐变，同时半圆角。效果图如下：</p>
 <p><img src="http://nunu03.github.io/2020/05/22/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9C%86%E8%A7%92%E7%9F%A9%E5%BD%A2%E6%B8%90%E5%8F%98%E8%83%8C%E6%99%AF%E8%BE%B9%E6%A1%86/image.jpg" alt="image"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">import android.content.Context</span><br><span class="line">import android.graphics.*</span><br><span class="line">import android.util.AttributeSet</span><br><span class="line">import android.widget.LinearLayout</span><br><span class="line"></span><br><span class="line">class GradientBackgroundView  @JvmOverloads constructor(</span><br><span class="line">        context: Context,</span><br><span class="line">        attrs: AttributeSet? = null,</span><br><span class="line">        defStyleAttr: Int = 0</span><br><span class="line">) : LinearLayout(context, attrs, defStyleAttr)  &#123;</span><br><span class="line">    private val mPaint = Paint(Paint.ANTI_ALIAS_FLAG)</span><br><span class="line">    private var mPath = Path()</span><br><span class="line">    private var backGradient: LinearGradient? = null</span><br><span class="line">    private var strokeGradient: LinearGradient? = null</span><br><span class="line">    private val radiusArray = floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        //设置抗锯齿</span><br><span class="line">        mPaint.isAntiAlias = true</span><br><span class="line">        //设置防抖动</span><br><span class="line">        mPaint.isDither = true</span><br><span class="line">        mPaint.style = Paint.Style.FILL</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * 设置四个角的圆角半径</span><br><span class="line">     */</span><br><span class="line">    fun setRadius(leftTop: Float, rightTop: Float, rightBottom: Float, leftBottom: Float) &#123;</span><br><span class="line">        radiusArray[0] = leftTop</span><br><span class="line">        radiusArray[1] = leftTop</span><br><span class="line">        radiusArray[2] = rightTop</span><br><span class="line">        radiusArray[3] = rightTop</span><br><span class="line">        radiusArray[4] = rightBottom</span><br><span class="line">        radiusArray[5] = rightBottom</span><br><span class="line">        radiusArray[6] = leftBottom</span><br><span class="line">        radiusArray[7] = leftBottom</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun setGradient(backGradientColors: IntArray?, strokeGradientcolors: IntArray?) &#123;</span><br><span class="line">        backGradient = LinearGradient(0f, 0f, width.toFloat(), 0f, backGradientColors, null, Shader.TileMode.CLAMP)</span><br><span class="line">        strokeGradient = LinearGradient(0f, 0f, width.toFloat(), 0f, strokeGradientcolors, null, Shader.TileMode.CLAMP)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun showBackgroundColor() &#123;</span><br><span class="line">        setBackgroundColor(Color.TRANSPARENT)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun onDraw(canvas: Canvas) &#123;</span><br><span class="line">        super.onDraw(canvas)</span><br><span class="line">        if (canvas == null) &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        canvas.save()</span><br><span class="line">        //渐变边框</span><br><span class="line">        mPaint.shader = strokeGradient</span><br><span class="line">        mPaint.style = Paint.Style.STROKE</span><br><span class="line">        mPaint.strokeWidth = 4f</span><br><span class="line">        mPath = Path()</span><br><span class="line">        mPath.addRoundRect(RectF(0f, 0f, width.toFloat(), height.toFloat()), radiusArray, Path.Direction.CW)</span><br><span class="line">        canvas.clipPath(mPath)</span><br><span class="line">        canvas.drawPath(mPath, mPaint)</span><br><span class="line"></span><br><span class="line">        //渐变背景色</span><br><span class="line">        mPaint.shader = backGradient</span><br><span class="line">        mPaint.style = Paint.Style.FILL</span><br><span class="line">        mPath = Path()</span><br><span class="line">        mPath.addRoundRect(RectF(2f, 2f, (width - 2).toFloat(), (height - 2).toFloat()), radiusArray, Path.Direction.CW)</span><br><span class="line">        canvas.clipPath(mPath)</span><br><span class="line">        canvas.drawPath(mPath, mPaint)</span><br><span class="line">        canvas.restore()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mBarrageLayout.setRadius(mRadius,0,0,mRadius);</span><br><span class="line">mBarrageLayout.setGradient(new int[]&#123;0xffff53a3,0xfd316a&#125;,new int[]&#123;0xffFFC92B,0x979797&#125;);</span><br><span class="line">mBarrageLayout.showBackgroundColor();</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.cnblogs.com/everhad/p/6161083.html" target="_blank" rel="noopener">一种android中实现“圆角矩形”的方法</a></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/page/3/index.html">http://nunu03.github.io/page/3/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/View/">View</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2020/05/22/自定义圆角矩形渐变背景边框/#more">Read More</a>
+        </p>
       
       
       
@@ -371,7 +292,7 @@
 <a href="/2019/12/06/颜色透明度十六进制/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -379,447 +300,16 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>00是完全透明(百分百透明)，FF就是完全<strong>不</strong>透明</p>
-
-<table>
-<thead>
-<tr>
-  <th align="left" style="width: 300px;">透明度</th>
-  <th align="left" style="width: 300px;">16进制表示</th>
-</tr>
-</thead>
-<tbody><tr>
-  <td align="left">100 %</td>
-  <td align="left">00</td>
-</tr>
-<tr>
-  <td align="left">99   %</td>
-  <td align="left">03</td>
-</tr>
-<tr>
-  <td align="left">98   %</td>
-  <td align="left">05</td>
-</tr>
-<tr>
-  <td align="left">97   %</td>
-  <td align="left">07</td>
-</tr>
-<tr>
-  <td align="left">96   %</td>
-  <td align="left">0A</td>
-</tr>
-<tr>
-  <td align="left">95   %</td>
-  <td align="left">0D</td>
-</tr>
-<tr>
-  <td align="left">94   %</td>
-  <td align="left">0F</td>
-</tr>
-<tr>
-  <td align="left">93   %</td>
-  <td align="left">12</td>
-</tr>
-<tr>
-  <td align="left">92   %</td>
-  <td align="left">14</td>
-</tr>
-<tr>
-  <td align="left">91   %</td>
-  <td align="left">17</td>
-</tr>
-<tr>
-  <td align="left">90   %</td>
-  <td align="left">1A</td>
-</tr>
-<tr>
-  <td align="left">89   %</td>
-  <td align="left">1C</td>
-</tr>
-<tr>
-  <td align="left">88   %</td>
-  <td align="left">1E</td>
-</tr>
-<tr>
-  <td align="left">87   %</td>
-  <td align="left">21</td>
-</tr>
-<tr>
-  <td align="left">86   %</td>
-  <td align="left">24</td>
-</tr>
-<tr>
-  <td align="left">85   %</td>
-  <td align="left">26</td>
-</tr>
-<tr>
-  <td align="left">84   %</td>
-  <td align="left">29</td>
-</tr>
-<tr>
-  <td align="left">83   %</td>
-  <td align="left">2B</td>
-</tr>
-<tr>
-  <td align="left">82   %</td>
-  <td align="left">2E</td>
-</tr>
-<tr>
-  <td align="left">81   %</td>
-  <td align="left">30</td>
-</tr>
-<tr>
-  <td align="left">80   %</td>
-  <td align="left">33</td>
-</tr>
-<tr>
-  <td align="left">79   %</td>
-  <td align="left">36</td>
-</tr>
-<tr>
-  <td align="left">78   %</td>
-  <td align="left">38</td>
-</tr>
-<tr>
-  <td align="left">77   %</td>
-  <td align="left">3B</td>
-</tr>
-<tr>
-  <td align="left">76   %</td>
-  <td align="left">3D</td>
-</tr>
-<tr>
-  <td align="left">75   %</td>
-  <td align="left">40</td>
-</tr>
-<tr>
-  <td align="left">74   %</td>
-  <td align="left">42</td>
-</tr>
-<tr>
-  <td align="left">73   %</td>
-  <td align="left">45</td>
-</tr>
-<tr>
-  <td align="left">72   %</td>
-  <td align="left">47</td>
-</tr>
-<tr>
-  <td align="left">71   %</td>
-  <td align="left">4A</td>
-</tr>
-<tr>
-  <td align="left">70   %</td>
-  <td align="left">4D</td>
-</tr>
-<tr>
-  <td align="left">69   %</td>
-  <td align="left">4F</td>
-</tr>
-<tr>
-  <td align="left">68   %</td>
-  <td align="left">52</td>
-</tr>
-<tr>
-  <td align="left">67   %</td>
-  <td align="left">54</td>
-</tr>
-<tr>
-  <td align="left">66   %</td>
-  <td align="left">57</td>
-</tr>
-<tr>
-  <td align="left">65   %</td>
-  <td align="left">59</td>
-</tr>
-<tr>
-  <td align="left">64   %</td>
-  <td align="left">5C</td>
-</tr>
-<tr>
-  <td align="left">63   %</td>
-  <td align="left">5E</td>
-</tr>
-<tr>
-  <td align="left">62   %</td>
-  <td align="left">61</td>
-</tr>
-<tr>
-  <td align="left">61   %</td>
-  <td align="left">63</td>
-</tr>
-<tr>
-  <td align="left">60   %</td>
-  <td align="left">66</td>
-</tr>
-<tr>
-  <td align="left">59   %</td>
-  <td align="left">69</td>
-</tr>
-<tr>
-  <td align="left">58   %</td>
-  <td align="left">6B</td>
-</tr>
-<tr>
-  <td align="left">57   %</td>
-  <td align="left">6E</td>
-</tr>
-<tr>
-  <td align="left">56   %</td>
-  <td align="left">70</td>
-</tr>
-<tr>
-  <td align="left">55   %</td>
-  <td align="left">73</td>
-</tr>
-<tr>
-  <td align="left">54   %</td>
-  <td align="left">75</td>
-</tr>
-<tr>
-  <td align="left">53   %</td>
-  <td align="left">78</td>
-</tr>
-<tr>
-  <td align="left">52   %</td>
-  <td align="left">7A</td>
-</tr>
-<tr>
-  <td align="left">51   %</td>
-  <td align="left">7D</td>
-</tr>
-<tr>
-  <td align="left">50   %</td>
-  <td align="left">80</td>
-</tr>
-<tr>
-  <td align="left">49   %</td>
-  <td align="left">82</td>
-</tr>
-<tr>
-  <td align="left">48   %</td>
-  <td align="left">85</td>
-</tr>
-<tr>
-  <td align="left">47   %</td>
-  <td align="left">87</td>
-</tr>
-<tr>
-  <td align="left">46   %</td>
-  <td align="left">8A</td>
-</tr>
-<tr>
-  <td align="left">45   %</td>
-  <td align="left">8C</td>
-</tr>
-<tr>
-  <td align="left">44   %</td>
-  <td align="left">8F</td>
-</tr>
-<tr>
-  <td align="left">43   %</td>
-  <td align="left">91</td>
-</tr>
-<tr>
-  <td align="left">42   %</td>
-  <td align="left">94</td>
-</tr>
-<tr>
-  <td align="left">41   %</td>
-  <td align="left">96</td>
-</tr>
-<tr>
-  <td align="left">40   %</td>
-  <td align="left">99</td>
-</tr>
-<tr>
-  <td align="left">39   %</td>
-  <td align="left">9C</td>
-</tr>
-<tr>
-  <td align="left">38   %</td>
-  <td align="left">9E</td>
-</tr>
-<tr>
-  <td align="left">37   %</td>
-  <td align="left">A1</td>
-</tr>
-<tr>
-  <td align="left">36   %</td>
-  <td align="left">A3</td>
-</tr>
-<tr>
-  <td align="left">35   %</td>
-  <td align="left">A6</td>
-</tr>
-<tr>
-  <td align="left">34   %</td>
-  <td align="left">A8</td>
-</tr>
-<tr>
-  <td align="left">33   %</td>
-  <td align="left">AB</td>
-</tr>
-<tr>
-  <td align="left">32   %</td>
-  <td align="left">AD</td>
-</tr>
-<tr>
-  <td align="left">31   %</td>
-  <td align="left">B0</td>
-</tr>
-<tr>
-  <td align="left">30   %</td>
-  <td align="left">B3</td>
-</tr>
-<tr>
-  <td align="left">29   %</td>
-  <td align="left">B5</td>
-</tr>
-<tr>
-  <td align="left">28   %</td>
-  <td align="left">B8</td>
-</tr>
-<tr>
-  <td align="left">27   %</td>
-  <td align="left">BA</td>
-</tr>
-<tr>
-  <td align="left">26   %</td>
-  <td align="left">BD</td>
-</tr>
-<tr>
-  <td align="left">25   %</td>
-  <td align="left">BF</td>
-</tr>
-<tr>
-  <td align="left">24   %</td>
-  <td align="left">C2</td>
-</tr>
-<tr>
-  <td align="left">23   %</td>
-  <td align="left">C4</td>
-</tr>
-<tr>
-  <td align="left">22   %</td>
-  <td align="left">C7</td>
-</tr>
-<tr>
-  <td align="left">21   %</td>
-  <td align="left">C9</td>
-</tr>
-<tr>
-  <td align="left">20   %</td>
-  <td align="left">CC</td>
-</tr>
-<tr>
-  <td align="left">19   %</td>
-  <td align="left">CF</td>
-</tr>
-<tr>
-  <td align="left">18   %</td>
-  <td align="left">D1</td>
-</tr>
-<tr>
-  <td align="left">17   %</td>
-  <td align="left">D4</td>
-</tr>
-<tr>
-  <td align="left">16   %</td>
-  <td align="left">D6</td>
-</tr>
-<tr>
-  <td align="left">15   %</td>
-  <td align="left">D9</td>
-</tr>
-<tr>
-  <td align="left">14   %</td>
-  <td align="left">DB</td>
-</tr>
-<tr>
-  <td align="left">13   %</td>
-  <td align="left">DE</td>
-</tr>
-<tr>
-  <td align="left">12   %</td>
-  <td align="left">E0</td>
-</tr>
-<tr>
-  <td align="left">11   %</td>
-  <td align="left">E3</td>
-</tr>
-<tr>
-  <td align="left">10   %</td>
-  <td align="left">E6</td>
-</tr>
-<tr>
-  <td align="left">9   %</td>
-  <td align="left">E8</td>
-</tr>
-<tr>
-  <td align="left">8   %</td>
-  <td align="left">EB</td>
-</tr>
-<tr>
-  <td align="left">7   %</td>
-  <td align="left">ED</td>
-</tr>
-<tr>
-  <td align="left">6   %</td>
-  <td align="left">F0</td>
-</tr>
-<tr>
-  <td align="left">5   %</td>
-  <td align="left">F2</td>
-</tr>
-<tr>
-  <td align="left">4   %</td>
-  <td align="left">F5</td>
-</tr>
-<tr>
-  <td align="left">3   %</td>
-  <td align="left">F7</td>
-</tr>
-<tr>
-  <td align="left">2   %</td>
-  <td align="left">FA</td>
-</tr>
-<tr>
-  <td align="left">1   %</td>
-  <td align="left">FC</td>
-</tr>
-<tr>
-  <td align="left">0   %</td>
-  <td align="left">FF</td>
-</tr>
-</tbody></table>
-
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/hewuzhao/article/details/78821954" target="_blank" rel="noopener">最全的Android 颜色透明度</a></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/page/3/index.html">http://nunu03.github.io/page/3/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Color/">Color</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2019/12/06/颜色透明度十六进制/#more">Read More</a>
+        </p>
       
       
       
@@ -860,7 +350,7 @@
 <a href="/2019/11/19/Android-沉浸式解析/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -868,110 +358,16 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>首先我们得了解什么是透明状态栏以及什么是沉浸式状态栏，以及其区别，国内习惯称变色状态栏为沉浸式状态栏，但是两者是有本质区别的:</p>
-<ul>
-<li>沉浸式：<br>Android 4.4中，沉浸式体验得到了再次强化，提供了一种“全屏模式”(Full-screen Immersive Mode)。全屏模式又分两种，一种叫后撤式 (Lean Back)，另一种叫做沉浸式(Immersive)。后撤式已经在之前的系统中被广泛使用了——当你在优酷APP中观看视频时，大部分时间手指是不会去碰屏幕的。这种情况下，虚拟键和状态栏都会自动隐藏，但当你触摸屏幕的时候，它们又会出现。而新加入的沉浸式则不太一样，在沉浸式全屏状态下，对屏幕的操作并不会唤出系统栏。想要唤出系统栏，你必须从屏幕的上/下边缘向屏幕内划入。沉浸式的全屏状态更适合游戏和阅读这样的应用。</li>
-</ul>
-<ul>
-<li>变色：<ul>
-<li>透明：<br>Android 4.4 一个很重要的改变就是透明系统栏.。新的系统栏是渐变透明的, 可以最大限度的允许屏幕显示更多内容, 也可以让系统栏和 Action Bar 融为一体, 仅仅留下最低限度的背景保护以免通知通知栏内容和 Action Bar 文字/图标难以识别。谷歌把这种效果称之为：Translucent Bar。<br>Translucent Bar 是 Android 对 Edge to Edge 尝试中的一个, 也是最容易被用户注意到的. 它的初始目的就是要最大化可视面积和淡化系统界面的存在感。</li>
-<li>变色：<br>Android 5.0后可以自由设置状态栏颜色，所以也可以称作变色状态栏。</li>
-</ul>
-</li>
-</ul>
-<p>所以我们这里讲的是变色状态栏，变色状态栏就是如何对 StatusBar（状态栏）的背景透明操作；当我们打开应用时，一般如果不对状态栏进行修改的话，在屏幕的顶部有一条默认的(黑色、灰色、其他)状态栏，和应用的风格非常不协调，为了提供更好的界面交互，然后在状态栏的位置显示我们自定义的颜色，通常为应用的TitleBar的颜色，或者是将应用的整体的一张图片也占据到状态栏中，这个时候我们就需要对状态栏的背景进行操作。<br><a href="http://www.androidchina.net/3520.html" target="_blank" rel="noopener">状态栏详解点击</a></p>
-<h2 id="StatusBar、TitleBar"><a href="#StatusBar、TitleBar" class="headerlink" title="StatusBar、TitleBar"></a>StatusBar、TitleBar</h2><p>StatusBar是状态栏，它处于屏幕的最顶部，正常情况下它是显示的，它和TitleBar之间没有直接的关系；</p>
-<p>TitleBar是标题栏，比如ActionBar、ToolBar，紧位于状态栏的下方显示。</p>
-<p>ActionBar（操作栏） 是在Android 3.0(API 11）中加入到SK中的。</p>
-<p>ToolBar（工具栏）是 Android 5.0 推出的一个 Material Design 风格的导航控件 ,用来取代之前的 Actionbar 。与 Actionbar 相比，Toolbar 明显要灵活的多。它不像 Actionbar 一样，一定要固定在Activity的顶部，而是可以放到界面的任意位置。与ActionBar相比显示效果跟ActionBar并没有区别。但优点是自定义视图的操作更加简单：</p>
-<ul>
-<li>1.设置导航栏图标；</li>
-<li>2.设置App的logo；</li>
-<li>3.支持设置标题和子标题；</li>
-<li>4.支持添加一个或多个的自定义控件；</li>
-<li>5.支持Action Menu；</li>
-</ul>
-<h3 id="ActionBar"><a href="#ActionBar" class="headerlink" title="ActionBar"></a>ActionBar</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=&quot;AppCompatActivity_ActionBarTheme&quot; parent=&quot;Theme.AppCompat.Light.DarkActionBar&quot;&gt;</span><br><span class="line">    &lt;!-- Customize your theme here. --&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimary&quot;&gt;@color/colorPrimary&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorAccent&quot;&gt;@color/colorAccent&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    ActionBar actionBar = getSupportActionBar();</span><br><span class="line">    actionBar.setTitle(&quot;ActionBar Title&quot;);</span><br><span class="line">actionBar.setBackgroundDrawable(getDrawable(R.drawable.ic_launcher_background));</span><br><span class="line">    actionBar.setCustomView(R.layout.activity_actionbar);</span><br><span class="line">    actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>备注</strong>是getSupportActionBar()还是默认的getActionBar()，还可以自定义title view</p>
-<h3 id="Toolbar"><a href="#Toolbar" class="headerlink" title="Toolbar"></a>Toolbar</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=&quot;AppCompatActivity_ToolBarTheme&quot; parent=&quot;Theme.AppCompat.Light&quot;&gt;</span><br><span class="line">    &lt;item name=&quot;windowActionBar&quot;&gt;false&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;windowNoTitle&quot;&gt;true&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimary&quot;&gt;@color/colorPrimary&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorAccent&quot;&gt;@color/colorAccent&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;android:textAllCaps&quot;&gt;false&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;android.support.v7.widget.Toolbar</span><br><span class="line">    android:id=&quot;@+id/toolbar&quot;</span><br><span class="line">    android:orientation=&quot;vertical&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:background=&quot;?attr/colorPrimary&quot;</span><br><span class="line">    android:layout_height=&quot;200dp&quot;</span><br><span class="line">    app:title=&quot;标题&quot;</span><br><span class="line">    android:minHeight=&quot;?attr/actionBarSize&quot;&gt;</span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=&quot;@+id/toolbar_view&quot;</span><br><span class="line">        android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:textColor=&quot;#ff0000&quot;</span><br><span class="line">        android:text=&quot;自定义View&quot;/&gt;</span><br><span class="line">&lt;/android.support.v7.widget.Toolbar&gt;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">	//也可以这里设置toolbar</span><br><span class="line">    Toolbar toolBar = findViewById(R.id.toolbar);</span><br><span class="line">    //主标题，必须在setSupportActionBar之前设置，否则无效，如果放在其他位置，则直接setTitle即可</span><br><span class="line">    toolBar.setTitle(&quot;ToolBar Title&quot;);</span><br><span class="line">    //用toolbar替换actionbar</span><br><span class="line">    setSupportActionBar(toolBar);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>备注</strong>可以在xml设置属性，也以在代码中设置；还可以在xml添加view；还可以对Toolbar自定义；使用Toolbar要隐藏ActionBar；</p>
-<p><a href="https://www.jianshu.com/p/81d0bcb282cb" target="_blank" rel="noopener">ActionBar和ToolBar：使用详细点击</a></p>
-<h3 id="item属性释义"><a href="#item属性释义" class="headerlink" title="item属性释义"></a>item属性释义</h3><p><img src="http://nunu03.github.io/2019/11/19/Android-%E6%B2%89%E6%B5%B8%E5%BC%8F%E8%A7%A3%E6%9E%90/item.png" alt="item"><br>比较通用的几个属性，引用了网上的一个截图；更多详细见：<br><a href="https://blog.csdn.net/jinmie0193/article/details/80723724" target="_blank" rel="noopener">各属性指定颜色的位置</a></p>
-<h2 id="状态栏背景色"><a href="#状态栏背景色" class="headerlink" title="状态栏背景色"></a>状态栏背景色</h2><h3 id="Android4-4（-lt-API-19）"><a href="#Android4-4（-lt-API-19）" class="headerlink" title="Android4.4（&lt; API 19）"></a>Android4.4（&lt; API 19）</h3><p>在Android系统4.4以前，状态栏的背景色和字体颜色都是不能改变的，我们可以对 StatusBar 进行全屏或隐藏操作。</p>
-<ul>
-<li><p>配置theme</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:theme=&quot;@android:style/Theme.NoTitleBar.Fullscreen&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>代码全屏</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,</span><br><span class="line">                WindowManager.LayoutParams. FLAG_FULLSCREEN);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="Android4-4（API-19）-Android-5-0（-lt-API-21）"><a href="#Android4-4（API-19）-Android-5-0（-lt-API-21）" class="headerlink" title="Android4.4（API 19）- Android 5.0（&lt; API 21）"></a>Android4.4（API 19）- Android 5.0（&lt; API 21）</h3><ul>
-<li><p>theme：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=&quot;android:windowTranslucentStatus&quot;&gt;true&lt;/item&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 失效 --&gt;</span><br><span class="line">   &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimary&lt;/item&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>代码：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>设置如上属性后，我们会发现状态栏的背景变了，其实不是变了，而是标题栏的布局延伸到了状态栏里。<br><img src="http://nunu03.github.io/2019/11/19/Android-%E6%B2%89%E6%B5%B8%E5%BC%8F%E8%A7%A3%E6%9E%90/translu.png" alt><br>如果是图片浸入的话：直接给TitleBar或者自定义view设置背景图即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Toolbar toolBar = findViewById(R.id.toolbar);</span><br><span class="line">toolBar.setBackgroundResource(R.mipmap.title_back);</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://nunu03.github.io/2019/11/19/Android-%E6%B2%89%E6%B5%B8%E5%BC%8F%E8%A7%A3%E6%9E%90/img_header.jpg" alt></p>
-<h3 id="Android-5-0（-gt-API-21）"><a href="#Android-5-0（-gt-API-21）" class="headerlink" title="Android 5.0（&gt;= API 21）"></a>Android 5.0（&gt;= API 21）</h3><ul>
-<li><p>theme：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimary&lt;/item&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>代码：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getWindow().setStatusBarColor(getResources().getColor(android.R.color.holo_red_light));</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>如果是图片浸入的话：直接在主题中设置状态栏背景色透明即可,同理直接给TitleBar或者自定义view设置背景图即可；效果图同上。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=&quot;android:windowTranslucentStatus&quot;&gt;true&lt;/item&gt;</span><br><span class="line">&lt;item name = &quot;android:statusBarColor&quot;&gt;@android:color/transparent&lt;/item&gt;</span><br><span class="line">	</span><br><span class="line">Toolbar toolBar = findViewById(R.id.toolbar);</span><br><span class="line">toolBar.setBackgroundResource(R.mipmap.title_back);</span><br></pre></td></tr></table></figure>
-
-<h3 id="android-fitsSystemWindows-”true”"><a href="#android-fitsSystemWindows-”true”" class="headerlink" title="android:fitsSystemWindows=”true”"></a>android:fitsSystemWindows=”true”</h3><p>当我们设置了android:windowTranslucentStatus=true后，我们发现Toolbar内容被StatusBar覆盖，相当于Toolbar整体布局上移了，怎么解决？我们可以设置android:fitsSystemWindows=”true”，但是这时候我们发现，我们的StatusBar的背景色实效了。如何解决？我们就可以通过往Window窗口的decorView添加一个View,让它大小与系统状态栏一样，然后设置这个view的背景，就可以实现修改状态栏颜色的效果了。但是这种只适合修改StatusBar的背景色，如果是图片浸入，就不可以了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ViewGroup decorViewGroup = (ViewGroup) getWindow().getDecorView();</span><br><span class="line">View statusBarView = new View(getWindow().getContext());</span><br><span class="line">int statusBarHeight = getStatusBarHeight(getWindow().getContext());</span><br><span class="line">FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, statusBarHeight);</span><br><span class="line">params.gravity = Gravity.TOP;</span><br><span class="line">statusBarView.setLayoutParams(params);</span><br><span class="line">statusBarView.setBackgroundResource(R.color.colorPrimary);</span><br><span class="line">decorViewGroup.addView(statusBarView);</span><br><span class="line">        </span><br><span class="line">private static int getStatusBarHeight(Context context) &#123;</span><br><span class="line">    int statusBarHeight = 0;</span><br><span class="line">    Resources res = context.getResources();</span><br><span class="line">    int resourceId = res.getIdentifier(&quot;status_bar_height&quot;, &quot;dimen&quot;, &quot;android&quot;);</span><br><span class="line">    if (resourceId &gt; 0) &#123;</span><br><span class="line">        statusBarHeight = res.getDimensionPixelSize(resourceId);</span><br><span class="line">    &#125;</span><br><span class="line">    return statusBarHeight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="TitleBar图片浸入"><a href="#TitleBar图片浸入" class="headerlink" title="TitleBar图片浸入"></a>TitleBar图片浸入</h3><p>我们从上面的效果图，可以看出，图片浸入时，相当于TitleBar移动到了状态栏的下面，这个时候我们标题可能与状态栏的图标重叠，那怎么办呢？上边说了android:fitsSystemWindows=”true”不行，需要设置状态栏背景色失效，其实我们这个时候，可以在TitleBar上添加一个和状态栏大小的透明view即可，TitleBar设置paddingTop 也可以，但是你需要重新设置TitleBar的高度，这样的话就不如第一种方案合适了。<br>设计一个xml，这个包含了TitleBar和默认的StatusBar的替代view。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">    android:orientation=&quot;vertical&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ImageView</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_alignBottom=&quot;@+id/toolbar&quot;</span><br><span class="line">        android:layout_alignTop=&quot;@+id/statusBartop&quot;</span><br><span class="line">        android:scaleType=&quot;fitXY&quot;</span><br><span class="line">        android:src=&quot;@mipmap/title_back&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        android:id=&quot;@+id/statusBartop&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:background=&quot;#00000000&quot;</span><br><span class="line">        android:orientation=&quot;horizontal&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.v7.widget.Toolbar</span><br><span class="line">        android:id=&quot;@+id/toolbar&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_below=&quot;@+id/statusBartop&quot;</span><br><span class="line">        &gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;match_parent&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot; dkfslfjslfsjflsjflsf&quot;</span><br><span class="line">            android:textColor=&quot;@android:color/holo_red_dark&quot;</span><br><span class="line"></span><br><span class="line">            android:textSize=&quot;16dp&quot; /&gt;</span><br><span class="line">    &lt;/android.support.v7.widget.Toolbar&gt;</span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
-
-<p>然后我们在代码中进行设置即可：版本大于18，即4.4以上即可，4.4一下不存在沉浸式模式；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int sysVersion = Build.VERSION.SDK_INT;</span><br><span class="line">if (sysVersion &gt; Build.VERSION_CODES.JELLY_BEAN_MR2 ) &#123;</span><br><span class="line">    int result = 0;</span><br><span class="line">    int resourceId = getResources().getIdentifier(&quot;status_bar_height&quot;, &quot;dimen&quot;, &quot;android&quot;);</span><br><span class="line">    if (resourceId &gt; 0) &#123;</span><br><span class="line">        result = getResources().getDimensionPixelSize(resourceId);</span><br><span class="line">    &#125;</span><br><span class="line">    LinearLayout toptop = this.findViewById(R.id.statusBartop);</span><br><span class="line">    RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(this.getWindowManager().getDefaultDisplay().getWidth(), result);</span><br><span class="line">    //设置修改后的布局。</span><br><span class="line">    toptop.setLayoutParams(para);</span><br><span class="line"></span><br><span class="line">    Toolbar toolbar = this.findViewById(R.id.toolbar);</span><br><span class="line">    RelativeLayout.LayoutParams paraBar = new RelativeLayout.LayoutParams(this.getWindowManager().getDefaultDisplay().getWidth(), 150);</span><br><span class="line">    paraBar.addRule(RelativeLayout.BELOW,R.id.statusBartop);</span><br><span class="line">    toolbar.setLayoutParams(paraBar);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>最后别忘记设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=&quot;android:windowTranslucentStatus&quot;&gt;true&lt;/item&gt;</span><br><span class="line">或者在代码中：</span><br><span class="line">getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</span><br></pre></td></tr></table></figure>
-
-<p>看下效果图：<br><img src="http://nunu03.github.io/2019/11/19/Android-%E6%B2%89%E6%B5%B8%E5%BC%8F%E8%A7%A3%E6%9E%90/image.jpg" alt></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/page/3/index.html">http://nunu03.github.io/page/3/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Title/">Title</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2019/11/19/Android-沉浸式解析/#more">Read More</a>
+        </p>
       
       
       
@@ -1012,7 +408,7 @@
 <a href="/2019/10/11/Toast解读/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -1020,110 +416,16 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Toast(吐司)，这个控件的用词相当准确,它所表现出来的特征正是吐司似的弹出效果，使用非常简单便捷。<br>而且Toast开发时比较常用的一个类了，用它给用户弹提示信息和界面反馈，有时候也用它来作为辅助调试的手段。但是用得多了，有时候自然会遇到各种各样的问题，比如重复点击问题，弹框位置，显示时间等，这时候我们就要对运行机制以及源码进行了解。</p>
-<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>1.Toast不是View，它用于帮助创建并展示包含一条小消息的View；</p>
-<p>2.它的设计理念是尽量不惹眼，但又能展示想让用户看到的信息；</p>
-<p>3.被展示时，浮在应用界面之上；</p>
-<p>4.永远不会获取到焦点；</p>
-<p>5.大小取决于消息的长度；</p>
-<p>6.超时后会自动消失；</p>
-<p>7.可以自定义显示在屏幕上的位置（默认左右居中显示在靠近屏幕底部的位置；</p>
-<p>8.可以使用自定义布局，也只有在自定义布局的时候才需要直接调用Toast的构造方法，其它时候都是使用 makeText方法来创建Toast；</p>
-<p>9.Toast弹出后当前Activity会保持可见性和可交互性；</p>
-<p>10.使用cancel方法可以立即将已显示的Toast关闭让未显示的Toast不再显示；</p>
-<p>11.Toast 也算是一个「通知」，如果弹出状态消息后期望得到用户响应，应该使用 Notification。</p>
-<h2 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><h4 id="new-Toast"><a href="#new-Toast" class="headerlink" title="new Toast"></a>new Toast</h4><blockquote>
-<p>Toast.class</p>
-<p>这里面初始化了TN,TN是什么？一会下面会讲道</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Constructs an empty Toast object.  If looper is null, Looper.myLooper() is used.</span><br><span class="line"> * @hide</span><br><span class="line"> */</span><br><span class="line">public Toast(@NonNull Context context, @Nullable Looper looper) &#123;</span><br><span class="line">    mContext = context;</span><br><span class="line">    mTN = new TN(context.getPackageName(), looper);</span><br><span class="line">    mTN.mY = context.getResources().getDimensionPixelSize(</span><br><span class="line">            com.android.internal.R.dimen.toast_y_offset);</span><br><span class="line">    mTN.mGravity = context.getResources().getInteger(</span><br><span class="line">            com.android.internal.R.integer.config_toastDefaultGravity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="Toast-makeText"><a href="#Toast-makeText" class="headerlink" title="Toast.makeText"></a>Toast.makeText</h4><blockquote>
-<p>Toast.class</p>
-<p>这里面蕴含了很多的信息,XML布局,text显示文案，显示时长等等</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Toast.class</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Make a standard toast to display using the specified looper.</span><br><span class="line"> * If looper is null, Looper.myLooper() is used.</span><br><span class="line"> * @hide</span><br><span class="line"> */</span><br><span class="line">public static Toast makeText(@NonNull Context context, @Nullable Looper looper,</span><br><span class="line">        @NonNull CharSequence text, @Duration int duration) &#123;</span><br><span class="line">    Toast result = new Toast(context, looper);</span><br><span class="line"></span><br><span class="line">    LayoutInflater inflate = (LayoutInflater)</span><br><span class="line">            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);</span><br><span class="line">    View v = inflate.inflate(com.android.internal.R.layout.transient_notification, null);</span><br><span class="line">    TextView tv = (TextView)v.findViewById(com.android.internal.R.id.message);</span><br><span class="line">    tv.setText(text);</span><br><span class="line"></span><br><span class="line">    result.mNextView = v;</span><br><span class="line">    result.mDuration = duration;</span><br><span class="line"></span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="显示"><a href="#显示" class="headerlink" title="显示"></a>显示</h3><blockquote>
-<p>Toast.class</p>
-<p>这里是show一个Toast,显示的时候把tn，和包名相关信息传递给service，将我们需要显示的toast放到这个服务的队列中进行显示。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Show the view for the specified duration.</span><br><span class="line"> */</span><br><span class="line">public void show() &#123;</span><br><span class="line">    if (mNextView == null) &#123;</span><br><span class="line">        throw new RuntimeException(&quot;setView must have been called&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    INotificationManager service = getService();</span><br><span class="line">    String pkg = mContext.getOpPackageName();</span><br><span class="line">    TN tn = mTN;</span><br><span class="line">    tn.mNextView = mNextView;</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        service.enqueueToast(pkg, tn, mDuration);</span><br><span class="line">    &#125; catch (RemoteException e) &#123;</span><br><span class="line">        // Empty</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>NotificationManagerService.class</p>
-<p>Toast入系统队列的方法:在Toast的TN对象中，会调用service.enqueueToast(String pkg,ItransientNotification callback,int duaraion)来将创建出来的Toast放入NotificationManagerService的ToastRecord队列中。<br>NotificationManagerService是一个运行在SystemServer进程中的一个守护进程，Android大部分的IPC通信都是通过Binder机制，这个守护进程像一个主管一样，所有的下面的人都必须让它进行调度，然后由它来进行显示或者是隐藏。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void enqueueToast(String pkg, ITransientNotification callback, int duration)</span><br><span class="line">&#123;</span><br><span class="line">    .........................................</span><br><span class="line"></span><br><span class="line">    synchronized (mToastQueue) &#123;</span><br><span class="line">        int callingPid = Binder.getCallingPid();</span><br><span class="line">        long callingId = Binder.clearCallingIdentity();</span><br><span class="line">        try &#123;</span><br><span class="line">            ToastRecord record;</span><br><span class="line">            int index;</span><br><span class="line">            // All packages aside from the android package can enqueue one toast at a time</span><br><span class="line">            //查看这个toast是否在当前队列中，有的话就返回索引</span><br><span class="line">            if (!isSystemToast) &#123;</span><br><span class="line">                index = indexOfToastPackageLocked(pkg);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                index = indexOfToastLocked(pkg, callback);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // If the package already has a toast, we update its toast</span><br><span class="line">            // in the queue, we don&apos;t move it to the end of the queue.</span><br><span class="line">            //如果这个index大于等于0，说明这个toast已经在这个队列中了，只需要更新显示时间就可以了</span><br><span class="line">            //当然这里callback是一个对象，pkg是一个String，所以比较的时候是对象的比较</span><br><span class="line">            if (index &gt;= 0) &#123;</span><br><span class="line">                record = mToastQueue.get(index);</span><br><span class="line">                record.update(duration);</span><br><span class="line">                try &#123;</span><br><span class="line">                    record.callback.hide();</span><br><span class="line">                &#125; catch (RemoteException e) &#123;</span><br><span class="line">                &#125;</span><br><span class="line">                record.update(callback);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">            		//将这个toast封装成ToastRecord对象，放到队列中</span><br><span class="line">                Binder token = new Binder();</span><br><span class="line">                mWindowManagerInternal.addWindowToken(token, TYPE_TOAST, DEFAULT_DISPLAY);</span><br><span class="line">                record = new ToastRecord(callingPid, pkg, callback, duration, token);</span><br><span class="line">                mToastQueue.add(record);</span><br><span class="line">                index = mToastQueue.size() - 1;</span><br><span class="line">            &#125;</span><br><span class="line">            keepProcessAliveIfNeededLocked(callingPid);</span><br><span class="line">            // If it&apos;s at index 0, it&apos;s the current toast.  It doesn&apos;t matter if it&apos;s</span><br><span class="line">            // new or just been updated.  Call back and tell it to show itself.</span><br><span class="line">            // If the callback fails, this will remove it from the list, so don&apos;t</span><br><span class="line">            // assume that it&apos;s valid after this.</span><br><span class="line">            //如果返回的索引是0，说明当前的这个存在的toast就在对头，直接显示</span><br><span class="line">            if (index == 0) &#123;</span><br><span class="line">                showNextToastLocked();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            Binder.restoreCallingIdentity(callingId);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void showNextToastLocked() &#123;</span><br><span class="line">    ToastRecord record = mToastQueue.get(0);</span><br><span class="line">    ....................................  </span><br><span class="line">    record.callback.show(record.token);</span><br><span class="line">    scheduleTimeoutLocked(record);</span><br><span class="line">    return;</span><br><span class="line">    ...................................    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void scheduleTimeoutLocked(ToastRecord r)</span><br><span class="line">&#123;</span><br><span class="line">    mHandler.removeCallbacksAndMessages(r);</span><br><span class="line">    Message m = Message.obtain(mHandler, MESSAGE_TIMEOUT, r);</span><br><span class="line">    long delay = r.duration == Toast.LENGTH_LONG ? LONG_DELAY : SHORT_DELAY;</span><br><span class="line">    mHandler.sendMessageDelayed(m, delay);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void handleTimeout(ToastRecord record)</span><br><span class="line">&#123;</span><br><span class="line">        int index = indexOfToastLocked(record.pkg, record.callback);</span><br><span class="line">        if (index &gt;= 0) &#123;</span><br><span class="line">            cancelToastLocked(index);</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="取消"><a href="#取消" class="headerlink" title="取消"></a>取消</h3><blockquote>
-<p>NotificationManagerService.class</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void cancelToastLocked(int index) &#123;</span><br><span class="line">    ToastRecord record = mToastQueue.get(index);</span><br><span class="line">    try &#123;</span><br><span class="line">        record.callback.hide();</span><br><span class="line">    &#125; catch (RemoteException e) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ToastRecord lastToast = mToastQueue.remove(index);</span><br><span class="line">    mWindowManagerInternal.removeWindowToken(lastToast.token, true, DEFAULT_DISPLAY);</span><br><span class="line"></span><br><span class="line">    keepProcessAliveIfNeededLocked(record.pid);</span><br><span class="line">    if (mToastQueue.size() &gt; 0) &#123;</span><br><span class="line">        // Show the next one. If the callback fails, this will remove</span><br><span class="line">        // it from the list, so don&apos;t assume that the list hasn&apos;t changed</span><br><span class="line">        // after this point.</span><br><span class="line">        showNextToastLocked();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="TN"><a href="#TN" class="headerlink" title="TN"></a>TN</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line">private static class TN extends ITransientNotification.Stub &#123;</span><br><span class="line">    private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();</span><br><span class="line">.................................................................</span><br><span class="line"></span><br><span class="line">    TN(String packageName, @Nullable Looper looper) &#123;</span><br><span class="line">        // XXX This should be changed to use a Dialog, with a Theme.Toast</span><br><span class="line">        // defined that sets up the layout params appropriately.</span><br><span class="line">        final WindowManager.LayoutParams params = mParams;</span><br><span class="line">        params.height = WindowManager.LayoutParams.WRAP_CONTENT;</span><br><span class="line">        params.width = WindowManager.LayoutParams.WRAP_CONTENT;</span><br><span class="line">        params.format = PixelFormat.TRANSLUCENT;</span><br><span class="line">        params.windowAnimations = com.android.internal.R.style.Animation_Toast;</span><br><span class="line">        params.type = WindowManager.LayoutParams.TYPE_TOAST;</span><br><span class="line">        params.setTitle(&quot;Toast&quot;);</span><br><span class="line">        params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON</span><br><span class="line">                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE</span><br><span class="line">                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;</span><br><span class="line"></span><br><span class="line">        mPackageName = packageName;</span><br><span class="line"></span><br><span class="line">        if (looper == null) &#123;</span><br><span class="line">            // Use Looper.myLooper() if looper is not specified.</span><br><span class="line">            looper = Looper.myLooper();</span><br><span class="line">            if (looper == null) &#123;</span><br><span class="line">                throw new RuntimeException(</span><br><span class="line">                        &quot;Can&apos;t toast on a thread that has not called Looper.prepare()&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        mHandler = new Handler(looper, null) &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void handleMessage(Message msg) &#123;</span><br><span class="line">                switch (msg.what) &#123;</span><br><span class="line">                    case SHOW: &#123;</span><br><span class="line">                        IBinder token = (IBinder) msg.obj;</span><br><span class="line">                        handleShow(token);</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                    case HIDE: &#123;</span><br><span class="line">                        handleHide();</span><br><span class="line">                        // Don&apos;t do this in handleHide() because it is also invoked by</span><br><span class="line">                        // handleShow()</span><br><span class="line">                        mNextView = null;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                    case CANCEL: &#123;</span><br><span class="line">                        handleHide();</span><br><span class="line">                        // Don&apos;t do this in handleHide() because it is also invoked by</span><br><span class="line">                        // handleShow()</span><br><span class="line">                        mNextView = null;</span><br><span class="line">                        try &#123;</span><br><span class="line">                            getService().cancelToast(mPackageName, TN.this);</span><br><span class="line">                        &#125; catch (RemoteException e) &#123;</span><br><span class="line">                        &#125;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * schedule handleShow into the right thread</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void show(IBinder windowToken) &#123;</span><br><span class="line">        if (localLOGV) Log.v(TAG, &quot;SHOW: &quot; + this);</span><br><span class="line">        mHandler.obtainMessage(SHOW, windowToken).sendToTarget();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * schedule handleHide into the right thread</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void hide() &#123;</span><br><span class="line">        if (localLOGV) Log.v(TAG, &quot;HIDE: &quot; + this);</span><br><span class="line">        mHandler.obtainMessage(HIDE).sendToTarget();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void cancel() &#123;</span><br><span class="line">        if (localLOGV) Log.v(TAG, &quot;CANCEL: &quot; + this);</span><br><span class="line">        mHandler.obtainMessage(CANCEL).sendToTarget();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void handleShow(IBinder windowToken) &#123;</span><br><span class="line">        .................................................</span><br><span class="line">            if (mView != mNextView) &#123;</span><br><span class="line">            // remove the old view if necessary</span><br><span class="line">            handleHide();</span><br><span class="line">            mView = mNextView;</span><br><span class="line">            Context context = mView.getContext().getApplicationContext();</span><br><span class="line">            String packageName = mView.getContext().getOpPackageName();</span><br><span class="line">            if (context == null) &#123;</span><br><span class="line">                context = mView.getContext();</span><br><span class="line">            &#125;</span><br><span class="line">            mWM = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);</span><br><span class="line">            // We can resolve the Gravity here by using the Locale for getting</span><br><span class="line">            // the layout direction</span><br><span class="line">            final Configuration config = mView.getContext().getResources().getConfiguration();</span><br><span class="line">            final int gravity = Gravity.getAbsoluteGravity(mGravity, config.getLayoutDirection());</span><br><span class="line">            mParams.gravity = gravity;</span><br><span class="line">            if ((gravity &amp; Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.FILL_HORIZONTAL) &#123;</span><br><span class="line">                mParams.horizontalWeight = 1.0f;</span><br><span class="line">            &#125;</span><br><span class="line">            if ((gravity &amp; Gravity.VERTICAL_GRAVITY_MASK) == Gravity.FILL_VERTICAL) &#123;</span><br><span class="line">                mParams.verticalWeight = 1.0f;</span><br><span class="line">            &#125;</span><br><span class="line">            mParams.x = mX;</span><br><span class="line">            mParams.y = mY;</span><br><span class="line">            mParams.verticalMargin = mVerticalMargin;</span><br><span class="line">            mParams.horizontalMargin = mHorizontalMargin;</span><br><span class="line">            mParams.packageName = packageName;</span><br><span class="line">            mParams.hideTimeoutMilliseconds = mDuration ==</span><br><span class="line">                Toast.LENGTH_LONG ? LONG_DURATION_TIMEOUT : SHORT_DURATION_TIMEOUT;</span><br><span class="line">            mParams.token = windowToken;</span><br><span class="line">            if (mView.getParent() != null) &#123;</span><br><span class="line">                if (localLOGV) Log.v(TAG, &quot;REMOVE! &quot; + mView + &quot; in &quot; + this);</span><br><span class="line">                mWM.removeView(mView);</span><br><span class="line">            &#125;</span><br><span class="line">            if (localLOGV) Log.v(TAG, &quot;ADD! &quot; + mView + &quot; in &quot; + this);</span><br><span class="line">            // Since the notification manager service cancels the token right</span><br><span class="line">            // after it notifies us to cancel the toast there is an inherent</span><br><span class="line">            // race and we may attempt to add a window after the token has been</span><br><span class="line">            // invalidated. Let us hedge against that.</span><br><span class="line">            try &#123;</span><br><span class="line">                mWM.addView(mView, mParams);</span><br><span class="line">                trySendAccessibilityEvent();</span><br><span class="line">            &#125; catch (WindowManager.BadTokenException e) &#123;</span><br><span class="line">                /* ignore */</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void trySendAccessibilityEvent() &#123;</span><br><span class="line">        AccessibilityManager accessibilityManager =</span><br><span class="line">                AccessibilityManager.getInstance(mView.getContext());</span><br><span class="line">        if (!accessibilityManager.isEnabled()) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        // treat toasts as notifications since they are used to</span><br><span class="line">        // announce a transient piece of information to the user</span><br><span class="line">        AccessibilityEvent event = AccessibilityEvent.obtain(</span><br><span class="line">                AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED);</span><br><span class="line">        event.setClassName(getClass().getName());</span><br><span class="line">        event.setPackageName(mView.getContext().getPackageName());</span><br><span class="line">        mView.dispatchPopulateAccessibilityEvent(event);</span><br><span class="line">        accessibilityManager.sendAccessibilityEvent(event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void handleHide() &#123;</span><br><span class="line">        if (localLOGV) Log.v(TAG, &quot;HANDLE HIDE: &quot; + this + &quot; mView=&quot; + mView);</span><br><span class="line">        if (mView != null) &#123;</span><br><span class="line">            // note: checking parent() just to make sure the view has</span><br><span class="line">            // been added...  i have seen cases where we get here when</span><br><span class="line">            // the view isn&apos;t yet added, so let&apos;s try not to crash.</span><br><span class="line">            if (mView.getParent() != null) &#123;</span><br><span class="line">                if (localLOGV) Log.v(TAG, &quot;REMOVE! &quot; + mView + &quot; in &quot; + this);</span><br><span class="line">                mWM.removeViewImmediate(mView);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            mView = null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="显示时长"><a href="#显示时长" class="headerlink" title="显示时长"></a>显示时长</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static final int LONG_DELAY = PhoneWindowManager.TOAST_WINDOW_TIMEOUT;</span><br><span class="line">public static final int TOAST_WINDOW_TIMEOUT = 3500; // 3.5 seconds</span><br><span class="line">static final int SHORT_DELAY = 2000; // 2 seconds</span><br></pre></td></tr></table></figure>
-
-<h3 id="超时时长"><a href="#超时时长" class="headerlink" title="超时时长"></a>超时时长</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">static final long SHORT_DURATION_TIMEOUT = 4000;</span><br><span class="line">static final long LONG_DURATION_TIMEOUT = 7000;</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题解答"><a href="#问题解答" class="headerlink" title="问题解答"></a>问题解答</h2><h3 id="能否在非-UI-线程调用"><a href="#能否在非-UI-线程调用" class="headerlink" title="能否在非 UI 线程调用"></a>能否在非 UI 线程调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        Toast.makeText(getContext(), &quot;Call toast on non-UI thread&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
-
-<p>异常提示：Can’t create handler inside thread that has not called Looper.prepare()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        Looper.prepare();</span><br><span class="line">        Toast.makeText(getContext(), &quot;Call toast on non-UI thread&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line">        Looper.loop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
-
-<h3 id="Toast数量"><a href="#Toast数量" class="headerlink" title="Toast数量"></a>Toast数量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static final int MAX_PACKAGE_NOTIFICATIONS = 50;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Service中能否显示Toast"><a href="#Service中能否显示Toast" class="headerlink" title="Service中能否显示Toast"></a>Service中能否显示Toast</h3><p>可以。但是网上说IntentService不可以,因为IntentService运行在独立的线程中，所以Toast不正常需要通过Handler运行于主线程之上，但是我打印IntentService也是main线程。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Handler handler = new Handler(Looper.getMainLooper());  </span><br><span class="line">handler.post(new Runnable() &#123;  </span><br><span class="line">	public void run() &#123;  </span><br><span class="line">		dialog.show();  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><h3 id="源码差异"><a href="#源码差异" class="headerlink" title="源码差异"></a>源码差异</h3><blockquote>
-<p>8 以下</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (index &gt;= 0) &#123;</span><br><span class="line">    record = mToastQueue.get(index);</span><br><span class="line">    record.update(duration);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>9</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if (index &gt;= 0) &#123;</span><br><span class="line">    record = mToastQueue.get(index);</span><br><span class="line">    record.update(duration);</span><br><span class="line">    try &#123;</span><br><span class="line">        record.callback.hide();</span><br><span class="line">    &#125; catch (RemoteException e) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    record.update(callback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果9，快速点击，当toast弹框，再次点击立刻消失，然后到事件后，清除队列后才能再次显示。而8以下，则是toast弹框到时间消失后，再次点击才能显示。两者toast每次显示的时间不同。</p>
-<h3 id="系统问题"><a href="#系统问题" class="headerlink" title="系统问题"></a>系统问题</h3><p>某些手机系统源码做了修改，比如红米5p，如果一直点击，在toast消失后，则不会在弹提示。停下一段时间后，log会输入异常提示。初步认定是快速点击时的toast机制做了修改。这个困扰了我好长时间，最后根据日志，和其他的手机才发现这个问题。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2019-11-08 17:41:33.311 1632-1632/? W/WindowManager: Attempted to remove non-existing token: android.os.Binder@bc43f4e</span><br><span class="line">2019-11-08 17:41:33.315 1632-2685/? W/WindowManager: Failed looking up window</span><br><span class="line">    java.lang.IllegalArgumentException: Requested window android.os.BinderProxy@22ce86f does not exist</span><br><span class="line">        at com.android.server.wm.WindowManagerService.windowForClientLocked(WindowManagerService.java:9651)</span><br><span class="line">        at com.android.server.wm.WindowManagerService.windowForClientLocked(WindowManagerService.java:9642)</span><br><span class="line">        at com.android.server.wm.WindowManagerService.removeWindow(WindowManagerService.java:2420)</span><br><span class="line">        at com.android.server.wm.Session.remove(Session.java:202)</span><br><span class="line">        at android.view.IWindowSession$Stub.onTransact(IWindowSession.java:242)</span><br><span class="line">        at com.android.server.wm.Session.onTransact(Session.java:145)</span><br><span class="line">        at android.os.Binder.execTransact(Binder.java:567)</span><br></pre></td></tr></table></figure>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>整个调研过程比较长，期间主要卡在了国内手机厂商的系统修改上，今后在遇到同样问题，还是要做测试，尽量早发现问题，今早提出解决和方案。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/mzlogin/article/details/78580687" target="_blank" rel="noopener">Android 源码分析 —— 从 Toast 出发</a></p>
-<p><a href="https://github.com/aosp-mirror/platform_frameworks_base/blob/master/services/core/java/com/android/server/notification/NotificationManagerService.java" target="_blank" rel="noopener">NotificationManagerService</a></p>
-<p><a href="https://github.com/aosp-mirror/platform_frameworks_base/blob/master/core/java/android/view/WindowManager.java" target="_blank" rel="noopener">WindowManager</a></p>
-<p><a href="https://github.com/aosp-mirror/platform_frameworks_base/blob/master/core/java/android/widget/Toast.java" target="_blank" rel="noopener">Toast</a></p>
-<p><a href="https://github.com/aosp-mirror/platform_frameworks_base/blob/master/services/core/java/com/android/server/policy/PhoneWindowManager.java" target="_blank" rel="noopener">PhoneWindowManager</a></p>
-<p><a href="https://blog.csdn.net/androidguy/article/details/90750688" target="_blank" rel="noopener">关于Binder中clearCallingIdentity()与restoreCallingIdentity()的作用及如何实现权限认证</a></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/page/3/index.html">http://nunu03.github.io/page/3/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Toast/">Toast</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2019/10/11/Toast解读/#more">Read More</a>
+        </p>
       
       
       
@@ -1164,61 +466,24 @@
 <a href="/2019/09/26/TextView图文混排居中、图片被截断问题/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
     </div>
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在Android中做图文混排，一般都是选择用TextView+ImageSpan来实现，但是在ImageSpan中，对齐方式只有ImageSpan.ALIGN_BASELINE,ImageSpan.ALIGN_BOTTOM两种对齐方式，不能相对于文本居中，如果我们图片小于文字，或者大于文字，都会导致排版问题出现。<br><img src="http://nunu03.github.io/2019/09/26/TextView%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E5%B1%85%E4%B8%AD%E3%80%81%E5%9B%BE%E7%89%87%E8%A2%AB%E6%88%AA%E6%96%AD%E9%97%AE%E9%A2%98/nocenter.png" alt="nocenter"><br><img src="http://nunu03.github.io/2019/09/26/TextView%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E5%B1%85%E4%B8%AD%E3%80%81%E5%9B%BE%E7%89%87%E8%A2%AB%E6%88%AA%E6%96%AD%E9%97%AE%E9%A2%98/blocked.png" alt="blocked"></p>
-<h2 id="居中"><a href="#居中" class="headerlink" title="居中"></a>居中</h2><p>下面是抄自wangkunlin同学都一个居中实现代码，封装的很好，就拿过来直接用了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br></pre></td><td class="code"><pre><span class="line">package com.wkl.imagespan;</span><br><span class="line"></span><br><span class="line">import android.graphics.Canvas;</span><br><span class="line">import android.graphics.Paint;</span><br><span class="line">import android.graphics.Rect;</span><br><span class="line">import android.graphics.drawable.Drawable;</span><br><span class="line">import android.support.annotation.IntDef;</span><br><span class="line">import android.text.style.ImageSpan;</span><br><span class="line"></span><br><span class="line">import java.lang.annotation.Retention;</span><br><span class="line">import java.lang.annotation.RetentionPolicy;</span><br><span class="line">import java.lang.ref.WeakReference;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by wangkunlin</span><br><span class="line"> * On 2017-03-15</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class AlignImageSpan extends ImageSpan &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 顶部对齐</span><br><span class="line">     */</span><br><span class="line">    public static final int ALIGN_TOP = 3;</span><br><span class="line">    /**</span><br><span class="line">     * 垂直居中</span><br><span class="line">     */</span><br><span class="line">    public static final int ALIGN_CENTER = 4;</span><br><span class="line"></span><br><span class="line">    @IntDef(&#123;ALIGN_BOTTOM, ALIGN_BASELINE, ALIGN_TOP, ALIGN_CENTER&#125;)</span><br><span class="line">    @Retention(RetentionPolicy.SOURCE)</span><br><span class="line">    public @interface Alignment &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public AlignImageSpan(Drawable d) &#123;</span><br><span class="line">        this(d, ALIGN_CENTER);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public AlignImageSpan(Drawable d, @Alignment int verticalAlignment) &#123;</span><br><span class="line">        super(d, verticalAlignment);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) &#123;</span><br><span class="line">        Drawable d = getCachedDrawable();</span><br><span class="line">        Rect rect = d.getBounds();</span><br><span class="line">        if (fm != null) &#123;</span><br><span class="line">            Paint.FontMetrics fmPaint = paint.getFontMetrics();</span><br><span class="line">            // 顶部 leading</span><br><span class="line">            float topLeading = fmPaint.top - fmPaint.ascent;</span><br><span class="line">            // 底部 leading</span><br><span class="line">            float bottomLeading = fmPaint.bottom - fmPaint.descent;</span><br><span class="line">            // drawable 的高度</span><br><span class="line">            int drHeight = rect.height();</span><br><span class="line"></span><br><span class="line">            switch (mVerticalAlignment) &#123;</span><br><span class="line">                case ALIGN_CENTER: &#123; // drawable 的中间与 行中间对齐</span><br><span class="line">                    // 当前行 的高度</span><br><span class="line">                    float fontHeight = fmPaint.descent - fmPaint.ascent;</span><br><span class="line">                    // 整行的 y方向上的中间 y 坐标</span><br><span class="line">                    float center = fmPaint.descent - fontHeight / 2;</span><br><span class="line"></span><br><span class="line">                    // 算出 ascent 和 descent</span><br><span class="line">                    float ascent = center - drHeight / 2;</span><br><span class="line">                    float descent = center + drHeight / 2;</span><br><span class="line"></span><br><span class="line">                    fm.ascent = (int) ascent;</span><br><span class="line">                    fm.top = (int) (ascent + topLeading);</span><br><span class="line">                    fm.descent = (int) descent;</span><br><span class="line">                    fm.bottom = (int) (descent + bottomLeading);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                case ALIGN_BASELINE: &#123; // drawable 的底部与 baseline 对齐</span><br><span class="line">                    // 所以 ascent 的值就是 负的 drawable 的高度</span><br><span class="line">                    float ascent = -drHeight;</span><br><span class="line">                    fm.ascent = -drHeight;</span><br><span class="line">                    fm.top = (int) (ascent + topLeading);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                case ALIGN_TOP: &#123; // drawable 的顶部与 行的顶部 对齐</span><br><span class="line">                    // 算出 descent</span><br><span class="line">                    float descent = drHeight + fmPaint.ascent;</span><br><span class="line">                    fm.descent = (int) descent;</span><br><span class="line">                    fm.bottom = (int) (descent + bottomLeading);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                case ALIGN_BOTTOM: // drawable 的底部与 行的底部 对齐</span><br><span class="line">                default: &#123;</span><br><span class="line">                    // 算出 ascent</span><br><span class="line">                    float ascent = fmPaint.descent - drHeight;</span><br><span class="line">                    fm.ascent = (int) ascent;</span><br><span class="line">                    fm.top = (int) (ascent + topLeading);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return rect.right;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 这里的 x, y, top 以及 bottom 都是基于整个 TextView 的坐标系的坐标</span><br><span class="line">     *</span><br><span class="line">     * @param x      drawable 绘制的起始 x 坐标</span><br><span class="line">     * @param top    当前行最高处，在 TextView 中的 y 坐标</span><br><span class="line">     * @param y      当前行的 BaseLine 在 TextView 中的 y 坐标</span><br><span class="line">     * @param bottom 当前行最低处，在 TextView 中的 y 坐标</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint) &#123;</span><br><span class="line">        Drawable drawable = getDrawable();</span><br><span class="line">        Rect rect = drawable.getBounds();</span><br><span class="line">        float transY;</span><br><span class="line">        switch (mVerticalAlignment) &#123;</span><br><span class="line">            case ALIGN_BASELINE:</span><br><span class="line">                transY = y - rect.height();</span><br><span class="line">                break;</span><br><span class="line">            case ALIGN_CENTER:</span><br><span class="line">                transY = ((bottom - top) - rect.height()) / 2 + top;</span><br><span class="line">                break;</span><br><span class="line">            case ALIGN_TOP:</span><br><span class="line">                transY = top;</span><br><span class="line">                break;</span><br><span class="line">            case ALIGN_BOTTOM:</span><br><span class="line">            default:</span><br><span class="line">                transY = bottom - rect.height();</span><br><span class="line">        &#125;</span><br><span class="line">        canvas.save();</span><br><span class="line">        // 这里如果不移动画布，drawable 就会在 Textview 的左上角出现</span><br><span class="line">        canvas.translate(x, transY);</span><br><span class="line">        drawable.draw(canvas);</span><br><span class="line">        canvas.restore();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private Drawable getCachedDrawable() &#123;</span><br><span class="line">        WeakReference&lt;Drawable&gt; wr = mDrawableRef;</span><br><span class="line">        Drawable d = null;</span><br><span class="line"></span><br><span class="line">        if (wr != null)</span><br><span class="line">            d = wr.get();</span><br><span class="line"></span><br><span class="line">        if (d == null) &#123;</span><br><span class="line">            d = getDrawable();</span><br><span class="line">            mDrawableRef = new WeakReference&lt;&gt;(d);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return d;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private WeakReference&lt;Drawable&gt; mDrawableRef;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="截断处理"><a href="#截断处理" class="headerlink" title="截断处理"></a>截断处理</h2><p>图片被截断，在概述里我们说明了原因，那怎么解决呢？这里我们使用了TextUtils.ellipsize，它相当于 TextView的xml中ellipsize，是在获取TextView已setMaxLines后，显示出来的带有…结尾的内容。</p>
-<p>所以我们就可以通过计算，获取到最终显示的文本，然后直接显示了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//获取图片大小</span><br><span class="line">int wh = mContext.getResources().getDimensionPixelOffset(R.dimen.28);</span><br><span class="line">textView.post(() -&gt; &#123;</span><br><span class="line">    int width = textView.getWidth(); //获取textview宽度</span><br><span class="line">    int padding = textView.getPaddingLeft()+textView.getPaddingRight();//获取textview 内边距</span><br><span class="line">    int lineWidth = width - padding-wh*2;//获取实际展示的但航内容宽度</span><br><span class="line">    //通过TextUtils.ellipsize获取截断后的实际文本</span><br><span class="line">    String ellipsizeStr = TextUtils.ellipsize(signature, textView.getPaint(), lineWidth*2, TextUtils.TruncateAt.END).toString();</span><br><span class="line">    textView.setText(getSignatureText(&quot;.  &quot;+ellipsizeStr+&quot;  .&quot;,wh));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">private SpannableString getSignatureText(String selfDesc,int wh)&#123;</span><br><span class="line">        Drawable drawableLeft = mContext.getResources().getDrawable(R.drawable.mark_left);</span><br><span class="line">        drawableLeft.setBounds(0, 0, wh, wh);</span><br><span class="line">        AlignImageSpan imgSpanLeft = new AlignImageSpan(drawableLeft, AlignImageSpan.ALIGN_CENTER);</span><br><span class="line"></span><br><span class="line">        Drawable drawableRight = mContext.getResources().getDrawable(R.drawable.mark_right);</span><br><span class="line">        drawableRight.setBounds(0, 0, wh, wh);</span><br><span class="line">        AlignImageSpan imgSpanRight = new AlignImageSpan(drawableRight, AlignImageSpan.ALIGN_CENTER);</span><br><span class="line"></span><br><span class="line">        SpannableString spannableString = new SpannableString(selfDesc);</span><br><span class="line">        spannableString.setSpan(imgSpanLeft, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        spannableString.setSpan(imgSpanRight, selfDesc.length()-1, selfDesc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        return spannableString;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意</strong></p>
-<p><strong>“.  “+ellipsizeStr+”  .”，我们在这里加入图片的地方加了点和空格，点是为了占位，空格是为了设置与文字之间的间距。为啥要用点占位，不加占位的话，首个文字会被开始的图片给截取点，导致少展示了一个开始的文字。（但是直接用系统ImageSpan，不用TextUtils.ellipsize的时候就不会，感兴趣的朋友可以验证下原因）。</strong></p>
-<h2 id="自动换行后，结尾图片显示正常"><a href="#自动换行后，结尾图片显示正常" class="headerlink" title="自动换行后，结尾图片显示正常"></a>自动换行后，结尾图片显示正常</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">textView.post(() -&gt; &#123;</span><br><span class="line">int ellipsisCount = textView.getLayout().getEllipsisCount(textView.getLineCount() - 1);</span><br><span class="line">    if (ellipsisCount &gt; 0) &#123;</span><br><span class="line">        int endIndex = getSubLength(text,textView,ellipsisCount);</span><br><span class="line">        text = text.substring(0, endIndex) + &quot;...  img&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 计算字符截取的point length，可以处理混排换行或数字，字母结尾图片展示不全的情况</span><br><span class="line"> * @param text</span><br><span class="line"> * @param textView</span><br><span class="line"> * @param ellipsisCount</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">private int getSubLength(String text, TextView textView, int ellipsisCount) &#123;</span><br><span class="line">    int endIndex = text.length() - ellipsisCount;</span><br><span class="line">    //默认减去一个字符代替图片位置</span><br><span class="line">    if (textView == null || textView.getPaint() == null) &#123;</span><br><span class="line">        return endIndex - 1;</span><br><span class="line">    &#125;</span><br><span class="line">    //精确计算需要展示的字符length</span><br><span class="line">    String subText = text.substring(0, endIndex);</span><br><span class="line">    char[] chars = subText.toCharArray();</span><br><span class="line">    float textWidth = 0;</span><br><span class="line">    Paint paint = textView.getPaint();</span><br><span class="line">    float point = paint.measureText(&quot;...&quot;);</span><br><span class="line">    for (int i = chars.length - 1; ; i--) &#123;</span><br><span class="line">        textWidth = textWidth + paint.measureText(String.valueOf(chars[i]));</span><br><span class="line">        endIndex = i;</span><br><span class="line">        if (textWidth &gt;= mImgSize + point) &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return endIndex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Html-fromHtml"><a href="#Html-fromHtml" class="headerlink" title="Html.fromHtml"></a>Html.fromHtml</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">String texts = &quot;&lt;img src=\&quot;startimg\&quot;/&gt;&amp;nbsp;&amp;nbsp;&quot; + text +&quot;...&amp;nbsp;&amp;nbsp;&lt;img src=\&quot;endimg\&quot;/&gt;&quot;;</span><br><span class="line">Spanned spanned =  Html.fromHtml(texts, new Html.ImageGetter() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Drawable getDrawable(String source) &#123;</span><br><span class="line">        if(&quot;startimg&quot;.equals(source))&#123;</span><br><span class="line">            //根据id从资源文件中获取图片对象</span><br><span class="line">            Drawable d = mContext.getResources().getDrawable(R.drawable.friend_list_card_selfdesc_mark_left);</span><br><span class="line">            d.setBounds(0, 0, wh,wh);</span><br><span class="line">            return d;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            Drawable d = mContext.getResources().getDrawable(R.drawable.friend_list_card_selfdesc_mark_right);</span><br><span class="line">            d.setBounds(0, 0, wh,wh);</span><br><span class="line">            return d;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,null);</span><br><span class="line">textView.setText(spanned);</span><br></pre></td></tr></table></figure>
-
-<p>html也不支持混排。</p>
-<h2 id="自动换行"><a href="#自动换行" class="headerlink" title="自动换行"></a>自动换行</h2><p>通过计算每个字符的宽度，来自动添加\n换行,且xml中不需要设置ellipsize。暂支持只两行，其他情况原理相同。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">textView.post(() -&gt; &#123;</span><br><span class="line">        String endText = getAutoSplitText(textView,signature,2);</span><br><span class="line">        textView.setText(getSignatureText(endText,wh));</span><br><span class="line">    &#125;);</span><br><span class="line">        </span><br><span class="line">private String getAutoSplitText(TextView textView, String signature, int maxLineCount) &#123;</span><br><span class="line">	int imgSize = mContext.getResources().getDimensionPixelOffset(R.dimen.px28);</span><br><span class="line">	String rawText = signature.replaceAll(&quot;\r&quot;, &quot;&quot;);</span><br><span class="line">	final Paint tvPaint = textView.getPaint();</span><br><span class="line">	float space = tvPaint.measureText(&quot;  &quot;);</span><br><span class="line">	float dot = tvPaint.measureText(&quot;...&quot;);</span><br><span class="line">	float tvWidth = textView.getWidth() - textView.getPaddingLeft() - textView.getPaddingRight(); //控件可用宽度</span><br><span class="line">	//如果整行宽度超过控件可用宽度，则按字符测量，在超过可用宽度的前一个字符处手动换行</span><br><span class="line">	StringBuilder startText = new StringBuilder();</span><br><span class="line">	float lineWidth = imgSize + space;</span><br><span class="line">	int lineCount = 0;</span><br><span class="line">	for (int count = 0; count &lt; rawText.length(); ++count) &#123;</span><br><span class="line">	    char ch = rawText.charAt(count);</span><br><span class="line">	    lineWidth += tvPaint.measureText(String.valueOf(ch));</span><br><span class="line">	    if (lineWidth &lt;= tvWidth) &#123;</span><br><span class="line">	        startText.append(ch);</span><br><span class="line">	    &#125; else &#123;</span><br><span class="line">	        startText.append(&quot;\n&quot;);</span><br><span class="line">	        lineCount++;</span><br><span class="line">	        if (lineCount == maxLineCount) &#123;</span><br><span class="line">	            break;</span><br><span class="line">	        &#125;</span><br><span class="line">	        tvWidth = tvWidth - imgSize - space - dot - tvPaint.measureText(String.valueOf(ch));</span><br><span class="line">	        lineWidth = 0;</span><br><span class="line">	        --count;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//把结尾多余的\n去掉</span><br><span class="line">	if (startText.toString().endsWith(&quot;\n&quot;)) &#123;</span><br><span class="line">	    startText.deleteCharAt(startText.length() - 1);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	StringBuilder endText = new StringBuilder();</span><br><span class="line">	if(lineCount &lt; 2)&#123;</span><br><span class="line">	    endText.append(&quot;img  &quot;).append(startText).append(&quot;  img&quot;);</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">	    endText.append(&quot;img  &quot;).append(startText).append(&quot;...  img&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	return endText.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p><img src="http://nunu03.github.io/2019/09/26/TextView%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E5%B1%85%E4%B8%AD%E3%80%81%E5%9B%BE%E7%89%87%E8%A2%AB%E6%88%AA%E6%96%AD%E9%97%AE%E9%A2%98/nodot.png" alt="nodot"><br><img src="http://nunu03.github.io/2019/09/26/TextView%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E5%B1%85%E4%B8%AD%E3%80%81%E5%9B%BE%E7%89%87%E8%A2%AB%E6%88%AA%E6%96%AD%E9%97%AE%E9%A2%98/dot.png" alt="dot"></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://ddrv.cn/a/232387" target="_blank" rel="noopener">TextView 图文混排，解决图片被截断</a></p>
-<p><a href="https://blog.csdn.net/jdsjlzx/article/details/90033791" target="_blank" rel="noopener">TextView图文混排图片被截断的问题以及Android省略号只有一个点的问题</a></p>
-<p><a href="https://blog.csdn.net/jiangtea/article/details/54098123" target="_blank" rel="noopener">SpannableString的用法详解</a></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/page/3/index.html">http://nunu03.github.io/page/3/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在Android中做图文混排，一般都是选择用TextView+ImageSpan来实现，但是在ImageSpan中，对齐方式只有ImageSpan.ALIGN_BASELINE,ImageSpan.ALIGN_BOTTOM两种对齐方式，不能相对于文本居中，如果我们图片小于文字，或者大于文字，都会导致排版问题出现。</p>
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2019/09/26/TextView图文混排居中、图片被截断问题/#more">Read More</a>
+        </p>
       
       
       
@@ -1259,7 +524,7 @@
 <a href="/2019/09/20/Android-7-0之后抓包证书无效的解决方案/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -1268,42 +533,16 @@
       
         <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>使用抓包软件（以 Charles 为例）抓取APP的 https 请求时，Android和Charles都正确安装了证书却出现抓包失败，报错：</p>
 <p>Failure    Client SSL handshake failed: An unknown issue occurred processing the certificate (certificate_unknown)</p>
-<p><img src="http://nunu03.github.io/2019/09/20/Android-7-0%E4%B9%8B%E5%90%8E%E6%8A%93%E5%8C%85%E8%AF%81%E4%B9%A6%E6%97%A0%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/certunknow.png" alt="certunknow"></p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="导出-pem"><a href="#导出-pem" class="headerlink" title="导出.pem"></a>导出.pem</h3><h3 id="获取文件名"><a href="#获取文件名" class="headerlink" title="获取文件名"></a>获取文件名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -subject_hash -in  /Users/chenyulong01/Desktop/Untitled.pem </span><br><span class="line">07cc5b45</span><br><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">MIIFbDCCBFSgAwIBAgIGAV84nCXLMA0GCSqGSIb3DQEBCwUAMIG6MUswSQYDVQQD</span><br><span class="line">DEJDaGFybGVzIFByb3h5IENBICgyMCDljYHmnIggMjAxNywgY2hlbnl1bG9uZzAx</span><br><span class="line">ZGVNYWNCb29rLVByby5sb2NhbCkxJTAjBgNVBAsMHGh0dHBzOi8vY2hhcmxlc3By</span><br><span class="line">b3h5LmNvbS9zc2wxETAPBgNVBAoMCFhLNzIgTHRkMREwDwYDVQQHDAhBdWNrbGFu</span><br><span class="line">ZDERMA8GA1UECAwIQXVja2xhbmQxCzAJBgNVBAYTAk5aMB4XDTAwMDEwMTAwMDAw</span><br><span class="line">MFoXDTQ2MTIxNzA3MDc1OFowgboxSzBJBgNVBAMMQkNoYXJsZXMgUHJveHkgQ0Eg</span><br><span class="line">KDIwIOWNgeaciCAyMDE3LCBjaGVueXVsb25nMDFkZU1hY0Jvb2stUHJvLmxvY2Fs</span><br><span class="line">KTElMCMGA1UECwwcaHR0cHM6Ly9jaGFybGVzcHJveHkuY29tL3NzbDERMA8GA1UE</span><br><span class="line">CgwIWEs3MiBMdGQxETAPBgNVBAcMCEF1Y2tsYW5kMREwDwYDVQQIDAhBdWNrbGFu</span><br><span class="line">ZDELMAkGA1UEBhMCTlowggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCU</span><br><span class="line">i7FUgkLSIxIYcQWXNf4OkncxNZl1SWXExV8whjC3W+IWA3C3gJgYVY57j4uj+B1q</span><br><span class="line">EGbqIYw4dok3ayB+Yrrcm0WVirb4IJVwUc/EfNnkqAluc/US01Mti6+PuUnya8ze</span><br><span class="line">JZN8ZzJReIgiI7LlYlrPjD0hl4cTckpsdcGLqlfkjuXyeUU3b/qNyKsquAq42o8M</span><br><span class="line">ngB7zbObsie/EpEsI3beqa7MForKeuq5Cc900IdMfTqeIATY7GTdtyXPXPzSionF</span><br><span class="line">TcYMk3QQqLZz+hqF6v8sKB4NeZNFpjSzJF2l7xjUMApMeDppaBN8kTSgf8k8OSxe</span><br><span class="line">HWk1lLhdJfh96O/nEbz9AgMBAAGjggF0MIIBcDAPBgNVHRMBAf8EBTADAQH/MIIB</span><br><span class="line">LAYJYIZIAYb4QgENBIIBHROCARlUaGlzIFJvb3QgY2VydGlmaWNhdGUgd2FzIGdl</span><br><span class="line">bmVyYXRlZCBieSBDaGFybGVzIFByb3h5IGZvciBTU0wgUHJveHlpbmcuIElmIHRo</span><br><span class="line">aXMgY2VydGlmaWNhdGUgaXMgcGFydCBvZiBhIGNlcnRpZmljYXRlIGNoYWluLCB0</span><br><span class="line">aGlzIG1lYW5zIHRoYXQgeW91J3JlIGJyb3dzaW5nIHRocm91Z2ggQ2hhcmxlcyBQ</span><br><span class="line">cm94eSB3aXRoIFNTTCBQcm94eWluZyBlbmFibGVkIGZvciB0aGlzIHdlYnNpdGUu</span><br><span class="line">IFBsZWFzZSBzZWUgaHR0cDovL2NoYXJsZXNwcm94eS5jb20vc3NsIGZvciBtb3Jl</span><br><span class="line">IGluZm9ybWF0aW9uLjAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0OBBYEFPDxZ1dwMgBq</span><br><span class="line">AuPwBWMv/Lcd7GOGMA0GCSqGSIb3DQEBCwUAA4IBAQA3nLkJtVRUUX94BJbryczU</span><br><span class="line">C0l5dqURDA6KKlNF3PtYvXxGGrdt7Ojkno9d2thUg1b+vKRwcY8tioJJHt01/QbH</span><br><span class="line">BK3uSIsdoxR+FY9Q7+hJc7XE8d+D3h4KlUgRY8EhCvBZMMo45O4t7wZYRbiCZh3q</span><br><span class="line">p4bayK99HZ8naYovYYK9oJiR8L41+YwuLZllkn5thJ+kvKw0NAgrP5YOsuxu+3DV</span><br><span class="line">uoDEhQPOwmPSVWq1JRAKMi8Ck9dfRYxZklLGZ+ZiT1L2ShyNuCLRKFHaP880RWJF</span><br><span class="line">uwuKep/FHqmCHWj5DumZF37jbsY56i13f723nSVZ56XJUq+yQ8KZzTqbEYBfC9Si</span><br><span class="line">-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure>
-
-<p>07cc5b45,就是我们获取到的文件名。</p>
-<h3 id="修改文件名"><a href="#修改文件名" class="headerlink" title="修改文件名"></a>修改文件名</h3><p>就是将我们从charles中导出的xxxxx.pem文件名改为07cc5b45.0</p>
-<h3 id="push到手机中（需要root）"><a href="#push到手机中（需要root）" class="headerlink" title="push到手机中（需要root）"></a>push到手机中（需要root）</h3><p>/system/etc/security/cacerts/</p>
-<p>放入的过程中，上述文件后缀名的数字是为了防止文件名冲突的，比如如果两个证书算出的Hash值是一样的话，那么一个证书的后缀名数字可以设置成0，而另一个证书的后缀名数字可以设置成1（07cc5b45.1）。</p>
-<h3 id="证书安装成功"><a href="#证书安装成功" class="headerlink" title="证书安装成功"></a>证书安装成功</h3><p>此时你应该可以在 设置-&gt;安全-&gt;信任的凭据 的系统标签页看到你新加入的证书，将其启用即可顺利抓包。</p>
-<p><img src="http://nunu03.github.io/2019/09/20/Android-7-0%E4%B9%8B%E5%90%8E%E6%8A%93%E5%8C%85%E8%AF%81%E4%B9%A6%E6%97%A0%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/certsuc.png" alt="certsuc"></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/shadowyspirits/article/details/79756274" target="_blank" rel="noopener">Android 7.0 之后抓包 unknown 和证书无效的解决方案（无需改代码)</a></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/page/3/index.html">http://nunu03.github.io/page/3/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Charles/">Charles</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2019/09/20/Android-7-0之后抓包证书无效的解决方案/#more">Read More</a>
+        </p>
       
       
       
@@ -1344,7 +583,7 @@
 <a href="/2019/08/29/gitlab-api-使用问题/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -1352,49 +591,16 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p>在我们使用gitlab获取数据的时候，一般返回的数据都是每页20条数据，但是如果我们想一次获取获取多于20条怎么办？其实gitlab有两个参数可以设置。page和per_page，可以分别设置页数和条数，加到请求参数里即可。<br>API如下：</p>
-<h2 id="Pagination"><a href="#Pagination" class="headerlink" title="Pagination"></a>Pagination</h2><p>Sometimes the returned result will span across many pages. When listing<br>resources you can pass the following parameters:</p>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>page</td>
-<td>Page number (default: 1)</td>
-</tr>
-<tr>
-<td>per_page</td>
-<td>Number of items to list per page (default: 20, max: 100)</td>
-</tr>
-</tbody></table>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/page/3/index.html">http://nunu03.github.io/page/3/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/">GitLab</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2019/08/29/gitlab-api-使用问题/#more">Read More</a>
+        </p>
       
       
       
@@ -1435,7 +641,7 @@
 <a href="/2019/08/21/通过ngrok搭建github的webhook/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -1443,276 +649,16 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h2 id="WebHook"><a href="#WebHook" class="headerlink" title="WebHook"></a>WebHook</h2><h3 id="webhook概述"><a href="#webhook概述" class="headerlink" title="webhook概述"></a>webhook概述</h3><p>When one of those events is triggered, we’ll send a HTTP POST payload to the webhook’s configured URL. Webhooks can be used to update an external issue tracker, trigger CI builds, update a backup mirror, or even deploy to your production server. You’re only limited by your imagination.</p>
-<p>Webhooks can be installed on an organization, a specific repository, or a GitHub App. Once installed, the webhook will be sent each time one or more subscribed events occurs.</p>
-<p>You can create up to 20 webhooks for each event on each installation target (specific organization or specific repository).<br>Learn more in our <a href="https://developer.github.com/webhooks/" target="_blank" rel="noopener">Webhooks Guide</a>.</p>
-<p>当触发其中一个事件时，我们将向webhook配置的URL发送httppost负载。webhook可以用于更新外部问题跟踪程序、触发CI构建、更新备份镜像，甚至可以部署到生产服务器。webhook不能做的的，可能是受到想象力的限制。</p>
-<p>webhook可以安装在组织、特定存储库或GitHub应用程序上。一旦安装，webhook将在每次发生一个或多个订阅事件时发送。</p>
-<p>您可以为每个安装目标（特定组织或特定存储库）上的每个事件创建最多20个webhook。</p>
-<p>所以，Webhook顾名思义，其实就是一钩子。当我们在Github上做出某些特定操作时，可以触发钩子，去进行一些我们事先设定好的脚本，以达到某些特定功能（例如–前端项目自动发布）。</p>
-<h3 id="github上webhook设置"><a href="#github上webhook设置" class="headerlink" title="github上webhook设置"></a>github上webhook设置</h3><p>在配置webhook的时候，你可以选择自己想要接收的事件。你甚至可以选择参加触发所有事件。只有订阅特殊的需要的事件，可以有效限制服务器HTTP请求数。可以通过API或者UR随时订阅事件。默认情况下，webhook只订阅push事件。<br><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/webhooks.png" alt="webhooks position"><br><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/webhooksuc.png" alt="add webhook"><br>上图是我设置的好的webhook：可以看到我设置好了Payload URL和Content type.</p>
-<p>Payload URL：就是我们要设置的钩子。</p>
-<p>Content type：是在通知我们时传递的内容类型，一般情况下我们选择json数据格式。还有另外一种类型：application/x-www-form-urlencoded。</p>
-<p>Which events would you like to trigger this webhook?：这个选择比较重要，直接决定了当仓库发生什么变化时才对我们进行通知。</p>
-<p>到此webhook添加完成。</p>
-<h3 id="负载数据属性"><a href="#负载数据属性" class="headerlink" title="负载数据属性"></a>负载数据属性</h3><p>每个webhook事件负载还包含事件特有的属性。</p>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>action</td>
-<td>string</td>
-<td>Most webhook payloads contain an action property that contains the specific activity that triggered the event.</td>
-</tr>
-<tr>
-<td>sender</td>
-<td>object</td>
-<td>The user that triggered the event. This property is included in every webhook payload.</td>
-</tr>
-<tr>
-<td>repository</td>
-<td>object</td>
-<td>The repository where the event occurred. Webhook payloads contain the repository property when the event occurs from activity in a repository.</td>
-</tr>
-<tr>
-<td>organization</td>
-<td>object</td>
-<td>Webhook payloads contain the organization object when the webhook is configured for an organization or the event occurs from activity in a repository owned by an organization.</td>
-</tr>
-<tr>
-<td>installation</td>
-<td>object</td>
-<td>The GitHub App installation. Webhook payloads contain the installation property when the event is configured for and sent to a GitHub App. For more information, see “Building GitHub App.”</td>
-</tr>
-</tbody></table>
-<p><strong>注意：</strong></p>
-<blockquote>
-<p>Payloads are capped at 25 MB. If your event generates a larger payload, a<br>webhook will not be fired. This may happen, for example, on a create event if  many branches or tags are pushed at once.</p>
-</blockquote>
-<h3 id="报文头"><a href="#报文头" class="headerlink" title="报文头"></a>报文头</h3><p>发送到webhook配置URL的HTTP POST负载会包含几个指定的报文头。</p>
-<p>X-GitHub-Event：触发分发的事件类型。<br>X-GitHub-Delivery：唯一识别分发的GUID。<br>X-Hub-Signature：HMAC十六进制的响应体。<br>X-Hub-Signature-256：<br>如果secret配置了，这个头信息将被发送。HMAC十六进制由sha1哈希算法生成，secret作为HMAC的key。</p>
-<h3 id="事例"><a href="#事例" class="headerlink" title="事例"></a>事例</h3><p>通过python配置一个简单的服务器，用于接收通知信息。具体事例如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@route(&apos;/payload&apos;, method=[&apos;GET&apos;,&apos;POST&apos;])</span><br><span class="line">def payload():</span><br><span class="line">    print(&apos;payload----request.json:&apos;+request.json.__str__())</span><br><span class="line">    print(&apos;payload----request.headers.X-GitHub-Event:&apos;+request.get_header(&apos;X-GitHub-Event&apos;))</span><br><span class="line">    print(&apos;payload----request.headers.X-GitHub-Delivery:&apos;+request.get_header(&apos;X-GitHub-Delivery&apos;))</span><br><span class="line">    return &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
-
-<p>这个时候我们手动push一个信息，打印信息如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;ref&quot;: &quot;refs/heads/master&quot;,</span><br><span class="line">	&quot;before&quot;: &quot;fc7585b3799386a625a2584b75c3e94424212889&quot;,</span><br><span class="line">	&quot;after&quot;: &quot;db7bbed15a40cec6c3cbbd778877fee8941bf86d&quot;,</span><br><span class="line">	&quot;created&quot;: false,</span><br><span class="line">	&quot;deleted&quot;: false,</span><br><span class="line">	&quot;forced&quot;: false,</span><br><span class="line">	&quot;base_ref&quot;: &quot;none&quot;,</span><br><span class="line">	&quot;compare&quot;: &quot;https://github.com/nunu03/photo/compare/fc7585b37993...db7bbed15a40&quot;,</span><br><span class="line">	&quot;commits&quot;: [&#123;</span><br><span class="line">		&quot;id&quot;: &quot;db7bbed15a40cec6c3cbbd778877fee8941bf86d&quot;,</span><br><span class="line">		&quot;tree_id&quot;: &quot;8394661d6d3855d60e431ad5a73a88b03e6944ab&quot;,</span><br><span class="line">		&quot;distinct&quot;: true,</span><br><span class="line">		&quot;message&quot;: &quot;6 update and commit&quot;,</span><br><span class="line">		&quot;timestamp&quot;: &quot;2019-08-21T18:04:00+08:00&quot;,</span><br><span class="line">		&quot;url&quot;: &quot;https://github.com/nunu03/photo/commit/db7bbed15a40cec6c3cbbd778877fee8941bf86d&quot;,</span><br><span class="line">		&quot;author&quot;: &#123;</span><br><span class="line">			&quot;name&quot;: &quot;YlJava110&quot;,</span><br><span class="line">			&quot;email&quot;: &quot;594531261@qq.com&quot;,</span><br><span class="line">			&quot;username&quot;: &quot;nunu03&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;committer&quot;: &#123;</span><br><span class="line">			&quot;name&quot;: &quot;YlJava110&quot;,</span><br><span class="line">			&quot;email&quot;: &quot;594531261@qq.com&quot;,</span><br><span class="line">			&quot;username&quot;: &quot;nunu03&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;added&quot;: [],</span><br><span class="line">		&quot;removed&quot;: [],</span><br><span class="line">		&quot;modified&quot;: [&quot;P2.docx&quot;]</span><br><span class="line">	&#125;],</span><br><span class="line">	&quot;head_commit&quot;: &#123;</span><br><span class="line">		&quot;id&quot;: &quot;db7bbed15a40cec6c3cbbd778877fee8941bf86d&quot;,</span><br><span class="line">		&quot;tree_id&quot;: &quot;8394661d6d3855d60e431ad5a73a88b03e6944ab&quot;,</span><br><span class="line">		&quot;distinct&quot;: true,</span><br><span class="line">		&quot;message&quot;: &quot;6 update and commit&quot;,</span><br><span class="line">		&quot;timestamp&quot;: &quot;2019-08-21T18:04:00+08:00&quot;,</span><br><span class="line">		&quot;url&quot;: &quot;https://github.com/nunu03/photo/commit/db7bbed15a40cec6c3cbbd778877fee8941bf86d&quot;,</span><br><span class="line">		&quot;author&quot;: &#123;</span><br><span class="line">			&quot;name&quot;: &quot;YlJava110&quot;,</span><br><span class="line">			&quot;email&quot;: &quot;594531261@qq.com&quot;,</span><br><span class="line">			&quot;username&quot;: &quot;nunu03&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;committer&quot;: &#123;</span><br><span class="line">			&quot;name&quot;: &quot;YlJava110&quot;,</span><br><span class="line">			&quot;email&quot;: &quot;594531261@qq.com&quot;,</span><br><span class="line">			&quot;username&quot;: &quot;nunu03&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;added&quot;: [],</span><br><span class="line">		&quot;removed&quot;: [],</span><br><span class="line">		&quot;modified&quot;: [&quot;P2.docx&quot;]</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;repository&quot;: &#123;</span><br><span class="line">		&quot;id&quot;: 158326464,</span><br><span class="line">		&quot;node_id&quot;: &quot;MDEwOlJlcG9zaXRvcnkxNTgzMjY0NjQ=&quot;,</span><br><span class="line">		&quot;name&quot;: &quot;photo&quot;,</span><br><span class="line">		&quot;full_name&quot;: &quot;nunu03/photo&quot;,</span><br><span class="line">		&quot;private&quot;: false,</span><br><span class="line">		&quot;owner&quot;: &#123;</span><br><span class="line">			&quot;name&quot;: &quot;nunu03&quot;,</span><br><span class="line">			&quot;email&quot;: &quot;594531261@qq.com&quot;,</span><br><span class="line">			&quot;login&quot;: &quot;nunu03&quot;,</span><br><span class="line">			&quot;id&quot;: 9353063,</span><br><span class="line">			&quot;node_id&quot;: &quot;MDQ6VXNlcjkzNTMwNjM=&quot;,</span><br><span class="line">			&quot;avatar_url&quot;: &quot;https://avatars0.githubusercontent.com/u/9353063?v=4&quot;,</span><br><span class="line">			......</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;created_at&quot;: 1542684949,</span><br><span class="line">		......</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;pusher&quot;: &#123;</span><br><span class="line">		&quot;name&quot;: &quot;nunu03&quot;,</span><br><span class="line">		&quot;email&quot;: &quot;594531261@qq.com&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;sender&quot;: &#123;</span><br><span class="line">		&quot;login&quot;: &quot;nunu03&quot;,</span><br><span class="line">		&quot;id&quot;: 9353063,</span><br><span class="line">		......</span><br><span class="line">		&quot;type&quot;: &quot;User&quot;,</span><br><span class="line">		&quot;site_admin&quot;: false</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload----request.headers.X-GitHub-Event:push</span><br><span class="line">payload----request.headers.X-GitHub-Delivery:7a8185c4-c40a-11e9-8ed7-401aabcf3ce7</span><br></pre></td></tr></table></figure>
-
-<p>事件的驱动信息可以在webhook中查看：<br><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/webhookimage.jpg" alt="webhook deliveries"></p>
-<p><a href="https://igit.58corp.com/help/api/README.md" target="_blank" rel="noopener">igit api help</a></p>
-<h2 id="ngrok配置"><a href="#ngrok配置" class="headerlink" title="ngrok配置"></a>ngrok配置</h2><p>你设置好了钩子，那就需要当收到通知的时候进行接收处理。这个时候要注意，我们的钩子里要求你的服务器能连接到外网上。那怎么办，我们本地做服务器，肯定就收不到通知了。这个时候推荐一个神器ngrok，它就可以让你在本地就有一个外网地址。<a href="https://ngrok.com/download" target="_blank" rel="noopener">ngrok下载地址</a>.下载之后，在ngrok目录执行cmd：./ngrok http 4567，弹出下面的界面：<br><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/ngrok.png" alt="ngrok start"><br>可以看到我们本地服务器的地址被映射到了一个外网的地址。而这个<a href="http://4c8a9e3f.ngrok.io/就是上图中我们设置好的Payload" target="_blank" rel="noopener">http://4c8a9e3f.ngrok.io/就是上图中我们设置好的Payload</a> URL。</p>
-<p>需要注意的是，当我们调试程序的时候，ngrok要打开，并且每次启动ngrok，外网地址都不同，每次启动有效时间为8小时。</p>
-<h3 id="ngrok注册"><a href="#ngrok注册" class="headerlink" title="ngrok注册"></a>ngrok注册</h3><p><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/authtoken.png" alt="ngrok register"></p>
-<p>通过官网注册，拿到了authtoken，然后保存即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01deMacBook-Pro:ngrok chenyulong01$ ./ngrok authtoken 1mg5VxMW7jhF3J90SBAerxFulVJ_7YWWYmNVX4C3jYyYoz5xR</span><br><span class="line">Authtoken saved to configuration file: /Users/chenyulong01/.ngrok2/ngrok.yml</span><br><span class="line"></span><br><span class="line">chenyulong01deMacBook-Pro:ngrok chenyulong01$ ./ngrok http 4567</span><br></pre></td></tr></table></figure>
-
-<p>使用open .ngrok2 打开ngrok.yml文件夹，ngrok.yml中存储了Authtoken，同时我们也可以修改其内容，增加root_cas: trusted，可以解决How to fix ngrok reconnecting (x509 certificate signed by unknown authority)异常问题。</p>
-<h3 id="其他反代理工具"><a href="#其他反代理工具" class="headerlink" title="其他反代理工具"></a>其他反代理工具</h3><p>localtunnel，natapp，花生壳</p>
-<h2 id="配置服务器"><a href="#配置服务器" class="headerlink" title="配置服务器"></a>配置服务器</h2><h3 id="bottle"><a href="#bottle" class="headerlink" title="bottle"></a>bottle</h3><p>Bottle是一个简单高效的遵循WSGI的微型python Web框架。bottle几乎没有任何依赖，而且只有一个文件。而相对于python默认的SimpleHTTPServer，功能更加丰富，实用更加灵活。如果只是开发一个小型的web程序，bottle已经足够了。但是这个服务器是阻塞式的，当一个用户请求的时候，其他用户的请求会被阻塞。可以很简单的使用其他的框架来配合bottle来实现无阻塞的web服务器。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@route(&apos;/&apos;)</span><br><span class="line">@route(&apos;/index.html&apos;)</span><br><span class="line">def index():</span><br><span class="line">    return &apos;&lt;a href=&quot;/hello&quot;&gt;Go to Hello World Page&lt;/a&gt;&apos;</span><br><span class="line">@route(&apos;/hello&apos;)</span><br><span class="line">def hello():</span><br><span class="line">    return &apos;Hello World&apos;</span><br><span class="line">@route(&apos;/hello/&lt;id&gt;&apos;)</span><br><span class="line">def hello(id):</span><br><span class="line">    return &apos;Hello World&apos;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">server_names = &#123;</span><br><span class="line">    &apos;cgi&apos;: CGIServer,</span><br><span class="line">    &apos;flup&apos;: FlupFCGIServer,</span><br><span class="line">    &apos;wsgiref&apos;: WSGIRefServer,</span><br><span class="line">    &apos;waitress&apos;: WaitressServer,</span><br><span class="line">    &apos;cherrypy&apos;: CherryPyServer,</span><br><span class="line">    &apos;paste&apos;: PasteServer,</span><br><span class="line">    &apos;fapws3&apos;: FapwsServer,</span><br><span class="line">    &apos;tornado&apos;: TornadoServer,</span><br><span class="line">    &apos;gae&apos;: AppEngineServer,</span><br><span class="line">    &apos;twisted&apos;: TwistedServer,</span><br><span class="line">    &apos;diesel&apos;: DieselServer,</span><br><span class="line">    &apos;meinheld&apos;: MeinheldServer,</span><br><span class="line">    &apos;gunicorn&apos;: GunicornServer,</span><br><span class="line">    &apos;eventlet&apos;: EventletServer,</span><br><span class="line">    &apos;gevent&apos;: GeventServer,</span><br><span class="line">    &apos;geventSocketIO&apos;:GeventSocketIOServer,</span><br><span class="line">    &apos;rocket&apos;: RocketServer,</span><br><span class="line">    &apos;bjoern&apos; : BjoernServer,</span><br><span class="line">    &apos;auto&apos;: AutoServer,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="paste"><a href="#paste" class="headerlink" title="paste"></a>paste</h3><table>
-<tbody>
-<tr><th style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);font-size:1.2em;">
-名称</th>
-<th style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);font-size:1.2em;">
-主页</th>
-<th style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);font-size:1.2em;">
-介绍</th>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-cgi</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
- </td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-以CGI脚本运行</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-flup</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://trac.saddi.com/flup" rel="noopener" title="FLUP" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="c7b4b5077834a0ed1f5c0a4bca14f4cf" target="_blank">http://trac.saddi.com/flup</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-以FastCGI进程运行</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-gae</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://code.google.com/appengine/docs/python/overview.html" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="288e3bc1b26e0f48f7cbdecc50951f37" target="_blank">http://code.google.com/appengine/docs/python/overview.html</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-Google App Engine部属</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-wsgiref</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://docs.python.org/library/wsgiref.html" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="237e23e44a4365b59fcc33b28a891844" target="_blank">http://docs.python.org/library/wsgiref.html</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-默认为单线程的服务器</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-cherrypy</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://www.cherrypy.org/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="72c50cd82c583c625d441d5022206177" target="_blank">http://www.cherrypy.org/</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-多线程服务器</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-paste</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://pythonpaste.org/" rel="noopener" title="http://pythonpaste.org/" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="71228709dedcb943fefeb0aec3bbd640" target="_blank">http://pythonpaste.org/</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-多线程服务器</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-rocket</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://pypi.python.org/pypi/rocket" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="cefb0f508a65db9aca1af3f78aa8df61" target="_blank">http://pypi.python.org/pypi/rocket</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-多线程服务器</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-gunicorn</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://pypi.python.org/pypi/gunicorn" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="9a58bd759fbfdbd2c6bb60b30eb894f3" target="_blank">http://pypi.python.org/pypi/gunicorn</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-部分用C编写</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-fapws3</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://www.fapws.org/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="7380c8ebddf823041cb3785a15444f1e" target="_blank">http://www.fapws.org/</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-Asynchronous，基于C开发</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-tornado</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://www.tornadoweb.org/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="28816a7f106f3be4d11b72a58302eabb" target="_blank">http://www.tornadoweb.org/</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-Asynchronous，服务了部分 FaceBook 的服务</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-twisted</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://twistedmatrix.com/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="c11813c5b43ff62fd484194d38ea9b09" target="_blank">http://twistedmatrix.com/</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-Asynchronous</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-gevent</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://www.gevent.org/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="8739ffd1da6ba93b622d20965903c018" target="_blank">http://dieselweb.org/</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-Asynchronous，基于Greenlet</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-diesel</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://dieselweb.org/" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="8739ffd1da6ba93b622d20965903c018" target="_blank">http://dieselweb.org/</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-Asynchronous，基于Greenlet</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-meinheld</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://pypi.python.org/pypi/meinheld" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="e8fc885d48908fbe74c4848d401bb8f0" target="_blank">http://pypi.python.org/pypi/meinheld</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-Asynchronous，部分基于C开发</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-bjoern</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-<a href="http://pypi.python.org/pypi/bjoern" rel="noopener" style="text-decoration:none;color:rgb(38,94,21);border-bottom-color:rgb(153,102,51);border-bottom-width:1px;border-bottom-style:dashed;" data-token="f9fa6703b208a2b47317f58614c91139" target="_blank">http://pypi.python.org/pypi/bjoern</a></td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-Asynchronous，非常快，基于C开发</td>
-</tr>
-
-<tr><td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-auto</td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
- </td>
-<td style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(221,221,221);">
-自动选择一个可用的服务器</td>
-</tr>
-</tbody>
-</table>
-可以看到，bottle适配的web服务器很丰富。工作模式也很全面，有多线程的（如paste）、有多进程模式的（如gunicorn）、也有基于协程的（如gevent）。
-
-<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>nohup python3 -u githook.py &gt; nohup.log 2&gt;&amp;1 &amp;</p>
-<p>nohup：放在命令的开头，表示不挂起（no hang up），也即，关闭终端或者退出某个账号，进程也继续保持运行状态。</p>
-<p>-u ：不启用缓冲。</p>
-<p>nohup.log：日志文件</p>
-<p>2&gt;&amp;1：也就表示将错误重定向到标准输出上</p>
-<p>&amp; ：放在命令到结尾，表示后台运行，防止终端一直被某个进程占用，这样终端可以执行别到任务。</p>
-<p><strong>注意使用nohup命令后台运行命令之后，需要使用exit正常退出当前账户，这样才能保证命令一直在后台运行。否则当前账户非正常退出或者结束的时候，命令还是会结束。</strong></p>
-<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><p>1.我们的路由@route(‘/payload’, method=[‘GET’,’POST’])是必填的，如果丢失method,我们将不能受到请求。同时payload，要与Payload URL中设置的名一样。</p>
-<p>2.requests</p>
-<p>print(r):&lt;Response [200]&gt;<br>print(r.json):{‘id’: 132968, ‘iid’: 2182437, ‘project_id’: 15509,<br>print(r.text):{“id”:132968,”iid”:2182437,”project_id”:15509,<br>json.dumps(r.json())</p>
-<p>3.can only concatenate str (not “int”) to str</p>
-<p>print(‘payload—-projectid:%d’ % projectid)</p>
-<h2 id="MR方案"><a href="#MR方案" class="headerlink" title="MR方案"></a>MR方案</h2><p><img src="http://nunu03.github.io/2019/08/21/%E9%80%9A%E8%BF%87ngrok%E6%90%AD%E5%BB%BAgithub%E7%9A%84webhook/automr.png" alt="MR流程图"></p>
-<h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><p>1.Could not fetch URL <a href="https://pypi.python.org/simple/requests/" target="_blank" rel="noopener">https://pypi.python.org/simple/requests/</a>: There was a problem confirming the ssl certificate: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:777) - skipping<br>  Could not find a version that satisfies the requirement requests (from versions: )<br>No matching distribution found for requests</p>
-<p>解决方法：pip3 install requests  -i  <a href="http://pypi.douban.com/simple" target="_blank" rel="noopener">http://pypi.douban.com/simple</a> –trusted-host=pypi.douban.com</p>
-<p>2.升级pip</p>
-<p>解决方法：尝试使用如下指令</p>
-<p>pip install -U pip</p>
-<p>sudo easy_install –upgrade pip</p>
-<p>3.405 Method Not Allowed</p>
-<p>路由名不对与Payload URL中设置的名不一样，或者method丢失。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.jianshu.com/p/55209f1031e8" target="_blank" rel="noopener">webhook小试水(无需外网服务器)</a></p>
-<p><a href="https://forge.autodesk.com/blog/how-fix-ngrok-reconnecting-x509-certificate-signed-unknown-authority" target="_blank" rel="noopener">x509 certificate signed by unknown authority</a></p>
-<p><a href="https://github.com/inconshreveable/ngrok" target="_blank" rel="noopener">ngrok git</a></p>
-<p><a href="https://ngrok.com/download" target="_blank" rel="noopener">ngrok官网</a></p>
-<p><a href="https://docs.github.com/en/free-pro-team@latest/developers" target="_blank" rel="noopener">webhooks developers</a></p>
-<p><a href="https://www.cnblogs.com/handsome1013/p/7390849.html" target="_blank" rel="noopener">反向代理</a></p>
-<p><a href="https://www.jianshu.com/p/b11d70d9dd52" target="_blank" rel="noopener">映射公网花生壳、PubYun、NoIP、DynDNS、Ngrok、Tunnel、localtunnel、pagekite</a></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/page/3/index.html">http://nunu03.github.io/page/3/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebHook/">WebHook</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ngrok/">ngrok</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2019/08/21/通过ngrok搭建github的webhook/#more">Read More</a>
+        </p>
       
       
       
@@ -1724,7 +670,7 @@ auto</td>
 
     <nav id="page-nav">
 
-<a class="extend prev" rel="prev" href="/page/2/">Previous</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next</a>
+<a class="extend prev" rel="prev" href="/page/2/">Anterior</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Siguiente</a>
 </nav>
 
 
@@ -1734,7 +680,7 @@ auto</td>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-posts"></i> Recent</h3>
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Recientes</h3>
     <div class="widget">
       <ul>
         
@@ -1766,7 +712,7 @@ auto</td>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-tag"></i> Tag Cloud</h3>
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Nube de etiquetas</h3>
     <div class="widget tagcloud">
       <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/Charles/" style="font-size: 13.33px;">Charles</a> <a href="/tags/Color/" style="font-size: 10px;">Color</a> <a href="/tags/FaceUnity/" style="font-size: 16.67px;">FaceUnity</a> <a href="/tags/Fix/" style="font-size: 10px;">Fix</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/GitLab/" style="font-size: 10px;">GitLab</a> <a href="/tags/Gradle/" style="font-size: 20px;">Gradle</a> <a href="/tags/Haar/" style="font-size: 10px;">Haar</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hook/" style="font-size: 10px;">Hook</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Log/" style="font-size: 10px;">Log</a> <a href="/tags/OpenCV/" style="font-size: 10px;">OpenCV</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Title/" style="font-size: 10px;">Title</a> <a href="/tags/Toast/" style="font-size: 10px;">Toast</a> <a href="/tags/View/" style="font-size: 10px;">View</a> <a href="/tags/WebHook/" style="font-size: 10px;">WebHook</a> <a href="/tags/Wireshark/" style="font-size: 10px;">Wireshark</a> <a href="/tags/Xposed/" style="font-size: 13.33px;">Xposed</a> <a href="/tags/aar/" style="font-size: 10px;">aar</a> <a href="/tags/cmd/" style="font-size: 10px;">cmd</a> <a href="/tags/ngrok/" style="font-size: 13.33px;">ngrok</a> <a href="/tags/nps/" style="font-size: 10px;">nps</a> <a href="/tags/人脸检测/" style="font-size: 10px;">人脸检测</a>
     </div>
@@ -1775,7 +721,7 @@ auto</td>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-classify"></i> Categories</h3>
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Categorías</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -1785,7 +731,7 @@ auto</td>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-archive"></i> Archive</h3>
+    <h3 class="widget-title"><i class="fa fa-archive"></i> Archivo</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
     </div>
@@ -1795,7 +741,7 @@ auto</td>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-tag"></i> Tags</h3>
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Etiquetas</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Charles/">Charles</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Color/">Color</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FaceUnity/">FaceUnity</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fix/">Fix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitLab/">GitLab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haar/">Haar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hook/">Hook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Log/">Log</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Title/">Title</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Toast/">Toast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebHook/">WebHook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireshark/">Wireshark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Xposed/">Xposed</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aar/">aar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok/">ngrok</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nps/">nps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸检测/">人脸检测</a><span class="tag-list-count">1</span></li></ul>
     </div>
@@ -1810,15 +756,7 @@ auto</td>
       <ul>
       
         <li>
-          <a href="http://www.example1.com/">site-name1</a>
-        </li>
-      
-        <li>
-          <a href="http://www.example2.com/">site-name2</a>
-        </li>
-      
-        <li>
-          <a href="http://www.example3.com/">site-name3</a>
+          <a href="https://handsomeliuyang.github.io/">liuyang</a>
         </li>
       
       </ul>
@@ -1836,9 +774,9 @@ auto</td>
   <div class="outer">
     <div id="footer-info" class="inner">
       <p>
-        <a href="/sitemap.xml">Site Map</a>
-        <span> | </span><a href="/atom.xml">Subscribe to this site</a>
-        <span> | </span><a href="/about/">Contact the blogger</a>
+        <a href="/sitemap.xml">Mapa del sitio</a>
+        <span> | </span><a href="/atom.xml">suscribirse a este sitio</a>
+        <span> | </span><a href="/about/">Contacta al blogger</a>
       </p>
       
         <p>

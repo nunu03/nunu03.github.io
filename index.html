@@ -16,7 +16,7 @@
     <link rel="alternate" href="/atom.xml" title="chenyulong">
   
   
-    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="shortcut icon" href="/css/images/avatar.jpg">
   
   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
@@ -50,19 +50,19 @@
     <div id="header-inner" class="inner">
       <nav id="main-nav">
         
-          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> Home</a>
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
         
-          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> Archive</a>
+          <a class="main-nav-link" href="/archives"><i class="fa fa-rss"></i> 归档</a>
         
-          <a class="main-nav-link" href="/about/"><i class="fa fa-user"></i> About</a>
+          <a class="main-nav-link" href="/categories/"><i class="fa fa-archive"></i> 分类</a>
         
-          <a class="main-nav-link" href="/atom.xml"><i class="fa fa-rss"></i> RSS</a>
+          <a class="main-nav-link" href="/tags/"><i class="fa fa-user"></i> 标签</a>
         
       </nav>
     </div>
     <div id="search-form">
       <div id="result-mask" class="hide"></div>
-      <label><input id="search-key" type="text" autocomplete="off" placeholder="search"></label>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="Búsqueda"></label>
       <div id="result-wrap" class="hide">
         <div id="search-result"></div>
       </div>
@@ -115,7 +115,7 @@
 <a href="/2022/05/29/Android知识点整理/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -123,317 +123,16 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><h3 id="循序表（数组arraylist）和linklist-（-双向链表）链表的插入、删除、查询的效率？"><a href="#循序表（数组arraylist）和linklist-（-双向链表）链表的插入、删除、查询的效率？" class="headerlink" title="循序表（数组arraylist）和linklist （ 双向链表）链表的插入、删除、查询的效率？"></a>循序表（数组arraylist）和linklist （ 双向链表）链表的插入、删除、查询的效率？</h3><h3 id="如果一个数组反复插入删除怎么降低时间复杂度？"><a href="#如果一个数组反复插入删除怎么降低时间复杂度？" class="headerlink" title="如果一个数组反复插入删除怎么降低时间复杂度？"></a>如果一个数组反复插入删除怎么降低时间复杂度？</h3><p>A.数组插入、删除：是在下标i的地方，后边的数组整体system.copy一份，然后插入到i位置。Copy是一个循环。</p>
-<p>链表插入、删除：是一个节点node，node包含两部分，数组和指针，当前指针指向下一个数组。</p>
-<p>数组，查找快，直接用下标获取。</p>
-<p>链表，查找慢，需要循环获取。</p>
-<p>B.标记-查找：删除的时候不删除，赋值为null或者标记其他，这个下次在插入的时候直接赋值即可。然后在适当的机会，循环删除值为null的数组即可。这样就可以优化了对象的反复创建和删除。</p>
-<p>C.linkedlist，查询第一个和最后一个时间复杂度一样？一样，查询第一个和倒数第二个一样吗？不一样，liankedlist是双向链表。倒数第二个需要两步。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/2354eb28445e06f90aa01870843db321.png" alt="descript"></p>
-<h3 id="hashmap？长度默认16"><a href="#hashmap？长度默认16" class="headerlink" title="hashmap？长度默认16"></a>hashmap？长度默认16</h3><h4 id="jdk-1-7-为什么用链表？用的是hash碰撞原理"><a href="#jdk-1-7-为什么用链表？用的是hash碰撞原理" class="headerlink" title="jdk 1.7:为什么用链表？用的是hash碰撞原理"></a>jdk 1.7:为什么用链表？用的是hash碰撞原理</h4><p>A。把key通过hashcode对length取模，设置下标。所以hashmap的table表是顺序的。然后创建一个节点（数据hashmapentry），放到这个下标的位置。同时每个下表对应的所有节点是一个单链表。</p>
-<p>B。Hashcode的获取，就是一个hash碰撞的过程。比如hashcode=1和hashcode=17，是在一个下标上。</p>
-<p>C。Get一个数据，就是用过key获取链表，然后在通过key循环具体的值，循环过程中要判断hashcode一致，判断key一致。</p>
-<p>D。Hash表在什么情况性能最差？所有数据在一个节点上，那链表久非常大，效率就非常低了。</p>
-<p>E。什么长度是16？因为在hash下标的过程中。16的二进制是10000.</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/98a374c9642bd13c072c8df2daa3c646.png" alt="descript"></p>
-<h4 id="jdk1-8-每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。"><a href="#jdk1-8-每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。" class="headerlink" title="jdk1.8:每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。"></a>jdk1.8:每一个节点，用了红黑树。Treenode。但不是每一个节点都是红黑树。</h4><p>A。hash冲突后不在用链表保存相同的index节点，而是采用红黑树保存冲突节点。</p>
-<p>B。红黑树构建的时候很复杂、效率很低（旋转）。所以当链表超过8个才使用红黑树。</p>
-<p>hashmap线程安全问题：不安全。</p>
-<p>如果链表被同时操作就会出现问题。</p>
-<p>Hashtable线程安全；所有函数（put、get，remove）的时候用到了synchronized。但是这样的任何访问都加了锁，包括所有hashcode上。</p>
-<p>Synchronized，内置锁，开锁和关锁都是jvm完成的。所以get时候不能put。只能执行其中一个。</p>
-<p>Concurrenthashmap：是基于hashtable的优化，它是在具体的链表上锁，也是用到了synchronized，但是它只是锁在了链表上。</p>
-<h2 id="广播注册方式？有什么不同？通信原理是什么？"><a href="#广播注册方式？有什么不同？通信原理是什么？" class="headerlink" title="广播注册方式？有什么不同？通信原理是什么？"></a>广播注册方式？有什么不同？通信原理是什么？</h2><p>动态，静态。原理都是Binder。静态广播不需要手动取消注册，周期是整个app期间。动态广播需要。</p>
-<h2 id="hashmap和sparsearray哪个更优？"><a href="#hashmap和sparsearray哪个更优？" class="headerlink" title="hashmap和sparsearray哪个更优？"></a>hashmap和sparsearray哪个更优？</h2><p>Hashmap：hashcode操作，耗时。Hashmap是任意对象。装载因子（阀值）是0.75。达到16*0.75=12，开始扩容，也是耗时操作。浪费了4个空间，所以耗内存。Get是遍历获取链表，耗时。</p>
-<p><strong>Sparsearray：两个数组：默认空间10；key[],value[]. Key与value是一一对应的。Sparsearray是int，节省内存空间。对应的key应该存在数组的哪里？采用了二分查找，找到数组中的位置，然后通过system。Copy移动数组插入。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/66fc84f2a6a39740d7143af12213dbab.png" alt="descript"></p>
-<p>get？通过二分查找找到下标，然后就可以了。速度快。</p>
-<p>拷贝效率也低啊？但是这里，remove时是没有具体删除的，而是标记一个delete。这样插入的时候直接赋值就可以了。而hashmap是循环。</p>
-<p>所以，<strong>sparsearray</strong>时间更快。但是hashmap空间更小。</p>
-<h2 id="单例模式："><a href="#单例模式：" class="headerlink" title="单例模式："></a>单例模式：</h2><h3 id="A：双重校验："><a href="#A：双重校验：" class="headerlink" title="A：双重校验："></a>A：双重校验：</h3><h4 id="如何防止指令重排，添加volatile。"><a href="#如何防止指令重排，添加volatile。" class="headerlink" title="如何防止指令重排，添加volatile。"></a>如何防止指令重排，添加volatile。</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/10be1191f3475ec1fdefec72e0668d45.png" alt="descript"></p>
-<h3 id="B-懒汉式单利"><a href="#B-懒汉式单利" class="headerlink" title="B:懒汉式单利"></a>B:懒汉式单利</h3><h4 id="线程不安全"><a href="#线程不安全" class="headerlink" title="线程不安全"></a>线程不安全</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/5cbd42da18a01320e01436dd6e9ce19c.png" alt="descript"></p>
-<h4 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/48fe275d98c3eb469652933e10a72617.png" alt="descript">但是同步锁粒度太大：下边的粒度就小很多；</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/74efdc6c4e5cb88666f1ad66ce7750eb.png" alt="descript"></p>
-<h3 id="C-饿汉式单例：线程安全"><a href="#C-饿汉式单例：线程安全" class="headerlink" title="C.饿汉式单例：线程安全"></a>C.饿汉式单例：线程安全</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/644b0d78d0f1b1e88a263b90ad976567.png" alt="descript"></p>
-<h3 id="D-静态内部类单例：线程安全的："><a href="#D-静态内部类单例：线程安全的：" class="headerlink" title="D.静态内部类单例：线程安全的："></a>D.静态内部类单例：线程安全的：</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/773c5d7794f7a708bdaab1927d05111a.png" alt="descript"></p>
-<h3 id="E-采用枚举：枚举默认线程安全；"><a href="#E-采用枚举：枚举默认线程安全；" class="headerlink" title="E.采用枚举：枚举默认线程安全；"></a>E.采用枚举：枚举默认线程安全；</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a5d69258dd6bb64fef4fbf71942dc5a1.png" alt="descript"></p>
-<h3 id="F-使用容器实现单例："><a href="#F-使用容器实现单例：" class="headerlink" title="F.使用容器实现单例："></a>F.使用容器实现单例：</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/02ef798bd8a121e1afc05bd67aaf4d9c.png" alt="descript"></p>
-<h2 id="string-的-与equals的区别？"><a href="#string-的-与equals的区别？" class="headerlink" title="string 的== 与equals的区别？"></a>string 的== 与equals的区别？</h2><p>String str1 = “a”常量池是在堆内存里的。==比较的是内存存放的位置。但是他们对hanshcode是相等的。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/459264b8012eb9e62c17eda6fc85302d.png" alt="descript"></p>
-<p>equals比较的是字符串的序列，是具体的字字符比较。</p>
-<p>Stirng str = “阿”。str = str+“阿”。与string ds = new string （“阿阿”）；str和ds是一个对象，string是不可变的，因为string类里的方法，都是final。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/52f7e8888b5476de8457a5008857ce45.png" alt="descript"></p>
-<h2 id="volatile："><a href="#volatile：" class="headerlink" title="volatile："></a>volatile：</h2><h3 id="A-多线程可见"><a href="#A-多线程可见" class="headerlink" title="A.多线程可见"></a>A.多线程可见</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/97b51f640aa7d54114060bba0eeb81e0.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/dec4eee4d976bed18eba9d17faddfdef.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/3bd1f9f4b7ffc671a609f6255866bdbf.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/d20dcdfe6c476ecd5c1339738c31901e.png" alt="descript"><strong>所以，volatile就相当于一个总线嗅探机制，当其中一个线程变化后，会修改主内存的值，其他线程会被通知，从新从主内存获取数据。并且8个操作是原子性的，其中一个指令执行，其他不会操作的。原理是：当一个线程执行write时，是被加了锁的（如下图的lock）。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/d848ab1e8edc6cdebe123e1c49e41e49.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/15d6be9cef1c056686289c51c56b1309.png" alt="descript"></p>
-<h3 id="B：禁止指令重排（半初始化），原理是内存屏障。"><a href="#B：禁止指令重排（半初始化），原理是内存屏障。" class="headerlink" title="B：禁止指令重排（半初始化），原理是内存屏障。"></a>B：禁止指令重排（半初始化），原理是内存屏障。</h3><p><strong>双重检测的单例，为啥加volatile？就是禁止指令重排。顺序如下：</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/fe8052d5f7c4b30c7f1923f2858c4651.png" alt="descript"></p>
-<p>但是在cpu执行过程中，这个顺序会改变。如果在单线程里，这个顺序改变了也没关系，但是在多线程中，如果在一个线程创建了引用，而另一个线程在执行时，就会拿到这个引用，从而，拿到的值有可能是第一个线程未赋值的初始值0，而第二个还在初始化对象。</p>
-<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/fd841b7835ce24d859bd0f9bec799f5e.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/b4b7fbfe5930e8ceeb2df9b92d10166e.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/71eb21ec07af0113c280da265c13619d.png" alt="descript"></p>
-<p><strong>上述代码：多线程并发问题。会出现i–，最后不为0的情况。</strong></p>
-<h3 id="A．synchronized：内置锁，重量级锁"><a href="#A．synchronized：内置锁，重量级锁" class="headerlink" title="A．synchronized：内置锁，重量级锁"></a>A．synchronized：内置锁，重量级锁</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/838f183a70ef127976756a9c26cb3d31.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/7671fb42b8ab08a0242b16ca3255486b.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/da5750fc9016f156bec0b0a69b35561b.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/046bcab402e983036d50f5737c779c55.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/68547c4a3bd8971bae7521ccc6631ad0.png" alt="descript"></p>
-<h3 id="B．AtomicInteger：乐观锁：无锁机制"><a href="#B．AtomicInteger：乐观锁：无锁机制" class="headerlink" title="B．AtomicInteger：乐观锁：无锁机制."></a>B．AtomicInteger：乐观锁：无锁机制.</h3><p>比synchronized快。<strong>缺点是：i.decrementAndGet的i—是可操作的。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/ba8063b2ae18ed7d6358d9b37466b00b.png" alt="descript">原理：根据堆内存中的偏移量来获取value，比通过对象.value的拷贝方式要快。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/3983caf6f9c91c28896dc421c065c8c8.png" alt="descript"></p>
-<h3 id="C-ReentrantLock：可重入锁，也叫显示锁"><a href="#C-ReentrantLock：可重入锁，也叫显示锁" class="headerlink" title="C.ReentrantLock：可重入锁，也叫显示锁"></a>C.ReentrantLock：可重入锁，也叫显示锁</h3><p><strong>是接口lock锁的实现类。也可以自己实现公平锁或者不公平锁，因为队列线程是我们自己的。也是重量级锁。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/1ae7cddbd38e40899d68c1bb77efe995.png" alt="descript"></p>
-<p>原理、执行过程：</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/807a85b110a59cc44fab3b7b8b28b238.png" alt="descript"></p>
-<h3 id="D-CAS：先比较再交换。也是一种乐观锁，无锁机制。"><a href="#D-CAS：先比较再交换。也是一种乐观锁，无锁机制。" class="headerlink" title="D.CAS：先比较再交换。也是一种乐观锁，无锁机制。"></a>D.CAS：先比较再交换。也是一种乐观锁，无锁机制。</h3><p><strong>高并发不适合。但是如果只有几个线程，速度非常快。</strong></p>
-<p><strong>而且CAS有ABA问题：尤其是对象操作的时候。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/923a0c790e4887ac2522ad868c47b2da.png" alt="descript"></p>
-<h2 id="Context是什么？抽象类"><a href="#Context是什么？抽象类" class="headerlink" title="Context是什么？抽象类"></a>Context是什么？抽象类</h2><p>A.上下文，贯穿整个应用。</p>
-<p>B．运行环境：提供了一个应用运行所需要的信息、资源、系统服务等。</p>
-<p>C．场景：用户操作和系统交互这一过程就是一个场景。比如Activity之间的切换、服务的启动等都离不开Context。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/dd1bdce2ec3a15c50cdb3f31b336c191.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/1854e4b259dbab826ac133d2fc1fa5d0.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/0cd76fb4f3da0531d0f64d209f5cbc75.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/f1aec1b60d5fb8b251e5f7c6366fe109.png" alt="descript"></p>
-<h2 id="什么是Activit、View、Window？"><a href="#什么是Activit、View、Window？" class="headerlink" title="什么是Activit、View、Window？"></a>什么是Activit、View、Window？</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/3f223045ae4a60aa1753642f9df25c50.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/914b2724138ef7381142762ae6f73651.png" alt="descript"></p>
-<h2 id="Dex文件"><a href="#Dex文件" class="headerlink" title="Dex文件"></a>Dex文件</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/5061be4497ea2dc76626057bf0ee910b.png" alt="descript"></p>
-<h2 id="APK打包流程"><a href="#APK打包流程" class="headerlink" title="APK打包流程"></a>APK打包流程</h2><p><strong>Xml通过aapt编译成R.JAVA</strong></p>
-<p><strong>Aidl通过aidl文件生成java文件</strong></p>
-<p><strong>然后通过javaCompiler把java文件转化为class文件。</strong></p>
-<p><strong>然后通过dex把class打包成.Dex文件。</strong></p>
-<p><strong>用apkbuild把所有文件，包括资源，图片文件通过zip压缩打包成apk，然后通过对齐，签名形成一个可运行的apk。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/9cf4771de7e387e22c75fc4052511d42.png" alt="descript"></p>
-<h2 id="事件分发处理机制"><a href="#事件分发处理机制" class="headerlink" title="事件分发处理机制"></a>事件分发处理机制</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/ea05017670bab7fd803e422e2d7373c9.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/88c0a2afb4981b79d034e8c67b46d19a.png" alt="descript"></p>
-<h3 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/d9fe85dbe0218bb757875b3899ae1d94.png" alt="descript"></p>
-<h3 id="Down事件的分发流程"><a href="#Down事件的分发流程" class="headerlink" title="Down事件的分发流程"></a>Down事件的分发流程</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/be635e4cec123a1908da7c4db6a8a67a.png" alt="descript"></p>
-<h2 id="measureSpec是什么？原理是什么？"><a href="#measureSpec是什么？原理是什么？" class="headerlink" title="measureSpec是什么？原理是什么？"></a>measureSpec是什么？原理是什么？</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/e0131b0ad4b2f1caaded3ff72ced90d7.png" alt="descript"></p>
-<p><strong>测量主要解决parent和wrap的测量。</strong></p>
-<p><strong>FlowLayout-》onMeasure：</strong></p>
-<p><strong>//计算孩子的宽/高:</strong></p>
-<p><strong>Width=100;height=300;</strong></p>
-<p><strong>//设置自己的宽/高：</strong></p>
-<p><strong>setMeasureDimension（width，height）</strong></p>
-<p><strong>那如何计算孩子的宽高？如何度量？其中view的大小，不是int，而是MeasureSpec。</strong></p>
-<p><strong>所有通过childView.getMeasureWidth(),childView.getMeasureheigth(),但是需要在获取之前设置度量孩子的大小childView.measure(widthMeasureSpec,heightMeasureSpec), widthMeasureSpec,heightMeasureSpec是什么？可以认为是父类宽高，childView的最大宽度，就是父类的宽高减去padding。那MeasureSpec如何得到？因为当前的子view也有可能有子view，所以.measure的时候，还需要通过getChildMeasureSpec获取widthMeasureSpec,heightMeasureSpec。</strong></p>
-<p><strong>通俗的说？widthMeasureSpec,heightMeasureSpec就是能给chaildView的具体的大小。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/48d6d5718255cba3d97c87f4f31f348e.png" alt="descript"></p>
-<p><strong>那为什要measure？因为只有把父类的具体大小给孩子，才能测量出孩子的具体宽高。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/f76030a1d33b9cec8be961434904f3cd.png" alt="descript"></p>
-<h2 id="layout自定义View布局原理？"><a href="#layout自定义View布局原理？" class="headerlink" title="layout自定义View布局原理？"></a>layout自定义View布局原理？</h2><p><strong>就是确定每一个view的left，top，right，bottom。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/543de1ef139cc3b29c1fa2a93c9f365c.png" alt="descript"><strong>onLayout是用的视图坐标系：因为你布局的时候，是根据父布局进行布局的。</strong></p>
-<p><strong>Layoutparams保存了view的坐标。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/3aac2163213b1687e10a5fa536f15873.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/3204210597a90c40f9183661222f43f9.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/2adb5515b610efc599bd7c37fa3be5cb.png" alt="descript"></p>
-<p>## </p>
-<h2 id="inflate解析xml过程？"><a href="#inflate解析xml过程？" class="headerlink" title="inflate解析xml过程？"></a>inflate解析xml过程？</h2><p><strong>Xml-》解析-？然后创建view，通过反射创建，比如自定义view在xml中使用，需要全路径名-》创建view后，会把解析的属性给view。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/7f8958e7e49458f6ab8405e4f914579e.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/7d7e522690b1332b3a393f5dcb3f395c.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/db859dea09d4f9f958d8ace4c6f07bd2.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/17127d6dfeeda274e264f023570785e6.png" alt="descript"></p>
-<h2 id="沉浸式开发原理？状态栏和ui一致背景？"><a href="#沉浸式开发原理？状态栏和ui一致背景？" class="headerlink" title="沉浸式开发原理？状态栏和ui一致背景？"></a>沉浸式开发原理？状态栏和ui一致背景？</h2><h2 id="ViewPage？默认缓存3个界面。"><a href="#ViewPage？默认缓存3个界面。" class="headerlink" title="ViewPage？默认缓存3个界面。"></a>ViewPage？默认缓存3个界面。</h2><p>Setoffscreenpagelimit（1）， Limint为1.他的意思是最多缓存当前界面的左右两个界面，加上当前就是3个界面。</p>
-<p>预加载：问题？缓存，会耗费更多内存，时间？会耗费更多时间。</p>
-<p>所以采用懒加载方案，就是loading或者白屏的时候。</p>
-<p>所以解决这个问题的原理：populate：填充+fragment adapter适配器模式。</p>
-<p>缓存：就是创建fragment放入到arraylist里。</p>
-<p>适配：当左右滑动时，先处理左边或右边的界面？如何处理，初始化（instantiateItem）一个fragment（放入arraylist）和销毁（destroyItem）掉一个fragment（从arraylist中删除）。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/bd4ed3c5cb23a36045848bc825ae204a.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/65b13e836a3a44450a536e66ee0bff70.png" alt="descript">Attch，fragment不会立即执行。这个时候，首先还要把刚初始化的页面设置为不可见setUerVisibleHint，也就是即将要缓存起来的item不可见。</p>
-<p>看下图：首先要缓存tab4，把tab1设为不可见，设置当前的目标tab3设为可见，并且直接用的FragmentCompat，。但是这个可见是在finishUpdate的commit之前执行的，所以，viewpage的fragment的生命周期，第一个是setUserVisibleHint。如下下图。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/91b2b685a083675d8d50d870b7d87ff9.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/ca1082bdee1ec80dd6f3c190346a205e.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/d751a058b3cb0be13cab98114068c28e.png" alt="descript">setPrimaryItem会执行两个动作：之前的item设置为不可见，新的item设为可见。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/4e47cd4f410f9eefdd6fefbd8043ae08.png" alt="descript"></p>
-<p>只有执行fragment的CommitAllowingStateLoss之后才会走fragment生命周期。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/0e3fd078dba2c55ad0e3588d3e4835de.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/948c3c01ae485bf5a7ba2a58ea1ed80a.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/311c922df3a027ebc3ada7afa53bf422.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/430f2bada823b24413bc51adb5070675.png" alt="descript"></p>
-<h2 id="RecycleView"><a href="#RecycleView" class="headerlink" title="RecycleView"></a>RecycleView</h2><p>缓存和复用都是ViewHolder。其实就是一个itemView。那缓存有几级？</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/07ebef7e90f4badae58976b345ab25ea.png" alt="descript"></p>
-<p>以下就是处理复用机制：</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/0d3638b50174dc4deaab14a2f7a1f072.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/987d0997e9ef341174e1216861fb8ea0.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/668659b35581382ec091a572e6e89889.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/1317567285774c88e4af660821ce9042.png" alt="descript"><strong>从滑动看复用填充流程：</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a52dc82434afcb4864b7e02ae442a3c4.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/d854812d61c8aa3e50a4fb8b76d9b7c5.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a3df54f181c1a07bde7cb509d37583f5.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a40fafe272966be716dc5929d8c1806b.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a589026286ef062d4e198cac4eb4823f.png" alt="descript"></p>
-<p><strong>从onLayout看复用填充流程：最终也会到fill入口，跟之前一样。</strong></p>
-<p><strong>缓存？=========================================================================</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/1c563da00d4883f8e6b741cb5a12b30b.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/1af42ed9ce59f8fd8e8e72aa94a45d88.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/447c41fc97a4f9fe14c81335f6af2f49.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/65649e3b4b2acf026819ac58fb7fc3c4.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/fd2453949e93532eaa90eb7ce4034ad2.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/ea6cab41f3c237e0dded4b1ca2ab43e9.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/3970f166048626b19c75284830d6c73d.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/cb42b87159dadeef9f3a6ac477ee31a6.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a5731d7b0173bb237fe1877bd7fc4943.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/ea75310a241454f4dba09e8b18645c2c.png" alt="descript"></p>
-<h2 id="OOM是如何发生的？"><a href="#OOM是如何发生的？" class="headerlink" title="OOM是如何发生的？"></a>OOM是如何发生的？</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/575a2a1abdcf2634bdfb6d22cc351b0a.png" alt="descript"></p>
-<h2 id="Java回收机制？如何减少OOM的概率？"><a href="#Java回收机制？如何减少OOM的概率？" class="headerlink" title="Java回收机制？如何减少OOM的概率？"></a>Java回收机制？如何减少OOM的概率？</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/0dcfb462ed52c5eedeed7ac5c7d9b2bf.png" alt="descript"></p>
-<h2 id="如何排除应用崩溃原因？ANR？"><a href="#如何排除应用崩溃原因？ANR？" class="headerlink" title="如何排除应用崩溃原因？ANR？"></a>如何排除应用崩溃原因？ANR？</h2><p><strong>1.把崩溃堆栈传到服务。</strong></p>
-<ol>
-<li><p><strong>使用第三方开源库。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/edcf259e74b9ac4ba28396d06bb6605c.png" alt="descript"></p>
-</li>
-</ol>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/ac6380ec8de6a9d4859c5e3e2f2d0788.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/3da26c11d9d71428a03f1e814279597a.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/76c8bf211224d76c2487b80d2f712c73.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/b25a3ffd98a6278558e86bcc87487d51.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/c805a1f591455134dccaad6a9ddbf641.png" alt="descript"></p>
-<h2 id="App启动优化，速度优化？"><a href="#App启动优化，速度优化？" class="headerlink" title="App启动优化，速度优化？"></a>App启动优化，速度优化？</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/7078146c6ab06539faed8078e244d62f.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/7f8dfa18d380d7138d4168a8593df813.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/27850ea8a3f0120b7c17dcf49a50de86.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/0d0935b6e3ba27c2d27a45cd0a2275ea.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/b81ce39e216eb9089e9040b8d324c284.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/6a262da28456b323b396dc2e2ff25a39.png" alt="descript"></p>
-<h2 id="热修复原理？"><a href="#热修复原理？" class="headerlink" title="热修复原理？"></a>热修复原理？</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/dff5a74d4ec95b8d4c4e5653c7b6fac1.png" alt="descript"></p>
-<h3 id="AndFix："><a href="#AndFix：" class="headerlink" title="AndFix："></a>AndFix：</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/6f560ddb1327c4a9d04ed308a6bfbd29.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/d105740dbf0f8cf4899fa85cb7175231.png" alt="descript"></p>
-<h3 id="Robust："><a href="#Robust：" class="headerlink" title="Robust："></a>Robust：</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/444c15764f2d15d1a411f9e50488037b.png" alt="descript"></p>
-<h3 id="Tinker-amp-类加载机制"><a href="#Tinker-amp-类加载机制" class="headerlink" title="Tinker&amp;类加载机制:"></a>Tinker&amp;类加载机制:</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/395088494eb8803e301054672bd40862.png" alt="descript"></p>
-<h4 id="Bsdiff差分工具："><a href="#Bsdiff差分工具：" class="headerlink" title="Bsdiff差分工具："></a>Bsdiff差分工具：</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/ec935385d5019548913111cb73824e11.png" alt="descript">如何拿当前的apk问价：PackageManager</p>
-<h4 id="CalssLoader："><a href="#CalssLoader：" class="headerlink" title="CalssLoader："></a>CalssLoader：</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/9b816c989988a4d68cd147b1deeadd83.png" alt="descript"><strong>自己写的类，用的PathClassLoader（mainactivity），系统的类，就是BootClassLoader（application，activity）。</strong></p>
-<p><strong>加载一个类方法：PathClassLoader.loadClass();-&gt;BaseDexClassLoader-&gt;ClassLoader.loadClass(),所以通过一个类全路径，获取Class对象。</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/87ad9b5c28554f7631ba4d68a3510dac.png" alt="descript"></p>
-<p>所有的类在dex文件里。FindLoadedClass从缓存获取class对象。如果没有，在通过parent .loadClass();parent也是一个ClassLoader。这里用的就是双亲委托机制。为什么要有这个机制：一是安全，而是避免重复加载。但是如果是我们的自己的类，parent肯定加载不到，所以执行findClass（）。而这个classloader，是pathclassloader。所以最后看到baseDexClassLoader。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/626820d057048fc5cb5b6280fd10436d.png" alt="descript"></p>
-<p>然后看到，通过for循环找，dexElements，是一个数组【class1.dex，class2.dex，。。。。。。】。从而拿到了dex中的Class类对象。所以，我们得到了修复之后的dex，那怎么办，只要把这个dex放到数组的最前面即可，因为是顺序的，所以在使用的时候，拿到这个正确的之后，就直接return了，不会在查询class2.dex……..。最后，先getClassLoader拿到pathclassloader，通过反射，拿到DexPathList，在拿到这个类里的dexElements数组，把这个dex，放到dexElements里即可。</p>
-<h4 id="双亲委托机制："><a href="#双亲委托机制：" class="headerlink" title="双亲委托机制："></a>双亲委托机制：</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/d0b7b8f33f239510d8f733f5f21ada3b.png" alt="descript">在用户的加载类里，如果要加载Activity系统类，这个时候，不需要自己加载，由parent=BootClassLoader加载了。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/042fe19c111690d7d93a975547b4cbc0.png" alt="descript"></p>
-<h3 id="Qzone："><a href="#Qzone：" class="headerlink" title="Qzone："></a>Qzone：</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/5d1d7b52a9d787a009e58786de105603.png" alt="descript"></p>
-<h2 id="如何判断文件的一致性？"><a href="#如何判断文件的一致性？" class="headerlink" title="如何判断文件的一致性？"></a>如何判断文件的一致性？</h2><p>crc方法。CRC32 即循环冗余校验码（Cyclic Redundancy Check）：是数据通信领域中最常用的一种查错校验码，其特征是信息字段和校验字段的长度可以任意选定。循环冗余检查（CRC ）是一种数据传输检错功能，对数据进行多项式计算，并将得到的结果附在帧的后面，接收设备也执行类似的算法，以保证数据传输的正确性和完整性。</p>
-<h2 id="多进程-文件共享"><a href="#多进程-文件共享" class="headerlink" title="多进程-文件共享"></a>多进程-文件共享</h2><p>Messenger，Bundle，文件共享，Content Provider……</p>
-<h2 id="sp、mmkv、mmap"><a href="#sp、mmkv、mmap" class="headerlink" title="sp、mmkv、mmap"></a>sp、mmkv、mmap</h2><h3 id="SharedPreference："><a href="#SharedPreference：" class="headerlink" title="SharedPreference："></a>SharedPreference：</h3><p>map持久化： 在内存中时，在文件中序列化是xml。</p>
-<p>初始化：在子线程里，通过io，获取xml文件，反序列化成map。</p>
-<p>如果数据比较大时：读写数据时，awaitLoadedLocket：等待加载完成。所以数据大，需要解析时间长，如果没有解析完，就读写，这个时候需要等待子线程初始化数据完成。</p>
-<p>并且sp创建后无法被回收。</p>
-<p>写新数据：map-》序列化xml，写入文件。commit同步提交，会阻塞调用线程。Apply异步，无法获取结果，没有事务性api。无法保证数据一致性。同时哪怕异步提交都可能会导致<strong>ANR</strong>的发生。</p>
-<p>更新数据：sp没有更新的概念，是整体的读写操作。哪怕只修改了1条数组，sp也需要全部序列化为xml，覆盖文件进行保存。（全量更新）</p>
-<p><strong>优化点：</strong></p>
-<p>高效的文件操作；MMAP;</p>
-<p>数据格式更精简；二进制；</p>
-<p>String一个字节占8位，如“1”（0000 0001）浪费了7位，其实只需要1位就可以；而二进制，一个字节就可以8个数据；</p>
-<p>更优的数据更新方式；</p>
-<h3 id="FileChannel："><a href="#FileChannel：" class="headerlink" title="FileChannel："></a>FileChannel：</h3><p>拷贝文件比IO快6-7倍。为什么这么快？底层用到了零拷贝技术;如sendfile,mmap。</p>
-<h3 id="MMKV：速度非常快。并且实现了sp和sp-editor接口。用了mmap技术。"><a href="#MMKV：速度非常快。并且实现了sp和sp-editor接口。用了mmap技术。" class="headerlink" title="MMKV：速度非常快。并且实现了sp和sp.editor接口。用了mmap技术。"></a>MMKV：速度非常快。并且实现了sp和sp.editor接口。用了mmap技术。</h3><p>零拷贝：是不需要CPU参与的技术。DMA COPY是从内存拷贝到Disk。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/4eb4e93c97ad7e6f4ee1b416d7e1d187.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/6b88a4d20e9f9b298babd4ccd4c8386a.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/95e6b3ca2fc96177f4560c8c528d2262.png" alt="descript">映射内存是通过Vma：vm_area_struct-》内存结构。</p>
-<p>HTTP2:多路复用。</p>
-<p>http1=字符串、文本</p>
-<p>http2=二进制。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/93cd1f2bc2a028ffca9d24c825bdf047.png" alt="descript"></p>
-<p>总长度（key长度+key值+value长度 +value值 ……）长度数据不一定是一个字节。</p>
-<p>那map数据存到文件的过程要通过序列化。</p>
-<p>那数据格式Protobuf：比json更加精简。Protobuf编码是一个变长编码，就是有可能把int原有4个字节，编码成1，2，3，4，5个字节。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/b96b2764b40ffe5a5c2322b4964f8027.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/8e06fb9023f3729afa57afb600c9c6be.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/99f8f989467495b5f9fdff7e252c5e3f.png" alt="descript"></p>
-<h2 id="Serializable"><a href="#Serializable" class="headerlink" title="Serializable"></a>Serializable</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/17d37bf4880d2c8cb04eb11637cf638c.png" alt="descript">1. 不会。</p>
-<p>2. 深拷贝。Equal</p>
-<p>3. Budle用的是Parcel，为什么不用map，bundle是跨进程传输一些小的对象。</p>
-<p>4. 版本控制。</p>
-<p>5. 原理：binder，binder大小就是1M-8kb；binder创建的线程池默认15个（我记得是31个）。内核中映射的最大内核空间，只有4M。有没有办法Intent突破1M？mmap的大小可以修改，但是不可以超过4M.还可以把数据写入数据库或者文件，传递数据的文件名。</p>
-<p>6. Activity的启动流程要和AMS打交道，是要跨进程。两个不同进程，数据只有序列化之后才能带过去。</p>
-<p>7. 序列化是跨进程通信使用的。持久化是保存数据。</p>
-<h2 id="Glide"><a href="#Glide" class="headerlink" title="Glide"></a>Glide</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/cb65dfa0bcca85478e30d6676af9c96a.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/e576dab941e4cade11bf7ae1899df72d.png" alt="descript"></p>
-<p><strong>面试题：为什么glide不能再子线程中with？再子线程中不会添加生命周期管理，只有再主线程中才会用空白的Fragment监听Activity或者Fragment的生命周期。看下面源码：4.11</strong></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/87341e6c8978a866c74713d9ce7d9b37.png" alt="descript"></p>
-<p>正在显示的是活动缓存，然后是内存缓存。</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/4d023604873a430955342f5076b7c011.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/c985abd398ff3ae0f5e5393969b86361.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a67afd5010e0a779f7c1c090cc228274.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/40bc8a8e04973ac12a35bec2c370df1b.png" alt="descript"></p>
-<h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/f630917431e2dee24662c7eaf02f83d1.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/b94c0d49b02351f8632c2b6eab3c9878.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/97fd31e5db9f00917bf4c774e4d36b1d.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/7a415daf91f1c482c4f917198ea93a38.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/bdc70d79f8df0613963e2ba34b02d271.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/e14d98891dbc58ff9e64b1f7c3cc8b2c.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/6c4e1a43ed7348d4ef934356f87d61fc.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/bc669550b92f8d10c2fe05046676cbb2.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a1abf478ae2ff98b85d52874a5c9b2e2.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/550c497b21ea96d924a8bd0c273b2e8b.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/4c84e163cb533f6a34cb11a94740f7a2.png" alt="descript"></p>
-<p><strong>所有javac处理自定义注解类，也是通过ServiceLoader（spi）的方式处理生成实现类的。</strong></p>
-<p><strong><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/4cadd6a2c158acff4657a4b6a8f8e1a8.png" alt="descript"></strong></p>
-<h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/f7c78f92e4117d7bd36fc5ef79e4f414.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/7a7bcbc4d3c64c67244c02b86038bc50.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/37c73c38bc033cc3f6273e2bf513890d.png" alt="descript"></p>
-<h2 id="ASM字节码插桩"><a href="#ASM字节码插桩" class="headerlink" title="ASM字节码插桩"></a>ASM字节码插桩</h2><h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/f9ac20500d65766902ae8e16c9964362.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/4588df91bfcd812e37af8c7a4dbf5077.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/0c8ad188faf52772f993a412975a0d8d.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/73c5f05c4afa6fc2da249e86b6beafd9.png" alt="descript"></p>
-<h2 id="插件化"><a href="#插件化" class="headerlink" title="插件化"></a>插件化</h2><h3 id="类加载机制：双亲委派机制"><a href="#类加载机制：双亲委派机制" class="headerlink" title="类加载机制：双亲委派机制"></a>类加载机制：双亲委派机制</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/245496a2b11ae3c7a7675af174cc1ed0.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/e12292eff45077a698f91e8c93b3b93f.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/c451e60f6b6385a0983566fe1a276380.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/5d18d28bf057b294735cbeb327aefae0.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/066c66d28c1b1f94ce8456bb3f84e9c7.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/65ba33652d6dacb94c53c0c834706dce.png" alt="descript"></p>
-<h3 id="findClass流程"><a href="#findClass流程" class="headerlink" title="findClass流程"></a>findClass流程</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/50e22c6be224a4059344788331e16b21.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/d679aef524bbeacf9291bec387b56764.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/cfa50202ee8a1ab52d0757750a9bc2ce.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a254d9fc5628bfd7775a960bbe027961.png" alt="descript"></p>
-<h3 id="合并第三方Dex"><a href="#合并第三方Dex" class="headerlink" title="合并第三方Dex"></a>合并第三方Dex</h3><p>思路：</p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/9c709c1cbe71044d9427156752dbed20.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/eba45c4804a05cd2520db40c05d729ff.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/93097b8654d6c663b897fc8fb4c7b411.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/818f87241d934cd60c1fa6b7e69544b5.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/bb01c55815b7bfd643e92d83b7d291c6.png" alt="descript"></p>
-<h3 id="Hook-Activity"><a href="#Hook-Activity" class="headerlink" title="Hook Activity"></a>Hook Activity</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/faa99012c413a386cb911a79a4c41f04.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/c93e9bd01b21b1b25206d2f11f203525.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/deea25f55f63c53da5751618042b8fa3.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/ef1a8708b3b3d2122d36c68d4d3d9c68.png" alt="descript"></p>
-<p>代码流程：</p>
-<h4 id="先实现"><a href="#先实现" class="headerlink" title="先实现"></a>先实现</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/f5ba44f99df815fad5ba3acb68a32ba4.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/1e21aeeb53f84215fef750f738959a47.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/0c2d721b0a2749d6306e80eb98c6468e.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/2ff790c4784d43966807cd8b4d06b061.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/c9ec0a3dc223dcec292f8efc6333b325.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/6eaa21a63ffbaeb945e801c97534686c.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/423791c6337f65c1e89f7be39caa2bee.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a21f4ceeb103a242c95bc431cc473578.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/8a374352380f9a927eb711d55fc6a14c.png" alt="descript"></p>
-<h4 id="再实现"><a href="#再实现" class="headerlink" title="再实现"></a>再实现</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a227d8a6a3bf52a3d03ba2c80d3ac8f0.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a73c647ed7aa225bddb18b5b3e463f6d.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/8518f606181552e494de9d22939667d3.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/8b5f89f180d5a09ae296ec07dc058879.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/43cf24d2e84bde43eb5e0afb11392538.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/219ef2df52aaf8540eefe3c05d10ac51.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/0c7a9cd671e05f869fa7604358c0946a.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/b22ac4fde49a6d5ae50a8443d3f58c12.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/6a97da7c803efa2e4bcf8961d8b1654d.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/2e823d4997e7ec7c1e788138956767dd.png" alt="descript"></p>
-<h4 id="版本适配"><a href="#版本适配" class="headerlink" title="版本适配"></a>版本适配</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/51ea360b77953be42859d544e6338829.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/17325f14527e598e37498204eacbf069.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/f9c41de16f6ef873b197c4ac3a57a0f4.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/8ce717d61520d015dcb5df46646795a7.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/76f638e3724f5d740d9574caa8938f17.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/664f93481eeb0ea2ef8c0c146b4eea71.png" alt="descript"><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/3aa9821dac70d9430d53cda63fbef6f2.png" alt="descript"></p>
-<h3 id="资源加载"><a href="#资源加载" class="headerlink" title="资源加载"></a>资源加载</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/ed443be21b351498ff31086ea0f1ef8c.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/fcdd29ef256af515e1fffb482cc12481.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/a9fde05805195b9c98fbe040061f8bae.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/2134005ae83b1d7e6d3c5e8f7f6c6000.png" alt="descript"></p>
-<h3 id="资源插件：创建"><a href="#资源插件：创建" class="headerlink" title="资源插件：创建"></a>资源插件：创建</h3><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/3f034f7a00b15e9807e093aeb60908b7.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/7e9639c0347b363f32083a5fd61440da.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/ab6fe04bd29b4968aafdfc435d2c2ff1.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/bcda7e0cd5eb0cc77bdbe29bfc3970b2.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/24e86439ed7206f7e7e28392a124858a.png" alt="descript"></p>
-<h4 id="解决资源文件冲突："><a href="#解决资源文件冲突：" class="headerlink" title="解决资源文件冲突："></a>解决资源文件冲突：</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/537d9e6e845dc09a689ec2f041718da9.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/d10b35aade1612e4072d385390939841.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/4f378f1ffc86a6c73b6fb25dbb747b9c.png" alt="descript"></p>
-<h4 id="具体冲突：改变插件Context的mResources"><a href="#具体冲突：改变插件Context的mResources" class="headerlink" title="具体冲突：改变插件Context的mResources"></a>具体冲突：改变插件Context的mResources</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/16403b183da60875225158c20e7467e7.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/8a108ef2e26261a4e15185663b3af422.png" alt="descript"></p>
-<p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/82642ad0b23412bf9b14ce23848894ed.png" alt="descript"></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2022/05/29/Android知识点整理/#more">Read More</a>
+        </p>
       
       
       
@@ -474,7 +173,7 @@
 <a href="/2022/05/29/hello-world/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -532,48 +231,24 @@
 <a href="/2022/04/08/epic原理浅析/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
     </div>
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Art-amp-Dalvik"><a href="#Art-amp-Dalvik" class="headerlink" title="Art &amp; Dalvik"></a>Art &amp; Dalvik</h2><p>Art（Android Runtime）虚拟机是 Android 4.4 发布的，用来替换 Dalvik 虚拟机，但是在Android 4.4 默认采用的还是Dalvik 虚拟机，但是可以选择使用Art。在Android 5.0版本中默认使用Art了，Dalvik退出了历史舞台，所以可以说是在Android在5.0开始正式使用Art虚拟机。<br>Dalvik中的应用每次运行时，字节码搜需要通过JIT编译器编译成机器码，这会使得应用程序的运行效率降低。而在 ART 中，系统在安装应用程序时会进行一次 AOT（ahead of time compilation, 预编译），将字节码预先编译成机器码并存储在本地，用于生成OAT文件，这个OAT文件既包含转化前的dex文件，又包含机器指令，这样应用程序每次运行时就不需要执行编译了，运行效率会大大提升，设备的耗电量也会降低。不过采用 AOT 也有缺点，主要有两个：第一个是 AOT 会使得应用程序的安装时间变长，尤其是一些复杂的应用；第二个是字节码预先编译成机器码，机器码需要的存储空间会多一些。为了弥补以上两个缺点，Android 7.0 版本的 ART 加入了即时编译器 JIT，引入了混合编译模式，作为 AOT 的一个补充，在应用程序安装时不会将字节码全部编译成机器码，而是在运行中将热点代码编译成机器码，从而缩短了应用程序的安装时间并节省了存储空间。<br>   <strong>基本概念和名词</strong></p>
-<ul>
-<li>.dex文件：App所有java源代码编译后生成众多class文件，由DX/D8，编译为一个/多个（multiDex）dex文件，由Android虚拟机编译执行</li>
-<li>.odex文件：dex文件经过验证和优化后的产物，art下的odex文件包含经过AOT编译后的代码以及dex的完整内容，但Android8.0之后odex中的dex内容移动到了.vdex文件</li>
-<li>.art文件：art下根据配置文件生成odex文件时同时生成.art文件，主要是为了提升运行时加载odex中热点代码的速度，包含了类信息和odex中热点方法的索引，运行App时会首先根据这个文件来加载odex中已经编译过的代码</li>
-<li>解释器（Interpreter）：用于程序运行时对代码进行逐行解释，翻译成对应平台的机器码执行</li>
-<li>JIT编译（Just In Time）：由于解释器方式运行太慢引入，对于<strong>频繁运行的热点代码（判定标准一般是在某个时间段内执行次数达到某个阈值）进行实时编译（在ART下以方法为粒度）执行，并且缓存JIT编译后的代码在内存中用于下次执行。由于以方法为粒度（ArtMethod）</strong>进行编译，JIT编较于解释器可以生成效率更高的代码，运行更快。</li>
-<li>AOT编译（Ahead-Of-Time）：应用安装时全量编译所有代码为本地机器码，运行时直接执行机器码。<br><img src="http://nunu03.github.io/2022/04/08/epic%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90/art.jpg" alt><br>从这幅图中我们看到：<br>在Dalvik虚拟机上，APK中的Dex文件在安装时会被优化成odex文件，在运行时，会被JIT编译器编译成native代码。<br>而在ART虚拟机上安装时，Dex文件会直接由dex2oat工具翻译成oat格式的文件，oat文件中既包含了dex文件中原先的内容，也包含了已经编译好的native代码。<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><a href="https://blog.csdn.net/weixin_33928467/article/details/89614535" target="_blank" rel="noopener">Android上的ART虚拟机</a><br><a href="https://bbs.pediy.com/thread-250490.htm" target="_blank" rel="noopener">开源Hook框架-epic-实现浅析</a></li>
-</ul>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
+        <h2 id="Art-amp-Dalvik"><a href="#Art-amp-Dalvik" class="headerlink" title="Art &amp; Dalvik"></a>Art &amp; Dalvik</h2><p>Art（Android Runtime）虚拟机是 Android 4.4 发布的，用来替换 Dalvik 虚拟机，但是在Android 4.4 默认采用的还是Dalvik 虚拟机，但是可以选择使用Art。在Android 5.0版本中默认使用Art了，Dalvik退出了历史舞台，所以可以说是在Android在5.0开始正式使用Art虚拟机。</p>
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hook/">Hook</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2022/04/08/epic原理浅析/#more">Read More</a>
+        </p>
       
       
       
@@ -614,7 +289,7 @@
 <a href="/2022/02/16/python-设置Host代理/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -626,40 +301,16 @@
 <p>Host Name:testcapp.com<br>Address: 10.167.192.17 </p>
 </blockquote>
 <p>那如果我们要是在通过Python脚本进行接口请求，在沙箱环境下，设置Host时要如何做呢？看下面代码设置：</p>
-<h2 id="配置Host"><a href="#配置Host" class="headerlink" title="配置Host"></a>配置Host</h2><p>上代码：</p>
-<p>配置Host，沙箱环境：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dataUrl = &quot;https://10.167.192.17/tst/positions/ful/dat&quot;</span><br><span class="line">req = urllib2.Request(dataUrl)</span><br><span class="line">req.add_header(&apos;Host&apos;, &apos;testcapp.com&apos;)</span><br><span class="line">req.add_header(&apos;version&apos;, versionName)</span><br><span class="line">resp = urllib2.urlopen(req)</span><br></pre></td></tr></table></figure>
-
-<p>正式线上环境：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dataUrl = &quot;https://testcapp.com/tst/positions/ful/dat&quot;</span><br><span class="line">req = urllib2.Request(dataUrl)</span><br><span class="line">req.add_header(&apos;version&apos;, versionName)</span><br><span class="line">resp = urllib2.urlopen(req)</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意：Host一定要是正式线上的域名，而不是Ip地址，下边设置是不对的,我们习惯了Charles写法，如果按下面设置，header中Host的key就错了，语法就不对：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dataUrl = &quot;https://testcapp.com/tst/positions/ful/dat&quot;</span><br><span class="line">req = urllib2.Request(dataUrl)</span><br><span class="line">req.add_header(&apos;testcapp.com&apos;, &apos;10.167.192.17&apos;)</span><br><span class="line">req.add_header(&apos;version&apos;, versionName)</span><br><span class="line">resp = urllib2.urlopen(req)</span><br><span class="line">req.add_header(&apos;testcapp.com&apos;, &apos;testcapp.com&apos;)</span><br></pre></td></tr></table></figure>
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2022/02/16/python-设置Host代理/#more">Read More</a>
+        </p>
       
       
       
@@ -700,7 +351,7 @@
 <a href="/2021/12/27/Pngquant-图片压缩/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -709,427 +360,25 @@
       
         <h2 id="pngquant"><a href="#pngquant" class="headerlink" title="pngquant"></a>pngquant</h2><p>pngquant是一个命令行实用程序，也是一个用于有损压缩PNG图像的库。转换后可以显著减小文件大小（通常高达70%），并保持完全的alpha透明度。生成的图像与所有web浏览器和操作系统兼容。具有以下特点：</p>
 <ul>
-<li>结合矢量化运算的高质量的调色板。</li>
-<li>独特的自适应抖动算法。</li>
-<li>跨平台： windows ， Mac OS X ， Linux 。 </li>
-<li>可以与shell脚本、GUI和服务器端软件轻松地集成。</li>
-<li>快速模式处理大量图像。</li>
-</ul>
-<blockquote>
-<p>Options：请参阅 pngquant -h 完整的选项列表。</p>
-</blockquote>
-<ul>
-<li><p>–ext new.png<br>为输出文件名设置自定义扩展。默认-or8.png或被-fs8.png使用。</p>
+<li><p>结合矢量化运算的高质量的调色板。</p>
 </li>
-<li><p>–quality min-max<br>指示pngquant使用达到或超过最高质量所需的最少量的颜色。如果转换结果的质量低于最低质量，图像将不会被保存（如果输出到标准输出，则会输出24位原始图像），pngquant并将以状态码99退出。<br>最小值和最大值是范围0（最差）到100（完美）的数字，类似于JPEG。<br>pngquant –quality=65-80 image.png</p>
+<li><p>独特的自适应抖动算法。</p>
 </li>
-<li><p>–speed N， -sN<br>速度/品质取舍从1（蛮力）到10（最快）。默认值为3. Speed 10的质量下降了5％，但比默认的速度快了8倍。</p>
+<li><p>跨平台： windows ， Mac OS X ， Linux 。 </p>
 </li>
-<li><p>–iebug<br>IE6的解决方法，只显示完全不透明的像素。pngquant会使几乎不透明的像素完全不透明，并会避免创建新的透明颜色。</p>
+<li><p>可以与shell脚本、GUI和服务器端软件轻松地集成。</p>
 </li>
-<li><p>–version<br>将版本信息打印到标准输出。</p>
-</li>
-<li><p>-<br>-从stdin读取图像并将结果发送到stdout。</p>
-</li>
-<li><p>–<br>停止参数的处理。这允许使用以开头的文件名-。如果您pngquant在脚本中使用，建议在文件名前加上：<br>pngquant $OPTIONS – “$FILE”</p>
-</li>
-</ul>
-<p>官网地址:<a href="https://pngquant.org/" target="_blank" rel="noopener">https://pngquant.org/</a></p>
-<h2 id="Mac端安装使用"><a href="#Mac端安装使用" class="headerlink" title="Mac端安装使用"></a>Mac端安装使用</h2><ul>
-<li><p>1.官网下载pngquant,解压到pngquant目录；<br><img src="http://nunu03.github.io/2021/12/27/Pngquant-%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/pngdown.jpg" alt></p>
-</li>
-<li><p>2.拷贝图片到pngquant目录；  </p>
-</li>
-<li><p>3.通过pngquant命令压缩图片：<br>Pro:pngquant chenyulong01$ ./pngquant img.png；</p>
-</li>
-<li><p>4.通过pngquant命令压缩多个图片：<br>Pro:pngquant chenyulong01$ ./pngquant ./img/*.png</p>
-</li>
-<li><p>5.将压缩后的-fs8.png移到新文件夹：<br>Pro:pngquant chenyulong01$ mkdir ./img/compress/</p>
-<p>Pro:pngquant chenyulong01$ mv ./img/*-fs8.png ./img/compress/</p>
-</li>
-<li><p>6.目录结构如下：</p>
-<img src="http://nunu03.github.io/2021/12/27/Pngquant-图片压缩/pngcompress.jpg" width="70%" height="70%">
-
-</li>
-</ul>
-<h2 id="压缩前后文件对比"><a href="#压缩前后文件对比" class="headerlink" title="压缩前后文件对比"></a>压缩前后文件对比</h2><p>先看下效果图：<br><img src="http://nunu03.github.io/2021/12/27/Pngquant-图片压缩/compress.jpg" width="70%" height="70%"><br>大小：从398kb降到了140kb，减少了258kb，优化率达到64.8%<br>文件类型：从24位png，转换成了8位png。</p>
-<blockquote>
-<p>PNG图片主要有三个类型，分别为 PNG-8，PNG-24，PNG-32：</p>
-</blockquote>
-<p>PNG 8：PNG 8中的8，其实指的是8bits，相当于用2^8（2的8次方）大小来存储一张图片的颜色种类，2^8等于256，也就是说PNG 8能存储256种颜色，一张图片如果颜色种类很少，将它设置成PNG 8得图片类型是非常适合的。</p>
-<p>PNG 24：PNG 24中的24，相当于3乘以8 等于 24，就是用三个8bits分别去表示 R（红）、G（绿）、B（蓝）。R(0-255),G(0-255),B(0-255)，可以表达256乘以256乘以256=16777216种颜色的图片，这样PNG 24就能比PNG 8表示色彩更丰富的图片。但是所占用的空间相对就更大了。</p>
-<p>PNG 32：PNG 32中的32，相当于PNG 24 加上 8bits的透明颜色通道，就相当于R（红）、G（绿）、B（蓝）、A（透明）。R(0-255),G(0-255),B(0-255),A(0-255)。比PNG 24多了一个A（透明），也就是说PNG 32能表示跟PNG 24一样多的色彩，并且还支持256种透明的颜色，能表示更加丰富的图片颜色类型。</p>
-<p><strong>从file命令来看：</strong><br>24位PNG（每通道8位 - 无alpha通道）</p>
-<blockquote>
-<p>$ file img2.png<br>img2.png: PNG image data, 540 x 1170, 8-bit/color RGB, non-interlaced</p>
-</blockquote>
-<p>8位PNG（256色）：</p>
-<blockquote>
-<p>$ file img2-fs8.png<br>img2-fs8.png: PNG image data, 540 x 1170, 8-bit colormap, non-interlaced</p>
-</blockquote>
-<p><strong>从png数据块来看：</strong><br><img src="http://nunu03.github.io/2021/12/27/Pngquant-图片压缩/compare-header.jpg" width="70%" height="70%"></p>
-<img src="http://nunu03.github.io/2021/12/27/Pngquant-图片压缩/png_pre.png" width="70%" height="70%">
-
-<img src="http://nunu03.github.io/2021/12/27/Pngquant-图片压缩/png_pre.png" width="70%" height="70%">
-8950 4e47 0d0a 1a0a：这个是PNG图片的头，所有的PNG图片的头都是这一串编码，图片软件通过这串编码判定这个文件是不是PNG格式的图片。
-0000 000d：iHDR数据块的长度(转十进制13)。
-4948 4452：数据块的type,为IHDR，之后紧跟着是data。
-0000 021c：图片宽度(转十进制540)。
-0000 0492：图片高度(转十进制1170)。
-08:图像深度。
-02/03:颜色类型。
-00:压缩算法。
-00:滤波器方法。
-00:非隔行扫描方法。
-75 f6a0:循环冗余检测。
-[详细参数看这里](https://www.cnblogs.com/ECJTUACM-873284962/p/8986391.html)
-所有我们可以得到png数据块结构：
-<img src="http://nunu03.github.io/2021/12/27/Pngquant-图片压缩/pngchunk.drawio.png" width="70%" height="70%">
-
-<h2 id="Png图片类型"><a href="#Png图片类型" class="headerlink" title="Png图片类型"></a>Png图片类型</h2><img src="http://nunu03.github.io/2021/12/27/Pngquant-图片压缩/possible-color-type.jpg" width="70%" height="70%">
-* 1.Truecolour with alpha:带alpha的Truecolour,每个像素由四个样本组成：红色、绿色、蓝色和alpha。
-* 2.Greyscale with alpha:灰度带alpha,每个像素由两个样本组成：灰度和alpha。
-* 3.Truecolour:真彩色,每个像素由三个样本组成：红色、绿色和蓝色。alpha通道可以由单个像素值表示。匹配的像素是完全透明的，其他所有像素都是完全不透明的。如果alpha通道没有以这种方式表示，则所有像素都是完全不透明的。
-* 4.Greyscale:灰度,每个像素由一个样本组成：灰色。与前一种情况一样，alpha通道可以由单个像素值表示。如果alpha通道没有以这种方式表示，则所有像素都是完全不透明的。
-* 5.Indexed-colour: 索引颜色,每个像素都包含一个调色板索引（以及相关的alpha值表，如果存在）。
-
-<p>每个像素的格式取决于PNG图像类型和位深度。对于非索引颜色的PNG图像类型，位深度指定每个样本的位数，而不是每个像素的总位数。对于索引彩色图像，位深度指定每个调色板索引中的位数，而不是调色板或alpha表中颜色的采样深度。在像素内，根据PNG图像类型，采样按以下顺序显示。</p>
-<ul>
-<li>a.带alpha的真彩色：红、绿、蓝、alpha。</li>
-<li>b.带alpha的灰度：灰色，alpha。</li>
-<li>c.真彩色：红、绿、蓝。</li>
-<li>d.灰度：灰色。</li>
-<li>e.索引颜色：调色板索引。<h2 id="索引彩色图像"><a href="#索引彩色图像" class="headerlink" title="索引彩色图像"></a>索引彩色图像</h2>如果不同像素值的数量为256或更少，且RGB采样深度不大于8，且alpha通道不存在或正好为8位深，或者每个像素是完全透明或完全不透明的，则称为索引颜色的替代表示可能更有效地进行编码。每个像素都被调色板中的索引替换。调色板是一个条目列表，每个条目包含三个8位样本（红色、绿色、蓝色）。如果存在alpha通道，则还存在8位alpha采样的并行表。<img src="http://nunu03.github.io/2021/12/27/Pngquant-图片压缩/png-indexing-color.jpg" width="70%" height="70%">
-即使PNG图像没有索引颜色，也可以构建一个或多个建议调色板，以帮助只能显示有限数量颜色的观众。
-对于索引彩色图像，编码器可以重新排列调色板，以便将具有最大alpha值的表格条目分组到最后。在这种情况下，表格可以用不包含这些条目的缩写形式进行编码。
-
-</li>
-</ul>
-<h2 id="PNG图片IDAT数据块图例"><a href="#PNG图片IDAT数据块图例" class="headerlink" title="PNG图片IDAT数据块图例"></a>PNG图片IDAT数据块图例</h2><h3 id="目标图："><a href="#目标图：" class="headerlink" title="目标图："></a>目标图：</h3><center>
-<img src="http://nunu03.github.io/2021/12/27/Pngquant-图片压缩/png-target.jpg" width="60%" height="60%">
-
-<p>$ $<br>target.jpg</p>
-</center>
-
-<h3 id="真彩-7x7-IDAT数据块"><a href="#真彩-7x7-IDAT数据块" class="headerlink" title="真彩 7x7 IDAT数据块"></a>真彩 7x7 IDAT数据块</h3><img src="http://nunu03.github.io/2021/12/27/Pngquant-图片压缩/png-rgb.jpg" width="68%" height="68%">
-
-<h3 id="索引-7x7-IDAT数据块"><a href="#索引-7x7-IDAT数据块" class="headerlink" title="索引 7x7 IDAT数据块"></a>索引 7x7 IDAT数据块</h3><img src="http://nunu03.github.io/2021/12/27/Pngquant-图片压缩/png-indexcolor.jpg" width="70%" height="70%">
-
-<h2 id="Png数据块表"><a href="#Png数据块表" class="headerlink" title="Png数据块表"></a>Png数据块表</h2><table bordercolor="#000000" cellspacing="2" width="532" border="1" id="table9">
-              <tbody><tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2"><b>
-                </b></font><p align="center"><font lang="ZH-CN" size="2"><b>数据块符号</b></font></p></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2"><b>
-                </b></font><p align="center"><font lang="ZH-CN" size="2"><b>数据块名称</b></font></p></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2"><b>
-                </b></font><p align="center"><font lang="ZH-CN" size="2"><b>多数据块</b></font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2"><b>
-                </b></font><p align="center"><font lang="ZH-CN" size="2"><b>可选否</b></font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2"><b>
-                </b></font><p align="center"><font lang="ZH-CN" size="2"><b>位置限制</b></font></p></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">IHDR</font></td>
-                <td valign="top" width="30%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">文件头数据块</font></td>
-                <td valign="top" width="13%" bgcolor="#ffffff" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="32%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">第一块</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">cHRM</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">
-                基色和白色点数据块</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">
-                在PLTE和IDAT之前</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">gAMA</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">图像γ数据块</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">
-                在PLTE和IDAT之前</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">sBIT</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">
-                样本有效位数据块</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">
-                在PLTE和IDAT之前</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">PLTE</font></td>
-                <td valign="top" width="30%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">调色板数据块</font></td>
-                <td valign="top" width="13%" bgcolor="#ffffff" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">在IDAT之前</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">bKGD</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">背景颜色数据块</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">
-                在PLTE之后IDAT之前</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">hIST</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">
-                图像直方图数据块</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">
-                在PLTE之后IDAT之前</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">tRNS</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">图像透明数据块</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">
-                在PLTE之后IDAT之前</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">oFFs</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">
-                (专用公共数据块)</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">在IDAT之前</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">pHYs</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">
-                物理像素尺寸数据块</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">在IDAT之前</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">sCAL</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">
-                (专用公共数据块)</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">在IDAT之前</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">IDAT</font></td>
-                <td valign="top" width="30%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">图像数据块</font></td>
-                <td valign="top" width="13%" bgcolor="#ffffff" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="10%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="32%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">与其他IDAT连续</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">tIME</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">
-                图像最后修改时间数据块</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">无限制</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">tEXt</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">文本信息数据块</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">无限制</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">zTXt</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">压缩文本数据块</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">无限制</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">fRAc</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">
-                (专用公共数据块)</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">无限制</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">gIFg</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">
-                (专用公共数据块)</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">无限制</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">gIFt</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">
-                (专用公共数据块)</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">无限制</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%"><font lang="ZH-CN" size="2">gIFx</font></td>
-                <td valign="top" width="30%"><font lang="ZH-CN" size="2">
-                (专用公共数据块)</font></td>
-                <td valign="top" width="13%" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="10%"><font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">是</font></p></td>
-                <td valign="top" width="32%"><font lang="ZH-CN" size="2">无限制</font></td>
-              </tr>
-              <tr>
-                <td valign="top" width="14%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">IEND</font></td>
-                <td valign="top" width="30%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">图像结束数据</font></td>
-                <td valign="top" width="13%" bgcolor="#ffffff" colspan="3">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="10%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">
-                </font><p align="center"><font lang="ZH-CN" size="2">否</font></p></td>
-                <td valign="top" width="32%" bgcolor="#ffffff">
-                <font lang="ZH-CN" size="2">最后一个数据块</font></td>
-              </tr>
-            </tbody></table>
-
-<h2 id="安卓图片压缩"><a href="#安卓图片压缩" class="headerlink" title="安卓图片压缩"></a>安卓图片压缩</h2><p>首先在Android Gradle Plugin版本为不低于3.3的情况下，有一个接口BaseVariantImpl.allRawAndroidResources.files可以在编译期间获取到所有的资源文件。所有包含jar，aar，module等等。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public interface BaseVariant &#123;</span><br><span class="line">    /**</span><br><span class="line">     * Returns file collection containing all raw Android resources, including the ones from</span><br><span class="line">     * transitive dependencies.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt;&lt;strong&gt;This is an incubating API, and it can be changed or removed without</span><br><span class="line">     * notice.&lt;/strong&gt;</span><br><span class="line">     */</span><br><span class="line">    //返回包含所有原始Android资源的文件集合，包括来自传递依赖项的资源</span><br><span class="line">    //这是一个正在孵化的API，可以更改或删除它，恕不另行通知</span><br><span class="line">    @Incubating</span><br><span class="line">    @NonNull</span><br><span class="line">    FileCollection getAllRawAndroidResources();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在这个前提下，可以结合pngquant，编写一个无侵入性的图片压缩插件，可以在构建过程中对所有图片进行有配置的压缩，从而减少包对体积大小。具体实现可以看抖音的开源McImage插件介绍<a href="https://github.com/smallSohoSolo/McImage" target="_blank" rel="noopener">https://github.com/smallSohoSolo/McImage</a>：</p>
-<blockquote>
-<p>优势：McImage在编译期间 hook 资源，采用开源的算法 pngquant/guetzli 进行压缩，支持 webp 压缩。与 tinypng 等一些已知的方案相比，存在以下优势：</p>
-</blockquote>
-<ul>
-<li>McImage 现支持 webp 压缩，压缩比高于 tinypng，不过 Android 上 webp 需要做兼容，下文会详细介绍；</li>
-<li>tinypng 不开源，每个账号每个月只能免费压缩 500 张；McImage 使用的压缩算法都是基于开源算法；</li>
-<li>McImage 不仅可以压缩 module 中的图片，还能压缩 jar 和 aar 中的图片；</li>
-<li>McImage 支持压缩算法扩展，有更优的压缩算法选择时扩展方便；</li>
-<li>和行业里其他方案相比，McImage 还能够支持压缩包含透明度的 webp 图片，并且兼容了 aapt2 对资源的 hook。</li>
-</ul>
-<blockquote>
-<p>收益:McImage 支持两种优化方式，但是两种优化方式不可同时使用:</p>
-</blockquote>
-<ul>
-<li>Compress，pngquant 压缩 png 图片，guetzli 压缩 jpg 图片；</li>
-<li>ConvertWebp，webp 压缩 png\png 图片。</li>
-<li>Webp 的压缩比要高于 pngquant、guetzli，推荐使用 ConvertWebp 压缩方式。</li>
-</ul>
-<blockquote>
-<p>功能：除了压缩、优化图片，McImage 还提供了以下功能：</p>
-</blockquote>
-<ul>
-<li>大图检测。阈值可在 McImageConfig 里进行设置，方便大图复盘优化包大小；也支持编译阶段检测，检测到大图直接 block 编译，可及时发现大图提交；</li>
-<li>压缩算法方便扩展。如果想接入其他压缩算法，只需要继承 AbstractTask，实现 ITask 接口中的 work 方法即可；</li>
-<li>支持多线程压缩。把所有 task 的执行放入线程池中执行，大大缩短了 mcimage 的执行时间；</li>
-<li>增加了图片缓存 cache，进一步缩短打包时间。在开启多线程+图片缓存的情况下，全部命中缓存的情况下，整个 mcimage 的过程不到 10s；缓存路径可配置；</li>
-<li>压缩质量可配置，满足不同的压缩质量需求，缓存文件也会按照不同的压缩质量进行保存和命中；</li>
-<li>图片白名单功能；</li>
-<li>debug打包模式是否开启设置；</li>
-</ul>
-<blockquote>
-<p>配置文件代码：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">McImageConfig &#123;</span><br><span class="line">    isCheckSize true //Whether to detect image size，default true</span><br><span class="line">    optimizeType &quot;Compress&quot; //Optimize Type，&quot;ConvertWebp&quot; or &quot;Compress&quot;，default &quot;Compress&quot;, &quot;CompressWebp&quot; is a better compression ratio but it don&apos;t support api &lt; 18</span><br><span class="line">    maxSize 1*1024*1024 //big image size threshold，default 1MB</span><br><span class="line">    enableWhenDebug false //switch in debug build，default true</span><br><span class="line">    isCheckPixels true // Whether to detect image pixels of width and height，default true</span><br><span class="line">    maxWidth 1000 //default 1000</span><br><span class="line">    maxHeight 1000 //default 1000</span><br><span class="line">    whiteList = [ //do not do any optimization for the images who in the list </span><br><span class="line">              &quot;icon_launcher.png&quot;</span><br><span class="line">    ]</span><br><span class="line">    mctoolsDir &quot;$rootDir&quot;</span><br><span class="line">    isSupportAlphaWebp false  //Whether support convert the Image with Alpha chanel to Webp，default false, the images with alpha chanels will be compressed.if config true, its need api level &gt;=18 or do some compatible measures </span><br><span class="line">    multiThread true  //Whether open multi-thread processing，default true</span><br><span class="line">    bigImageWhiteList = [] //do not detect big size or large pixels for the images who in the list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.codenong.com/cs105675686/" target="_blank" rel="noopener">图片压缩原理</a><br><a href="http://www.360doc.com/content/11/0428/12/1016783_112894280.shtml" target="_blank" rel="noopener">PNG文件结构分析</a><br><a href="https://www.w3.org/TR/PNG/" target="_blank" rel="noopener">PNG文件格式白皮书</a><br><a href="https://segmentfault.com/a/1190000020864056" target="_blank" rel="noopener">手动生成一张PNG图片</a><br><a href="https://dev.gameres.com/Program/Visual/Other/PNGFormat.htm" target="_blank" rel="noopener">PNG格式</a></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
+<li><p>快速模式处理大量图像。</p></li></ul>
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2021/12/27/Pngquant-图片压缩/#more">Read More</a>
+        </p>
       
       
       
@@ -1170,7 +419,7 @@
 <a href="/2021/11/15/Gradle-4-0-jar包assets资源丢失原因分析/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -1178,79 +427,16 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在gradle升级到4.0.2时遇到了release包构建成功，并且在构建过程中无异常提示，但是百度地图BaiduLBS_Android.jar中assets下文件丢失，导致地图相应功能丢失，app崩溃情况。在解决问题的过程中，耗费时间较长，一度以为是混淆问题，因为debug包没问题，并且release在打开R8的情况下，也可以解决，gradle升级到4.1也可以解决。但是具体原因是什么呢？到底是混淆问题，还是其他原因，带着这个问题我们分析下第三方jar包assets下资源文件是如何打包到apk中的。</p>
-<h2 id="总流程"><a href="#总流程" class="headerlink" title="总流程"></a>总流程</h2><p>第三方jar包assets下资源文件构建总流程如下：<br><img src="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/jar-assets-general-flow-chart.jpg" alt><br>主要是分为以下几步：</p>
-<ol>
-<li>jar包中的assets下资源文件在生成aar后，不是在aar的assets目录下，而是在classed.jar的assets目录下，同时aar中libs下的jar包，不在包含assets目录,只有源码目录文件。</li>
-<li>在构建过程中，通过mergeReleaseJavaResource合并java资源Task解析classes.jar并生成out.jar文件，out.jar中包含所有的非res文件，以及源码目录非claaes文件。例如：out/com/baidu/pano/platform/res/indoor_in.png </li>
-<li>在minifyReleaseWithProguard的Task中，out.jar会被解析重新生成一个minified.jar文件，这个minified.jar文件不仅包含了out.jar内容，也包含了所有的classes文件。</li>
-<li>在最后打包packageRelease的Task中，读取minified.jar文件中的assets目录文件，直接add到apk中。</li>
-</ol>
-<h2 id="PackageRelease-分析"><a href="#PackageRelease-分析" class="headerlink" title="PackageRelease 分析"></a>PackageRelease 分析</h2><p>先看下如下构建时序图：<br><img src="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/pack-release-time.jpg" alt></p>
-<ol>
-<li>run:主要读取文件信息，manifest、dex、javaRes、assets、res、so、……等等。</li>
-<li>updateFiles:更新所有存档中所有新的、更改的和删除的文件，也就是dex、android res、java res、assets、so等等。</li>
-<li>addFiles:写入andoid 资源文件，和java资源文件。</li>
-</ol>
-<p>在最后一步我们看到有两种文件处理方式：那么4.0版本我们用的是ApkZFileCreator，4.1版本我们用的是ApkFlinger。我们还可以通过设置android.useNewApkCreator配置决定使用哪个打包工具，值为true用ApkFlinger，否则用ApkZFileCreator，并且android.useNewApkCreator默认值为true，那么我们在4.0版本应该使用的是否则用ApkZFileCreator，然后我们跟踪一下4.0源码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (!apkFormatIsFile || !debuggableBuild) &#123;</span><br><span class="line">    mApkCreatorType = ApkCreatorType.APK_Z_FILE_CREATOR;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    mApkCreatorType = apkCreatorType;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们可以发现，无论我们如何，release构建都是用的ApkZFileCreator，debug用的是ApkFlinger。然后我们在看一下4.1源码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (!apkFormatIsFile) &#123;</span><br><span class="line">    mApkCreatorType = ApkCreatorType.APK_Z_FILE_CREATOR;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    mApkCreatorType = apkCreatorType;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们可以发现，无论我们如何，release构建都是用的ApkFlinger。</p>
-<p>通过以上比较，和通过4.1进行构建打包，发现4.1是正常的，所以我们定位到4.0构建打包jar下assets目录文件和使用ApkZFileCreator文件有关。</p>
-<h2 id="ApkZFileCreator分析"><a href="#ApkZFileCreator分析" class="headerlink" title="ApkZFileCreator分析"></a>ApkZFileCreator分析</h2><p>下面的源码片段展示了写入的主要逻辑，分为如下 3 步：</p>
-<ol>
-<li>创建 ZFile 对象，读取 zip 文件将 central directory 中的每项加入到 entries 中;</li>
-<li>遍历 ZFile 中的 entries，将压缩的资源文件合并到 APK 文件中;</li>
-<li>遍历 ZFile 中的 entries，将非压缩的资源文件写入到 APK 文件中;</li>
-</ol>
-<p>ApkZFileCreator:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public void writeZip(File zip, @Nullable Function&lt;String, String&gt; transform, @Nullable Predicate&lt;String&gt; isIgnored) throws IOException &#123;</span><br><span class="line">    Closer closer = Closer.create();</span><br><span class="line">    try &#123;</span><br><span class="line">      ZFile toMerge = closer.register(ZFile.openReadWrite(zip));</span><br><span class="line">    </span><br><span class="line">      Predicate&lt;String&gt; ignorePredicate;</span><br><span class="line">      if (isIgnored == null) &#123;</span><br><span class="line">        ignorePredicate = s -&gt; false;</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        ignorePredicate = isIgnored;</span><br><span class="line">      &#125;</span><br><span class="line">    </span><br><span class="line">      // Files that *must* be uncompressed in the result should not be merged and should be</span><br><span class="line">      // added after. This is just very slightly less efficient than ignoring just the ones</span><br><span class="line">      // that were compressed and must be uncompressed, but it is a lot simpler :)</span><br><span class="line">      Predicate&lt;String&gt; noMergePredicate =</span><br><span class="line">          v -&gt; ignorePredicate.apply(v) || noCompressPredicate.apply(v);</span><br><span class="line">    </span><br><span class="line">      this.zip.mergeFrom(toMerge, noMergePredicate);</span><br><span class="line">    </span><br><span class="line">      for (StoredEntry toMergeEntry : toMerge.entries()) &#123;</span><br><span class="line">        String path = toMergeEntry.getCentralDirectoryHeader().getName();</span><br><span class="line">        if (noCompressPredicate.apply(path) &amp;&amp; !ignorePredicate.apply(path)) &#123;</span><br><span class="line">          // This entry *must* be uncompressed so it was ignored in the merge and should</span><br><span class="line">          // now be added to the apk.</span><br><span class="line">          try (InputStream ignoredData = toMergeEntry.open()) &#123;</span><br><span class="line">            this.zip.add(path, ignoredData, false);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; catch (Throwable t) &#123;</span><br><span class="line">      throw closer.rethrow(t);</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">      closer.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>ZFile.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">private void readData() throws IOException &#123;</span><br><span class="line">  // ...</span><br><span class="line">  readEocd();</span><br><span class="line">  readCentralDirectory();</span><br><span class="line">  // ...</span><br><span class="line">  if (directoryEntry != null) &#123;</span><br><span class="line"> // ...</span><br><span class="line"> for (StoredEntry entry : directory.getEntries().values()) &#123;</span><br><span class="line">   // ...</span><br><span class="line">   entries.put(entry.getCentralDirectoryHeader().getName(), mapEntry);</span><br><span class="line">   //...</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> directoryStartOffset = directoryEntry.getStart();</span><br><span class="line">  &#125; else &#123;</span><br><span class="line"> // ...</span><br><span class="line">  &#125;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void mergeFrom(ZFile src, Predicate&lt;String&gt; ignoreFilter) throws IOException &#123;</span><br><span class="line">  // ...</span><br><span class="line">  for (StoredEntry fromEntry : src.entries()) &#123;</span><br><span class="line"> if (ignoreFilter.apply(fromEntry.getCentralDirectoryHeader().getName())) &#123;</span><br><span class="line">   continue;</span><br><span class="line"> &#125;</span><br><span class="line"> // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在调试过程中发现读取minified.jar文件创建的ZFile中的entries中文件读取不全，没有 Java 资源文件，而在前面 IncrementalSplitterRunnable.execute 中调 PackageAndroidArtifact.getChangedJavaResources获取改变的Java资源文件时，使用ZipCentralDirectory能正常读取到Java资源文件，由此说明ZFile存在缺陷。图示如下：<br>ZipCentralDirectory读取minified.jar:<br><img src="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/zifcenter-minified.jpg" alt><br>ZFile读取minified.jar:<br><img src="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/zif-minified.jpg" alt><br><strong>ZipCentralDirectory读取minified.jar:获取changeJavaResources文件数是101377</strong>，</p>
-<p><strong>ZFile读取minified.jar:获取entries文件数是35841</strong>，</p>
-<p>两种方式读取的文件数完全不一样。</p>
-<p>而且ZFile注释中所述,它不是通用的 zip 工具类，对 zip 格式和不支持的特性有严格的要求；它在某些特殊条件下存在限制，可能会出现读取文件缺失等问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* &lt;p&gt;Because &#123;@code ZFile&#125; was designed to be used in a build system and not as general-purpose zip</span><br><span class="line"> * utility, it is very strict (and unforgiving) about the zip format and unsupported features.</span><br></pre></td></tr></table></figure>
-
-<p>那么为啥开启R8就没问题了呢？看一下R8的流程图：可以看到开启R8后，生成的java 资源文件是shrunkJavaRes.jar，这个shrunkJavaRes.jar文件和minified.jar相比仅仅包含了out.jar内容，不包含classes文件。<br><img src="http://nunu03.github.io/2021/11/15/Gradle-4-0-jar%E5%8C%85assets%E8%B5%84%E6%BA%90%E4%B8%A2%E5%A4%B1%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90/jar-assets-general-flow-chart-r8.jpg" alt></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>4.0版本构建release包不管如何设置打包方式，都是执行的ApkZFileCreator;</li>
-<li>4.0版本构建debug包，执行的新打包方式ApkFlinger;</li>
-<li>4.1版本构建release包，可以通过android.useNewApkCreator设置打包方式（ApkZFileCreator/ApkFlinger），默认为true，执行ApkFlinger;</li>
-<li>4.0版本构建release包虽然打包方式是ApkZFileCreator，但是经过了R8混淆，生成的java资源文件shrunkJavaRes.jar，并且此文件和minified.jar相比仅仅包含了out.jar内容，不包含classes文件;</li>
-</ol>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://segmentfault.com/a/1190000040612479" target="_blank" rel="noopener">AGP 升级之旅</a></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2021/11/15/Gradle-4-0-jar包assets资源丢失原因分析/#more">Read More</a>
+        </p>
       
       
       
@@ -1291,50 +477,24 @@
 <a href="/2021/10/08/Android代码混淆语法/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
     </div>
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="混淆设置参数"><a href="#混淆设置参数" class="headerlink" title="混淆设置参数"></a>混淆设置参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">-optimizationpasses 5                       # 代码混淆的压缩比例，值介于0-7，默认5</span><br><span class="line">-verbose                                    # 混淆时记录日志</span><br><span class="line">-dontoptimize                               # 不优化输入的类文件</span><br><span class="line">-dontshrink                                 # 关闭压缩</span><br><span class="line">-dontpreverify                              # 关闭预校验(作用于Java平台，Android不需要，去掉可加快混淆)</span><br><span class="line">-dontoptimize                               # 关闭代码优化</span><br><span class="line">-dontobfuscate                              # 关闭混淆</span><br><span class="line">-ignorewarnings                             # 忽略警告</span><br><span class="line">-dontwarn com.squareup.okhttp.**            # 指定类不输出警告信息</span><br><span class="line">-dontusemixedcaseclassnames                 # 混淆后类型都为小写</span><br><span class="line">-dontskipnonpubliclibraryclasses            # 不跳过非公共的库的类</span><br><span class="line">-printmapping mapping.txt                   # 生成原类名与混淆后类名的映射文件mapping.txt</span><br><span class="line">-useuniqueclassmembernames                  # 把混淆类中的方法名也混淆</span><br><span class="line">-allowaccessmodification                    # 优化时允许访问并修改有修饰符的类及类的成员</span><br><span class="line">-renamesourcefileattribute SourceFile       # 将源码中有意义的类名转换成SourceFile，用于混淆具体崩溃代码</span><br><span class="line">-keepattributes SourceFile,LineNumberTable  # 保留行号</span><br><span class="line">-keepattributes *Annotation*,InnerClasses,Signature,EnclosingMethod # 避免混淆注解、内部类、泛型、匿名类</span><br><span class="line">-optimizations !code/simplification/cast,!field/ ,!class/merging/   # 指定混淆时采用的算法</span><br></pre></td></tr></table></figure>
-
-<h2 id="保持不被混淆的设置"><a href="#保持不被混淆的设置" class="headerlink" title="保持不被混淆的设置"></a>保持不被混淆的设置</h2><h3 id="保持命令"><a href="#保持命令" class="headerlink" title="保持命令"></a>保持命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-keep                           # 防止类和类成员被移除或被混淆；</span><br><span class="line">-keepnames                      # 防止类和类成员被混淆；</span><br><span class="line">-keepclassmembers	            # 防止类成员被移除或被混淆；</span><br><span class="line">-keepclassmembernames           # 防止类成员被混淆；</span><br><span class="line">-keepclasseswithmembers         # 防止拥有该成员的类和类成员被移除或被混淆；</span><br><span class="line">-keepclasseswithmembernames     # 防止拥有该成员的类和类成员被混淆；</span><br></pre></td></tr></table></figure>
-
-<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">具体的类</span><br><span class="line">访问修饰符 → public、private、protected</span><br><span class="line">通配符(*) → 匹配任意长度字符，但不包含包名分隔符(.)</span><br><span class="line">通配符(**) → 匹配任意长度字符，且包含包名分隔符(.)</span><br><span class="line">extends → 匹配实现了某个父类的子类</span><br><span class="line">implements → 匹配实现了某接口的类</span><br><span class="line">$ → 内部类</span><br></pre></td></tr></table></figure>
-
-<h3 id="成员"><a href="#成员" class="headerlink" title="成员"></a>成员</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">匹配所有构造器 → &lt;init&gt;</span><br><span class="line">匹配所有域 → &lt;field&gt;</span><br><span class="line">匹配所有方法 → &lt;methods&gt;</span><br><span class="line">访问修饰符 → public、private、protected</span><br><span class="line">除了 * 和 ** 通配符外，还支持 *** 通配符，匹配任意参数类型</span><br><span class="line">... → 匹配任意长度的任意类型参数，如void test(...)可以匹配不同参数个数的test方法</span><br></pre></td></tr></table></figure>
-
-<h3 id="常用自定义混淆规则范例"><a href="#常用自定义混淆规则范例" class="headerlink" title="常用自定义混淆规则范例"></a>常用自定义混淆规则范例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"># 不混淆某个类的类名，及类中的内容</span><br><span class="line">-keep class cn.coderpig.myapp.example.Test &#123; *; &#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定包名下的类名，不包括子包下的类名</span><br><span class="line">-keep class cn.coderpig.myapp*</span><br><span class="line"></span><br><span class="line"># 不混淆指定包名下的类名，及类里的内容</span><br><span class="line">-keep class cn.coderpig.myapp* &#123;*;&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定包名下的类名，包括子包下的类名</span><br><span class="line">-keep class cn.coderpig.myapp**</span><br><span class="line"></span><br><span class="line"># 不混淆某个类的子类</span><br><span class="line">-keep public class * extends cn.coderpig.myapp.base.BaseFragment</span><br><span class="line"></span><br><span class="line"># 不混淆实现了某个接口的类</span><br><span class="line">-keep class * implements cn.coderpig.myapp.dao.DaoImp</span><br><span class="line"></span><br><span class="line"># 不混淆类名中包含了&quot;entity&quot;的类，及类中内容</span><br><span class="line">-keep class **.*entity*.** &#123;*;&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆内部类中的所有public内容</span><br><span class="line">-keep class cn.coderpig.myapp.widget.CustomView$OnClickInterface &#123;</span><br><span class="line">    public *;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定类的所有方法</span><br><span class="line">-keep cn.coderpig.myapp.example.Test &#123;</span><br><span class="line">    public &lt;methods&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定类的所有字段</span><br><span class="line">-keep cn.coderpig.myapp.example.Test &#123;</span><br><span class="line">    public &lt;fields&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定类的所有构造方法</span><br><span class="line">-keep cn.coderpig.myapp.example.Test &#123;</span><br><span class="line">    public &lt;init&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆指定参数作为形参的方法</span><br><span class="line">-keep cn.coderpig.myapp.example.Test &#123;</span><br><span class="line">    public &lt;methods&gt;(java.lang.String);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆类的特定方法</span><br><span class="line">-keep cn.coderpig.myapp.example.Test &#123;</span><br><span class="line">    public test(java.lang.String);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆native方法</span><br><span class="line">-keepclasseswithmembernames class * &#123;</span><br><span class="line">    native &lt;methods&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆枚举类</span><br><span class="line">-keepclassmembers enum * &#123;</span><br><span class="line">  public static **[] values();</span><br><span class="line">  public static ** valueOf(java.lang.String);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#不混淆资源类</span><br><span class="line">-keepclassmembers class **.R$* &#123;</span><br><span class="line">    public static &lt;fields&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆自定义控件</span><br><span class="line">-keep public class * entends android.view.View &#123;</span><br><span class="line">    *** get*();</span><br><span class="line">    void set*(***);</span><br><span class="line">    public &lt;init&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆实现了Serializable接口的类成员，此处只是演示，也可以直接 *;</span><br><span class="line">-keepclassmembers class * implements java.io.Serializable &#123;</span><br><span class="line">    static final long serialVersionUID;</span><br><span class="line">    private static final java.io.ObjectStreamField[] serialPersistentFields;</span><br><span class="line">    private void writeObject(java.io.ObjectOutputStream);</span><br><span class="line">    private void readObject(java.io.ObjectInputStream);</span><br><span class="line">    java.lang.Object writeReplace();</span><br><span class="line">    java.lang.Object readResolve();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 不混淆实现了parcelable接口的类成员</span><br><span class="line">-keep class * implements android.os.Parcelable &#123;</span><br><span class="line">    public static final android.os.Parcelable$Creator *;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 注意事项：</span><br><span class="line">#</span><br><span class="line"># ① jni方法不可混淆，方法名需与native方法保持一致；</span><br><span class="line"># ② 反射用到的类不混淆，否则反射可能出问题；</span><br><span class="line"># ③ 四大组件、Application子类、Framework层下的类、自定义的View默认不会被混淆，无需另外配置；</span><br><span class="line"># ④ WebView的JS调用接口方法不可混淆；</span><br><span class="line"># ⑤ 注解相关的类不混淆；</span><br><span class="line"># ⑥ GSON、Fastjson等解析的Bean数据类不可混淆；</span><br><span class="line"># ⑦ 枚举enum类中的values和valuesof这两个方法不可混淆(反射调用)；</span><br><span class="line"># ⑧ 继承Parceable和Serializable等可序列化的类不可混淆；</span><br><span class="line"># ⑨ 第三方库或SDK，请参考第三方提供的混淆规则，没提供的话，建议第三方包全部不混淆；</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://juejin.cn/post/6966526844552085512#heading-5" target="_blank" rel="noopener">补齐Android技能树 - 从害怕到玩转Android代码混淆</a></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
+        <h2 id="混淆设置参数"><a href="#混淆设置参数" class="headerlink" title="混淆设置参数"></a>混淆设置参数</h2>
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2021/10/08/Android代码混淆语法/#more">Read More</a>
+        </p>
       
       
       
@@ -1375,7 +535,7 @@
 <a href="/2021/09/06/自定义Gradle-Plugin发布到本地/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -1383,39 +543,16 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h2 id="插件build-gradle"><a href="#插件build-gradle" class="headerlink" title="插件build.gradle"></a>插件build.gradle</h2><p>采用com.lenebf.plugin插件demo方式。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * This file was generated by the Gradle &apos;init&apos; task.</span><br><span class="line"> *</span><br><span class="line"> * This generated file contains a sample Gradle plugin project to get you started.</span><br><span class="line"> * For more details take a look at the Writing Custom Plugins chapter in the Gradle</span><br><span class="line"> * User Manual available at https://docs.gradle.org/6.6.1/userguide/custom_plugins.html</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">plugins &#123;</span><br><span class="line">    // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins</span><br><span class="line">    id &apos;java-gradle-plugin&apos;</span><br><span class="line">    // Apply the Groovy plugin to add support for Groovy</span><br><span class="line">    id &apos;groovy&apos;</span><br><span class="line"></span><br><span class="line">    // 应用 Maven Publish Plugin 发布插件</span><br><span class="line">    id &apos;maven-publish&apos;</span><br><span class="line"></span><br><span class="line">    id &apos;com.jfrog.bintray&apos; version &quot;1.8.5&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task sourcesJar(type: Jar, dependsOn: classes) &#123;</span><br><span class="line">    def classifier = getArchiveClassifier()</span><br><span class="line">    classifier.set(&apos;sources&apos;)</span><br><span class="line">    classifier.convention(&apos;sources&apos;)</span><br><span class="line">    from sourceSets.main.allSource</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">publishing &#123;</span><br><span class="line">    publications &#123;</span><br><span class="line">        apkRename(MavenPublication) &#123;</span><br><span class="line">            // 组件类型，我们的插件其实就是Java组件</span><br><span class="line">            from components.java</span><br><span class="line">            // 插件的组ID，建议设置为插件的包名</span><br><span class="line">            groupId = &apos;com.lenebf.plugin&apos;</span><br><span class="line">            // 翻译过来是 工件ID，我的理解是插件的名字</span><br><span class="line">            artifactId = &apos;McImage&apos;</span><br><span class="line">            version = &apos;1.5.0&apos;</span><br><span class="line">            artifact sourcesJar</span><br><span class="line">            // artifact javadocJar</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        maven &#123;</span><br><span class="line">            // $rootProject 表示你项目的根目录</span><br><span class="line">            url = &quot;$rootDir/repo&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">sourceSets &#123;</span><br><span class="line">    main &#123;</span><br><span class="line">        groovy &#123;</span><br><span class="line">            srcDir &apos;src/main/groovy&apos;</span><br><span class="line">        &#125;</span><br><span class="line">        resources &#123;</span><br><span class="line">            srcDir &apos;src/main/resources&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">bintray &#123;</span><br><span class="line">    user = System.getenv(&apos;BINTRAY_USER&apos;)</span><br><span class="line">    key = System.getenv(&apos;BINTRAY_KEY&apos;)</span><br><span class="line">    publications = [&apos;McImage&apos;]</span><br><span class="line">    pkg &#123;</span><br><span class="line">        // 必填项，前面我们创建的仓库名称</span><br><span class="line">        repo = &apos;maven&apos;</span><br><span class="line"></span><br><span class="line">        // 必填项，我们要上传的包的名称</span><br><span class="line">        name = &apos;McImage&apos;</span><br><span class="line">        // 每次上传直接发布</span><br><span class="line">        publish = true</span><br><span class="line"></span><br><span class="line">        // 开原许可，如果是开源包必须有，否则可选</span><br><span class="line">        // 文档原话：your package licenses (mandatory if the package doesn&apos;t exist yet and must be created,</span><br><span class="line">        // and if the package is an OSS package; optional otherwise)</span><br><span class="line">//        licenses = [&apos;Apache-2.0&apos;]</span><br><span class="line"></span><br><span class="line">        // 版本控制系统地址（一般为git地址）如果是开源包必须有，否则可选</span><br><span class="line">        // 文档原话：your VCS URL (mandatory if the package doesn&apos;t exist yet and must be created,</span><br><span class="line">        // and if the package is an OSS package; optional otherwise)</span><br><span class="line">//        vcsUrl = &apos;https://github.com/lenebf/GradlePluginTutorial&apos;</span><br><span class="line"></span><br><span class="line">        // 包的版本信息</span><br><span class="line">        version &#123;</span><br><span class="line">            // 必填，版本名称</span><br><span class="line">            name = &apos;0.0.6&apos;</span><br><span class="line">            // 选填，版本描述</span><br><span class="line">            desc = &apos;McImage Plugin 0.0.6&apos;</span><br><span class="line">            // 选填，版本发布日期</span><br><span class="line">            released = new Date()</span><br><span class="line">            // 选填，版本控制系统的对象的tag名称</span><br><span class="line">            vcsTag = &apos;tag_0.0.6&apos;</span><br><span class="line">            // 选填，该版本的附件属性信息，可以任意填写</span><br><span class="line">            attributes = [&apos;McImage&apos;: &apos;a simple plugin.&apos;]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">repositories &#123;</span><br><span class="line">    // Use jcenter for resolving dependencies.</span><br><span class="line">    // You can declare any Maven/Ivy/file repository here.</span><br><span class="line">    jcenter()</span><br><span class="line">&#125;</span><br><span class="line">gradlePlugin &#123;</span><br><span class="line">    // Define the plugin</span><br><span class="line">    plugins &#123;</span><br><span class="line">        mcImage &#123;</span><br><span class="line">            id = &apos;McImage&apos;</span><br><span class="line">            implementationClass = &apos;com.lenebf.plugin.ImagePlugin&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    implementation &apos;com.android.tools.build:gradle:4.0.2&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="发布-settings-gradle"><a href="#发布-settings-gradle" class="headerlink" title="发布 settings.gradle"></a>发布 settings.gradle</h2><blockquote>
-<p>include ‘:McImage’</p>
-</blockquote>
-<h2 id="工程-build-gradle"><a href="#工程-build-gradle" class="headerlink" title="工程 build.gradle"></a>工程 build.gradle</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        maven &#123;</span><br><span class="line">            url uri(&apos;./repo&apos;)</span><br><span class="line">        &#125;</span><br><span class="line">        google()</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath &apos;com.android.tools.build:gradle:4.0.2&apos;</span><br><span class="line">        classpath &apos;com.lenebf.plugin:McImage:1.5.0&apos;</span><br><span class="line">//        classpath &apos;com.smallsoho.mobcase:McImage:1.5.1&apos;</span><br><span class="line"></span><br><span class="line">        // NOTE: Do not place your application dependencies here; they belong</span><br><span class="line">        // in the individual module build.gradle files</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        maven &#123;</span><br><span class="line">            url uri(&apos;./repo&apos;)</span><br><span class="line">        &#125;</span><br><span class="line">        google()</span><br><span class="line">        jcenter()</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2021/09/06/自定义Gradle-Plugin发布到本地/#more">Read More</a>
+        </p>
       
       
       
@@ -1456,7 +593,7 @@
 <a href="/2021/09/06/Gradle之android.precompileDependenciesResources配置介绍/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -1464,119 +601,16 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p>本地版用了一个第三方图片压缩插件，用来减少包大小大约2.6兆，但是在gradle升级后，并没有达到预期的效果。之后在gradle.properties中设置了android.precompileDependenciesResources=false后，解决了该问题。android.precompileDependenciesResources是Gradle 3.6版本以后增加的一个配置，并且默认是打开的，但是不知道他具体的作用。我们在开发过程中也很少用到关闭的情况。 所以本次具体介绍一下它的作用，主要从以下几个方面介绍：</p>
-<blockquote>
-<ul>
-<li>precompileDependenciesResources的配置</li>
-<li>MergeResources任务流程解析</li>
-<li>McImage图片压缩插件问题解决</li>
-<li>总结</li>
-</ul>
-</blockquote>
-<hr>
-<h2 id="precompileDependenciesResources在依赖逻辑中的处理"><a href="#precompileDependenciesResources在依赖逻辑中的处理" class="headerlink" title="precompileDependenciesResources在依赖逻辑中的处理"></a>precompileDependenciesResources在依赖逻辑中的处理</h2><hr>
-<p>在BooleanOption中可以看到默认设置是true:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PRECOMPILE_DEPENDENCIES_RESOURCES(&quot;android.precompileDependenciesResources&quot;, true, FeatureStage.Supported)</span><br></pre></td></tr></table></figure>
-
-<p>看一下调用的地方，在这里可以看到其实返回是和图片压缩一起判断的，所以这里的注释要注意下：意思是<strong>如果使用图片压缩就需要所有的资源都能通过MergeResources任务过程</strong>，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* 这里也判断了shrinkResources，我们默认资源缩减是false，所以在不配置android.precompileDependenciesResources=false的情况下，一直返回true，如果</span><br><span class="line">* android.precompileDependenciesResources设置false或者shrinkResources=true，都会返回false。</span><br><span class="line">*/</span><br><span class="line">public boolean isPrecompileDependenciesResourcesEnabled() &#123;</span><br><span class="line">        // Resource shrinker expects MergeResources task to have all the resources merged and with</span><br><span class="line">        // overlay rules applied, so we have to go through the MergeResources pipeline in case it&apos;s</span><br><span class="line">        // enabled, see b/134766811.</span><br><span class="line">        return globalScope.getProjectOptions().get(BooleanOption.PRECOMPILE_DEPENDENCIES_RESOURCES)</span><br><span class="line">                &amp;&amp; !useResourceShrinker();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>同时在为true的情况下，在依赖处理的逻辑中注册了转化flat的Transform</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> if (globalScope.projectOptions[BooleanOption.PRECOMPILE_DEPENDENCIES_RESOURCES]) &#123;</span><br><span class="line">    dependencies.registerTransform(</span><br><span class="line">        AarResourcesCompilerTransform::class.java</span><br><span class="line">    )</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="MergeResources"><a href="#MergeResources" class="headerlink" title="MergeResources"></a>MergeResources</h2><hr>
-<p>我们先找出mergeReleaseResourcesTask对应的类：根据下面命令可以拿到具体的处理在类MergeResources中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01deMacBook-Pro:MyActivityTest chenyulong01$ ./gradlew -q help --task app:mergeReleaseResources</span><br><span class="line">Detailed task information for app:mergeReleaseResources</span><br><span class="line">Path</span><br><span class="line">     :app:mergeReleaseResources</span><br><span class="line">Type</span><br><span class="line">     MergeResources (com.android.build.gradle.tasks.MergeResources)</span><br><span class="line">Description</span><br><span class="line">     -</span><br><span class="line">Group</span><br><span class="line">     -</span><br><span class="line">chenyulong01deMacBook-Pro:MyActivityTest chenyulong01$</span><br></pre></td></tr></table></figure>
-
-<p>任务执行开始doFullTaskAction方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">protected void doFullTaskAction() throws IOException, JAXBException &#123;</span><br><span class="line">     ResourcePreprocessor preprocessor = getPreprocessor();</span><br><span class="line"></span><br><span class="line">     // this is full run, clean the previous outputs</span><br><span class="line">     File destinationDir = getOutputDir().get().getAsFile();</span><br><span class="line">     FileUtils.cleanOutputDir(destinationDir);</span><br><span class="line">     if (getDataBindingLayoutInfoOutFolder().isPresent()) &#123;</span><br><span class="line">          FileUtils.deleteDirectoryContents(getDataBindingLayoutInfoOutFolder().get().getAsFile());</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     //获取所有的 ResourceSet  </span><br><span class="line">     List&lt;ResourceSet&gt; resourceSets = getConfiguredResourceSets(preprocessor);</span><br><span class="line"></span><br><span class="line">     // create a new merger and populate it with the sets.</span><br><span class="line">     ResourceMerger merger = new ResourceMerger(getMinSdk().get());</span><br><span class="line">     .....</span><br><span class="line">     try (WorkerExecutorFacade workerExecutorFacade = getAaptWorkerFacade();</span><br><span class="line">          ResourceCompilationService resourceCompiler = getResourceProcessor() &#123;</span><br><span class="line">          ......</span><br><span class="line">          //过滤ResourceSet，设置了setAllowedFolderPrefix(FD_RES_VALUES)的非values资源（drawable、layout、。。。。。）不走下面流程      </span><br><span class="line">          for (ResourceSet resourceSet : resourceSets) &#123;</span><br><span class="line">               resourceSet.loadFromFiles(new LoggerWrapper(getLogger()));</span><br><span class="line">               merger.addDataSet(resourceSet);</span><br><span class="line">          &#125;</span><br><span class="line">          ......        </span><br><span class="line">          MergedResourceWriter writer = new MergedResourceWriter();</span><br><span class="line">          ......</span><br><span class="line">          merger.mergeData(writer, false /*doCleanUp*/));</span><br><span class="line">          .....</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>看一下如何获取所有ResourceSet：getConfiguredResourceSets方法里调用了compute方法，这个方法很重要，尤其时注释，说明的很清楚，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private List&lt;ResourceSet&gt; getConfiguredResourceSets(ResourcePreprocessor preprocessor) &#123;</span><br><span class="line">processedInputs = getResourcesComputer().compute(precompileDependenciesResources);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>compute方法:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* Computes resource sets for merging, if [precompileDependenciesResources] flag is enabled we</span><br><span class="line">* filter out the non-values resources as it&apos;s precompiled and is consumed directly in the</span><br><span class="line">* linking step.</span><br><span class="line">* 计算用于合并的资源集，如果启用[PrecompiledDependenciesResources]标志，</span><br><span class="line">* 我们将在预编译时过滤掉非值资源，并在链接步骤中直接使用。</span><br><span class="line">*/</span><br><span class="line">@JvmOverloads</span><br><span class="line">fun compute(precompileDependenciesResources: Boolean = false): List&lt;ResourceSet&gt; &#123;</span><br><span class="line">     ......</span><br><span class="line">     val resourceSetList = ArrayList&lt;ResourceSet&gt;(size)</span><br><span class="line">     // 这里要注意，过滤的是libraries库的资源。</span><br><span class="line">     addLibraryResources(libraries, resourceSetList,                       precompileDependenciesResources)</span><br><span class="line">     ......</span><br><span class="line">    return resourceSetList</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个时候我们知道在compute处理了非值资源，其实就是非values资源。其实这里不是过滤，是给所有的文件都设置了value标记。<br>setAllowedFolderPrefix(FD_RES_VALUES)，这个标记在读取的时候会用到。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">private fun addLibraryResources(</span><br><span class="line">     libraries: ArtifactCollection?,</span><br><span class="line">     resourceSetList: MutableList&lt;ResourceSet&gt;,</span><br><span class="line">     resourceArePrecompiled: Boolean</span><br><span class="line">) &#123;</span><br><span class="line">     // add at the beginning since the libraries are less important than the folder based</span><br><span class="line">     // resource sets.</span><br><span class="line">     // get the dependencies first</span><br><span class="line">     libraries?.let &#123;</span><br><span class="line">          val libArtifacts = it.artifacts</span><br><span class="line">          // the order of the artifact is descending order, so we need to reverse it.</span><br><span class="line">          for (artifact in libArtifacts) &#123;</span><br><span class="line">               val resourceSet = ResourceSet()</span><br><span class="line">               .......</span><br><span class="line">               resourceSet.isFromDependency = true</span><br><span class="line">               //我们在loadFromFiles处理resourceSet时，会遍历这个set</span><br><span class="line">               resourceSet.addSource(artifact.file)</span><br><span class="line"></span><br><span class="line">               if (resourceArePrecompiled) &#123;</span><br><span class="line">               // For values resources we impose stricter rules different from aapt so they need to go</span><br><span class="line">               // through the merging step.</span><br><span class="line">               // 设置了setAllowedFolderPrefix(FD_RES_VALUES)</span><br><span class="line">               resourceSet.setAllowedFolderPrefix(FD_RES_VALUES)</span><br><span class="line">               &#125;</span><br><span class="line">               // add to 0 always, since we need to reverse the order.</span><br><span class="line">               resourceSetList.add(0, resourceSet)</span><br><span class="line">          &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>综上其实都是对资源文件的配置，看一下读取，读取开始就是resourceSet.loadFromFiles方法，最近进入readSourceFolder方法，对文件进行处理、过滤，看下面debug图比较清晰，<br><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/readfiles.png" alt></p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/ignorefiles.png" alt></p>
-<p>然后我们看一下，分别设置precompileDependenciesResources后mergerReleaseResources执行完后的/build/res/merged/debug/文件数量对比：<br><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/comp.png" alt><br>我们发现，未设置false时.flat文件比设置后少了好多，那在processRleaseResources时，这些文件从哪里来呢？肯定不会丢失.我们打印一下processRleaseResources时，task.inputs.files输入文件：执行./gradlew :app:processReleaseResources</p>
-<p>precompileDependenciesResources = true</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/5f74d6550e3a0049fba9165d4efc08e0/androidx.appcompat</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/2efc557459e42f3d4a45ed4fdeadd8e6/android.support.constraint</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/b26cf8ef1b89aa3b84e14c53ba7689f8/androidx.fragment</span><br><span class="line">......</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/aa6c769bb172babdd442b10f9ded6c0f/androidx.arch.core</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/3d7ded961afb1450efaaf93a54ba3962/androidx.interpolator</span><br><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/res/merged/release</span><br><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/merged_manifests/release</span><br></pre></td></tr></table></figure>
-
-<p>precompileDependenciesResources = false</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/res/merged/release</span><br><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/merged_manifests/release</span><br></pre></td></tr></table></figure>
-
-<p>所以，precompileDependenciesResources = true时，libraries的非values资源都是从caches中获取<br>最后我们看一下gradle 4.0的mergeReleaseResources的Task任务流程：</p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/mergeResources.png" alt></p>
-<h2 id="图片压缩"><a href="#图片压缩" class="headerlink" title="图片压缩"></a>图片压缩</h2><hr>
-<p>McImage是无侵入式的全量压缩资源图片插件，包括Jar包中的图、AAR中的图、Module中的图。使用了三种算法：pngquant算法压缩png、guetzli算法压缩jpg、cwebp算法转webp。<a href="https://github.com/smallSohoSolo/McImage" target="_blank" rel="noopener">https://github.com/smallSohoSolo/McImage</a>。</p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/compress-blank.png" alt></p>
-<p>Gradle未升级前，由于引入了McImage图片压缩插件，会降低包大小2.6M,但是在升级到4.0.2后，只降低了1.4M。那问题出现在了哪里？为社么会有1.2M左右的差值，当时第一反应就是，压缩失败，插件没有适配Gradle版本。所以在开始就研究了一下McImage的插件源码，然后在工程中直接使用McImage源码。但是根据打印信息来看，跟直接依赖插件输出也完全一样。那么说明插件没有问题。那么到底问题出现在了哪里？</p>
-<p>在未解决问题之前，曾想找一个替代插件，看到了<a href="https://booster.johnsonlee.io/preface/" target="_blank" rel="noopener">https://booster.johnsonlee.io/preface/</a>。 介绍到，Booster是一款专门为移动应用设计的易用、轻量级且可扩展的质量优化框架，其目标主要是为了解决随着APP复杂度的提升而带来的性能、稳定性、包体积等一系列质量问题。这里我们只关注包体积相关模块即可。包体积优化，包含资源去冗余、<strong>资源压缩</strong>等功能模块。<br>在看到图片压缩时，实现思路是选择在mergeResources和processResources任务之间插入PNG压缩任务，如下图所示：</p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/noun.png" alt></p>
-<p>根据这个思路，查看一下McImage相关源码：源码中有这么一行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mergeResourcesTask.dependsOn(project.tasks.findByName(mcPicTask.name))</span><br></pre></td></tr></table></figure>
-
-<p>好吧，源码错了，修改，移动压缩task到mergerResourcesTask后面，结果就是压缩没有问题。但是包大小还是不对。继续往下看booster文档，在看到图片压缩时，看到有这么一个注释：</p>
-<blockquote>
-<p>WARNING<br>Android Gradle Plugin 3.6 及以上版本，需要在 gradle.properties 中设置：<br>android.precompileDependenciesResources=false</p>
-</blockquote>
-<p>好吧，尝试一下：结果成功了。那为什么压缩处理的Task是在mergeResources的Task之前执行，跟思路图不同，但是有效呢。我们知道从agp3.0开始，google默认开启了aapt2作为资源编译的编译器，如果是使用aapt，上面的思路就没问题，但是我们已经开启了aapt2编译，那就只能说明上边的思路和当前的的图片压缩思路不一致，不是当前的思路图。因为我们在升级前，agp版本是3.4.3，也没有关闭aapt2，再次证明上述思路针对当前agp版本是错误的。插件代码是没问题的。</p>
-<p>agp版本从3.3开始，通过getAllRawAndroidResources获取所有的资源文件，包括来自传递依赖项的资源，举例几个来源：</p>
-<pre><code>res/,
-app/src/main/res,
-app/src/debug/res,
-intermediates/packaged_res/debug,
-catche/aeec173e09252e6f19e949e00c8c5eec/jetified-XXXX-10010.4.36/res,
-build/generated/res/,
-build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">     * Returns file collection containing all raw Android resources, including the ones from</span><br><span class="line">     * transitive dependencies.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt;&lt;strong&gt;This is an incubating API, and it can be changed or removed without</span><br><span class="line">     * notice.&lt;/strong&gt;</span><br><span class="line">     */</span><br><span class="line">    @Incubating</span><br><span class="line">    @NonNull</span><br><span class="line">    FileCollection getAllRawAndroidResources();</span><br></pre></td></tr></table></figure>
-
-<h2 id="缓存flat生成"><a href="#缓存flat生成" class="headerlink" title="缓存flat生成"></a>缓存flat生成</h2><hr>
-<p>上述说到aar的flat资源不是在mergeResourceTask生成的。但是在processResources中，发现aar的flat来自catch，那缓存中的flat是什么时候生成的呢？在开始将依赖逻辑处理时我们注册了一个AarResourcesCompilerTransform。这个Transform就是处理aar资源flat转换的。所以，当我们在mergeResourceTask之前处理图片的时候，其实aar的资源和图片，都已经转换成了flat。虽然我们压缩没问题，但是我们的flat在压缩之前就完成了转换。所以，我们的包大小并没有减少。也就是1.2M差距的原因。<br><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/compress.png" alt></p>
-<h2 id="gradle断点调试"><a href="#gradle断点调试" class="headerlink" title="gradle断点调试"></a>gradle断点调试</h2><hr>
-<ol>
-<li>打开Edit Configurations</li>
-<li>选中Remote，点击+，Remote</li>
-<li>输入Name，拷贝Command line agruments for remote JVM:</li>
-<li>打开gradle.properties</li>
-<li>修改替换org.gradle.jvmargs值为3中拷贝内容。</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
-<ul>
-<li>1.Gradle升级版本差距较大的情况下，有问题首先看源码，多调试，更新文档一般不会提及这种小点。</li>
-<li>2.precompileDependenciesResources默认true情况下，默认开启aapt2会减少构建时间。</li>
-<li>3.图片压缩插件可指定具体压缩文件，减少构建时间，可以作为优化构建时间的一个优化点。</li>
-<li>4.MergerResources是合并生成flat文件。<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><a href="https://blog.csdn.net/dbs1215/category_10281748.html" target="_blank" rel="noopener">Android构建流程</a><br><a href="https://www.cnblogs.com/mingfeng002/p/11751309.html" target="_blank" rel="noopener">Gradle之Android Gradle Plugin 主要 Task分析</a></li>
-</ul>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2021/09/06/Gradle之android.precompileDependenciesResources配置介绍/#more">Read More</a>
+        </p>
       
       
       
@@ -1617,7 +651,7 @@ build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
 <a href="/2021/08/18/Gradle升级到4-0之图片压缩问题/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Libro de visitas
 </a>
 
 
@@ -1625,123 +659,16 @@ build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p>本地版用了一个第三方图片压缩插件，用来减少包大小大约2.6兆，但是在gradle升级后，并没有达到预期的效果,只降低了1.4M。之后在gradle.properties中设置了android.precompileDependenciesResources=false后，解决了该问题。而android.precompileDependenciesResources是Gradle 3.6版本以后增加的一个配置，并且默认是打开的，但是不知道他具体的作用，我们在开发过程中也很少用到关闭的情况。 所以通过下面几点具体介绍压缩问题解决流程：</p>
-<blockquote>
-<ul>
-<li>图片压缩介绍</li>
-<li>precompileDependenciesResources的配置</li>
-<li>MergeResources任务流程解析</li>
-<li>缓存flat</li>
-<li>调试总结</li>
-</ul>
-</blockquote>
-<h2 id="图片压缩"><a href="#图片压缩" class="headerlink" title="图片压缩"></a>图片压缩</h2><p>总上所知，Gradle升级前后，压缩结果会有1.2M左右的差距。那问题出现在了哪里？为社么会有1.2M左右的差值，当时第一反应就是，压缩失败，插件没有适配Gradle版本。所以在开始就研究了一下McImage的插件源码，然后在工程中直接使用McImage源码。但是根据打印信息来看，跟直接依赖插件输出也完全一样。那么说明插件没有问题。那么到底问题出现在了哪里？</p>
-<p>在未解决问题之前，曾想找一个替代插件，看到了<a href="https://booster.johnsonlee.io/preface/" target="_blank" rel="noopener">https://booster.johnsonlee.io/preface/</a>。 介绍到，Booster是一款专门为移动应用设计的易用、轻量级且可扩展的质量优化框架，其目标主要是为了解决随着APP复杂度的提升而带来的性能、稳定性、包体积等一系列质量问题。这里我们只关注包体积相关模块即可。包体积优化，包含资源去冗余、<strong>资源压缩</strong>等功能模块。<br>在看到图片压缩时，实现思路是选择在mergeResources和processResources任务之间插入PNG压缩任务，如下图所示：</p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/noun.png" alt></p>
-<p>根据这个思路，查看了一下McImage压缩插件相关源码：源码中有这么一行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mergeResourcesTask.dependsOn(project.tasks.findByName(mcPicTask.name))</span><br></pre></td></tr></table></figure>
-
-<p>好吧，看来是源码错了，修改，移动压缩task到mergerResourcesTask后面，结果就是压缩还是没有问题。但是包大小还是不对。继续往下看booster文档，在看到图片压缩时，看到有这么一个注释：</p>
-<blockquote>
-<p>WARNING<br>Android Gradle Plugin 3.6 及以上版本，需要在 gradle.properties 中设置：<br>android.precompileDependenciesResources=false</p>
-</blockquote>
-<p>把这个配置尝试添加到我们工程中：结果成功了。那为什么压缩处理的Task是在mergeResources的Task之前执行，跟思路图完全不同，但是有效呢。其实我们知道从agp3.0开始，google默认开启了aapt2作为资源编译的编译器，如果是使用aapt，上面的思路就没问题，但是我们已经开启了aapt2编译，那就只能说明上边的思路和当前的的图片压缩思路不一致，不是当前的思路图。因为我们在升级前，agp版本是3.4.3，也没有关闭aapt2，再次证明上述思路针对当前agp版本是错误的。插件没有问题，只是压缩思路应该是先压缩再merge，</p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/noun2.png" alt></p>
-<p>那么就只是我们的gradle配置错误。那么McImage具体是怎么压缩的呢？</p>
-<p>McImage是无侵入式的全量压缩资源图片插件，包括Jar包中的图、AAR中的图、Module中的图。使用了三种算法：pngquant算法压缩png、guetzli算法压缩jpg、cwebp算法转webp。<a href="https://github.com/smallSohoSolo/McImage" target="_blank" rel="noopener">https://github.com/smallSohoSolo/McImage</a>。</p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/compress-blank.png" alt></p>
-<p>agp版本从3.3开始，通过getAllRawAndroidResources获取所有的资源文件，包括来自传递依赖项的资源，举例几个来源：</p>
-<pre><code>res/,
-app/src/main/res,
-app/src/debug/res,
-intermediates/packaged_res/debug,
-catche/aeec173e09252e6f19e949e00c8c5eec/jetified-XXXX-10010.4.36/res,
-build/generated/res/,
-build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">     * Returns file collection containing all raw Android resources, including the ones from</span><br><span class="line">     * transitive dependencies.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt;&lt;strong&gt;This is an incubating API, and it can be changed or removed without</span><br><span class="line">     * notice.&lt;/strong&gt;</span><br><span class="line">     */</span><br><span class="line">    @Incubating</span><br><span class="line">    @NonNull</span><br><span class="line">    FileCollection getAllRawAndroidResources();</span><br></pre></td></tr></table></figure>
-
-<h2 id="precompileDependenciesResources在依赖逻辑中的处理"><a href="#precompileDependenciesResources在依赖逻辑中的处理" class="headerlink" title="precompileDependenciesResources在依赖逻辑中的处理"></a>precompileDependenciesResources在依赖逻辑中的处理</h2><p>在BooleanOption中可以看到默认设置是true:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PRECOMPILE_DEPENDENCIES_RESOURCES(&quot;android.precompileDependenciesResources&quot;, true, FeatureStage.Supported)</span><br></pre></td></tr></table></figure>
-
-<p>看一下调用的地方，在这里可以看到其实返回是和图片压缩一起判断的，所以这里的注释要注意下：意思是<strong>如果使用图片压缩就需要所有的资源都能通过MergeResources任务过程</strong>，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* 这里也判断了shrinkResources，我们默认资源缩减是false，所以在不配置android.precompileDependenciesResources=false的情况下，一直返回true，如果</span><br><span class="line">* android.precompileDependenciesResources设置false或者shrinkResources=true，都会返回false。</span><br><span class="line">*/</span><br><span class="line">public boolean isPrecompileDependenciesResourcesEnabled() &#123;</span><br><span class="line">        // Resource shrinker expects MergeResources task to have all the resources merged and with</span><br><span class="line">        // overlay rules applied, so we have to go through the MergeResources pipeline in case it&apos;s</span><br><span class="line">        // enabled, see b/134766811.</span><br><span class="line">        return globalScope.getProjectOptions().get(BooleanOption.PRECOMPILE_DEPENDENCIES_RESOURCES)</span><br><span class="line">                &amp;&amp; !useResourceShrinker();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>同时在为true的情况下，在依赖处理的逻辑中注册了转化flat的Transform</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> if (globalScope.projectOptions[BooleanOption.PRECOMPILE_DEPENDENCIES_RESOURCES]) &#123;</span><br><span class="line">    dependencies.registerTransform(</span><br><span class="line">        AarResourcesCompilerTransform::class.java</span><br><span class="line">    )</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="MergeResources"><a href="#MergeResources" class="headerlink" title="MergeResources"></a>MergeResources</h2><hr>
-<p>我们先找出mergeReleaseResourcesTask对应的类：根据下面命令可以拿到具体的处理在类MergeResources中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">chenyulong01deMacBook-Pro:MyActivityTest chenyulong01$ ./gradlew -q help --task app:mergeReleaseResources</span><br><span class="line">Detailed task information for app:mergeReleaseResources</span><br><span class="line">Path</span><br><span class="line">     :app:mergeReleaseResources</span><br><span class="line">Type</span><br><span class="line">     MergeResources (com.android.build.gradle.tasks.MergeResources)</span><br><span class="line">Description</span><br><span class="line">     -</span><br><span class="line">Group</span><br><span class="line">     -</span><br><span class="line">chenyulong01deMacBook-Pro:MyActivityTest chenyulong01$</span><br></pre></td></tr></table></figure>
-
-<p>任务执行开始doFullTaskAction方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">protected void doFullTaskAction() throws IOException, JAXBException &#123;</span><br><span class="line">     ResourcePreprocessor preprocessor = getPreprocessor();</span><br><span class="line"></span><br><span class="line">     // this is full run, clean the previous outputs</span><br><span class="line">     File destinationDir = getOutputDir().get().getAsFile();</span><br><span class="line">     FileUtils.cleanOutputDir(destinationDir);</span><br><span class="line">     if (getDataBindingLayoutInfoOutFolder().isPresent()) &#123;</span><br><span class="line">          FileUtils.deleteDirectoryContents(getDataBindingLayoutInfoOutFolder().get().getAsFile());</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     //获取所有的 ResourceSet  </span><br><span class="line">     List&lt;ResourceSet&gt; resourceSets = getConfiguredResourceSets(preprocessor);</span><br><span class="line"></span><br><span class="line">     // create a new merger and populate it with the sets.</span><br><span class="line">     ResourceMerger merger = new ResourceMerger(getMinSdk().get());</span><br><span class="line">     .....</span><br><span class="line">     try (WorkerExecutorFacade workerExecutorFacade = getAaptWorkerFacade();</span><br><span class="line">          ResourceCompilationService resourceCompiler = getResourceProcessor() &#123;</span><br><span class="line">          ......</span><br><span class="line">          //过滤ResourceSet，设置了setAllowedFolderPrefix(FD_RES_VALUES)的非values资源（drawable、layout、。。。。。）不走下面流程      </span><br><span class="line">          for (ResourceSet resourceSet : resourceSets) &#123;</span><br><span class="line">               resourceSet.loadFromFiles(new LoggerWrapper(getLogger()));</span><br><span class="line">               merger.addDataSet(resourceSet);</span><br><span class="line">          &#125;</span><br><span class="line">          ......        </span><br><span class="line">          MergedResourceWriter writer = new MergedResourceWriter();</span><br><span class="line">          ......</span><br><span class="line">          merger.mergeData(writer, false /*doCleanUp*/));</span><br><span class="line">          .....</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>看一下如何获取所有ResourceSet：getConfiguredResourceSets方法里调用了compute方法，这个方法很重要，尤其时注释，说明的很清楚，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private List&lt;ResourceSet&gt; getConfiguredResourceSets(ResourcePreprocessor preprocessor) &#123;</span><br><span class="line">processedInputs = getResourcesComputer().compute(precompileDependenciesResources);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>compute方法:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* Computes resource sets for merging, if [precompileDependenciesResources] flag is enabled we</span><br><span class="line">* filter out the non-values resources as it&apos;s precompiled and is consumed directly in the</span><br><span class="line">* linking step.</span><br><span class="line">* 计算用于合并的资源集，如果启用[PrecompiledDependenciesResources]标志，</span><br><span class="line">* 我们将在预编译时过滤掉非值资源，并在链接步骤中直接使用。</span><br><span class="line">*/</span><br><span class="line">@JvmOverloads</span><br><span class="line">fun compute(precompileDependenciesResources: Boolean = false): List&lt;ResourceSet&gt; &#123;</span><br><span class="line">     ......</span><br><span class="line">     val resourceSetList = ArrayList&lt;ResourceSet&gt;(size)</span><br><span class="line">     // 这里要注意，过滤的是libraries库的资源。</span><br><span class="line">     addLibraryResources(libraries, resourceSetList,                       precompileDependenciesResources)</span><br><span class="line">     ......</span><br><span class="line">    return resourceSetList</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个时候我们知道在compute处理了非值资源，其实就是非values资源。其实这里不是过滤，是给所有的文件都设置了value标记。<br>setAllowedFolderPrefix(FD_RES_VALUES)，这个标记在读取的时候会用到。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">private fun addLibraryResources(</span><br><span class="line">     libraries: ArtifactCollection?,</span><br><span class="line">     resourceSetList: MutableList&lt;ResourceSet&gt;,</span><br><span class="line">     resourceArePrecompiled: Boolean</span><br><span class="line">) &#123;</span><br><span class="line">     // add at the beginning since the libraries are less important than the folder based</span><br><span class="line">     // resource sets.</span><br><span class="line">     // get the dependencies first</span><br><span class="line">     libraries?.let &#123;</span><br><span class="line">          val libArtifacts = it.artifacts</span><br><span class="line">          // the order of the artifact is descending order, so we need to reverse it.</span><br><span class="line">          for (artifact in libArtifacts) &#123;</span><br><span class="line">               val resourceSet = ResourceSet()</span><br><span class="line">               .......</span><br><span class="line">               resourceSet.isFromDependency = true</span><br><span class="line">               //我们在loadFromFiles处理resourceSet时，会遍历这个set</span><br><span class="line">               resourceSet.addSource(artifact.file)</span><br><span class="line"></span><br><span class="line">               if (resourceArePrecompiled) &#123;</span><br><span class="line">               // For values resources we impose stricter rules different from aapt so they need to go</span><br><span class="line">               // through the merging step.</span><br><span class="line">               // 设置了setAllowedFolderPrefix(FD_RES_VALUES)</span><br><span class="line">               resourceSet.setAllowedFolderPrefix(FD_RES_VALUES)</span><br><span class="line">               &#125;</span><br><span class="line">               // add to 0 always, since we need to reverse the order.</span><br><span class="line">               resourceSetList.add(0, resourceSet)</span><br><span class="line">          &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>综上其实都是对资源文件的配置，看一下读取，读取开始就是resourceSet.loadFromFiles方法，最终进入readSourceFolder方法，对文件进行处理、过滤，看下面debug图比较清晰，</p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/readfiles.png" alt></p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/ignorefiles.png" alt></p>
-<p>然后我们看一下，分别设置precompileDependenciesResources后mergerReleaseResources执行完后的/build/res/merged/debug/文件数量对比：</p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/comp.png" alt></p>
-<p>我们发现，未设置false时.flat文件比设置后少了好多，那在processRleaseResources时，这些文件从哪里来呢？肯定不会丢失.我们打印一下processRleaseResources时，task.inputs.files输入文件：执行./gradlew :app:processReleaseResources</p>
-<p>precompileDependenciesResources = true</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/5f74d6550e3a0049fba9165d4efc08e0/androidx.appcompat</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/2efc557459e42f3d4a45ed4fdeadd8e6/android.support.constraint</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/b26cf8ef1b89aa3b84e14c53ba7689f8/androidx.fragment</span><br><span class="line">......</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/aa6c769bb172babdd442b10f9ded6c0f/androidx.arch.core</span><br><span class="line">input file:/Users/chenyulong01/.gradle/caches/transforms-2/files-2.1/3d7ded961afb1450efaaf93a54ba3962/androidx.interpolator</span><br><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/res/merged/release</span><br><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/merged_manifests/release</span><br></pre></td></tr></table></figure>
-
-<p>precompileDependenciesResources = false</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/res/merged/release</span><br><span class="line">input file:/Users/chenyulong01/AndroidStudioProjects/MyActivityTest/app/build/intermediates/merged_manifests/release</span><br></pre></td></tr></table></figure>
-
-<p>所以，precompileDependenciesResources = true时，libraries的非values资源都是从caches中获取<br>最后我们看一下gradle 4.0的mergeReleaseResources的Task任务流程：</p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/mergeResources.png" alt></p>
-<h2 id="缓存flat生成"><a href="#缓存flat生成" class="headerlink" title="缓存flat生成"></a>缓存flat生成</h2><hr>
-<p>上述说到aar的flat资源不是在mergeResourceTask生成的。但是在processResources中，发现aar的flat来自catch，那缓存中的flat是什么时候生成的呢？在开始依赖逻辑处理时我们注册了一个AarResourcesCompilerTransform。其实这个Transform就是处理aar资源flat转换的。所以，当我们在mergeResourceTask之前处理图片的时候，其实aar的资源和图片，都已经转换成了flat。虽然我们压缩没问题，但是我们的flat在压缩之前就完成了转换。所以，我们的包大小并没有减少。也就是1.2M差距的原因。</p>
-<p><img src="http://nunu03.github.io/2021/08/18/Gradle%E5%8D%87%E7%BA%A7%E5%88%B04-0%E4%B9%8B%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E9%97%AE%E9%A2%98/compress.png" alt></p>
-<h2 id="gradle断点调试"><a href="#gradle断点调试" class="headerlink" title="gradle断点调试"></a>gradle断点调试</h2><hr>
-<ol>
-<li>打开Edit Configurations</li>
-<li>选中Remote，点击+，Remote</li>
-<li>输入Name，拷贝Command line agruments for remote JVM:</li>
-<li>打开gradle.properties</li>
-<li>修改替换org.gradle.jvmargs值为3中拷贝内容。</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
-<ul>
-<li>1.Gradle升级版本差距较大的情况下，有问题首先看源码，多调试，更新文档一般不会提及这种小点。</li>
-<li>2.precompileDependenciesResources默认true情况下，默认开启aapt2会减少构建时间。</li>
-<li>3.图片压缩插件可指定具体压缩文件，减少构建时间，可以作为优化构建时间的一个优化点。</li>
-<li>4.aapt2 MergerResources是合并生成flat文件。</li>
-</ul>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
       
     </div>
     <footer class="article-footer">
       
-        <div class="article-tag-wrap">
-          
-
-          
+        
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
 
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
+        <p class="article-more-link">
+          <a href="/2021/08/18/Gradle升级到4-0之图片压缩问题/#more">Read More</a>
+        </p>
       
       
       
@@ -1753,7 +680,7 @@ build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
 
     <nav id="page-nav">
 
-<span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next</a>
+<span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Siguiente</a>
 </nav>
 
 
@@ -1763,7 +690,7 @@ build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-posts"></i> Recent</h3>
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Recientes</h3>
     <div class="widget">
       <ul>
         
@@ -1795,7 +722,7 @@ build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-tag"></i> Tag Cloud</h3>
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Nube de etiquetas</h3>
     <div class="widget tagcloud">
       <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/Charles/" style="font-size: 13.33px;">Charles</a> <a href="/tags/Color/" style="font-size: 10px;">Color</a> <a href="/tags/FaceUnity/" style="font-size: 16.67px;">FaceUnity</a> <a href="/tags/Fix/" style="font-size: 10px;">Fix</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/GitLab/" style="font-size: 10px;">GitLab</a> <a href="/tags/Gradle/" style="font-size: 20px;">Gradle</a> <a href="/tags/Haar/" style="font-size: 10px;">Haar</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hook/" style="font-size: 10px;">Hook</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Log/" style="font-size: 10px;">Log</a> <a href="/tags/OpenCV/" style="font-size: 10px;">OpenCV</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Title/" style="font-size: 10px;">Title</a> <a href="/tags/Toast/" style="font-size: 10px;">Toast</a> <a href="/tags/View/" style="font-size: 10px;">View</a> <a href="/tags/WebHook/" style="font-size: 10px;">WebHook</a> <a href="/tags/Wireshark/" style="font-size: 10px;">Wireshark</a> <a href="/tags/Xposed/" style="font-size: 13.33px;">Xposed</a> <a href="/tags/aar/" style="font-size: 10px;">aar</a> <a href="/tags/cmd/" style="font-size: 10px;">cmd</a> <a href="/tags/ngrok/" style="font-size: 13.33px;">ngrok</a> <a href="/tags/nps/" style="font-size: 10px;">nps</a> <a href="/tags/人脸检测/" style="font-size: 10px;">人脸检测</a>
     </div>
@@ -1804,7 +731,7 @@ build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-classify"></i> Categories</h3>
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Categorías</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -1814,7 +741,7 @@ build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-archive"></i> Archive</h3>
+    <h3 class="widget-title"><i class="fa fa-archive"></i> Archivo</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
     </div>
@@ -1824,7 +751,7 @@ build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-tag"></i> Tags</h3>
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Etiquetas</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Charles/">Charles</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Color/">Color</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FaceUnity/">FaceUnity</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fix/">Fix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitLab/">GitLab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haar/">Haar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hook/">Hook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Log/">Log</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Title/">Title</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Toast/">Toast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebHook/">WebHook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireshark/">Wireshark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Xposed/">Xposed</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aar/">aar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok/">ngrok</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nps/">nps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸检测/">人脸检测</a><span class="tag-list-count">1</span></li></ul>
     </div>
@@ -1839,15 +766,7 @@ build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
       <ul>
       
         <li>
-          <a href="http://www.example1.com/">site-name1</a>
-        </li>
-      
-        <li>
-          <a href="http://www.example2.com/">site-name2</a>
-        </li>
-      
-        <li>
-          <a href="http://www.example3.com/">site-name3</a>
+          <a href="https://handsomeliuyang.github.io/">liuyang</a>
         </li>
       
       </ul>
@@ -1865,9 +784,9 @@ build-types/debug/res</code></pre><p>BaseVariantImpl:</p>
   <div class="outer">
     <div id="footer-info" class="inner">
       <p>
-        <a href="/sitemap.xml">Site Map</a>
-        <span> | </span><a href="/atom.xml">Subscribe to this site</a>
-        <span> | </span><a href="/about/">Contact the blogger</a>
+        <a href="/sitemap.xml">Mapa del sitio</a>
+        <span> | </span><a href="/atom.xml">suscribirse a este sitio</a>
+        <span> | </span><a href="/about/">Contacta al blogger</a>
       </p>
       
         <p>
