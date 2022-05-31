@@ -3,6 +3,34 @@
   
     
     <entry>
+      <title><![CDATA[OkHttp总结]]></title>
+      <url>/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/</url>
+      <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/okhttp-jieshao.png" alt></p>
+<a id="more"></a>
+<h2 id="请求流程"><a href="#请求流程" class="headerlink" title="请求流程"></a>请求流程</h2><p><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/okhttp-lc.png" alt></p>
+<h2 id="线程限制"><a href="#线程限制" class="headerlink" title="线程限制"></a>线程限制</h2><p>能否无限制创建线程？虽然没有限制，但是创建每个线程都是需要内存的。jdk在1.5以下，创建一个线程大约需要200k左右；jdk在1.5以上，创建一个线程大约需要1m左右。<br>okhttp的限制呢？<br>同时正在进行的异步请求：默认最大64个；<br>同一域名同时请求存在：默认最大5个；<br>看以下代码图：<br><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/c5e069ce89fb66b99e855c15ff701ced.png" alt></p>
+<p>但是这个数字是可以改的。</p>
+<h2 id="分发器"><a href="#分发器" class="headerlink" title="分发器"></a>分发器</h2><p><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/496e5f1d391c77bac3821d8b6c72ed82.png" alt><br><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/fdde7a6dcadc8b4312f48d2bbacb0580.png" alt><br><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/2103eaa2cd3efafe10c13ebab280d9a3.png" alt><br>每执行一个请求，正在请求的队列则-1=63，如果是同一域名的请求也减1=4，同时在ready的队列则释放一个到running队列里。看下图：</p>
+<p><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/136b551f2762d7b12144a9147994787b.png" alt></p>
+<h2 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h2><p><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/75af422c6f304d8d9b27bcc29a68855c.png" alt><br><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/35f983d3114bede0ba032285c6280042.png" alt><br><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/d2b1f3a54502167cf44626712c057813.png" alt><br><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/okhttp-zerenl.png" alt><br><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/790a03ff09704c4a91b78be7dcce4339.png" alt><br><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/c0e233ce4e0756a352282c27063e8ce2.png" alt><br><img src="http://nunu03.github.io/2022/05/31/OkHttp%E6%80%BB%E7%BB%93/d177c850ea0bcf7069e89ced97702fcd.png" alt></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Android </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> OkHttp </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Retrofit架构解析]]></title>
       <url>/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/</url>
       <content type="html"><![CDATA[<h2 id="What"><a href="#What" class="headerlink" title="What?"></a>What?</h2><p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/retrofit-what.png" alt></p>
