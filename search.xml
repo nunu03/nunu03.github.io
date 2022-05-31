@@ -3,6 +3,95 @@
   
     
     <entry>
+      <title></title>
+      <url>/2022/05/31/retrofit%E6%80%BB%E7%BB%93/</url>
+      <content type="html"><![CDATA[<p><img src="/.io//4de77ad35503abbd00c13c147323ca21.png" alt></p>
+<p><img src="/.io//7933ffed68e92b84378c31a49e7e6ac1.png" alt></p>
+<p><img src="/.io//9a4932290dd8db3fc8c171494795f3da.png" alt></p>
+<p><img src="/.io//3f88aeb47d686803669d2f6f49aeffc8.png" alt></p>
+<p><img src="/.io//0de5cf423a7c3c89cbcc39028012a9d1.png" alt></p>
+<p><img src="/.io//dc5d144c8361d27781f2e68e8153a0af.png" alt></p>
+<p>ServiceMethod,采用反射获取接口中设置的参数信息，性能低？用到了缓存啊，把ServiceMethod缓存到一个map里</p>
+<p><img src="/.io//b067b8cbea7526a20c0eddf1edb24ab3.png" alt></p>
+<p>那Retrofit可以用单例吗？可以啊，如果接口请求频繁，可以用，如果点击一次，请求一次，就可以用构造者模式。同时接口越多，缓存的也越多。</p>
+<p>ServiceMethod，封装成一个OKhttp请求的Call使用，并返回一个Call。Okhttpcall就是衔接sm和okhttp的。</p>
+<p><img src="/.io//fdf756beb3868dc26c7b2a7d02f19224.png" alt></p>
+<p><img src="/.io//408e85e639b492f0a6927b3d3ca75e02.png" alt></p>
+<p>Moshi替换gson解析数据：</p>
+<p>ExecutorCallbackCall是对okhttpcall的封装，<img src="/.io//86ee16d22e5e1478e87bae98dabe34fe.png" alt></p>
+<p><img src="/.io//59630c45872bacc592f940ffaec759f6.png" alt></p>
+<p><img src="/.io//4e9069338babe0a0179fcc51029af07a.png" alt></p>
+<p><img src="/.io//e4748949d2a640ae5022de89cdf325aa.png" alt></p>
+<p><img src="/.io//18b11b3227e2ca3cd6f50d0077a031e5.png" alt></p>
+<p><img src="/.io//11a1c471fea2388400d028ad1e3e5c86.png" alt></p>
+<p><img src="/.io//b2e24d8c55efa10ec2f3f2c0c342bdcf.png" alt></p>
+<p><img src="/.io//52f007abdde12af0368acc90e6ad7bc1.png" alt></p>
+<p><img src="/.io//10f558ccfa699d1d0bd6afc839784611.png" alt></p>
+<p><img src="/.io//493e40be01c7d3e6ce6bf85e33ecaa9d.png" alt></p>
+<p><img src="/.io//623abf36e4328994281d47f6032582d6.png" alt></p>
+<p><img src="/.io//a1905ededaf02ced2e8be88021cd04e2.png" alt></p>
+<p><img src="/.io//691c561fa2e426c642bb201f21257290.png" alt></p>
+<p><img src="/.io//8ad1e995d647ced7a696a2b46f9ce129.png" alt><img src="/.io//d1ff069a231166788959b23fdaff0c8b.png" alt></p>
+<p><img src="/.io//2192ab9b92405da66522fcae02489717.png" alt></p>
+<p><img src="/.io//06662df34b597e5de2c9b03b3b7fe054.png" alt></p>
+<p><img src="/.io//507b53189e26fafacc1271729e0f60dc.png" alt></p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Retrofit架构解析]]></title>
+      <url>/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/</url>
+      <content type="html"><![CDATA[<h2 id="What"><a href="#What" class="headerlink" title="What?"></a>What?</h2><p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/retrofit-what.png" alt></p>
+<p> <img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/4de77ad35503abbd00c13c147323ca21.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/7933ffed68e92b84378c31a49e7e6ac1.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/9a4932290dd8db3fc8c171494795f3da.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/3f88aeb47d686803669d2f6f49aeffc8.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/0de5cf423a7c3c89cbcc39028012a9d1.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/dc5d144c8361d27781f2e68e8153a0af.png" alt></p>
+<p>ServiceMethod,采用反射获取接口中设置的参数信息，性能低？用到了缓存啊，把ServiceMethod缓存到一个map里</p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/b067b8cbea7526a20c0eddf1edb24ab3.png" alt></p>
+<p>那Retrofit可以用单例吗？可以啊，如果接口请求频繁，可以用，如果点击一次，请求一次，就可以用构造者模式。同时接口越多，缓存的也越多。</p>
+<p>ServiceMethod，封装成一个OKhttp请求的Call使用，并返回一个Call。Okhttpcall就是衔接sm和okhttp的。</p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/fdf756beb3868dc26c7b2a7d02f19224.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/408e85e639b492f0a6927b3d3ca75e02.png" alt></p>
+<p>Moshi替换gson解析数据：</p>
+<p>ExecutorCallbackCall是对okhttpcall的封装，<img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/86ee16d22e5e1478e87bae98dabe34fe.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/59630c45872bacc592f940ffaec759f6.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/4e9069338babe0a0179fcc51029af07a.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/e4748949d2a640ae5022de89cdf325aa.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/18b11b3227e2ca3cd6f50d0077a031e5.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/11a1c471fea2388400d028ad1e3e5c86.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/b2e24d8c55efa10ec2f3f2c0c342bdcf.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/52f007abdde12af0368acc90e6ad7bc1.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/10f558ccfa699d1d0bd6afc839784611.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/493e40be01c7d3e6ce6bf85e33ecaa9d.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/623abf36e4328994281d47f6032582d6.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/a1905ededaf02ced2e8be88021cd04e2.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/691c561fa2e426c642bb201f21257290.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/8ad1e995d647ced7a696a2b46f9ce129.png" alt><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/d1ff069a231166788959b23fdaff0c8b.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/2192ab9b92405da66522fcae02489717.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/06662df34b597e5de2c9b03b3b7fe054.png" alt></p>
+<p><img src="http://nunu03.github.io/2022/05/31/Retrofit%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/507b53189e26fafacc1271729e0f60dc.png" alt></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Android </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Retrofit </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Android知识点整理]]></title>
       <url>/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</url>
       <content type="html"><![CDATA[<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><h3 id="循序表（数组arraylist）和linklist-（-双向链表）链表的插入、删除、查询的效率？"><a href="#循序表（数组arraylist）和linklist-（-双向链表）链表的插入、删除、查询的效率？" class="headerlink" title="循序表（数组arraylist）和linklist （ 双向链表）链表的插入、删除、查询的效率？"></a>循序表（数组arraylist）和linklist （ 双向链表）链表的插入、删除、查询的效率？</h3><h3 id="如果一个数组反复插入删除怎么降低时间复杂度？"><a href="#如果一个数组反复插入删除怎么降低时间复杂度？" class="headerlink" title="如果一个数组反复插入删除怎么降低时间复杂度？"></a>如果一个数组反复插入删除怎么降低时间复杂度？</h3><p>A.数组插入、删除：是在下标i的地方，后边的数组整体system.copy一份，然后插入到i位置。Copy是一个循环。</p>
