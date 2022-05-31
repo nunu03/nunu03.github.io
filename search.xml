@@ -292,7 +292,7 @@
 <h4 id="具体冲突：改变插件Context的mResources"><a href="#具体冲突：改变插件Context的mResources" class="headerlink" title="具体冲突：改变插件Context的mResources"></a>具体冲突：改变插件Context的mResources</h4><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/16403b183da60875225158c20e7467e7.png" alt="descript"></p>
 <p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/8a108ef2e26261a4e15185663b3af422.png" alt="descript"></p>
 <p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/82642ad0b23412bf9b14ce23848894ed.png" alt="descript"></p>
-<h2 id="开机启动流程"><a href="#开机启动流程" class="headerlink" title="开机启动流程"></a>开机启动流程</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/loadstart.png" alt="descript"></p>
+<h2 id="开机启动流程"><a href="#开机启动流程" class="headerlink" title="开机启动流程"></a>开机启动流程</h2><p><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/loadstart.png" alt="descript"><br>从按下电源开始，会通过Boot Rom中的引导芯片代码开始运行。加载引导程序BootLoader到RAM，然后执行。BootLoader会引导操作系统启动。首先启动内核态（idle pid=0），初始化进程管理、内存管理、驱动（Binder，Display，Camera等等）相关工作，并创建内核进程kthreadd（pid=2），同时创建工作的线程kworkder，软中断线程等等守护进程等。这些都在内核态中进行。<br>然后启动用户进程init进程，也是第一个用户进程。从而手机进入了用户态。同时init进程是用户进程的鼻祖。每一个进程都有一个main函数。通过linux一系列执行，最终会进入init.rc文件。并同时启动zygote。看如下图，包括usb，hardware等等。<br><img src="http://nunu03.github.io/2022/05/29/Android%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/initrc.png" alt="descript"></p>
 ]]></content>
       
         <categories>
