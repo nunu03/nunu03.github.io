@@ -62,7 +62,7 @@
     </div>
     <div id="search-form">
       <div id="result-mask" class="hide"></div>
-      <label><input id="search-key" type="text" autocomplete="off" placeholder="search"></label>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="Recherche"></label>
       <div id="result-wrap" class="hide">
         <div id="search-result"></div>
       </div>
@@ -83,91 +83,6 @@
 
       <div class="outer">
         <section id="main">
-  <article id="post-retrofit总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-inner">
-    
-    
-    <div class="article-meta">
-      
-      <span class="article-date">
-  <i class="fa fa-date"></i>
-  <time class="dt-published" datetime="2022-05-31T08:14:32.638Z" itemprop="datePublished">2022年05月31日</time>
-</span>
-      
-      
-      
-<a href="/2022/05/31/retrofit总结/#comments" class="article-comment-link">
-  
-  <i class="fa fa-commt"></i>
-  Guestbook
-</a>
-
-
-    </div>
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="/.io//4de77ad35503abbd00c13c147323ca21.png" alt></p>
-<p><img src="/.io//7933ffed68e92b84378c31a49e7e6ac1.png" alt></p>
-<p><img src="/.io//9a4932290dd8db3fc8c171494795f3da.png" alt></p>
-<p><img src="/.io//3f88aeb47d686803669d2f6f49aeffc8.png" alt></p>
-<p><img src="/.io//0de5cf423a7c3c89cbcc39028012a9d1.png" alt></p>
-<p><img src="/.io//dc5d144c8361d27781f2e68e8153a0af.png" alt></p>
-<p>ServiceMethod,采用反射获取接口中设置的参数信息，性能低？用到了缓存啊，把ServiceMethod缓存到一个map里</p>
-<p><img src="/.io//b067b8cbea7526a20c0eddf1edb24ab3.png" alt></p>
-<p>那Retrofit可以用单例吗？可以啊，如果接口请求频繁，可以用，如果点击一次，请求一次，就可以用构造者模式。同时接口越多，缓存的也越多。</p>
-<p>ServiceMethod，封装成一个OKhttp请求的Call使用，并返回一个Call。Okhttpcall就是衔接sm和okhttp的。</p>
-<p><img src="/.io//fdf756beb3868dc26c7b2a7d02f19224.png" alt></p>
-<p><img src="/.io//408e85e639b492f0a6927b3d3ca75e02.png" alt></p>
-<p>Moshi替换gson解析数据：</p>
-<p>ExecutorCallbackCall是对okhttpcall的封装，<img src="/.io//86ee16d22e5e1478e87bae98dabe34fe.png" alt></p>
-<p><img src="/.io//59630c45872bacc592f940ffaec759f6.png" alt></p>
-<p><img src="/.io//4e9069338babe0a0179fcc51029af07a.png" alt></p>
-<p><img src="/.io//e4748949d2a640ae5022de89cdf325aa.png" alt></p>
-<p><img src="/.io//18b11b3227e2ca3cd6f50d0077a031e5.png" alt></p>
-<p><img src="/.io//11a1c471fea2388400d028ad1e3e5c86.png" alt></p>
-<p><img src="/.io//b2e24d8c55efa10ec2f3f2c0c342bdcf.png" alt></p>
-<p><img src="/.io//52f007abdde12af0368acc90e6ad7bc1.png" alt></p>
-<p><img src="/.io//10f558ccfa699d1d0bd6afc839784611.png" alt></p>
-<p><img src="/.io//493e40be01c7d3e6ce6bf85e33ecaa9d.png" alt></p>
-<p><img src="/.io//623abf36e4328994281d47f6032582d6.png" alt></p>
-<p><img src="/.io//a1905ededaf02ced2e8be88021cd04e2.png" alt></p>
-<p><img src="/.io//691c561fa2e426c642bb201f21257290.png" alt></p>
-<p><img src="/.io//8ad1e995d647ced7a696a2b46f9ce129.png" alt><img src="/.io//d1ff069a231166788959b23fdaff0c8b.png" alt></p>
-<p><img src="/.io//2192ab9b92405da66522fcae02489717.png" alt></p>
-<p><img src="/.io//06662df34b597e5de2c9b03b3b7fe054.png" alt></p>
-<p><img src="/.io//507b53189e26fafacc1271729e0f60dc.png" alt></p>
-
-        
-        
-          <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
-          </blockquote>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <div class="article-tag-wrap">
-          
-
-          
-          
-    <div class="social-share">
-      <span>Share:</span>
-    </div>
-
-
-
-        </div>
-      
-      
-      
-    </footer>
-  </div>
-</article>
-
-
   <article id="post-Retrofit架构解析" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner">
     
@@ -200,7 +115,7 @@
 <a href="/2022/05/31/Retrofit架构解析/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Livre d&#39;or
 </a>
 
 
@@ -242,8 +157,8 @@
         
         
           <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
+              <p>Lien original: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
+              <p>Déclaration de droit d&#39;auteur: 转载请注明出处.</p>
           </blockquote>
         
       
@@ -258,7 +173,7 @@
 
           
     <div class="social-share">
-      <span>Share:</span>
+      <span>Partager:</span>
     </div>
 
 
@@ -304,7 +219,7 @@
 <a href="/2022/05/29/Android知识点整理/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Livre d&#39;or
 </a>
 
 
@@ -362,7 +277,7 @@
 <a href="/2022/05/29/hello-world/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Livre d&#39;or
 </a>
 
 
@@ -420,7 +335,7 @@
 <a href="/2022/04/08/epic原理浅析/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Livre d&#39;or
 </a>
 
 
@@ -478,7 +393,7 @@
 <a href="/2022/02/16/python-设置Host代理/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Livre d&#39;or
 </a>
 
 
@@ -540,7 +455,7 @@
 <a href="/2021/12/27/Pngquant-图片压缩/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Livre d&#39;or
 </a>
 
 
@@ -608,7 +523,7 @@
 <a href="/2021/11/15/Gradle-4-0-jar包assets资源丢失原因分析/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Livre d&#39;or
 </a>
 
 
@@ -666,7 +581,7 @@
 <a href="/2021/10/08/Android代码混淆语法/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Livre d&#39;or
 </a>
 
 
@@ -724,7 +639,7 @@
 <a href="/2021/09/06/自定义Gradle-Plugin发布到本地/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Livre d&#39;or
 </a>
 
 
@@ -750,10 +665,68 @@
 </article>
 
 
+  <article id="post-Gradle之android.precompileDependenciesResources配置介绍" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/09/06/Gradle之android.precompileDependenciesResources配置介绍/">Gradle之android.precompileDependenciesResources配置介绍</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2021-09-06T09:38:06.000Z" itemprop="datePublished">2021年09月06日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/Gradle/">Gradle</a>
+  </div>
+
+      
+      
+<a href="/2021/09/06/Gradle之android.precompileDependenciesResources配置介绍/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  Livre d&#39;or
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>本地版用了一个第三方图片压缩插件，用来减少包大小大约2.6兆，但是在gradle升级后，并没有达到预期的效果。之后在gradle.properties中设置了android.precompileDependenciesResources=false后，解决了该问题。android.precompileDependenciesResources是Gradle 3.6版本以后增加的一个配置，并且默认是打开的，但是不知道他具体的作用。我们在开发过程中也很少用到关闭的情况。 所以本次具体介绍一下它的作用，主要从以下几个方面介绍：</p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
+
+        <p class="article-more-link">
+          <a href="/2021/09/06/Gradle之android.precompileDependenciesResources配置介绍/#more">Read More</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
 
     <nav id="page-nav">
 
-<span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next</a>
+<span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Suivant</a>
 </nav>
 
 
@@ -763,13 +736,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-posts"></i> Recent</h3>
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Récent</h3>
     <div class="widget">
       <ul>
-        
-          <li>
-            <a href="/2022/05/31/retrofit总结/">(no title)</a>
-          </li>
         
           <li>
             <a href="/2022/05/31/Retrofit架构解析/">Retrofit架构解析</a>
@@ -787,6 +756,10 @@
             <a href="/2022/04/08/epic原理浅析/">epic原理浅析</a>
           </li>
         
+          <li>
+            <a href="/2022/02/16/python-设置Host代理/">Python设置Host代理</a>
+          </li>
+        
       </ul>
     </div>
   </div>
@@ -795,7 +768,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-tag"></i> Tag Cloud</h3>
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Nuage de tag</h3>
     <div class="widget tagcloud">
       <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/Charles/" style="font-size: 13.33px;">Charles</a> <a href="/tags/Color/" style="font-size: 10px;">Color</a> <a href="/tags/FaceUnity/" style="font-size: 16.67px;">FaceUnity</a> <a href="/tags/Fix/" style="font-size: 10px;">Fix</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/GitLab/" style="font-size: 10px;">GitLab</a> <a href="/tags/Gradle/" style="font-size: 20px;">Gradle</a> <a href="/tags/Haar/" style="font-size: 10px;">Haar</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hook/" style="font-size: 10px;">Hook</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Log/" style="font-size: 10px;">Log</a> <a href="/tags/OpenCV/" style="font-size: 10px;">OpenCV</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Title/" style="font-size: 10px;">Title</a> <a href="/tags/Toast/" style="font-size: 10px;">Toast</a> <a href="/tags/View/" style="font-size: 10px;">View</a> <a href="/tags/WebHook/" style="font-size: 10px;">WebHook</a> <a href="/tags/Wireshark/" style="font-size: 10px;">Wireshark</a> <a href="/tags/Xposed/" style="font-size: 13.33px;">Xposed</a> <a href="/tags/aar/" style="font-size: 10px;">aar</a> <a href="/tags/cmd/" style="font-size: 10px;">cmd</a> <a href="/tags/ngrok/" style="font-size: 13.33px;">ngrok</a> <a href="/tags/nps/" style="font-size: 10px;">nps</a> <a href="/tags/人脸检测/" style="font-size: 10px;">人脸检测</a>
     </div>
@@ -804,7 +777,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-classify"></i> Categories</h3>
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Catégories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -816,7 +789,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-archive"></i> Archive</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
     </div>
   </div>
 
@@ -834,7 +807,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-link"></i> Blogroll</h3>
+    <h3 class="widget-title"><i class="fa fa-link"></i> À suivre</h3>
     <div class="widget">
       <ul>
       
@@ -857,9 +830,9 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       <p>
-        <a href="/sitemap.xml">Site Map</a>
-        <span> | </span><a href="/atom.xml">Subscribe to this site</a>
-        <span> | </span><a href="/about/">Contact the blogger</a>
+        <a href="/sitemap.xml">Plan du site</a>
+        <span> | </span><a href="/atom.xml">Abonnez-vous à ce site</a>
+        <span> | </span><a href="/about/">Contacter le blogueur</a>
       </p>
       
         <p>
