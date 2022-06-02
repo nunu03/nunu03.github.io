@@ -3,6 +3,28 @@
   
     
     <entry>
+      <title><![CDATA[LiveData&LifeCycle原理]]></title>
+      <url>/2022/06/02/LiveData-LifeCycle%E5%8E%9F%E7%90%86/</url>
+      <content type="html"><![CDATA[<h2 id="LiveData是什么？"><a href="#LiveData是什么？" class="headerlink" title="LiveData是什么？"></a>LiveData是什么？</h2><p>LiveData是一个可以被观察的数据持有类，可以感知并遵循Activity、Fragment等组件的生命周期。因此可以做到仅再组件处于生命周期的激活状态时更新UI数据。</p>
+<p><img src="http://nunu03.github.io/2022/06/02/LiveData-LifeCycle%E5%8E%9F%E7%90%86/live-jg.png" alt="descript"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Android </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> LiveData </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Android WMS原理]]></title>
       <url>/2022/06/01/Android-WMS%E5%8E%9F%E7%90%86/</url>
       <content type="html"><![CDATA[<h2 id="zygote-启动app进程"><a href="#zygote-启动app进程" class="headerlink" title="zygote 启动app进程"></a>zygote 启动app进程</h2><p>总结app启动流程以及wms相关的view绘制源码解析，以及相关的一些问题的整理。</p>
