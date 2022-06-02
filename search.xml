@@ -6,7 +6,42 @@
       <title><![CDATA[LiveData&LifeCycle原理]]></title>
       <url>/2022/06/02/LiveData-LifeCycle%E5%8E%9F%E7%90%86/</url>
       <content type="html"><![CDATA[<h2 id="LiveData是什么？"><a href="#LiveData是什么？" class="headerlink" title="LiveData是什么？"></a>LiveData是什么？</h2><p>LiveData是一个可以被观察的数据持有类，可以感知并遵循Activity、Fragment等组件的生命周期。因此可以做到仅再组件处于生命周期的激活状态时更新UI数据。</p>
+<a id="more"></a>
 <p><img src="http://nunu03.github.io/2022/06/02/LiveData-LifeCycle%E5%8E%9F%E7%90%86/live-jg.png" alt="descript"></p>
+<h2 id="常用通信框架"><a href="#常用通信框架" class="headerlink" title="常用通信框架"></a>常用通信框架</h2><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Handler</td>
+<td>系统原生，能实现线程间通信</td>
+<td>高耦合、不利于维护、容易导致内存泄漏和空指针</td>
+</tr>
+<tr>
+<td>BroadCast</td>
+<td>简单</td>
+<td>性能差、传递数据有限、打乱代码执行逻辑</td>
+</tr>
+<tr>
+<td>interface</td>
+<td>速度快、容易理解</td>
+<td>实现复杂、不利于维护</td>
+</tr>
+<tr>
+<td>RxBus</td>
+<td>效率高、无内存泄漏</td>
+<td>基于rxjava，学习成本高且依赖包太大</td>
+</tr>
+<tr>
+<td>EventBus</td>
+<td>使用简单</td>
+<td>混淆问题，无法感知组件的生命周期、实现复杂</td>
+</tr>
+</tbody></table>
 ]]></content>
       
         <categories>
