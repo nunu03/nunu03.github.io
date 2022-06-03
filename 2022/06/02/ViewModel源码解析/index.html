@@ -140,8 +140,9 @@
 <p>如下图生命周期：<br><img src="http://nunu03.github.io/2022/06/02/ViewModel%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/viewmodel-lifecycle.png" alt><br>在系统首次调用 Activity 对象的 onCreate() 方法时请求 ViewModel。系统可能会在 activity 的整个生命周期内多次调用 onCreate()，如在旋转设备屏幕时。ViewModel 存在的时间范围是从您首次请求 ViewModel 直到 activity 完成并销毁。</p>
 <h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
 <li>1.横竖屏切换，包括Activity重建，数据可依然保存。</li>
-<li>2.同一个Activity下，Fragment之间的数据共享。同理在不同Activity中也可以共享ViewModel数据<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2>我们在使用时是这样创建viewmodel的:</li>
+<li>2.同一个Activity下，Fragment之间的数据共享。同理在不同Activity中也可以共享ViewModel数据</li>
 </ul>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p>我们在使用时是这样创建viewmodel的:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ViewModelProviders.of(this).get(MyViewModel::class.java)</span><br></pre></td></tr></table></figure>
 
 <p>从上看出，Factory不传，默认为null</p>
