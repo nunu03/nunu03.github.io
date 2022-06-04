@@ -172,7 +172,8 @@ notifyListeners(mcr);</code></pre><p>}</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关键awaitLoadedLocked 这个方法，当数据没有加载完，就让调用的线程处于等待中，阻塞住了</span><br></pre></td></tr></table></figure>
 
 <p>private void awaitLoadedLocked() {<br>    if (!mLoaded) {<br>        // Raise an explicit StrictMode onReadFromDisk for this<br>        // thread, since the real read will be in a different<br>        // thread and otherwise ignored by StrictMode.<br>        BlockGuard.getThreadPolicy().onReadFromDisk();<br>    }<br>    while (!mLoaded) {<br>        try {<br>            mLock.wait();<br>        } catch (InterruptedException unused) {<br>        }<br>    }<br>    if (mThrowable != null) {<br>        throw new IllegalStateException(mThrowable);<br>    }<br>}</p>
-<pre><code>所以获取数据也是阻塞的。
+<pre><code>
+所以获取数据也是阻塞的。
 
 #### 源码总结
 从上面可以看出两者最后都是先调用commitToMemory，将更改提交到内存，在这一点上两者是一致的，之后又都调用了enqueueDiskWrite进行数据持久化任务，不过commit函数一般会在当前线程直接写文件，而apply则提交到一个队列里，延迟加载，之后直接返回。
