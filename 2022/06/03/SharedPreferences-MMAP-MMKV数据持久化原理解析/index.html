@@ -62,7 +62,7 @@
     </div>
     <div id="search-form">
       <div id="result-mask" class="hide"></div>
-      <label><input id="search-key" type="text" autocomplete="off" placeholder="Suche"></label>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="search"></label>
       <div id="result-wrap" class="hide">
         <div id="search-result"></div>
       </div>
@@ -128,7 +128,7 @@
     
   
   <i class="fa fa-commt"></i>
-  Gästebuch
+  Guestbook
 </a>
 
 
@@ -191,9 +191,11 @@
 </ul>
 </blockquote>
 <h2 id="MMAP"><a href="#MMAP" class="headerlink" title="MMAP"></a>MMAP</h2><h3 id="传统I-O"><a href="#传统I-O" class="headerlink" title="传统I/O"></a>传统I/O</h3><p>虚拟内存被操作系统划分为两块：用户空间和内核空间，用户空间是用户程序代码运行的地方，内核空间是内核代码运行的地方，内核空间由所有进程共享。为了安全，他们是隔离的，即使用户的程序崩溃了，内核也不受影响。<br>写文件的流程：<br><img src="http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/sp-io.png" alt><br>1、调用write，告诉内核需要写入数据的开始地址与长度。<br>2、内核将数据拷贝到内核页缓存。<br>3、由操作系统调用，将数据拷贝到磁盘，完成写入。</p>
-<h3 id="MMMAP"><a href="#MMMAP" class="headerlink" title="MMMAP"></a>MMMAP</h3><p>Linux 通过将一个虚拟内存区域与一个磁盘上的对象关联起来，以初始化这个虚拟内存区域的内容，这个过程称为内存映射(memory mapping).<br><img src="http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/sp-io.png" alt><br>对文件进行mmap，会在进程的虚拟内存分配地址空间创建映射关系。实现这样的映射关系后，就可以采用指针的方式读写操作这一段内存，而系统会自动回写到对应的文件磁盘上。</p>
-<h2 id="MMKV"><a href="#MMKV" class="headerlink" title="MMKV"></a>MMKV</h2><p>MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列化使用 protobuf 实现，性能高，稳定性强。</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><ul>
+<h3 id="MMMAP"><a href="#MMMAP" class="headerlink" title="MMMAP"></a>MMMAP</h3><p>Linux 通过将一个虚拟内存区域与一个磁盘上的对象关联起来，以初始化这个虚拟内存区域的内容，这个过程称为内存映射(memory mapping).<br>对文件进行mmap，会在进程的虚拟内存分配地址空间创建映射关系。实现这样的映射关系后，就可以采用指针的方式读写操作这一段内存，而系统会自动回写到对应的文件磁盘上。<br><img src="http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/sp-io.png" alt></p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>MMAP对文件的读写操作只需要从磁盘到用户主存的一次数据拷贝过程，减少了数据的拷贝次数，提高了文件操作效率</li>
+<li>MMAP使用逻辑内存对磁盘文件进行映射，操作内存就相当于操作文件，不需要开启线程，操作MMAP的速度和操作内存的速度一样快</li>
+<li>MMAP提供一段可供随时写入的内存块，App只管往里面写数据，由操作系统如内存不足、进程退出等时候负责将内存回写到文件。<h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4>微信Mars：<br><a href="https://github.com/Tencent/mars" target="_blank" rel="noopener">github</a><br><a href="https://mp.weixin.qq.com/s/cnhuEodJGIbdodh0IxNeXQ" target="_blank" rel="noopener">文档</a><br>美团Logan：<br><a href="https://github.com/Meituan-Dianping/Logan/tree/master/Example/Logan-Android" target="_blank" rel="noopener">github</a><br><a href="https://tech.meituan.com/2018/02/11/logan.html" target="_blank" rel="noopener">博客</a><br>网易android-mmap：<h4 id="Binder通信"><a href="#Binder通信" class="headerlink" title="Binder通信"></a>Binder通信</h4><h2 id="MMKV"><a href="#MMKV" class="headerlink" title="MMKV"></a>MMKV</h2>MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列化使用 protobuf 实现，性能高，稳定性强。<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3></li>
 <li>内存准备<br>通过 mmap 内存映射文件，提供一段可供随时写入的内存块，App 只管往里面写数据，由操作系统负责将内存回写到文件，不必担心 crash 导致数据丢失。</li>
 <li>数据组织<br>数据序列化方面我们选用 protobuf 协议，pb 在性能和空间占用上都有不错的表现。</li>
 <li>写入优化<br>考虑到主要使用场景是频繁地进行写入更新，我们需要有增量更新的能力。我们考虑将增量 kv 对象序列化后，append 到内存末尾。</li>
@@ -204,9 +206,9 @@
             <div id="toc-article">
                 
   <div class="widget-wrap" id="toc-wrap">
-    <h3 class="widget-title"><i class="fa fa-toc"></i> Inhalte</h3>
+    <h3 class="widget-title"><i class="fa fa-toc"></i> Contents</h3>
     <div class="widget">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SharedPreferences"><span class="toc-text">SharedPreferences</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使用"><span class="toc-text">如何使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码分析"><span class="toc-text">源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#获取"><span class="toc-text">获取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#commit"><span class="toc-text">commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#writeToFile"><span class="toc-text">writeToFile</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#apply"><span class="toc-text">apply</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读数据"><span class="toc-text">读数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#源码总结"><span class="toc-text">源码总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MMAP"><span class="toc-text">MMAP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#传统I-O"><span class="toc-text">传统I/O</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MMMAP"><span class="toc-text">MMMAP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MMKV"><span class="toc-text">MMKV</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SharedPreferences"><span class="toc-text">SharedPreferences</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使用"><span class="toc-text">如何使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码分析"><span class="toc-text">源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#获取"><span class="toc-text">获取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#commit"><span class="toc-text">commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#writeToFile"><span class="toc-text">writeToFile</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#apply"><span class="toc-text">apply</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读数据"><span class="toc-text">读数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#源码总结"><span class="toc-text">源码总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MMAP"><span class="toc-text">MMAP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#传统I-O"><span class="toc-text">传统I/O</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MMMAP"><span class="toc-text">MMMAP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#特点"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#案例"><span class="toc-text">案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Binder通信"><span class="toc-text">Binder通信</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MMKV"><span class="toc-text">MMKV</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
     </div>
   </div>
 
@@ -215,8 +217,8 @@
         
         
           <blockquote id="copyright">
-              <p>Ursprünglicher Link: <a href="http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/">http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/</a></p>
-              <p>Copyright-Erklärung: 转载请注明出处.</p>
+              <p>Original link: <a href="http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/">http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/</a></p>
+              <p>Copyright Notice: 转载请注明出处.</p>
           </blockquote>
         
       
@@ -231,7 +233,7 @@
 
           
     <div class="social-share">
-      <span>Aktie:</span>
+      <span>Share:</span>
     </div>
 
 
@@ -275,7 +277,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-posts"></i> Letzte</h3>
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Recent</h3>
     <div class="widget">
       <ul>
         
@@ -316,7 +318,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-classify"></i> Kategorien</h3>
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -326,7 +328,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-archive"></i> Archiv</h3>
+    <h3 class="widget-title"><i class="fa fa-archive"></i> Archive</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
     </div>
@@ -369,9 +371,9 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       <p>
-        <a href="/sitemap.xml">Sitemap</a>
-        <span> | </span><a href="/atom.xml">Abonnieren Sie diese Site</a>
-        <span> | </span><a href="/about/">Kontaktieren Sie den Blogger</a>
+        <a href="/sitemap.xml">Site Map</a>
+        <span> | </span><a href="/atom.xml">Subscribe to this site</a>
+        <span> | </span><a href="/about/">Contact the blogger</a>
       </p>
       
         <p>
