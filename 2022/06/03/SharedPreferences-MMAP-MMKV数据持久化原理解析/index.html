@@ -62,7 +62,7 @@
     </div>
     <div id="search-form">
       <div id="result-mask" class="hide"></div>
-      <label><input id="search-key" type="text" autocomplete="off" placeholder="search"></label>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="Suche"></label>
       <div id="result-wrap" class="hide">
         <div id="search-result"></div>
       </div>
@@ -128,7 +128,7 @@
     
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Gästebuch
 </a>
 
 
@@ -157,188 +157,49 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">public boolean commit() &#123;</span><br><span class="line">    long startTime = 0;</span><br><span class="line"></span><br><span class="line">    if (DEBUG) &#123;</span><br><span class="line">        startTime = System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MemoryCommitResult mcr = commitToMemory();</span><br><span class="line"></span><br><span class="line">    SharedPreferencesImpl.this.enqueueDiskWrite(</span><br><span class="line">        mcr, null /* sync write on this thread okay */);</span><br><span class="line">    try &#123;</span><br><span class="line">         //这个地方就让主线程卡住的原因，如果多个commit，就需要等待，就会阻塞。</span><br><span class="line">        mcr.writtenToDiskLatch.await();</span><br><span class="line">    &#125; catch (InterruptedException e) &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        if (DEBUG) &#123;</span><br><span class="line">            Log.d(TAG, mFile.getName() + &quot;:&quot; + mcr.memoryStateGeneration</span><br><span class="line">                    + &quot; committed after &quot; + (System.currentTimeMillis() - startTime)</span><br><span class="line">                    + &quot; ms&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    notifyListeners(mcr);</span><br><span class="line">    return mcr.writeToDiskResult;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void enqueueDiskWrite(final MemoryCommitResult mcr,</span><br><span class="line">                                final Runnable postWriteRunnable) &#123;</span><br><span class="line">    final boolean isFromSyncCommit = (postWriteRunnable == null);</span><br><span class="line"></span><br><span class="line">    final Runnable writeToDiskRunnable = new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                synchronized (mWritingToDiskLock) &#123;</span><br><span class="line">                    writeToFile(mcr, isFromSyncCommit);</span><br><span class="line">                &#125;</span><br><span class="line">                synchronized (mLock) &#123;</span><br><span class="line">                    mDiskWritesInFlight--;</span><br><span class="line">                &#125;</span><br><span class="line">                if (postWriteRunnable != null) &#123;</span><br><span class="line">                    postWriteRunnable.run();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">    // 未true是commit提交，在当前线程提交，注意这里的锁.</span><br><span class="line">    if (isFromSyncCommit) &#123;</span><br><span class="line">        boolean wasEmpty = false;</span><br><span class="line">        synchronized (mLock) &#123;</span><br><span class="line">            wasEmpty = mDiskWritesInFlight == 1;</span><br><span class="line">        &#125;</span><br><span class="line">        if (wasEmpty) &#123;</span><br><span class="line">            writeToDiskRunnable.run();</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // apply 如队列</span><br><span class="line">    QueuedWork.queue(writeToDiskRunnable, !isFromSyncCommit);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在commit方法中，首先执行写入任务也就是enqueueDiskWrite这个方法，然后让调用线程处于等待状态，当写入任务执行成功后唤起调用commit的线程，假设调用commit的线程就是主线线程，并且写入任务耗时还比较多的，这不就阻塞住主线程了吗？</p>
-<h4 id="writeToFile"><a href="#writeToFile" class="headerlink" title="writeToFile"></a>writeToFile</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">private void writeToFile(MemoryCommitResult mcr, boolean isFromSyncCommit) &#123;</span><br><span class="line">    long startTime = 0;</span><br><span class="line">    long existsTime = 0;</span><br><span class="line">    long backupExistsTime = 0;</span><br><span class="line">    long outputStreamCreateTime = 0;</span><br><span class="line">    long writeTime = 0;</span><br><span class="line">    long fsyncTime = 0;</span><br><span class="line">    long setPermTime = 0;</span><br><span class="line">    long fstatTime = 0;</span><br><span class="line">    long deleteTime = 0;</span><br><span class="line">    try &#123;</span><br><span class="line">        FileOutputStream str = createFileOutputStream(mFile);</span><br><span class="line"></span><br><span class="line">        if (DEBUG) &#123;</span><br><span class="line">            outputStreamCreateTime = System.currentTimeMillis();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (str == null) &#123;</span><br><span class="line">            mcr.setDiskWriteResult(false, false);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        XmlUtils.writeMapXml(mcr.mapToWriteToDisk, str);</span><br><span class="line"></span><br><span class="line">        writeTime = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        FileUtils.sync(str);</span><br><span class="line"></span><br><span class="line">        fsyncTime = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        str.close();</span><br><span class="line">        ContextImpl.setFilePermissionsFromMode(mFile.getPath(), mMode, 0);</span><br><span class="line">        return;</span><br><span class="line">    &#125; catch (XmlPullParserException e) &#123;</span><br><span class="line">        Log.w(TAG, &quot;writeToFile: Got exception:&quot;, e);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        Log.w(TAG, &quot;writeToFile: Got exception:&quot;, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">直接io操作写入的文件。</span><br><span class="line"></span><br><span class="line">#### apply</span><br><span class="line"></span><br><span class="line">apply -&gt; 异步延迟加载</span><br></pre></td></tr></table></figure>
+<h4 id="writeToFile"><a href="#writeToFile" class="headerlink" title="writeToFile"></a>writeToFile</h4><p>直接io操作写入的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">private void writeToFile(MemoryCommitResult mcr, boolean isFromSyncCommit) &#123;</span><br><span class="line">    long startTime = 0;</span><br><span class="line">    long existsTime = 0;</span><br><span class="line">    long backupExistsTime = 0;</span><br><span class="line">    long outputStreamCreateTime = 0;</span><br><span class="line">    long writeTime = 0;</span><br><span class="line">    long fsyncTime = 0;</span><br><span class="line">    long setPermTime = 0;</span><br><span class="line">    long fstatTime = 0;</span><br><span class="line">    long deleteTime = 0;</span><br><span class="line">    try &#123;</span><br><span class="line">        FileOutputStream str = createFileOutputStream(mFile);</span><br><span class="line"></span><br><span class="line">        if (DEBUG) &#123;</span><br><span class="line">            outputStreamCreateTime = System.currentTimeMillis();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (str == null) &#123;</span><br><span class="line">            mcr.setDiskWriteResult(false, false);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        XmlUtils.writeMapXml(mcr.mapToWriteToDisk, str);</span><br><span class="line"></span><br><span class="line">        writeTime = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        FileUtils.sync(str);</span><br><span class="line"></span><br><span class="line">        fsyncTime = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        str.close();</span><br><span class="line">        ContextImpl.setFilePermissionsFromMode(mFile.getPath(), mMode, 0);</span><br><span class="line">        return;</span><br><span class="line">    &#125; catch (XmlPullParserException e) &#123;</span><br><span class="line">        Log.w(TAG, &quot;writeToFile: Got exception:&quot;, e);</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        Log.w(TAG, &quot;writeToFile: Got exception:&quot;, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>public void apply() {<br>    final long startTime = System.currentTimeMillis();</p>
-<pre><code>final MemoryCommitResult mcr = commitToMemory();
-final Runnable awaitCommit = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                mcr.writtenToDiskLatch.await();
-            } catch (InterruptedException ignored) {
-            }
+<h4 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h4><p>apply -&gt; 异步延迟加载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public void apply() &#123;</span><br><span class="line">    final long startTime = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">    final MemoryCommitResult mcr = commitToMemory();</span><br><span class="line">    final Runnable awaitCommit = new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    mcr.writtenToDiskLatch.await();</span><br><span class="line">                &#125; catch (InterruptedException ignored) &#123;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                if (DEBUG &amp;&amp; mcr.wasWritten) &#123;</span><br><span class="line">                    Log.d(TAG, mFile.getName() + &quot;:&quot; + mcr.memoryStateGeneration</span><br><span class="line">                            + &quot; applied after &quot; + (System.currentTimeMillis() - startTime)</span><br><span class="line">                            + &quot; ms&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    // 这个是保存到QueuedWork队列， 添加到LinkedList&lt;Runnable&gt; sFinishers = new LinkedList&lt;&gt;();里</span><br><span class="line">    QueuedWork.addFinisher(awaitCommit);</span><br><span class="line"></span><br><span class="line">    Runnable postWriteRunnable = new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                awaitCommit.run();</span><br><span class="line">                QueuedWork.removeFinisher(awaitCommit);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">    SharedPreferencesImpl.this.enqueueDiskWrite(mcr, postWriteRunnable);</span><br><span class="line"></span><br><span class="line">    // Okay to notify the listeners before it&apos;s hit disk</span><br><span class="line">    // because the listeners should always get the same</span><br><span class="line">    // SharedPreferences instance back, which has the</span><br><span class="line">    // changes reflected in memory.</span><br><span class="line">    notifyListeners(mcr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-            if (DEBUG &amp;&amp; mcr.wasWritten) {
-                Log.d(TAG, mFile.getName() + &quot;:&quot; + mcr.memoryStateGeneration
-                        + &quot; applied after &quot; + (System.currentTimeMillis() - startTime)
-                        + &quot; ms&quot;);
-            }
-        }
-    };
-// 这个是保存到QueuedWork队列， 添加到LinkedList&lt;Runnable&gt; sFinishers = new LinkedList&lt;&gt;();里
-QueuedWork.addFinisher(awaitCommit);
+<p>入队列，创建handler，sWork队列中数据最终在queued-work-looper 线程中依次得到执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> public static void queue(Runnable work, boolean shouldDelay) &#123;</span><br><span class="line">    Handler handler = getHandler();</span><br><span class="line"></span><br><span class="line">    synchronized (sLock) &#123;</span><br><span class="line">        sWork.add(work);</span><br><span class="line"></span><br><span class="line">        if (shouldDelay &amp;&amp; sCanDelay) &#123;</span><br><span class="line">            handler.sendEmptyMessageDelayed(QueuedWorkHandler.MSG_RUN, DELAY);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            handler.sendEmptyMessage(QueuedWorkHandler.MSG_RUN);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-Runnable postWriteRunnable = new Runnable() {
-        @Override
-        public void run() {
-            awaitCommit.run();
-            QueuedWork.removeFinisher(awaitCommit);
-        }
-    };
+<p>最终processPendingWork执行，实际上就是for循环，轮询执行；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">private static void processPendingWork() &#123;</span><br><span class="line">    long startTime = 0;</span><br><span class="line"></span><br><span class="line">    if (DEBUG) &#123;</span><br><span class="line">        startTime = System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    synchronized (sProcessingWork) &#123;</span><br><span class="line">        LinkedList&lt;Runnable&gt; work;</span><br><span class="line"></span><br><span class="line">        synchronized (sLock) &#123;</span><br><span class="line">            work = (LinkedList&lt;Runnable&gt;) sWork.clone();</span><br><span class="line">            sWork.clear();</span><br><span class="line"></span><br><span class="line">            // Remove all msg-s as all work will be processed now</span><br><span class="line">            getHandler().removeMessages(QueuedWorkHandler.MSG_RUN);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (work.size() &gt; 0) &#123;</span><br><span class="line">            for (Runnable w : work) &#123;</span><br><span class="line">                w.run();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-SharedPreferencesImpl.this.enqueueDiskWrite(mcr, postWriteRunnable);
+<p>apply的中写入操作也是在异步线程执行，不会导致主线程卡顿，但是如果异步任务执行时间过长，当ActvityThread执行了handleStopActivity或者handleServiceArgs或者handlePauseActivity 等方法的时候都会调用QueuedWork.waitToFinish()方法,而此方法中会在异步任务执行完成前一直阻塞住主线程，所以卡顿问题就产生了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">public static void waitToFinish() &#123;</span><br><span class="line">       long startTime = System.currentTimeMillis();</span><br><span class="line">       boolean hadMessages = false;</span><br><span class="line"></span><br><span class="line">       Handler handler = getHandler();</span><br><span class="line"></span><br><span class="line">       synchronized (sLock) &#123;</span><br><span class="line">           if (handler.hasMessages(QueuedWorkHandler.MSG_RUN)) &#123;</span><br><span class="line">               // Delayed work will be processed at processPendingWork() below</span><br><span class="line">               handler.removeMessages(QueuedWorkHandler.MSG_RUN);</span><br><span class="line"></span><br><span class="line">               if (DEBUG) &#123;</span><br><span class="line">                   hadMessages = true;</span><br><span class="line">                   Log.d(LOG_TAG, &quot;waiting&quot;);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           // We should not delay any work as this might delay the finishers</span><br><span class="line">           sCanDelay = false;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();</span><br><span class="line">       try &#123;</span><br><span class="line">           processPendingWork();</span><br><span class="line">       &#125; finally &#123;</span><br><span class="line">           StrictMode.setThreadPolicy(oldPolicy);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       try &#123;</span><br><span class="line">           while (true) &#123;</span><br><span class="line">               Runnable finisher;</span><br><span class="line"></span><br><span class="line">               synchronized (sLock) &#123;</span><br><span class="line">                   finisher = sFinishers.poll();</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               if (finisher == null) &#123;</span><br><span class="line">                   break;</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               finisher.run();</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; finally &#123;</span><br><span class="line">           sCanDelay = true;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       synchronized (sLock) &#123;</span><br><span class="line">           long waitTime = System.currentTimeMillis() - startTime;</span><br><span class="line"></span><br><span class="line">           if (waitTime &gt; 0 || hadMessages) &#123;</span><br><span class="line">               mWaitTimes.add(Long.valueOf(waitTime).intValue());</span><br><span class="line">               mNumWaits++;</span><br><span class="line"></span><br><span class="line">               if (DEBUG || mNumWaits % 1024 == 0 || waitTime &gt; MAX_WAIT_TIME_MILLIS) &#123;</span><br><span class="line">                   mWaitTimes.log(LOG_TAG, &quot;waited: &quot;);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-// Okay to notify the listeners before it&apos;s hit disk
-// because the listeners should always get the same
-// SharedPreferences instance back, which has the
-// changes reflected in memory.
-notifyListeners(mcr);</code></pre><p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">入队列，创建handler，sWork队列中数据最终在queued-work-looper 线程中依次得到执行</span><br></pre></td></tr></table></figure>
+<p>会从sFinishers队列中取出数据然后执行run方法，我们别忘了在apply的方法中，我们还添加了QueuedWork.addFinisher(awaitCommit);这个awaitCommit 就得到执行了但是awaitCommit中的代码确实是阻塞的代码，等待写入线程执行完毕才能唤起此线程。如果 apply中的写入代码不执行完，主线程就一直卡住了，也就出现了我们上面的问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> final Runnable awaitCommit = new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            mcr.writtenToDiskLatch.await();</span><br><span class="line">        &#125; catch (InterruptedException ignored) &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (DEBUG &amp;&amp; mcr.wasWritten) &#123;</span><br><span class="line">            Log.d(TAG, mFile.getName() + &quot;:&quot; + mcr.memoryStateGeneration</span><br><span class="line">                    + &quot; applied after &quot; + (System.currentTimeMillis() - startTime)</span><br><span class="line">                    + &quot; ms&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p> public static void queue(Runnable work, boolean shouldDelay) {<br>    Handler handler = getHandler();</p>
-<pre><code>synchronized (sLock) {
-    sWork.add(work);
+<h4 id="读数据"><a href="#读数据" class="headerlink" title="读数据"></a>读数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public int getInt(String key, int defValue) &#123;</span><br><span class="line">    synchronized (mLock) &#123;</span><br><span class="line">        awaitLoadedLocked();</span><br><span class="line">        Integer v = (Integer)mMap.get(key);</span><br><span class="line">        return v != null ? v : defValue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    if (shouldDelay &amp;&amp; sCanDelay) {
-        handler.sendEmptyMessageDelayed(QueuedWorkHandler.MSG_RUN, DELAY);
-    } else {
-        handler.sendEmptyMessage(QueuedWorkHandler.MSG_RUN);
-    }
-}</code></pre><p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">最终processPendingWork执行，实际上就是for循环，轮询执行；</span><br></pre></td></tr></table></figure>
+<p>关键awaitLoadedLocked 这个方法，当数据没有加载完，就让调用的线程处于等待中，阻塞住了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private void awaitLoadedLocked() &#123;</span><br><span class="line">    if (!mLoaded) &#123;</span><br><span class="line">        // Raise an explicit StrictMode onReadFromDisk for this</span><br><span class="line">        // thread, since the real read will be in a different</span><br><span class="line">        // thread and otherwise ignored by StrictMode.</span><br><span class="line">        BlockGuard.getThreadPolicy().onReadFromDisk();</span><br><span class="line">    &#125;</span><br><span class="line">    while (!mLoaded) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            mLock.wait();</span><br><span class="line">        &#125; catch (InterruptedException unused) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    if (mThrowable != null) &#123;</span><br><span class="line">        throw new IllegalStateException(mThrowable);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>private static void processPendingWork() {<br>    long startTime = 0;</p>
-<pre><code>if (DEBUG) {
-    startTime = System.currentTimeMillis();
-}
+<p>所以获取数据也是阻塞的。</p>
+<h4 id="源码总结"><a href="#源码总结" class="headerlink" title="源码总结"></a>源码总结</h4><p>从上面可以看出两者最后都是先调用commitToMemory，将更改提交到内存，在这一点上两者是一致的，之后又都调用了enqueueDiskWrite进行数据持久化任务，不过commit函数一般会在当前线程直接写文件，而apply则提交到一个队列里，延迟加载，之后直接返回。<br>（这里代码是android-28，可能新版本是是一个线程池，而非队列）</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><blockquote>
+<p>xml格式保存<br>通过子线程使用IO读取整个文件，并进行xml解析，存入内存Map，完成初始化，默认大小是16k。<br>commit是同步提交，阻塞调用的线程，为啥？如果是使用commit方式提交，会阻塞调用commit方法的线程，如果写入任务很多比较耗时，就卡住了，所以不要在主线程执行写入文件的操作，否则阻塞主线程；apply是异步(延迟)提交，无法获取结果且可能数据丢失。apply 放法不会阻塞调用的线程，但是如果写入任务比较耗时，会阻塞住主线程，因为主线程有调用的代码，需要等写入任务执行完了才会继续往下执行。<br>更新，是吧map中数据，全部序列化XML，覆盖文件保存（全量更新）。<br>所以有没有一种方案改进sp的xml，io，并发问题？</p>
+</blockquote>
+<h2 id="MMAP"><a href="#MMAP" class="headerlink" title="MMAP"></a>MMAP</h2><h2 id="MMKV"><a href="#MMKV" class="headerlink" title="MMKV"></a>MMKV</h2><p>MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列化使用 protobuf 实现，性能高，稳定性强。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><ul>
+<li>内存准备<br>通过 mmap 内存映射文件，提供一段可供随时写入的内存块，App 只管往里面写数据，由操作系统负责将内存回写到文件，不必担心 crash 导致数据丢失。</li>
+<li>数据组织<br>数据序列化方面我们选用 protobuf 协议，pb 在性能和空间占用上都有不错的表现。</li>
+<li>写入优化<br>考虑到主要使用场景是频繁地进行写入更新，我们需要有增量更新的能力。我们考虑将增量 kv 对象序列化后，append 到内存末尾。</li>
+<li>空间增长<br>使用 append 实现增量更新带来了一个新的问题，就是不断 append 的话，文件大小会增长得不可控。我们需要在性能和空间上做个折中。<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><a href="https://juejin.cn/post/6926825172066369544" target="_blank" rel="noopener">关于SharePreference使用以及内部原理简单解析</a><br><a href="https://www.jianshu.com/p/40e42da910e2?utm_campaign=maleskine" target="_blank" rel="noopener">庖丁解牛之SharedPreferences超级大卡顿</a><br><a href="https://github.com/Tencent/MMKV/blob/master/README_CN.md" target="_blank" rel="noopener">MMKV</a></li>
+</ul>
 
-synchronized (sProcessingWork) {
-    LinkedList&lt;Runnable&gt; work;
-
-    synchronized (sLock) {
-        work = (LinkedList&lt;Runnable&gt;) sWork.clone();
-        sWork.clear();
-
-        // Remove all msg-s as all work will be processed now
-        getHandler().removeMessages(QueuedWorkHandler.MSG_RUN);
-    }
-
-    if (work.size() &gt; 0) {
-        for (Runnable w : work) {
-            w.run();
-        }
-    }
-}</code></pre><p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">apply的中写入操作也是在异步线程执行，不会导致主线程卡顿，但是如果异步任务执行时间过长，当ActvityThread执行了handleStopActivity或者handleServiceArgs或者handlePauseActivity 等方法的时候都会调用QueuedWork.waitToFinish()方法,而此方法中会在异步任务执行完成前一直阻塞住主线程，所以卡顿问题就产生了。</span><br></pre></td></tr></table></figure>
-
-<p> public static void waitToFinish() {<br>        long startTime = System.currentTimeMillis();<br>        boolean hadMessages = false;</p>
-<pre><code>    Handler handler = getHandler();
-
-    synchronized (sLock) {
-        if (handler.hasMessages(QueuedWorkHandler.MSG_RUN)) {
-            // Delayed work will be processed at processPendingWork() below
-            handler.removeMessages(QueuedWorkHandler.MSG_RUN);
-
-            if (DEBUG) {
-                hadMessages = true;
-                Log.d(LOG_TAG, &quot;waiting&quot;);
-            }
-        }
-
-        // We should not delay any work as this might delay the finishers
-        sCanDelay = false;
-    }
-
-    StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
-    try {
-        processPendingWork();
-    } finally {
-        StrictMode.setThreadPolicy(oldPolicy);
-    }
-
-    try {
-        while (true) {
-            Runnable finisher;
-
-            synchronized (sLock) {
-                finisher = sFinishers.poll();
-            }
-
-            if (finisher == null) {
-                break;
-            }
-
-            finisher.run();
-        }
-    } finally {
-        sCanDelay = true;
-    }
-
-    synchronized (sLock) {
-        long waitTime = System.currentTimeMillis() - startTime;
-
-        if (waitTime &gt; 0 || hadMessages) {
-            mWaitTimes.add(Long.valueOf(waitTime).intValue());
-            mNumWaits++;
-
-            if (DEBUG || mNumWaits % 1024 == 0 || waitTime &gt; MAX_WAIT_TIME_MILLIS) {
-                mWaitTimes.log(LOG_TAG, &quot;waited: &quot;);
-            }
-        }
-    }
-}</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">会从sFinishers队列中取出数据然后执行run方法，我们别忘了在apply的方法中，我们还添加了QueuedWork.addFinisher(awaitCommit);这个awaitCommit 就得到执行了但是awaitCommit中的代码确实是阻塞的代码，等待写入线程执行完毕才能唤起此线程。如果 apply中的写入代码不执行完，主线程就一直卡住了，也就出现了我们上面的问题。</span><br></pre></td></tr></table></figure>
-
-<p> final Runnable awaitCommit = new Runnable() {<br>    @Override<br>    public void run() {<br>        try {<br>            mcr.writtenToDiskLatch.await();<br>        } catch (InterruptedException ignored) {<br>        }</p>
-<pre><code>    if (DEBUG &amp;&amp; mcr.wasWritten) {
-        Log.d(TAG, mFile.getName() + &quot;:&quot; + mcr.memoryStateGeneration
-                + &quot; applied after &quot; + (System.currentTimeMillis() - startTime)
-                + &quot; ms&quot;);
-    }
-}</code></pre><p>};</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 读数据</span><br></pre></td></tr></table></figure>
-
-<p>public int getInt(String key, int defValue) {<br>    synchronized (mLock) {<br>        awaitLoadedLocked();<br>        Integer v = (Integer)mMap.get(key);<br>        return v != null ? v : defValue;<br>    }<br>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关键awaitLoadedLocked 这个方法，当数据没有加载完，就让调用的线程处于等待中，阻塞住了</span><br></pre></td></tr></table></figure>
-
-<p>private void awaitLoadedLocked() {<br>    if (!mLoaded) {<br>        // Raise an explicit StrictMode onReadFromDisk for this<br>        // thread, since the real read will be in a different<br>        // thread and otherwise ignored by StrictMode.<br>        BlockGuard.getThreadPolicy().onReadFromDisk();<br>    }<br>    while (!mLoaded) {<br>        try {<br>            mLock.wait();<br>        } catch (InterruptedException unused) {<br>        }<br>    }<br>    if (mThrowable != null) {<br>        throw new IllegalStateException(mThrowable);<br>    }<br>}</p>
-<pre><code>所以获取数据也是阻塞的。
-
-#### 源码总结
-从上面可以看出两者最后都是先调用commitToMemory，将更改提交到内存，在这一点上两者是一致的，之后又都调用了enqueueDiskWrite进行数据持久化任务，不过commit函数一般会在当前线程直接写文件，而apply则提交到一个队列里，延迟加载，之后直接返回。
-（这里代码是android-28，可能新版本是是一个线程池，而非队列）
-
-### 总结
-&gt; xml格式保存
-&gt; 通过子线程使用IO读取整个文件，并进行xml解析，存入内存Map，完成初始化，默认大小是16k。
-&gt; commit是同步提交，阻塞调用的线程，为啥？如果是使用commit方式提交，会阻塞调用commit方法的线程，如果写入任务很多比较耗时，就卡住了，所以不要在主线程执行写入文件的操作，否则阻塞主线程；apply是异步(延迟)提交，无法获取结果且可能数据丢失。apply 放法不会阻塞调用的线程，但是如果写入任务比较耗时，会阻塞住主线程，因为主线程有调用的代码，需要等写入任务执行完了才会继续往下执行。
-&gt; 更新，是吧map中数据，全部序列化XML，覆盖文件保存（全量更新）。
-所以有没有一种方案改进sp的xml，io，并发问题？
-
-## MMAP
-
-## MMKV
-MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列化使用 protobuf 实现，性能高，稳定性强。
-### 原理
-* 内存准备
-通过 mmap 内存映射文件，提供一段可供随时写入的内存块，App 只管往里面写数据，由操作系统负责将内存回写到文件，不必担心 crash 导致数据丢失。
-* 数据组织
-数据序列化方面我们选用 protobuf 协议，pb 在性能和空间占用上都有不错的表现。
-* 写入优化
-考虑到主要使用场景是频繁地进行写入更新，我们需要有增量更新的能力。我们考虑将增量 kv 对象序列化后，append 到内存末尾。
-* 空间增长
-使用 append 实现增量更新带来了一个新的问题，就是不断 append 的话，文件大小会增长得不可控。我们需要在性能和空间上做个折中。
-## 参考资料
-[关于SharePreference使用以及内部原理简单解析](https://juejin.cn/post/6926825172066369544)
-[庖丁解牛之SharedPreferences超级大卡顿](https://www.jianshu.com/p/40e42da910e2?utm_campaign=maleskine)
-[MMKV](https://github.com/Tencent/MMKV/blob/master/README_CN.md)</code></pre>
         
             <div id="toc-article">
                 
   <div class="widget-wrap" id="toc-wrap">
-    <h3 class="widget-title"><i class="fa fa-toc"></i> Contents</h3>
+    <h3 class="widget-title"><i class="fa fa-toc"></i> Inhalte</h3>
     <div class="widget">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SharedPreferences"><span class="toc-text">SharedPreferences</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使用"><span class="toc-text">如何使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码分析"><span class="toc-text">源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#获取"><span class="toc-text">获取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#commit"><span class="toc-text">commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#writeToFile"><span class="toc-text">writeToFile</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SharedPreferences"><span class="toc-text">SharedPreferences</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使用"><span class="toc-text">如何使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码分析"><span class="toc-text">源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#获取"><span class="toc-text">获取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#commit"><span class="toc-text">commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#writeToFile"><span class="toc-text">writeToFile</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#apply"><span class="toc-text">apply</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读数据"><span class="toc-text">读数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#源码总结"><span class="toc-text">源码总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MMAP"><span class="toc-text">MMAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MMKV"><span class="toc-text">MMKV</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
     </div>
   </div>
 
@@ -347,8 +208,8 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
         
         
           <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/">http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
+              <p>Ursprünglicher Link: <a href="http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/">http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/</a></p>
+              <p>Copyright-Erklärung: 转载请注明出处.</p>
           </blockquote>
         
       
@@ -363,7 +224,7 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
 
           
     <div class="social-share">
-      <span>Share:</span>
+      <span>Aktie:</span>
     </div>
 
 
@@ -407,7 +268,7 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-posts"></i> Recent</h3>
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Letzte</h3>
     <div class="widget">
       <ul>
         
@@ -448,7 +309,7 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-classify"></i> Categories</h3>
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Kategorien</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -458,7 +319,7 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-archive"></i> Archive</h3>
+    <h3 class="widget-title"><i class="fa fa-archive"></i> Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
     </div>
@@ -501,9 +362,9 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
   <div class="outer">
     <div id="footer-info" class="inner">
       <p>
-        <a href="/sitemap.xml">Site Map</a>
-        <span> | </span><a href="/atom.xml">Subscribe to this site</a>
-        <span> | </span><a href="/about/">Contact the blogger</a>
+        <a href="/sitemap.xml">Sitemap</a>
+        <span> | </span><a href="/atom.xml">Abonnieren Sie diese Site</a>
+        <span> | </span><a href="/about/">Kontaktieren Sie den Blogger</a>
       </p>
       
         <p>
