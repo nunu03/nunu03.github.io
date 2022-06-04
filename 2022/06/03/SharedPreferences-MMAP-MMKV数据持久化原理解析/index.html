@@ -62,7 +62,7 @@
     </div>
     <div id="search-form">
       <div id="result-mask" class="hide"></div>
-      <label><input id="search-key" type="text" autocomplete="off" placeholder="Suche"></label>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="search"></label>
       <div id="result-wrap" class="hide">
         <div id="search-result"></div>
       </div>
@@ -128,7 +128,7 @@
     
   
   <i class="fa fa-commt"></i>
-  Gästebuch
+  Guestbook
 </a>
 
 
@@ -194,7 +194,7 @@ SharedPreferencesImpl.this.enqueueDiskWrite(mcr, postWriteRunnable);
 // SharedPreferences instance back, which has the
 // changes reflected in memory.
 notifyListeners(mcr);</code></pre><p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">入队列，创建handler，sWork队列中数据最终在queued-work-looper 线程中依次得到执行</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">入队列，创建handler，sWork队列中数据最终在queued-work-looper 线程中依次得到执行</span><br></pre></td></tr></table></figure>
 
 <p> public static void queue(Runnable work, boolean shouldDelay) {<br>    Handler handler = getHandler();</p>
 <pre><code>synchronized (sLock) {
@@ -230,7 +230,7 @@ synchronized (sProcessingWork) {
         }
     }
 }</code></pre><p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply的中写入操作也是在异步线程执行，不会导致主线程卡顿，但是如果异步任务执行时间过长，当ActvityThread执行了handleStopActivity或者handleServiceArgs或者handlePauseActivity 等方法的时候都会调用QueuedWork.waitToFinish()方法,而此方法中会在异步任务执行完成前一直阻塞住主线程，所以卡顿问题就产生了。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">apply的中写入操作也是在异步线程执行，不会导致主线程卡顿，但是如果异步任务执行时间过长，当ActvityThread执行了handleStopActivity或者handleServiceArgs或者handlePauseActivity 等方法的时候都会调用QueuedWork.waitToFinish()方法,而此方法中会在异步任务执行完成前一直阻塞住主线程，所以卡顿问题就产生了。</span><br></pre></td></tr></table></figure>
 
 <p> public static void waitToFinish() {<br>        long startTime = System.currentTimeMillis();<br>        boolean hadMessages = false;</p>
 <pre><code>    Handler handler = getHandler();
@@ -287,7 +287,7 @@ synchronized (sProcessingWork) {
             }
         }
     }
-}</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">会从sFinishers队列中取出数据然后执行run方法，我们别忘了在apply的方法中，我们还添加了QueuedWork.addFinisher(awaitCommit);这个awaitCommit 就得到执行了但是awaitCommit中的代码确实是阻塞的代码，等待写入线程执行完毕才能唤起此线程。如果 apply中的写入代码不执行完，主线程就一直卡住了，也就出现了我们上面的问题。</span><br></pre></td></tr></table></figure>
+}</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">会从sFinishers队列中取出数据然后执行run方法，我们别忘了在apply的方法中，我们还添加了QueuedWork.addFinisher(awaitCommit);这个awaitCommit 就得到执行了但是awaitCommit中的代码确实是阻塞的代码，等待写入线程执行完毕才能唤起此线程。如果 apply中的写入代码不执行完，主线程就一直卡住了，也就出现了我们上面的问题。</span><br></pre></td></tr></table></figure>
 
 <p> final Runnable awaitCommit = new Runnable() {<br>    @Override<br>    public void run() {<br>        try {<br>            mcr.writtenToDiskLatch.await();<br>        } catch (InterruptedException ignored) {<br>        }</p>
 <pre><code>    if (DEBUG &amp;&amp; mcr.wasWritten) {
@@ -296,7 +296,7 @@ synchronized (sProcessingWork) {
                 + &quot; ms&quot;);
     }
 }</code></pre><p>};</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#### 读数据</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 读数据</span><br></pre></td></tr></table></figure>
 
 <p>public int getInt(String key, int defValue) {<br>    synchronized (mLock) {<br>        awaitLoadedLocked();<br>        Integer v = (Integer)mMap.get(key);<br>        return v != null ? v : defValue;<br>    }<br>}</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关键awaitLoadedLocked 这个方法，当数据没有加载完，就让调用的线程处于等待中，阻塞住了</span><br></pre></td></tr></table></figure>
@@ -336,7 +336,7 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
             <div id="toc-article">
                 
   <div class="widget-wrap" id="toc-wrap">
-    <h3 class="widget-title"><i class="fa fa-toc"></i> Inhalte</h3>
+    <h3 class="widget-title"><i class="fa fa-toc"></i> Contents</h3>
     <div class="widget">
       <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SharedPreferences"><span class="toc-text">SharedPreferences</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使用"><span class="toc-text">如何使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码分析"><span class="toc-text">源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#获取"><span class="toc-text">获取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#commit"><span class="toc-text">commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#writeToFile"><span class="toc-text">writeToFile</span></a></li></ol></li></ol></li></ol>
     </div>
@@ -347,8 +347,8 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
         
         
           <blockquote id="copyright">
-              <p>Ursprünglicher Link: <a href="http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/">http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/</a></p>
-              <p>Copyright-Erklärung: 转载请注明出处.</p>
+              <p>Original link: <a href="http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/">http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/</a></p>
+              <p>Copyright Notice: 转载请注明出处.</p>
           </blockquote>
         
       
@@ -363,7 +363,7 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
 
           
     <div class="social-share">
-      <span>Aktie:</span>
+      <span>Share:</span>
     </div>
 
 
@@ -407,7 +407,7 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-posts"></i> Letzte</h3>
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Recent</h3>
     <div class="widget">
       <ul>
         
@@ -448,7 +448,7 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-classify"></i> Kategorien</h3>
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -458,7 +458,7 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-archive"></i> Archiv</h3>
+    <h3 class="widget-title"><i class="fa fa-archive"></i> Archive</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
     </div>
@@ -501,9 +501,9 @@ MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列
   <div class="outer">
     <div id="footer-info" class="inner">
       <p>
-        <a href="/sitemap.xml">Sitemap</a>
-        <span> | </span><a href="/atom.xml">Abonnieren Sie diese Site</a>
-        <span> | </span><a href="/about/">Kontaktieren Sie den Blogger</a>
+        <a href="/sitemap.xml">Site Map</a>
+        <span> | </span><a href="/atom.xml">Subscribe to this site</a>
+        <span> | </span><a href="/about/">Contact the blogger</a>
       </p>
       
         <p>
