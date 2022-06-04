@@ -76,31 +76,31 @@ notifyListeners(mcr);</code></pre><p>}</p>
         handler.sendEmptyMessage(QueuedWorkHandler.MSG_RUN);
     }
 }</code></pre><p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最终processPendingWork执行，实际上就是for循环，轮询执行；</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">最终processPendingWork执行，实际上就是for循环，轮询执行；</span><br></pre></td></tr></table></figure>
 
-<p>private static void processPendingWork() {<br>        long startTime = 0;</p>
-<pre><code>    if (DEBUG) {
-        startTime = System.currentTimeMillis();
+<p>private static void processPendingWork() {<br>    long startTime = 0;</p>
+<pre><code>if (DEBUG) {
+    startTime = System.currentTimeMillis();
+}
+
+synchronized (sProcessingWork) {
+    LinkedList&lt;Runnable&gt; work;
+
+    synchronized (sLock) {
+        work = (LinkedList&lt;Runnable&gt;) sWork.clone();
+        sWork.clear();
+
+        // Remove all msg-s as all work will be processed now
+        getHandler().removeMessages(QueuedWorkHandler.MSG_RUN);
     }
 
-    synchronized (sProcessingWork) {
-        LinkedList&lt;Runnable&gt; work;
-
-        synchronized (sLock) {
-            work = (LinkedList&lt;Runnable&gt;) sWork.clone();
-            sWork.clear();
-
-            // Remove all msg-s as all work will be processed now
-            getHandler().removeMessages(QueuedWorkHandler.MSG_RUN);
-        }
-
-        if (work.size() &gt; 0) {
-            for (Runnable w : work) {
-                w.run();
-            }
+    if (work.size() &gt; 0) {
+        for (Runnable w : work) {
+            w.run();
         }
     }
-}</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply的中写入操作也是在异步线程执行，不会导致主线程卡顿，但是如果异步任务执行时间过长，当ActvityThread执行了handleStopActivity或者handleServiceArgs或者handlePauseActivity 等方法的时候都会调用QueuedWork.waitToFinish()方法,而此方法中会在异步任务执行完成前一直阻塞住主线程，所以卡顿问题就产生了。</span><br></pre></td></tr></table></figure>
+}</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply的中写入操作也是在异步线程执行，不会导致主线程卡顿，但是如果异步任务执行时间过长，当ActvityThread执行了handleStopActivity或者handleServiceArgs或者handlePauseActivity 等方法的时候都会调用QueuedWork.waitToFinish()方法,而此方法中会在异步任务执行完成前一直阻塞住主线程，所以卡顿问题就产生了。</span><br></pre></td></tr></table></figure>
 
 <p> public static void waitToFinish() {<br>        long startTime = System.currentTimeMillis();<br>        boolean hadMessages = false;</p>
 <pre><code>    Handler handler = getHandler();
@@ -172,8 +172,7 @@ notifyListeners(mcr);</code></pre><p>}</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关键awaitLoadedLocked 这个方法，当数据没有加载完，就让调用的线程处于等待中，阻塞住了</span><br></pre></td></tr></table></figure>
 
 <p>private void awaitLoadedLocked() {<br>    if (!mLoaded) {<br>        // Raise an explicit StrictMode onReadFromDisk for this<br>        // thread, since the real read will be in a different<br>        // thread and otherwise ignored by StrictMode.<br>        BlockGuard.getThreadPolicy().onReadFromDisk();<br>    }<br>    while (!mLoaded) {<br>        try {<br>            mLock.wait();<br>        } catch (InterruptedException unused) {<br>        }<br>    }<br>    if (mThrowable != null) {<br>        throw new IllegalStateException(mThrowable);<br>    }<br>}</p>
-<pre><code>
-所以获取数据也是阻塞的。
+<pre><code>所以获取数据也是阻塞的。
 
 #### 源码总结
 从上面可以看出两者最后都是先调用commitToMemory，将更改提交到内存，在这一点上两者是一致的，之后又都调用了enqueueDiskWrite进行数据持久化任务，不过commit函数一般会在当前线程直接写文件，而apply则提交到一个队列里，延迟加载，之后直接返回。
