@@ -53,7 +53,12 @@
 <p>所以获取数据也是阻塞的。</p>
 <h4 id="源码总结"><a href="#源码总结" class="headerlink" title="源码总结"></a>源码总结</h4><p>从上面可以看出两者最后都是先调用commitToMemory，将更改提交到内存，在这一点上两者是一致的，之后又都调用了enqueueDiskWrite进行数据持久化任务，不过commit函数一般会在当前线程直接写文件，而apply则提交到一个队列里，延迟加载，之后直接返回。<br>（这里代码是android-28，可能新版本是是一个线程池，而非队列）</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><blockquote>
-<p>xml格式保存<br>通过子线程使用IO读取整个文件，并进行xml解析，存入内存Map，完成初始化，默认大小是16k。<br>commit是同步提交，阻塞调用的线程，为啥？如果是使用commit方式提交，会阻塞调用commit方法的线程，如果写入任务很多比较耗时，就卡住了，所以不要在主线程执行写入文件的操作，否则阻塞主线程；apply是异步(延迟)提交，无法获取结果且可能数据丢失。apply 放法不会阻塞调用的线程，但是如果写入任务比较耗时，会阻塞住主线程，因为主线程有调用的代码，需要等写入任务执行完了才会继续往下执行。<br>更新，是吧map中数据，全部序列化XML，覆盖文件保存（全量更新）。<br>所以有没有一种方案改进sp的xml，io，并发问题？</p>
+<ul>
+<li>xml格式保存</li>
+<li>通过子线程使用IO读取整个文件，并进行xml解析，存入内存Map，完成初始化，默认大小是16k。</li>
+<li>commit是同步提交，阻塞调用的线程，为啥？如果是使用commit方式提交，会阻塞调用commit方法的线程，如果写入任务很多比较耗时，就卡住了，所以不要在主线程执行写入文件的操作，否则阻塞主线程；apply是异步(延迟)提交，无法获取结果且可能数据丢失。apply 放法不会阻塞调用的线程，但是如果写入任务比较耗时，会阻塞住主线程，因为主线程有调用的代码，需要等写入任务执行完了才会继续往下执行。</li>
+<li>更新，是吧map中数据，全部序列化XML，覆盖文件保存（全量更新）。<br>所以有没有一种方案改进sp的xml，io，并发问题？</li>
+</ul>
 </blockquote>
 <h2 id="MMAP"><a href="#MMAP" class="headerlink" title="MMAP"></a>MMAP</h2><h2 id="MMKV"><a href="#MMKV" class="headerlink" title="MMKV"></a>MMKV</h2><p>MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列化使用 protobuf 实现，性能高，稳定性强。</p>
 <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><ul>
