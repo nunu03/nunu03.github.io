@@ -123,8 +123,9 @@
 <li>6.扩容，设置文件大小*2，通过unmap，解除映射；重新映射mmap(size * 2),这里是个do while循环判断；</li>
 <li>7.如果文件损坏：回调给开发者或者默认直接丢失数据，重新保存数据。</li>
 <li>8.支持多进程：文件锁flock。多进程数据同步：crc32校验</li>
-<li><em>数据对比*</em><br><img src="http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/sp-data.png" alt><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><a href="https://juejin.cn/post/6926825172066369544" target="_blank" rel="noopener">关于SharePreference使用以及内部原理简单解析</a><br><a href="https://www.jianshu.com/p/40e42da910e2?utm_campaign=maleskine" target="_blank" rel="noopener">庖丁解牛之SharedPreferences超级大卡顿</a><br><a href="https://github.com/Tencent/MMKV/blob/master/README_CN.md" target="_blank" rel="noopener">MMKV</a><br><a href="https://www.51cto.com/article/686452.html" target="_blank" rel="noopener">https://www.51cto.com/article/686452.html</a></li>
 </ul>
+<p><strong>数据对比</strong><br><img src="http://nunu03.github.io/2022/06/03/SharedPreferences-MMAP-MMKV%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/sp-data.png" alt></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://juejin.cn/post/6926825172066369544" target="_blank" rel="noopener">关于SharePreference使用以及内部原理简单解析</a><br><a href="https://www.jianshu.com/p/40e42da910e2?utm_campaign=maleskine" target="_blank" rel="noopener">庖丁解牛之SharedPreferences超级大卡顿</a><br><a href="https://github.com/Tencent/MMKV/blob/master/README_CN.md" target="_blank" rel="noopener">MMKV</a><br><a href="https://www.51cto.com/article/686452.html" target="_blank" rel="noopener">https://www.51cto.com/article/686452.html</a></p>
 ]]></content>
       
         <categories>
