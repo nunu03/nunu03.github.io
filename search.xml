@@ -3,6 +3,46 @@
   
     
     <entry>
+      <title><![CDATA[SPI原理解析]]></title>
+      <url>/2022/06/07/SPI%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>SPI全称Service Provider Interface，是Java提供的一种动态服务发现机制。通过SPI机制，我们可以直接跨模块查找到想要的接口实现类,从而避免不必要的模块间依赖，降低模块之间的耦合性。这对Android组件间通信非常重要的意义。试想一下如果有一个组件能提供这样一种能力,我们的组件通信是否会变得很容易: 通过一个接口，我可以很容易的查找到这个接口在任意模块下的任意一个或多个实现类的对象.</p>
+<a id="more"></a>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><p>首先创建一个ISPIService接口：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface ISPIService &#123;</span><br><span class="line">    void execute();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接着实现接口：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class SpiImpl1 implements ISPIService &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void execute() &#123;</span><br><span class="line">        Log.e(&quot;ISPIService----------&quot;,&quot;SpiImpl1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class SpiImpl2 implements ISPIService &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void execute() &#123;</span><br><span class="line">        Log.e(&quot;ISPIService----------&quot;,&quot;SpiImpl2&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>目录结构：<br><img src="http://nunu03.github.io/2022/06/07/SPI%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/spi-file.png" alt></p>
+<h3 id="ServiceLoader加载"><a href="#ServiceLoader加载" class="headerlink" title="ServiceLoader加载"></a>ServiceLoader加载</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ServiceLoader&lt;ISPIService&gt; serviceLoader = ServiceLoader.load(ISPIService.class);</span><br><span class="line">Iterator&lt;ISPIService&gt; iterator = serviceLoader.iterator();</span><br><span class="line">while (iterator.hasNext())&#123;</span><br><span class="line">    Log.e(&quot;ISPIService-------&quot;,iterator.toString());</span><br><span class="line">    ISPIService service = iterator.next();</span><br><span class="line">    Log.e(&quot;ISPIService-------&quot;,service.getClass().getName());</span><br><span class="line">    service.execute();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2022-06-07 14:53:33.960 7422-7422/com.myapplication E/ISPIService-------: java.util.ServiceLoader$1@6ab81e8</span><br><span class="line">2022-06-07 14:53:33.960 7422-7422/com.myapplication E/ISPIService-------: com.myapplication.spi.SpiImpl1</span><br><span class="line">2022-06-07 14:53:33.960 7422-7422/com.myapplication E/ISPIService----------: SpiImpl1</span><br><span class="line">2022-06-07 14:53:33.960 7422-7422/com.myapplication E/ISPIService-------: java.util.ServiceLoader$1@6ab81e8</span><br><span class="line">2022-06-07 14:53:33.960 7422-7422/com.myapplication E/ISPIService-------: com.myapplication.spi.SpiImpl2</span><br><span class="line">2022-06-07 14:53:33.960 7422-7422/com.myapplication E/ISPIService----------: SpiImpl2</span><br></pre></td></tr></table></figure>
+
+<p>所以，我们只需要把具体实现的接口类，添加到文件内，就可以通过ServiceLoader加载。</p>
+<p>再看下apk内目录结构：</p>
+<p><img src="http://nunu03.github.io/2022/06/07/SPI%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/spi-apk.png" alt></p>
+<h3 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h3><p>通过上面的图，我们可以知道，我们的service是注册再resources文件夹下的，并且接口的全路径名是文件的名字。这是其中一种注册方式，还有另外一种注册方式，Google的AutoService的注解方式注册。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@AutoService(ISPIService.class)</span><br><span class="line">public class SpiImpl1 implements ISPIService &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void execute() &#123;</span><br><span class="line">        Log.e(&quot;ISPIService----------&quot;,&quot;SpiImpl1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ServiceLoader源码"><a href="#ServiceLoader源码" class="headerlink" title="ServiceLoader源码"></a>ServiceLoader源码</h2><h2 id="AutoService源码"><a href="#AutoService源码" class="headerlink" title="AutoService源码"></a>AutoService源码</h2>]]></content>
+      
+        <categories>
+            
+            <category> Android </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> SPI </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[SharedPreferences+MMAP+MMKV数据持久化原理解析]]></title>
       <url>/2022/06/03/SharedPreferences-MMAP-MMKV%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</url>
       <content type="html"><![CDATA[<h2 id="SharedPreferences"><a href="#SharedPreferences" class="headerlink" title="SharedPreferences"></a>SharedPreferences</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><ul>
