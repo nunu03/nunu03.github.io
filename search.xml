@@ -25,6 +25,7 @@
 <h3 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h3><p>通过上面的图，我们可以知道，我们的service是注册再resources文件夹下的，并且接口的全路径名是文件的名字。这是其中一种注册方式，还有另外一种注册方式，Google的AutoService的注解方式注册。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@AutoService(ISPIService.class)</span><br><span class="line">public class SpiImpl1 implements ISPIService &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void execute() &#123;</span><br><span class="line">        Log.e(&quot;ISPIService----------&quot;,&quot;SpiImpl1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>效果图如下：<br><img src="http://nunu03.github.io/2022/06/07/SPI%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/spi-autoservice.png" alt></p>
 <h2 id="ServiceLoader源码"><a href="#ServiceLoader源码" class="headerlink" title="ServiceLoader源码"></a>ServiceLoader源码</h2><h2 id="AutoService源码"><a href="#AutoService源码" class="headerlink" title="AutoService源码"></a>AutoService源码</h2>]]></content>
       
         <categories>
