@@ -62,7 +62,7 @@
     </div>
     <div id="search-form">
       <div id="result-mask" class="hide"></div>
-      <label><input id="search-key" type="text" autocomplete="off" placeholder="search"></label>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="Suche"></label>
       <div id="result-wrap" class="hide">
         <div id="search-result"></div>
       </div>
@@ -128,7 +128,7 @@
     
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Gästebuch
 </a>
 
 
@@ -151,7 +151,7 @@
 <ul>
 <li>自动、智能地下采样(downsampling)和缓存(caching)，以最小化存储开销和解码次数；</li>
 <li>积极的资源重用，例如字节数组和Bitmap，以最小化昂贵的垃圾回收和堆碎片影响；</li>
-<li>深度的生命周期集成，以确保仅优先处理活跃的Fragment和Activity的请求，并有利于应用在必要时释放资源以避免在后台时被杀掉。<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">repositories &#123;</span><br><span class="line">  google()</span><br><span class="line">  mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">  implementation &apos;com.github.bumptech.glide:glide:4.13.0&apos;</span><br><span class="line">  annotationProcessor &apos;com.github.bumptech.glide:compiler:4.13.0&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>深度的生命周期集成，以确保仅优先处理活跃的Fragment和Activity的请求，并有利于应用在必要时释放资源以避免在后台时被杀掉。<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2>图片请求，是发送到一个队列里，然后多个线程进行消费。如下图：<br><img src="http://nunu03.github.io/2022/06/08/Glide%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/glide-jg.png" alt><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">repositories &#123;</span><br><span class="line">  google()</span><br><span class="line">  mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">  implementation &apos;com.github.bumptech.glide:glide:4.11.0&apos;</span><br><span class="line">  annotationProcessor &apos;com.github.bumptech.glide:compiler:4.11.0&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -193,25 +193,282 @@
 <p>之后你就可以使用生成的 GlideApp 类调用你的自定义方法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GlideApp.with(fragment)</span><br><span class="line">   .load(url)</span><br><span class="line">   .miniThumb(thumbnailSize)</span><br><span class="line">   .into(imageView);</span><br><span class="line">```   </span><br><span class="line">## 源码分析</span><br><span class="line">根据Glide分成三条主线：</span><br><span class="line">### with</span><br><span class="line">with返回的是RequestManager对象</span><br></pre></td></tr></table></figure>
 
-<p>public static RequestManager with(@NonNull FragmentActivity activity) {<br>return getRetriever(activity).get(activity);<br>}</p>
+<p>public static RequestManager with(@NonNull FragmentActivity activity) {<br>    return getRetriever(activity).get(activity);<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最总会进入这个方法：这里会给Glide添加生命周期。</span><br></pre></td></tr></table></figure>
+
+<p>@NonNull<br>public RequestManager get(@NonNull FragmentActivity activity) {<br>    //如果不是主线程，则没有生命周期<br>    if (Util.isOnBackgroundThread()) {<br>        return get(activity.getApplicationContext());<br>    } else {<br>        assertNotDestroyed(activity);<br>        //主线程，添加了一个空白的Fragment，通过空白的Fragment监听this的生命周期。<br>        FragmentManager fm = activity.getSupportFragmentManager();<br>        return supportFragmentGet(activity, fm, /<em>parentHint=</em>/ null, isActivityVisible(activity));<br>    }<br>}</p>
+<p>private RequestManager supportFragmentGet(<br>    @NonNull Context context,<br>    @NonNull FragmentManager fm,<br>    @Nullable Fragment parentHint,<br>    boolean isParentVisible) {<br>    SupportRequestManagerFragment current =<br>        getSupportRequestManagerFragment(fm, parentHint, isParentVisible);<br>    RequestManager requestManager = current.getRequestManager();<br>    if (requestManager == null) {<br>        Glide glide = Glide.get(context);<br>        requestManager =<br>            factory.build(<br>                glide, current.getGlideLifecycle(), current.getRequestManagerTreeNode(), context);<br>        current.setRequestManager(requestManager);<br>    }<br>    return requestManager;<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">同时,Glide再构造对象时,会顶一个registry,这个对象会append多种设置:</span><br></pre></td></tr></table></figure>
+
+<p>registry<br>        .append(Uri.class, InputStream.class, new UriLoader.StreamFactory(contentResolver))<br>        .append(<br>            Uri.class,<br>            ParcelFileDescriptor.class,<br>            new UriLoader.FileDescriptorFactory(contentResolver))<br>        .append(<br>            Uri.class,<br>            AssetFileDescriptor.class,<br>            new UriLoader.AssetFileDescriptorFactory(contentResolver))<br>        .append(Uri.class, InputStream.class, new UrlUriLoader.StreamFactory())<br>        .append(URL.class, InputStream.class, new UrlLoader.StreamFactory())<br>        .append(Uri.class, File.class, new MediaStoreFileLoader.Factory(context))<br>        .append(GlideUrl.class, InputStream.class, new HttpGlideUrlLoader.Factory())<br>        .append(byte[].class, ByteBuffer.class, new ByteArrayLoader.ByteBufferFactory())<br>        .append(byte[].class, InputStream.class, new ByteArrayLoader.StreamFactory())<br>        .append(Uri.class, Uri.class, UnitModelLoader.Factory.<uri>getInstance())<br>        .append(Drawable.class, Drawable.class, UnitModelLoader.Factory.<drawable>getInstance())<br>        .append(Drawable.class, Drawable.class, new UnitDrawableDecoder())<br>        /* Transcoders */<br>        .register(Bitmap.class, BitmapDrawable.class, new BitmapDrawableTranscoder(resources))<br>        .register(Bitmap.class, byte[].class, bitmapBytesTranscoder)<br>        .register(<br>            Drawable.class,<br>            byte[].class,<br>            new DrawableBytesTranscoder(<br>                bitmapPool, bitmapBytesTranscoder, gifDrawableBytesTranscoder))<br>        .register(GifDrawable.class, byte[].class, gifDrawableBytesTranscoder);</drawable></uri></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">### load</span><br><span class="line">load是指定url，返回的RequestBuilder对象，</span><br></pre></td></tr></table></figure>
 
-<p>public RequestBuilder<drawable> load(@Nullable String string) {<br>return asDrawable().load(string);<br>}</drawable></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">### into</span><br><span class="line">into，是重点啊：</span><br></pre></td></tr></table></figure>
+<p>public RequestBuilder<drawable> load(@Nullable String string) {<br>    return asDrawable().load(string);<br>}</drawable></p>
+<p>private RequestBuilder<transcodetype> loadGeneric(@Nullable Object model) {<br>    this.model = model;<br>    isModelSet = true;<br>    return this;<br>}</transcodetype></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">### into</span><br><span class="line">into，是重点啊,这个图片的显示,都在这个执行流程里:</span><br><span class="line">RequestBuilder.into -&gt; buildRequest -&gt; </span><br><span class="line">RequestManager.track -&gt; RequestTracker.runRequest -&gt; SingleRequest.begin -&gt; onSizeReady -&gt; Engile.load -&gt; loadFromMemory -&gt;waitForExistingOrStartNewJob -&gt;  EngineJob.build -&gt; DecodeJob.build -&gt; run -&gt;  runWrapped &gt; runGenerators -&gt; SourceGenerator.startNext -&gt; DecodeHelper.getLoadData -&gt; HttpGlideUrlLoader.buildLoadData -&gt; HttpUrlFetcher.loadData &gt; loadDataWithRedirects</span><br></pre></td></tr></table></figure>
 
 <p>@NonNull<br>public ViewTarget&lt;ImageView, TranscodeType&gt; into(@NonNull ImageView view) {<br>Util.assertMainThread();<br>Preconditions.checkNotNull(view);</p>
 <p>BaseRequestOptions&lt;?&gt; requestOptions = this;<br>if (!requestOptions.isTransformationSet()<br>    &amp;&amp; requestOptions.isTransformationAllowed()<br>    &amp;&amp; view.getScaleType() != null) {<br>    // Clone in this method so that if we use this RequestBuilder to load into a View and then<br>    // into a different target, we don’t retain the transformation applied based on the previous<br>    // View’s scale type.<br>    switch (view.getScaleType()) {<br>    case CENTER_CROP:<br>        requestOptions = requestOptions.clone().optionalCenterCrop();<br>        break;<br>    case CENTER_INSIDE:<br>        requestOptions = requestOptions.clone().optionalCenterInside();<br>        break;<br>    case FIT_CENTER:<br>    case FIT_START:<br>    case FIT_END:<br>        requestOptions = requestOptions.clone().optionalFitCenter();<br>        break;<br>    case FIT_XY:<br>        requestOptions = requestOptions.clone().optionalCenterInside();<br>        break;<br>    case CENTER:<br>    case MATRIX:<br>    default:<br>        // Do nothing.<br>    }<br>}</p>
-<p>return into(<br>    glideContext.buildImageViewTarget(view, transcodeClass),<br>    /<em>targetListener=</em>/ null,<br>    requestOptions,<br>    Executors.mainThreadExecutor());<br>}<br>```</p>
-<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p>图片请求，是发送到一个队列里，然后多个线程进行消费。如下图：<br><img src="http://nunu03.github.io/2022/06/08/Glide%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/glide-jg.png" alt></p>
+<p>return into(<br>    //得到ImageViewTarget<br>    glideContext.buildImageViewTarget(view, transcodeClass),<br>    /<em>targetListener=</em>/ null,<br>    requestOptions,<br>    Executors.mainThreadExecutor());<br>}</p>
+<p>private &lt;Y extends Target<transcodetype>&gt; Y into(<br>    @NonNull Y target,<br>    @Nullable RequestListener<transcodetype> targetListener,<br>    BaseRequestOptions&lt;?&gt; options,<br>    Executor callbackExecutor) {<br>    。。。。。。。。。。。。。。。。。。<br>    // 构建一个请求,实现类SingleRequest<br>    Request request = buildRequest(target, targetListener, options, callbackExecutor);</transcodetype></transcodetype></p>
+<pre><code>Request previous = target.getRequest();
+//如果上一个请求没有请求完
+if (request.isEquivalentTo(previous)
+    &amp;&amp; !isSkipMemoryCacheWithCompletePreviousRequest(options, previous)) {
+    if (!Preconditions.checkNotNull(previous).isRunning()) {
+        previous.begin();
+    }
+    return target;
+}
+
+requestManager.clear(target);
+target.setRequest(request);
+requestManager.track(target, request);
+return target;</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RequestTracker:</span><br></pre></td></tr></table></figure>
+
+<p>//正在运行的队列<br>private final Set<request> requests =<br>    Collections.newSetFromMap(new WeakHashMap&lt;Request, Boolean&gt;());<br>//等待中的队列<br>private final List<request> pendingRequests = new ArrayList&lt;&gt;();</request></request></p>
+<p>public void runRequest(@NonNull Request request) {<br>requests.add(request);<br>    if (!isPaused) {<br>        request.begin();<br>    } else {<br>        request.clear();<br>        if (Log.isLoggable(TAG, Log.VERBOSE)) {<br>        Log.v(TAG, “Paused, delaying request”);<br>        }<br>        pendingRequests.add(request);<br>    }<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SingleRequest.begin:</span><br></pre></td></tr></table></figure>
+
+<p>@Override<br>public void begin() {<br>synchronized (requestLock) {<br>    。。。。。。。。。。。。<br>    //正在执行，直接返回异常<br>    if (status == Status.RUNNING) {<br>    throw new IllegalArgumentException(“Cannot restart a running request”);<br>    }</p>
+<pre><code>if (status == Status.COMPLETE) {
+onResourceReady(resource, DataSource.MEMORY_CACHE);
+return;
+}
+
+status = Status.WAITING_FOR_SIZE;
+if (Util.isValidDimensions(overrideWidth, overrideHeight)) {
+    onSizeReady(overrideWidth, overrideHeight);
+} else {
+    target.getSize(this);
+}</code></pre><p>…………………………………<br>}<br>// 传进宽高<br>public void onSizeReady(int width, int height) {<br>    synchronized (requestLock) {<br>    ………………………………..<br>        loadStatus =<br>            engine.load(<br>                glideContext,<br>                model,<br>                requestOptions.getSignature(),<br>                this.width,<br>                this.height,<br>                requestOptions.getResourceClass(),<br>                transcodeClass,<br>                priority,<br>                requestOptions.getDiskCacheStrategy(),<br>                requestOptions.getTransformations(),<br>                requestOptions.isTransformationRequired(),<br>                requestOptions.isScaleOnlyOrNoTransform(),<br>                requestOptions.getOptions(),<br>                requestOptions.isMemoryCacheable(),<br>                requestOptions.getUseUnlimitedSourceGeneratorsPool(),<br>                requestOptions.getUseAnimationPool(),<br>                requestOptions.getOnlyRetrieveFromCache(),<br>                this,<br>                callbackExecutor);<br>    }<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Engine.load</span><br></pre></td></tr></table></figure>
+
+<p>public <r> LoadStatus load(<br>      GlideContext glideContext,<br>      Object model,<br>      Key signature,<br>      int width,<br>      int height,<br>      Class<?> resourceClass,
+      Class<r> transcodeClass,
+      Priority priority,
+      DiskCacheStrategy diskCacheStrategy,
+      Map<class<?>, Transformation&lt;?&gt;&gt; transformations,<br>      boolean isTransformationRequired,<br>      boolean isScaleOnlyOrNoTransform,<br>      Options options,<br>      boolean isMemoryCacheable,<br>      boolean useUnlimitedSourceExecutorPool,<br>      boolean useAnimationPool,<br>      boolean onlyRetrieveFromCache,<br>      ResourceCallback cb,<br>      Executor callbackExecutor) {<br>    long startTime = VERBOSE_IS_LOGGABLE ? LogTime.getLogTime() : 0;</class<?></r></r></p>
+<pre><code>//生成的 key 会用于缓存
+EngineKey key =
+    keyFactory.buildKey(
+        model,
+        signature,
+        width,
+        height,
+        transformations,
+        resourceClass,
+        transcodeClass,
+        options);
+
+EngineResource&lt;?&gt; memoryResource;
+synchronized (this) {
+ // 从缓存中拿
+memoryResource = loadFromMemory(key, isMemoryCacheable, startTime);
+
+    if (memoryResource == null) {
+        return waitForExistingOrStartNewJob(
+            glideContext,
+            model,
+            signature,
+            width,
+            height,
+            resourceClass,
+            transcodeClass,
+            priority,
+            diskCacheStrategy,
+            transformations,
+            isTransformationRequired,
+            isScaleOnlyOrNoTransform,
+            options,
+            isMemoryCacheable,
+            useUnlimitedSourceExecutorPool,
+            useAnimationPool,
+            onlyRetrieveFromCache,
+            cb,
+            callbackExecutor,
+            key,
+            startTime);
+    }
+}
+cb.onResourceReady(memoryResource, DataSource.MEMORY_CACHE);
+return null;</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loadFromMemory从缓存取,也称运行时缓存(如果app被kill掉,就没有了):</span><br></pre></td></tr></table></figure>
+
+<p>private EngineResource<?> loadFromMemory(
+      EngineKey key, boolean isMemoryCacheable, long startTime) {
+    if (!isMemoryCacheable) {
+      return null;
+    }
+    // 先从活动缓存(用户正在显示的图片)拿,一级缓存
+    EngineResource<?> active = loadFromActiveResources(key);<br>    if (active != null) {<br>      if (VERBOSE_IS_LOGGABLE) {<br>        logWithTimeAndKey(“Loaded resource from active resources”, startTime, key);<br>      }<br>      return active;<br>    }<br>    // 再从内存缓存(活动缓存回收后给到内存缓存)拿,二级缓存<br>    EngineResource&lt;?&gt; cached = loadFromCache(key);<br>    if (cached != null) {<br>      if (VERBOSE_IS_LOGGABLE) {<br>        logWithTimeAndKey(“Loaded resource from cache”, startTime, key);<br>      }<br>      return cached;<br>    }</p>
+<pre><code>return null;</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">waitForExistingOrStartNewJob:缓存中没有</span><br></pre></td></tr></table></figure>
+
+<p>private <r> LoadStatus waitForExistingOrStartNewJob(<br>    GlideContext glideContext,<br>    Object model,<br>    Key signature,<br>    int width,<br>    int height,<br>    Class<?> resourceClass,
+    Class<r> transcodeClass,
+    Priority priority,
+    DiskCacheStrategy diskCacheStrategy,
+    Map<class<?>, Transformation<?>> transformations,
+    boolean isTransformationRequired,
+    boolean isScaleOnlyOrNoTransform,
+    Options options,
+    boolean isMemoryCacheable,
+    boolean useUnlimitedSourceExecutorPool,
+    boolean useAnimationPool,
+    boolean onlyRetrieveFromCache,
+    ResourceCallback cb,
+    Executor callbackExecutor,
+    EngineKey key,
+    long startTime) {
+        //根据key拿当前正在运行中,有没有缓存(这里指磁盘缓存)可用,再验证一次缓存
+    EngineJob<?> current = jobs.get(key, onlyRetrieveFromCache);<br>    if (current != null) {<br>        current.addCallback(cb, callbackExecutor);<br>        if (VERBOSE_IS_LOGGABLE) {<br>        logWithTimeAndKey(“Added to existing load”, startTime, key);<br>        }<br>        return new LoadStatus(cb, current);<br>    }<br>    // 网络请求了<br>    EngineJob<r> engineJob =<br>        engineJobFactory.build(<br>            key,<br>            isMemoryCacheable,<br>            useUnlimitedSourceExecutorPool,<br>            useAnimationPool,<br>            onlyRetrieveFromCache);</r></class<?></r></r></p>
+<pre><code>DecodeJob&lt;R&gt; decodeJob =
+    decodeJobFactory.build(
+        glideContext,
+        model,
+        key,
+        signature,
+        width,
+        height,
+        resourceClass,
+        transcodeClass,
+        priority,
+        diskCacheStrategy,
+        transformations,
+        isTransformationRequired,
+        isScaleOnlyOrNoTransform,
+        onlyRetrieveFromCache,
+        options,
+        engineJob);
+
+jobs.put(key, engineJob);
+//把decodeJob,添加给引擎job,然后开始执行.
+engineJob.addCallback(cb, callbackExecutor);
+engineJob.start(decodeJob);
+return new LoadStatus(cb, engineJob);</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EngineJob,引擎Job,这里会由很多的线程池Executor,用来执行操作的:</span><br><span class="line">DecodeJob,是一个任务,runnable.</span><br></pre></td></tr></table></figure>
+
+<p>private final StateVerifier stateVerifier = StateVerifier.newInstance();<br>private final ResourceListener resourceListener;<br>private final Pools.Pool&lt;EngineJob&lt;?&gt;&gt; pool;<br>private final EngineResourceFactory engineResourceFactory;<br>private final EngineJobListener engineJobListener;<br>private final GlideExecutor diskCacheExecutor;<br>private final GlideExecutor sourceExecutor;<br>private final GlideExecutor sourceUnlimitedExecutor;<br>private final GlideExecutor animationExecutor;<br>private final AtomicInteger pendingCallbacks = new AtomicInteger();</p>
+<p>public synchronized void start(DecodeJob<r> decodeJob) {<br>    this.decodeJob = decodeJob;<br>    //线程池<br>    GlideExecutor executor =<br>        decodeJob.willDecodeFromCache() ? diskCacheExecutor : getActiveSourceExecutor();<br>    //执行runnable<br>    executor.execute(decodeJob);<br>}</r></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DecodeJob.run &gt; runWrapped &gt; runGenerators</span><br></pre></td></tr></table></figure>
+
+<p>public void run() {<br>    DataFetcher&lt;?&gt; localFetcher = currentFetcher;<br>    try {<br>      if (isCancelled) {<br>        notifyFailed();<br>        return;<br>      }<br>      runWrapped();<br>    } catch (CallbackException e) {<br>    }<br>}</p>
+<p>private void runWrapped() {<br>    switch (runReason) {<br>      case INITIALIZE:<br>        stage = getNextStage(Stage.INITIALIZE);<br>        currentGenerator = getNextGenerator();<br>        runGenerators();<br>        break;<br>      case SWITCH_TO_SOURCE_SERVICE:<br>        runGenerators();<br>        break;<br>      case DECODE_DATA:<br>        decodeFromRetrievedData();<br>        break;<br>      default:<br>        throw new IllegalStateException(“Unrecognized run reason: “ + runReason);<br>    }<br>}<br>//如果你配置了缓存策略,就使用,如果没有,就使用默认SOURCE策略<br>private DataFetcherGenerator getNextGenerator() {<br>    switch (stage) {<br>      case RESOURCE_CACHE:<br>        return new ResourceCacheGenerator(decodeHelper, this);<br>      case DATA_CACHE:<br>        return new DataCacheGenerator(decodeHelper, this);<br>      case SOURCE:<br>        return new SourceGenerator(decodeHelper, this);<br>      case FINISHED:<br>        return null;<br>      default:<br>        throw new IllegalStateException(“Unrecognized stage: “ + stage);<br>    }<br>}</p>
+<p>private void runGenerators() {<br>    currentThread = Thread.currentThread();<br>    startFetchTime = LogTime.getLogTime();<br>    boolean isStarted = false;<br>    while (!isCancelled<br>        &amp;&amp; currentGenerator != null<br>        &amp;&amp; !(isStarted = currentGenerator.startNext())) {<br>      stage = getNextStage(stage);<br>      currentGenerator = getNextGenerator();</p>
+<pre><code>  if (stage == Stage.SOURCE) {
+    reschedule();
+    return;
+}</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SourceGenerator.startNext</span><br></pre></td></tr></table></figure>
+
+<p>public boolean startNext() {<br>    if (dataToCache != null) {<br>      Object data = dataToCache;<br>      dataToCache = null;<br>      cacheData(data);<br>    }<br>    …………………………..<br>    loadData = null;<br>    boolean started = false;<br>    while (!started &amp;&amp; hasNextModelLoader()) {<br>        //获取网络请求的对象loadData.HttpUrlFetcher<br>      loadData = helper.getLoadData().get(loadDataListIndex++);<br>      if (loadData != null<br>          &amp;&amp; (helper.getDiskCacheStrategy().isDataCacheable(loadData.fetcher.getDataSource())<br>              || helper.hasLoadPath(loadData.fetcher.getDataClass()))) {<br>        started = true;<br>        //开始网络请求<br>        startNextLoad(loadData);<br>      }<br>    }<br>    return started;<br>}<br>// 这里创建了网络请求成功后的callback:DataCacheGenerator<br>private void cacheData(Object dataToCache) {<br>    sourceCacheGenerator =<br>        new DataCacheGenerator(Collections.singletonList(loadData.sourceKey), helper, this);<br>}</p>
+<p>//网络请求fetcher.loadData<br>private void startNextLoad(final LoadData&lt;?&gt; toStart) {<br>    loadData.fetcher.loadData(<br>        helper.getPriority(),<br>        new DataCallback<object>() {<br>          @Override<br>          public void onDataReady(@Nullable Object data) {<br>            if (isCurrentRequest(toStart)) {<br>              onDataReadyInternal(toStart, data);<br>            }<br>          }</object></p>
+<pre><code>  @Override
+  public void onLoadFailed(@NonNull Exception e) {
+    if (isCurrentRequest(toStart)) {
+      onLoadFailedInternal(toStart, e);
+    }
+  }
+});</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DecodeHelper.getLoadData &gt; HttpGlideUrlLoader.buildLoadData</span><br></pre></td></tr></table></figure>
+
+<p>List&lt;LoadData<?>> getLoadData() {
+    if (!isLoadDataSet) {
+      isLoadDataSet = true;
+      loadData.clear();
+      List<modelloader<object, ?>&gt; modelLoaders = glideContext.getRegistry().getModelLoaders(model);<br>      //noinspection ForLoopReplaceableByForEach to improve perf<br>      for (int i = 0, size = modelLoaders.size(); i &lt; size; i++) {<br>        ModelLoader&lt;Object, ?&gt; modelLoader = modelLoaders.get(i);<br>        LoadData&lt;?&gt; current = modelLoader.buildLoadData(model, width, height, options);<br>        if (current != null) {<br>          loadData.add(current);<br>        }<br>      }<br>    }<br>    return loadData;<br>}<br>//buildLoadData这个函数就返回了HttpUrlFetcher,而HttpUrlFetcher是封装再LoadData对象里的.<br>public LoadData<inputstream> buildLoadData(<br>      @NonNull GlideUrl model, int width, int height, @NonNull Options options) {<br>    // GlideUrls memoize parsed URLs so caching them saves a few object instantiations and time<br>    // spent parsing urls.<br>    GlideUrl url = model;<br>    if (modelCache != null) {<br>      url = modelCache.get(model, 0, 0);<br>      if (url == null) {<br>        modelCache.put(model, 0, 0, model);<br>        url = model;<br>      }<br>    }<br>    int timeout = options.get(TIMEOUT);<br>    return new LoadData&lt;&gt;(url, new HttpUrlFetcher(url, timeout));<br>}</inputstream></modelloader<object,></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">开始请求网络:HttpUrlFetcher.loadData &gt; loadDataWithRedirects</span><br></pre></td></tr></table></figure>
+
+<p>@Override<br>public void loadData(<br>    @NonNull Priority priority, @NonNull DataCallback&lt;? super InputStream&gt; callback) {<br>    long startTime = LogTime.getLogTime();<br>    try {<br>        //返回InputStream<br>        InputStream result = loadDataWithRedirects(glideUrl.toURL(), 0, null, glideUrl.getHeaders());<br>        //把返回的InputStream返回给callback:DataCacheGenerator<br>        callback.onDataReady(result);<br>    }<br>}</p>
+<p>//真正的网络请求再这里,返回InputStream<br>private InputStream loadDataWithRedirects(<br>    URL url, int redirects, URL lastUrl, Map&lt;String, String&gt; headers) throws IOException {<br>    if (redirects &gt;= MAXIMUM_REDIRECTS) {<br>        throw new HttpException(“Too many (&gt; “ + MAXIMUM_REDIRECTS + “) redirects!”);<br>    } else {<br>        // Comparing the URLs using .equals performs additional network I/O and is generally broken.<br>        // See <a href="http://michaelscharf.blogspot.com/2006/11/javaneturlequals-and-hashcode-make.html" target="_blank" rel="noopener">http://michaelscharf.blogspot.com/2006/11/javaneturlequals-and-hashcode-make.html</a>.<br>        try {<br>        if (lastUrl != null &amp;&amp; url.toURI().equals(lastUrl.toURI())) {<br>            throw new HttpException(“In re-direct loop”);<br>        }<br>        } catch (URISyntaxException e) {<br>        // Do nothing, this is best effort.<br>    }<br>    }<br>    //url:图片的网络地址<br>    urlConnection = connectionFactory.build(url);<br>    for (Map.Entry&lt;String, String&gt; headerEntry : headers.entrySet()) {<br>        urlConnection.addRequestProperty(headerEntry.getKey(), headerEntry.getValue());<br>    }<br>    urlConnection.setConnectTimeout(timeout);<br>    urlConnection.setReadTimeout(timeout);<br>    urlConnection.setUseCaches(false);<br>    urlConnection.setDoInput(true);</p>
+<pre><code>// Stop the urlConnection instance of HttpUrlConnection from following redirects so that
+// redirects will be handled by recursive calls to this method, loadDataWithRedirects.
+urlConnection.setInstanceFollowRedirects(false);
+
+// Connect explicitly to avoid errors in decoders if connection fails.
+urlConnection.connect();
+// Set the stream so that it&apos;s closed in cleanup to avoid resource leaks. See #2352.
+stream = urlConnection.getInputStream();
+if (isCancelled) {
+    return null;
+}
+final int statusCode = urlConnection.getResponseCode();
+if (isHttpOk(statusCode)) {
+    return getStreamForSuccessfulRequest(urlConnection);
+} else if (isHttpRedirect(statusCode)) {
+    String redirectUrlString = urlConnection.getHeaderField(&quot;Location&quot;);
+    if (TextUtils.isEmpty(redirectUrlString)) {
+    throw new HttpException(&quot;Received empty or null redirect url&quot;);
+    }
+    URL redirectUrl = new URL(url, redirectUrlString);
+    // Closing the stream specifically is required to avoid leaking ResponseBodys in addition
+    // to disconnecting the url connection below. See #2352.
+    cleanup();
+    return loadDataWithRedirects(redirectUrl, redirects + 1, url, headers);
+} </code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">网络请求完成后,开始往回走了</span><br><span class="line">DataCacheGenerator.onDataReady</span><br></pre></td></tr></table></figure>
+
+<p>public void onDataReady(Object data) {<br>    cb.onDataFetcherReady(sourceKey, data, loadData.fetcher, DataSource.DATA_DISK_CACHE, sourceKey);<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FetcherReadyCallback.onDataFetcherReady &gt; DecodeJob.onDataFetcherReady &gt;  decodeFromRetrievedData &gt; decodeFromData &gt; decodeFromFetcher &gt;runLoadPath &gt;  path.load LoadPth &gt; LoadPth.loadWithExceptionList &gt; path.decode DecodePath &gt; DecodePath.decode</span><br></pre></td></tr></table></figure>
+
+<p>//开始解码了<br>public Resource<transcode> decode(<br>      DataRewinder<datatype> rewinder,<br>      int width,<br>      int height,<br>      @NonNull Options options,<br>      DecodeCallback<resourcetype> callback)<br>      throws GlideException {<br>    Resource<resourcetype> decoded = decodeResource(rewinder, width, height, options);<br>    Resource<resourcetype> transformed = callback.onResourceDecoded(decoded);<br>    return transcoder.transcode(transformed, options);<br>}</resourcetype></resourcetype></resourcetype></datatype></transcode></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DecodePath.decodeResource &gt; decodeResourceWithList &gt; decoder.decode StreamBitmapDecoder.decode</span><br><span class="line">这里就开始采用压缩,返回Bitmap</span><br></pre></td></tr></table></figure>
+
+<p>public Resource<bitmap> decode(<br>      @NonNull InputStream source, int width, int height, @NonNull Options options)<br>      throws IOException {</bitmap></p>
+<pre><code>// Use to fix the mark limit to avoid allocating buffers that fit entire images.
+final RecyclableBufferedInputStream bufferedStream;
+final boolean ownsBufferedStream;
+if (source instanceof RecyclableBufferedInputStream) {
+  bufferedStream = (RecyclableBufferedInputStream) source;
+  ownsBufferedStream = false;
+} else {
+  bufferedStream = new RecyclableBufferedInputStream(source, byteArrayPool);
+  ownsBufferedStream = true;
+}
+ExceptionCatchingInputStream exceptionStream =
+    ExceptionCatchingInputStream.obtain(bufferedStream);
+
+MarkEnforcingInputStream invalidatingStream = new MarkEnforcingInputStream(exceptionStream);
+UntrustedCallbacks callbacks = new UntrustedCallbacks(bufferedStream, exceptionStream);
+try {
+  return downsampler.decode(invalidatingStream, width, height, options, callbacks);
+} </code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">最终返回到DecodePath,因为我们是再DecodePath.decode的decodeResource里进来的:</span><br><span class="line">再看下代码:</span><br></pre></td></tr></table></figure>
+
+<p>public Resource<transcode> decode(<br>      DataRewinder<datatype> rewinder,<br>      int width,<br>      int height,<br>      @NonNull Options options,<br>      DecodeCallback<resourcetype> callback)<br>      throws GlideException {<br>    Resource<resourcetype> decoded = decodeResource(rewinder, width, height, options);<br>    //这里把获取的图片返回到DecodeJob里:<br>    Resource<resourcetype> transformed = callback.onResourceDecoded(decoded);<br>    //其实这里还会对图片进行处理优化<br>    return transcoder.transcode(transformed, options);<br>}</resourcetype></resourcetype></resourcetype></datatype></transcode></p>
+<p>public Resource<z> onResourceDecoded(@NonNull Resource<z> decoded) {<br>    return DecodeJob.this.onResourceDecoded(dataSource, decoded);<br>}</z></z></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DecodeJob.onResourceDecoded....&gt; notifyEncodeAndRelease &gt; notifyComplete</span><br><span class="line">-&gt; onResourceReady &gt; EngineJob.onResourceReady &gt; notifyCallbacksOfResult &gt; entry.executor.execute(new CallResourceReady(entry.cb)) .... &gt;EnginJob.loadFromActiveResources</span><br><span class="line">最终把Bitmap存到了活动缓存里:</span><br></pre></td></tr></table></figure>
+
+<p> private EngineResource<?> loadFromActiveResources(Key key) {
+    EngineResource<?> active = activeResources.get(key);<br>    if (active != null) {<br>      active.acquire();<br>    }</p>
+<pre><code>return active;</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">接着再通过onResourceReady回调返回到SingleRequest里:这里有个target,这个target,就是我们再into开始时根据imageview创建的ImageViewTarget</span><br></pre></td></tr></table></figure>
+
+<p>private void onResourceReady(Resource<r> resource, R result, DataSource dataSource) {<br>    if (!anyListenerHandledUpdatingTarget) {<br>        Transition&lt;? super R&gt; animation = animationFactory.build(dataSource, isFirstResource);<br>        target.onResourceReady(result, animation);<br>      }<br>    }<br>    notifyLoadSuccess();<br>}</r></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImageViewTarget,最终显示图片,DrawableImageViewTarget</span><br></pre></td></tr></table></figure>
+
+<p>public void onResourceReady(@NonNull Z resource, @Nullable Transition&lt;? super Z&gt; transition) {<br>    if (transition == null || !transition.transition(resource, this)) {<br>        setResourceInternal(resource);<br>    } else {<br>        maybeUpdateAnimatable(resource);<br>    }<br>}</p>
+<p>private void setResourceInternal(@Nullable Z resource) {<br>    // Order matters here. Set the resource first to make sure that the Drawable has a valid and<br>    // non-null Callback before starting it.<br>    setResource(resource);<br>    maybeUpdateAnimatable(resource);<br>}</p>
+<p>protected void setResource(@Nullable Drawable resource) {<br>    view.setImageDrawable(resource);<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## 生命周期分析</span><br><span class="line">首先Activity中对生命周期的监听,也是参考这个方式:</span><br><span class="line">还是从with的RequestManager开始:</span><br></pre></td></tr></table></figure>
+
+<p>private RequestManager supportFragmentGet(<br>    @NonNull Context context,<br>    @NonNull FragmentManager fm,<br>    @Nullable Fragment parentHint,<br>    boolean isParentVisible) {<br>    //空白的Fragment<br>    SupportRequestManagerFragment current =<br>        getSupportRequestManagerFragment(fm, parentHint, isParentVisible);<br>    //给到 RequestManager<br>    RequestManager requestManager = current.getRequestManager();<br>    if (requestManager == null) {<br>        Glide glide = Glide.get(context);<br>        requestManager =<br>            factory.build(<br>                glide, current.getGlideLifecycle(), current.getRequestManagerTreeNode(), context);<br>        current.setRequestManager(requestManager);<br>    }<br>    return requestManager;<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SupportRequestManagerFragment</span><br></pre></td></tr></table></figure>
+
+<p>@Override<br>public void onDestroy() {<br>    super.onDestroy();<br>    lifecycle.onDestroy();<br>    unregisterFragmentWithRoot();<br>}<br>// ActivityFragmentLifecycle implements Lifecycle<br>// interface LifecycleListener 生命周期的监听接口<br>void onDestroy() {<br>    isDestroyed = true;<br>    for (LifecycleListener lifecycleListener : Util.getSnapshot(lifecycleListeners)) {<br>      lifecycleListener.onDestroy();<br>    }<br>  }</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">所以当界面生命周期发生变化后,实现了LifecycleListener 接口的类,都会收到生命周期的回调监听.我们就可以针对具体的生命周期,执行对应逻辑处理.</span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line">// RequestManager</span><br><span class="line">public synchronized void onDestroy() &#123;</span><br><span class="line">    targetTracker.onDestroy();</span><br><span class="line">    for (Target&lt;?&gt; target : targetTracker.getAll()) &#123;</span><br><span class="line">      clear(target);</span><br><span class="line">    &#125;</span><br><span class="line">    targetTracker.clear();</span><br><span class="line">    requestTracker.clearRequests();</span><br><span class="line">    lifecycle.removeListener(this);</span><br><span class="line">    lifecycle.removeListener(connectivityMonitor);</span><br><span class="line">    mainHandler.removeCallbacks(addSelfToLifecycle);</span><br><span class="line">    glide.unregisterRequestManager(this);</span><br><span class="line">&#125;</span><br><span class="line">// RequestTracker,pendingRequests缓存了等待执行的url请求</span><br><span class="line">public void clearRequests() &#123;</span><br><span class="line">    for (Request request : Util.getSnapshot(requests)) &#123;</span><br><span class="line">      // It&apos;s unsafe to recycle the Request here because we don&apos;t know who might else have a</span><br><span class="line">      // reference to it.</span><br><span class="line">      clearAndRemove(request);</span><br><span class="line">    &#125;</span><br><span class="line">    pendingRequests.clear();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://muyangmin.github.io/glide-docs-cn/" target="_blank" rel="noopener">Glide中文文档</a></p>
 
         
             <div id="toc-article">
                 
   <div class="widget-wrap" id="toc-wrap">
-    <h3 class="widget-title"><i class="fa fa-toc"></i> Contents</h3>
+    <h3 class="widget-title"><i class="fa fa-toc"></i> Inhalte</h3>
     <div class="widget">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是Glide"><span class="toc-text">什么是Glide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特点"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能"><span class="toc-text">性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#依赖"><span class="toc-text">依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加载"><span class="toc-text">加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取消加载"><span class="toc-text">取消加载:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过度"><span class="toc-text">过度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变换"><span class="toc-text">变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generated-API"><span class="toc-text">Generated API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GlideExtension-amp-GlideOption"><span class="toc-text">GlideExtension &amp; GlideOption</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#架构"><span class="toc-text">架构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是Glide"><span class="toc-text">什么是Glide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特点"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能"><span class="toc-text">性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#架构"><span class="toc-text">架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#依赖"><span class="toc-text">依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加载"><span class="toc-text">加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取消加载"><span class="toc-text">取消加载:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过度"><span class="toc-text">过度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变换"><span class="toc-text">变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generated-API"><span class="toc-text">Generated API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GlideExtension-amp-GlideOption"><span class="toc-text">GlideExtension &amp; GlideOption</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
     </div>
   </div>
 
@@ -220,8 +477,8 @@
         
         
           <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/2022/06/08/Glide图片加载框架原理/">http://nunu03.github.io/2022/06/08/Glide图片加载框架原理/</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
+              <p>Ursprünglicher Link: <a href="http://nunu03.github.io/2022/06/08/Glide图片加载框架原理/">http://nunu03.github.io/2022/06/08/Glide图片加载框架原理/</a></p>
+              <p>Copyright-Erklärung: 转载请注明出处.</p>
           </blockquote>
         
       
@@ -236,7 +493,7 @@
 
           
     <div class="social-share">
-      <span>Share:</span>
+      <span>Aktie:</span>
     </div>
 
 
@@ -280,7 +537,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-posts"></i> Recent</h3>
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Letzte</h3>
     <div class="widget">
       <ul>
         
@@ -321,7 +578,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-classify"></i> Categories</h3>
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Kategorien</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -331,7 +588,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-archive"></i> Archive</h3>
+    <h3 class="widget-title"><i class="fa fa-archive"></i> Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
     </div>
@@ -374,9 +631,9 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       <p>
-        <a href="/sitemap.xml">Site Map</a>
-        <span> | </span><a href="/atom.xml">Subscribe to this site</a>
-        <span> | </span><a href="/about/">Contact the blogger</a>
+        <a href="/sitemap.xml">Sitemap</a>
+        <span> | </span><a href="/atom.xml">Abonnieren Sie diese Site</a>
+        <span> | </span><a href="/about/">Kontaktieren Sie den Blogger</a>
       </p>
       
         <p>
