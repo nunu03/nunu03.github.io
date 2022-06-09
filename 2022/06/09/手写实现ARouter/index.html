@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  <title>手写实现ARouter | chenyulong</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <meta name="description" content="Nunu&#39;s blog!">
+  
+  
+    <meta name="keywords" content="Nunu">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="chenyulong">
+  
+  
+    <link rel="shortcut icon" href="/css/images/avatar.jpg">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" href="/localshare/css/share.css">
+  
+  
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chenyulong</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">理论是你知道是这样，但它却不好用；实践是它很好用，但你不知道是为什么；程序员将理论和实践结合到一起：既不好用，也不知道是为什么。</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives"><i class="fa fa-rss"></i> 归档</a>
+        
+          <a class="main-nav-link" href="/categories/"><i class="fa fa-archive"></i> 分类</a>
+        
+          <a class="main-nav-link" href="/tags/"><i class="fa fa-user"></i> 标签</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="Suche"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-手写实现ARouter" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      手写实现ARouter
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-06-09T08:11:47.000Z" itemprop="datePublished">2022年06月09日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2022/06/09/手写实现ARouter/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+  
+  <i class="fa fa-commt"></i>
+  Gästebuch
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h2><p>可以理解为解耦复杂系统时将多个功能模块拆分，重组的过程。在Android工程中，表现就是把app按照其业务的不同，划分为不同的Module。举例一点，比如我在开发58同城时，具有很多个业务，房产，招聘，新车，每一个业务线都是独立的，可以单独运行，相互之间并不依赖，但是在平台中，可以做到横向的互相跳转。所以组件化有点有很多：</p>
+<ul>
+<li>1.各组件只关系自己功能开发，模块内代码高度聚合，只负责一项任务；</li>
+<li>2.业务之间不干扰，提升协作的效率；</li>
+<li>3.业务组件可插拔，比如招聘，可以随时集成到58同镇平台；</li>
+<li>4.业务之间不直接依赖，各个业务更独立，降低了耦合；</li>
+<li>5.可以单独编译，加快编译速度，提高开发效率；</li>
+<li><ol start="6">
+<li>。。。。。。<a id="more"></a>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2>ARouter，阿里开源，一个用于帮助 Android App 进行组件化改造的框架 —— 支持模块间的路由、通信、解耦<h2 id="手写实现简单ARouter"><a href="#手写实现简单ARouter" class="headerlink" title="手写实现简单ARouter"></a>手写实现简单ARouter</h2><h3 id="项目目录"><a href="#项目目录" class="headerlink" title="项目目录"></a>项目目录</h3><img src="http://nunu03.github.io/2022/06/08/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0ARouter/router-ml.png" alt><h3 id="router实现"><a href="#router实现" class="headerlink" title="router实现"></a>router实现</h3>具体原理，就是在我们router有一个单例，这个单例保存了一个Map，而这个map存了key-value,key是我们的自定义的字符串，value就是我们的Activity.class。然后我们的业务模块就可以把自己的Activity，put到这个map里，而其他的业务就可以根据key拿到Activity，从而就可以实现Intent跳转了。路由代码：</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">private static volatile CRouter mInstance;</span><br><span class="line">    // 存储所有的注册Activity</span><br><span class="line">    private  static Map&lt;String,Class&lt;? extends Activity&gt;&gt; routers = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    private CRouter()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    public static  CRouter getInstance()&#123;</span><br><span class="line">        if (mInstance == null)&#123;</span><br><span class="line">            synchronized (CRouter.class)&#123;</span><br><span class="line">                if (mInstance == null)&#123;</span><br><span class="line">                    mInstance = new CRouter();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return mInstance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void init(Application application)&#123;</span><br><span class="line">//        new JobRouter().loadRouters(routers);</span><br><span class="line">//        new CarRouter().loadRouters(routers);</span><br><span class="line">        //这里可以用ClassLoader和DexFile便利拿到所有com.example.router包下的类，再通过反射,拿到Router并调用loadRouters注册所有Activity，// 就不可以不用手动执行new JobRouter().loadRouters(routers);当然我们也拿不到JobRouter，CarRouter；</span><br><span class="line">        try &#123;</span><br><span class="line">            Set&lt;String&gt; classNames = ClassUtils.getFileNameByPackageName(application,&quot;com.example.routers&quot;);</span><br><span class="line">            for (String clsName : classNames) &#123;</span><br><span class="line">                Class&lt;?&gt; cls = Class.forName(clsName);</span><br><span class="line">                if (IRouteLoad.class.isAssignableFrom(cls))&#123;</span><br><span class="line">                    IRouteLoad iRouteLoad = (IRouteLoad)cls.newInstance();</span><br><span class="line">                    iRouteLoad.loadRouters(routers);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void startActivity(Activity activity,String path)&#123;</span><br><span class="line">        Class&lt;? extends Activity&gt; cls = routers.get(path);</span><br><span class="line">        if (cls != null)&#123;</span><br><span class="line">            Intent intent = new Intent(activity,cls);</span><br><span class="line">            activity.startActivity(intent);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public void register(String path,Class&lt;? extends Activity&gt; cls )&#123;</span><br><span class="line">        routers.put(path,cls);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>工具类如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">public class ClassUtils &#123;</span><br><span class="line">    //获取程序所欲apk</span><br><span class="line">    public static List&lt;String&gt; getSourcePaths(Context context) throws PackageManager.NameNotFoundException &#123;</span><br><span class="line">        ApplicationInfo applicationInfo = context.getPackageManager()</span><br><span class="line">                .getApplicationInfo(context.getPackageName(),0);</span><br><span class="line">        List&lt;String&gt; sourcePaths = new ArrayList&lt;&gt;();</span><br><span class="line">        //当前应用的apk</span><br><span class="line">        sourcePaths.add(applicationInfo.sourceDir);</span><br><span class="line">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP)&#123;</span><br><span class="line">            if (null != applicationInfo.splitSourceDirs)&#123;</span><br><span class="line">                sourcePaths.addAll(Arrays.asList(applicationInfo.splitSourceDirs));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return sourcePaths;</span><br><span class="line">    &#125;</span><br><span class="line">    public static Set&lt;String&gt; getFileNameByPackageName(Application context, String packagename) throws PackageManager.NameNotFoundException&#123;</span><br><span class="line">        Set&lt;String&gt; classNames = new HashSet&lt;&gt;();</span><br><span class="line">        List&lt;String&gt; paths = getSourcePaths(context);</span><br><span class="line">        for (String path: paths)&#123;</span><br><span class="line">            DexFile dexFile = null;</span><br><span class="line">            try&#123;</span><br><span class="line">                //加载apk中dex，并便利获得所有的packageName的类</span><br><span class="line">                dexFile = new DexFile(path);</span><br><span class="line">                Enumeration&lt;String&gt; dexEntries = dexFile.entries();</span><br><span class="line">                //遍历整个apk中的所有类</span><br><span class="line">                while (dexEntries.hasMoreElements())&#123;</span><br><span class="line">                    String className = dexEntries.nextElement();</span><br><span class="line">                    if (className.startsWith(packagename))&#123;</span><br><span class="line">                        classNames.add(className);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;catch (Exception e)&#123;</span><br><span class="line"></span><br><span class="line">            &#125;finally &#123;</span><br><span class="line">                if (null!= dexFile)&#123;</span><br><span class="line">                    try&#123;</span><br><span class="line">                        dexFile.getClass();</span><br><span class="line">                    &#125;catch (Exception e)&#123;</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return classNames;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>业务模块注册：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 车业务</span><br><span class="line">package com.example.router;</span><br><span class="line"></span><br><span class="line">public class CarRouter implements IRouteLoad &#123;</span><br><span class="line">    public void loadRouters(Map&lt;String,Class&lt;? extends Activity&gt;&gt; routers)&#123;</span><br><span class="line">        routers.put(&quot;/path/car&quot;, CarActivity.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 招聘业务</span><br><span class="line">package com.example.router;</span><br><span class="line"></span><br><span class="line">public class JobRouter implements IRouteLoad &#123;</span><br><span class="line">    public void loadRouters(Map&lt;String,Class&lt;? extends Activity&gt;&gt; routers)&#123;</span><br><span class="line">        routers.put(&quot;/path/job&quot;, JobActivity.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注册好了，这样我们就可以跳转了：在车跳转到招聘业务，完成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CRouter.getInstance().startActivity(this,&quot;/path/job&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>然后我们发现，注册的时候，需要每个业务线，都要手动注册put自己的key-value；而且注册的保命，类名不一样外，其他的代码实现都差不多。那有没有一种方式，动态生成呢？</p>
+<h3 id="APT注解"><a href="#APT注解" class="headerlink" title="APT注解"></a>APT注解</h3><p><strong>注解的两个实现模块，都不能是android module。</strong><br>注解类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 用在什么地方</span><br><span class="line">@Target(ElementType.TYPE)</span><br><span class="line">//注解保留到：源码</span><br><span class="line">@Retention(RetentionPolicy.SOURCE)</span><br><span class="line">public @interface CRouterAnnotation &#123;</span><br><span class="line">    String value();// 我们需要的时字符串</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>自定义注解实现：自动生成的类，是什么？就是一个.java文件.所以我们其实就是拿到内容，生成一个文件。<br>写入依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    implementation &quot;com.google.auto.service:auto-service:1.0-rc7&quot;</span><br><span class="line">    annotationProcessor &quot;com.google.auto.service:auto-service:1.0-rc7&quot;</span><br><span class="line">    implementation &apos;com.squareup:javapoet:1.13.0&apos;</span><br><span class="line"></span><br><span class="line">    implementation project(&quot;:apt-annotation&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">@AutoService(Processor.class)</span><br><span class="line">//指定我们自己的注解处理器：CRouterAnnotation，全路径</span><br><span class="line">@SupportedAnnotationTypes(&quot;com.example.apt_annotation.CRouterAnnotation&quot;)</span><br><span class="line">@SupportedOptions(&quot;AROUTER_MODULE_NAME&quot;)</span><br><span class="line">public class RouterProcessor extends AbstractProcessor &#123;</span><br><span class="line">    private Messager messager;//打印日志</span><br><span class="line">    private Filer filer;//文件持有，管理者</span><br><span class="line">    private String moduleName;//业务线的名称</span><br><span class="line">    @Override</span><br><span class="line">    public synchronized void init(ProcessingEnvironment processingEnv) &#123;</span><br><span class="line">        super.init(processingEnv);</span><br><span class="line">        messager = processingEnv.getMessager();</span><br><span class="line">        filer = processingEnv.getFiler();</span><br><span class="line">        Map&lt;String,String&gt; options =  processingEnv.getOptions();</span><br><span class="line">        moduleName = options.get(&quot;AROUTER_MODULE_NAME&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean process(Set&lt;? extends TypeElement&gt; annotations,</span><br><span class="line">                           RoundEnvironment roundEnv) &#123;</span><br><span class="line">        //使用了@CRouterAnnotation注解类的节点的集合，包括包名、类名、属性、方法等节点。</span><br><span class="line">        Set&lt;? extends Element&gt; elements = roundEnv.getElementsAnnotatedWith(CRouterAnnotation.class);</span><br><span class="line">        //拼装类内容</span><br><span class="line">        StringBuilder sb = new StringBuilder(&quot;package com.example.routers;&quot; +</span><br><span class="line">                &quot;\n import android.app.Activity; \n&quot;);</span><br><span class="line">        for (Element element : elements)&#123;</span><br><span class="line">            TypeElement typeElement = (TypeElement)element;//获取类信息</span><br><span class="line">            sb.append(&quot;import &quot;);</span><br><span class="line">            sb.append(typeElement.getQualifiedName());// com.example.mycar.CarActivity</span><br><span class="line">            sb.append(&quot;;\n&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append( &quot;import com.example.myrouteapi.IRouteLoad;\n&quot;);</span><br><span class="line">        sb.append(&quot;import java.util.Map;\n&quot;);</span><br><span class="line">        sb.append(&quot;public class &quot;+ moduleName+ &quot;Router implements IRouteLoad &#123;\n&quot;);</span><br><span class="line">        sb.append(&quot;    public void loadRouters(Map&lt;String,Class&lt;? extends Activity&gt;&gt; routers)&#123;\n&quot;);</span><br><span class="line"></span><br><span class="line">        for (Element element : elements)&#123;</span><br><span class="line">            CRouterAnnotation cRouterAnnotation = element.getAnnotation(CRouterAnnotation.class);</span><br><span class="line">            String value = cRouterAnnotation.value();</span><br><span class="line">            Name clsName = element.getSimpleName();</span><br><span class="line">            sb.append(&quot;routers.put(\&quot;&quot;+value+ &quot;\&quot;,&quot;).append(clsName+&quot;.class);\n&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(&quot;    &#125;\n&quot;);</span><br><span class="line">        sb.append(&quot;&#125;\n&quot;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        messager.printMessage(Diagnostic.Kind.NOTE,&quot;moduleName--------：&quot;+moduleName);</span><br><span class="line">        try &#123;</span><br><span class="line">            //生成文件</span><br><span class="line">           JavaFileObject sourceFile =  filer.createSourceFile(&quot;com.example.routers.&quot;+moduleName+&quot;Router&quot;);</span><br><span class="line">            OutputStream os = sourceFile.openOutputStream();</span><br><span class="line">            os.write(sb.toString().getBytes());</span><br><span class="line">            os.close();</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意模块名称需要配置：AROUTER_MODULE_NAME，就是RouterProcessor中需要的类名前缀。这个是在模块业务中配置的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">javaCompileOptions &#123;</span><br><span class="line">    annotationProcessorOptions &#123;</span><br><span class="line">        arguments = [AROUTER_MODULE_NAME: project.getName()]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还需要配置依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    implementation project(&apos;:myrouteapi&apos;)</span><br><span class="line">    implementation project(&apos;:apt-annotation&apos;)</span><br><span class="line">    annotationProcessor project(&quot;:apt-processor&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>设置协议key：”/path/job”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@CRouterAnnotation(&quot;/path/job&quot;)</span><br><span class="line">public class JobActivity extends AppCompatActivity &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终在各业务模块生成：<br><img src="http://nunu03.github.io/2022/06/08/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0ARouter/router-apt.png" alt><br>OK，实现完成。</p>
+<p>AutoService是什么？RouterProcessor是怎么执行的？看我写的<a href="https://nunu03.github.io/2022/06/07/SPI%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/">SPI原理</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实如上只是简单的实现了ARouter，还有很多改进的地方，比如可以再次基础上根据业务改进我们的框架；比如我们可以通过Gradle 字节码插桩提升我们的初始化速度，通过URI实现我们的跳转配置，增加协议的参数等等。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/alibaba/ARouter/blob/master/README_CN.md" target="_blank" rel="noopener">ARouter中文文档</a><br><a href="https://www.bilibili.com/video/BV1gT4y1q74f?p=10&spm_id_from=pageDriver" target="_blank" rel="noopener">组件化视频</a></p>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> Inhalte</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件化"><span class="toc-text">组件化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由"><span class="toc-text">路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手写实现简单ARouter"><span class="toc-text">手写实现简单ARouter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#项目目录"><span class="toc-text">项目目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#router实现"><span class="toc-text">router实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#APT注解"><span class="toc-text">APT注解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>Ursprünglicher Link: <a href="http://nunu03.github.io/2022/06/09/手写实现ARouter/">http://nunu03.github.io/2022/06/09/手写实现ARouter/</a></p>
+              <p>Copyright-Erklärung: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/组件化/">组件化</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>Aktie:</span>
+    </div>
+
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2022/06/08/Glide图片加载框架原理/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          Glide图片加载框架原理
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+      
+      
+        
+
+
+
+
+
+
+
+
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Letzte</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/09/手写实现ARouter/">手写实现ARouter</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/08/Glide图片加载框架原理/">Glide图片加载框架原理</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/07/SPI原理解析/">SPI原理解析</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/">SharedPreferences+MMAP+MMKV数据持久化原理解析</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/02/ViewModel源码解析/">ViewModel源码解析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/Charles/" style="font-size: 13.33px;">Charles</a> <a href="/tags/Color/" style="font-size: 10px;">Color</a> <a href="/tags/FaceUnity/" style="font-size: 16.67px;">FaceUnity</a> <a href="/tags/Fix/" style="font-size: 10px;">Fix</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/GitLab/" style="font-size: 10px;">GitLab</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/Gradle/" style="font-size: 20px;">Gradle</a> <a href="/tags/Haar/" style="font-size: 10px;">Haar</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hook/" style="font-size: 10px;">Hook</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/LiveData/" style="font-size: 10px;">LiveData</a> <a href="/tags/Log/" style="font-size: 10px;">Log</a> <a href="/tags/OkHttp/" style="font-size: 10px;">OkHttp</a> <a href="/tags/OpenCV/" style="font-size: 10px;">OpenCV</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/SPI/" style="font-size: 10px;">SPI</a> <a href="/tags/Title/" style="font-size: 10px;">Title</a> <a href="/tags/Toast/" style="font-size: 10px;">Toast</a> <a href="/tags/View/" style="font-size: 10px;">View</a> <a href="/tags/ViewModel/" style="font-size: 10px;">ViewModel</a> <a href="/tags/WMS/" style="font-size: 10px;">WMS</a> <a href="/tags/WebHook/" style="font-size: 10px;">WebHook</a> <a href="/tags/Wireshark/" style="font-size: 10px;">Wireshark</a> <a href="/tags/Xposed/" style="font-size: 13.33px;">Xposed</a> <a href="/tags/aar/" style="font-size: 10px;">aar</a> <a href="/tags/cmd/" style="font-size: 10px;">cmd</a> <a href="/tags/mmap/" style="font-size: 10px;">mmap</a> <a href="/tags/ngrok/" style="font-size: 13.33px;">ngrok</a> <a href="/tags/nps/" style="font-size: 10px;">nps</a> <a href="/tags/人脸检测/" style="font-size: 10px;">人脸检测</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">23</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Charles/">Charles</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Color/">Color</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FaceUnity/">FaceUnity</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fix/">Fix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitLab/">GitLab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Glide/">Glide</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haar/">Haar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hook/">Hook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LiveData/">LiveData</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Log/">Log</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OkHttp/">OkHttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SPI/">SPI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Title/">Title</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Toast/">Toast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ViewModel/">ViewModel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WMS/">WMS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebHook/">WebHook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireshark/">Wireshark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Xposed/">Xposed</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aar/">aar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mmap/">mmap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok/">ngrok</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nps/">nps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸检测/">人脸检测</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-link"></i> Blogroll</h3>
+    <div class="widget">
+      <ul>
+      
+        <li>
+          <a href="https://handsomeliuyang.github.io/">liuyang</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">Sitemap</a>
+        <span> | </span><a href="/atom.xml">Abonnieren Sie diese Site</a>
+        <span> | </span><a href="/about/">Kontaktieren Sie den Blogger</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2022 Nunu Long.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  <script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/search.json.js"></script>
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  <script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  
+    <script src="/localshare/js/social-share.js"></script>
+    <script src="/localshare/js/qrcode.js"></script>
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>
