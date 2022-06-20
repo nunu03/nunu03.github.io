@@ -62,7 +62,7 @@
     </div>
     <div id="search-form">
       <div id="result-mask" class="hide"></div>
-      <label><input id="search-key" type="text" autocomplete="off" placeholder="Búsqueda"></label>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="Suche"></label>
       <div id="result-wrap" class="hide">
         <div id="search-result"></div>
       </div>
@@ -115,7 +115,7 @@
 <a href="/2022/06/20/设计模式/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Libro de visitas
+  Gästebuch
 </a>
 
 
@@ -125,13 +125,15 @@
         <h2 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h2><h3 id="简单工厂设计模式"><a href="#简单工厂设计模式" class="headerlink" title="简单工厂设计模式"></a>简单工厂设计模式</h3><p><strong>适用于：</strong>工厂类负责创建的对象较少；客户端只需要传入工厂类的参数，对于如何船舰对象的逻辑不需要关心。<br><strong>优点：</strong>只需要传入一个正确的参数，就可以获取你所需要的对象，无须知道其创建的细节。<br><strong>缺点：</strong>不易于扩展过于复杂的产品结构。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public interface ILanguages &#123;</span><br><span class="line">    void out();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class JavaLanguage implements ILanguages &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void out() &#123;</span><br><span class="line">        System.out.println(&quot;JavaLanguage--------------&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class PythonLanguage implements ILanguages &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void out() &#123;</span><br><span class="line">        System.out.println(&quot;PythonLanguage--------------&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class LanaguageFactory &#123;</span><br><span class="line">    public ILanguages create(Class&lt;?extends ILanguages&gt; clsName)&#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            if (null != clsName)&#123;</span><br><span class="line">                return clsName.newInstance();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        System.out.println(&quot;pattern----------------start&quot;);</span><br><span class="line">        ILanguages language = new LanaguageFactory().create(PythonLanguage.class);</span><br><span class="line">        language.out();</span><br><span class="line">        System.out.println(&quot;pattern----------------end&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h3><p>Factory Method Pattern，指定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类，工厂方法让类的实例化推迟到子类中进行。属于创建型设计模式。</p>
+<h3 id="工厂方法设计模式"><a href="#工厂方法设计模式" class="headerlink" title="工厂方法设计模式"></a>工厂方法设计模式</h3><p>工厂方法模式,Factory Method Pattern，指定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类，工厂方法让类的实例化推迟到子类中进行。属于创建型设计模式。<br><strong>适用于：</strong>创建对象需要大量重复的代码。客户端(应用层)不依赖产品类实例如何被创建、实现等细节。一个类通过其子类来指定创建哪个对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">public interface ILanguages &#123;</span><br><span class="line">    void out();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class JavaLanguage implements ILanguages &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void out() &#123;</span><br><span class="line">        System.out.println(&quot;JavaLanguage--------------&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class PythonLanguage implements ILanguages &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void out() &#123;</span><br><span class="line">        System.out.println(&quot;PythonLanguage--------------&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public interface ILanaguageFactory &#123;</span><br><span class="line">     ILanguages create();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class JavaLanguageFactory implements ILanaguageFactory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public ILanguages create() &#123;</span><br><span class="line">        return new JavaLanguage();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class PythonLanguageFactory implements ILanaguageFactory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public ILanguages create() &#123;</span><br><span class="line">        return new PythonLanguage();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        System.out.println(&quot;pattern----------------start&quot;);</span><br><span class="line">        ILanaguageFactory languageFactory = new JavaLanguageFactory();</span><br><span class="line">        ILanguages languages = languageFactory.create();</span><br><span class="line">        languages.out();</span><br><span class="line">        System.out.println(&quot;pattern----------------end&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
         
         
           <blockquote id="copyright">
-              <p>Enlace original: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
-              <p>Declaración de copyright: 转载请注明出处.</p>
+              <p>Ursprünglicher Link: <a href="http://nunu03.github.io/index.html">http://nunu03.github.io/index.html</a></p>
+              <p>Copyright-Erklärung: 转载请注明出处.</p>
           </blockquote>
         
       
@@ -146,7 +148,7 @@
 
           
     <div class="social-share">
-      <span>Cuota:</span>
+      <span>Aktie:</span>
     </div>
 
 
@@ -192,7 +194,7 @@
 <a href="/2022/06/09/手写实现ARouter/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Libro de visitas
+  Gästebuch
 </a>
 
 
@@ -256,7 +258,7 @@
 <a href="/2022/06/08/Glide图片加载框架原理/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Libro de visitas
+  Gästebuch
 </a>
 
 
@@ -321,7 +323,7 @@
 <a href="/2022/06/07/SPI原理解析/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Libro de visitas
+  Gästebuch
 </a>
 
 
@@ -379,7 +381,7 @@
 <a href="/2022/06/03/SharedPreferences-MMAP-MMKV数据持久化原理解析/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Libro de visitas
+  Gästebuch
 </a>
 
 
@@ -440,7 +442,7 @@
 <a href="/2022/06/02/ViewModel源码解析/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Libro de visitas
+  Gästebuch
 </a>
 
 
@@ -498,7 +500,7 @@
 <a href="/2022/06/02/LiveData-LifeCycle原理/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Libro de visitas
+  Gästebuch
 </a>
 
 
@@ -556,7 +558,7 @@
 <a href="/2022/06/01/Android-WMS原理/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Libro de visitas
+  Gästebuch
 </a>
 
 
@@ -615,7 +617,7 @@
 <a href="/2022/05/31/OkHttp总结/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Libro de visitas
+  Gästebuch
 </a>
 
 
@@ -673,7 +675,7 @@
 <a href="/2022/05/31/Retrofit架构解析/#comments" class="article-comment-link">
   
   <i class="fa fa-commt"></i>
-  Libro de visitas
+  Gästebuch
 </a>
 
 
@@ -702,7 +704,7 @@
 
     <nav id="page-nav">
 
-<span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Siguiente</a>
+<span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Nächster</a>
 </nav>
 
 
@@ -712,7 +714,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-posts"></i> Recientes</h3>
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Letzte</h3>
     <div class="widget">
       <ul>
         
@@ -744,7 +746,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-tag"></i> Nube de etiquetas</h3>
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/Charles/" style="font-size: 13.33px;">Charles</a> <a href="/tags/Color/" style="font-size: 10px;">Color</a> <a href="/tags/FaceUnity/" style="font-size: 16.67px;">FaceUnity</a> <a href="/tags/Fix/" style="font-size: 10px;">Fix</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/GitLab/" style="font-size: 10px;">GitLab</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/Gradle/" style="font-size: 20px;">Gradle</a> <a href="/tags/Haar/" style="font-size: 10px;">Haar</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hook/" style="font-size: 10px;">Hook</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/LiveData/" style="font-size: 10px;">LiveData</a> <a href="/tags/Log/" style="font-size: 10px;">Log</a> <a href="/tags/OkHttp/" style="font-size: 10px;">OkHttp</a> <a href="/tags/OpenCV/" style="font-size: 10px;">OpenCV</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/SPI/" style="font-size: 10px;">SPI</a> <a href="/tags/Title/" style="font-size: 10px;">Title</a> <a href="/tags/Toast/" style="font-size: 10px;">Toast</a> <a href="/tags/View/" style="font-size: 10px;">View</a> <a href="/tags/ViewModel/" style="font-size: 10px;">ViewModel</a> <a href="/tags/WMS/" style="font-size: 10px;">WMS</a> <a href="/tags/WebHook/" style="font-size: 10px;">WebHook</a> <a href="/tags/Wireshark/" style="font-size: 10px;">Wireshark</a> <a href="/tags/Xposed/" style="font-size: 13.33px;">Xposed</a> <a href="/tags/aar/" style="font-size: 10px;">aar</a> <a href="/tags/cmd/" style="font-size: 10px;">cmd</a> <a href="/tags/mmap/" style="font-size: 10px;">mmap</a> <a href="/tags/ngrok/" style="font-size: 13.33px;">ngrok</a> <a href="/tags/nps/" style="font-size: 10px;">nps</a> <a href="/tags/人脸检测/" style="font-size: 10px;">人脸检测</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
     </div>
@@ -753,7 +755,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-classify"></i> Categorías</h3>
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Kategorien</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">23</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -763,7 +765,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-archive"></i> Archivo</h3>
+    <h3 class="widget-title"><i class="fa fa-archive"></i> Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
     </div>
@@ -773,7 +775,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-tag"></i> Etiquetas</h3>
+    <h3 class="widget-title"><i class="fa fa-tag"></i> Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Charles/">Charles</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Color/">Color</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FaceUnity/">FaceUnity</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fix/">Fix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitLab/">GitLab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Glide/">Glide</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haar/">Haar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hook/">Hook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LiveData/">LiveData</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Log/">Log</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OkHttp/">OkHttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SPI/">SPI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Title/">Title</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Toast/">Toast</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ViewModel/">ViewModel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WMS/">WMS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebHook/">WebHook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireshark/">Wireshark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Xposed/">Xposed</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aar/">aar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mmap/">mmap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok/">ngrok</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nps/">nps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸检测/">人脸检测</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
     </div>
@@ -806,9 +808,9 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       <p>
-        <a href="/sitemap.xml">Mapa del sitio</a>
-        <span> | </span><a href="/atom.xml">suscribirse a este sitio</a>
-        <span> | </span><a href="/about/">Contacta al blogger</a>
+        <a href="/sitemap.xml">Sitemap</a>
+        <span> | </span><a href="/atom.xml">Abonnieren Sie diese Site</a>
+        <span> | </span><a href="/about/">Kontaktieren Sie den Blogger</a>
       </p>
       
         <p>
