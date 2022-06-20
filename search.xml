@@ -3,6 +3,30 @@
   
     
     <entry>
+      <title><![CDATA[设计模式]]></title>
+      <url>/2022/06/20/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<h2 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h2><h3 id="简单工厂设计模式"><a href="#简单工厂设计模式" class="headerlink" title="简单工厂设计模式"></a>简单工厂设计模式</h3><p><strong>适用于：</strong>工厂类负责创建的对象较少；客户端只需要传入工厂类的参数，对于如何船舰对象的逻辑不需要关心。<br><strong>优点：</strong>只需要传入一个正确的参数，就可以获取你所需要的对象，无须知道其创建的细节。<br><strong>缺点：</strong>不易于扩展过于复杂的产品结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public interface ILanguages &#123;</span><br><span class="line">    void out();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class JavaLanguage implements ILanguages &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void out() &#123;</span><br><span class="line">        System.out.println(&quot;JavaLanguage--------------&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class PythonLanguage implements ILanguages &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void out() &#123;</span><br><span class="line">        System.out.println(&quot;PythonLanguage--------------&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class LanaguageFactory &#123;</span><br><span class="line">    public ILanguages create(Class&lt;?extends ILanguages&gt; clsName)&#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            if (null != clsName)&#123;</span><br><span class="line">                return clsName.newInstance();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        System.out.println(&quot;pattern----------------start&quot;);</span><br><span class="line">        ILanguages language = new LanaguageFactory().create(PythonLanguage.class);</span><br><span class="line">        language.out();</span><br><span class="line">        System.out.println(&quot;pattern----------------end&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h3><p>Factory Method Pattern，指定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类，工厂方法让类的实例化推迟到子类中进行。属于创建型设计模式。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 设计模式 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[手写实现ARouter]]></title>
       <url>/2022/06/09/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0ARouter/</url>
       <content type="html"><![CDATA[<h2 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h2><p>可以理解为解耦复杂系统时将多个功能模块拆分，重组的过程。在Android工程中，表现就是把app按照其业务的不同，划分为不同的Module。举例一点，比如我在开发58同城时，具有很多个业务，房产，招聘，新车，每一个业务线都是独立的，可以单独运行，相互之间并不依赖，但是在平台中，可以做到横向的互相跳转。所以组件化有点有很多：</p>
