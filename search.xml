@@ -60,7 +60,18 @@
 <p>比如在58同城IM source体系中，具体的业务实现，可以分为交友与同镇，同城等，三者大部分业务相同，但是也有不同的业务卡片。</p>
 <h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><p>单例模式(Singleton Pattern) 是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点，防止重复创建。隐藏其所有的构造方法。属于创建型模式。<br><strong>适用场景：</strong></p>
 <ul>
-<li>确保任何情况下都绝对只有一个实例。ApplicationContext、ServletConfig、DBPool。<h3 id="饿汉式单例"><a href="#饿汉式单例" class="headerlink" title="饿汉式单例"></a>饿汉式单例</h3>在单例类首次加载时就创建实例。</li>
+<li>确保任何情况下都绝对只有一个实例。ApplicationContext、ServletConfig、DBPool。</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>在内存中只有一个实例，减少了内存开销。</li>
+<li>可以避免对资源的多重占用。</li>
+<li>设置全局访问点，严格控制访问。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>没有接口，扩展困难。</li>
+<li>如果要扩展单例对象，只有修改代码，没有其他途径。<h3 id="饿汉式单例"><a href="#饿汉式单例" class="headerlink" title="饿汉式单例"></a>饿汉式单例</h3>在单例类首次加载时就创建实例。</li>
 <li><em>优点：*</em></li>
 <li>执行效率高</li>
 <li>性能高</li>
