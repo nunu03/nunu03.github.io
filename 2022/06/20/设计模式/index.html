@@ -62,7 +62,7 @@
     </div>
     <div id="search-form">
       <div id="result-mask" class="hide"></div>
-      <label><input id="search-key" type="text" autocomplete="off" placeholder="search"></label>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="Suche"></label>
       <div id="result-wrap" class="hide">
         <div id="search-result"></div>
       </div>
@@ -128,7 +128,7 @@
     
   
   <i class="fa fa-commt"></i>
-  Guestbook
+  Gästebuch
 </a>
 
 
@@ -320,8 +320,11 @@
 <li>2.保证线程安全。</li>
 <li>3.延迟加载。</li>
 <li>4.防止序列化和反序列化破坏单例。</li>
-<li>5.防止反射攻击单例。<h2 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h2>原型模式(Prototype Pattern),是指原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。调用者不需要知道任何创建细节，不调用构造函数。属于创建型模式。</li>
-<li><em>适用场景：*</em></li>
+<li>5.防止反射攻击单例。</li>
+</ul>
+<h2 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h2><p>原型模式(Prototype Pattern),是指原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。调用者不需要知道任何创建细节，不调用构造函数。属于创建型模式。</p>
+<p><strong>适用场景：</strong></p>
+<ul>
 <li>类初始化消耗资源较多。</li>
 <li>new 产生的一个对象需要非常繁琐的过程（数据准备、访问权限等）。</li>
 <li>构造函数比较复杂。</li>
@@ -377,7 +380,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pattern----------------start</span><br><span class="line">LanguageBean&#123;id=&apos;2&apos;, name=&apos;java&apos;, nickName=&apos;javaName&apos;, method=[money, cat]&#125;</span><br><span class="line">LanguageBean&#123;id=&apos;2&apos;, name=&apos;java&apos;, nickName=&apos;javaName&apos;, method=[money, cat, dog]&#125;</span><br><span class="line">LanguageBean&#123;id=&apos;2&apos;, name=&apos;java&apos;, nickName=&apos;javaName&apos;, method=[money, cat]&#125;</span><br><span class="line">false</span><br><span class="line">[money, cat, dog]</span><br><span class="line">[money, cat]</span><br><span class="line">false</span><br><span class="line">pattern----------------end</span><br></pre></td></tr></table></figure>
 
 <p><strong>但是这个deepClone，也有可能是有问题的，如果这个原型是个单例，就有可能被破坏。所以如果是单例，就不能实现Cloneable的clone接口，或者实现的话，就直接返回instance。所以原型和单例其实是互斥的。</strong></p>
-<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><p>适配器模式(Adapter Pattern)也叫变压器模式，它的功能是将一个类的接口变成客户端所期望的另一种接口，从而使原本因接口不匹配而导致无法在一起工作的两个类能够一起工作。属于结构性设计模式。<br><strong>适用场景：</strong></p>
+<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><p>适配器模式(Adapter Pattern)也叫变压器模式，它的功能是将一个类的接口变成客户端所期望的另一种接口，从而使原本因接口不匹配而导致无法在一起工作的两个类能够一起工作。属于结构性设计模式。</p>
+<p><strong>适用场景：</strong></p>
 <ul>
 <li>已经存在的类，它的方法和需求不匹配的情况。</li>
 <li>适配器模式不是软件设计阶段考虑的设计模式，是随着软件维护，由于不同产品、不同厂家造成功能类似而接口不相同情况下的解决方案。</li>
@@ -577,7 +581,7 @@
             <div id="toc-article">
                 
   <div class="widget-wrap" id="toc-wrap">
-    <h3 class="widget-title"><i class="fa fa-toc"></i> Contents</h3>
+    <h3 class="widget-title"><i class="fa fa-toc"></i> Inhalte</h3>
     <div class="widget">
       <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#工厂设计模式"><span class="toc-text">工厂设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单工厂模式"><span class="toc-text">简单工厂模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工厂方法模式"><span class="toc-text">工厂方法模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象工厂模式"><span class="toc-text">抽象工厂模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单例模式"><span class="toc-text">单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#饿汉式单例"><span class="toc-text">饿汉式单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#懒汉式单例"><span class="toc-text">懒汉式单例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#线程不安全"><span class="toc-text">线程不安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程安全"><span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#双重校验"><span class="toc-text">双重校验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#静态内部类"><span class="toc-text">静态内部类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反射破坏单例"><span class="toc-text">反射破坏单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注册式单例"><span class="toc-text">注册式单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#序列化、反序列化破坏单例"><span class="toc-text">序列化、反序列化破坏单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal单例"><span class="toc-text">ThreadLocal单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型模式"><span class="toc-text">原型模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#浅克隆"><span class="toc-text">浅克隆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#深克隆"><span class="toc-text">深克隆</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#适配器模式"><span class="toc-text">适配器模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类适配器"><span class="toc-text">类适配器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对象适配器"><span class="toc-text">对象适配器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口适配器"><span class="toc-text">接口适配器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建造者模式"><span class="toc-text">建造者模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建造者模式和工厂模式的区别"><span class="toc-text">建造者模式和工厂模式的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代理模式"><span class="toc-text">代理模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#静态代理"><span class="toc-text">静态代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态代理"><span class="toc-text">动态代理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JDK实现"><span class="toc-text">JDK实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cglib-实现"><span class="toc-text">cglib 实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#手写动态代理"><span class="toc-text">手写动态代理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#门面模式-amp-外观模式"><span class="toc-text">门面模式 &amp; 外观模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#装饰器模式"><span class="toc-text">装饰器模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#装饰器模式和代理模式对比"><span class="toc-text">装饰器模式和代理模式对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#享元模式"><span class="toc-text">享元模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组合模式"><span class="toc-text">组合模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
     </div>
@@ -588,8 +592,8 @@
         
         
           <blockquote id="copyright">
-              <p>Original link: <a href="http://nunu03.github.io/2022/06/20/设计模式/">http://nunu03.github.io/2022/06/20/设计模式/</a></p>
-              <p>Copyright Notice: 转载请注明出处.</p>
+              <p>Ursprünglicher Link: <a href="http://nunu03.github.io/2022/06/20/设计模式/">http://nunu03.github.io/2022/06/20/设计模式/</a></p>
+              <p>Copyright-Erklärung: 转载请注明出处.</p>
           </blockquote>
         
       
@@ -604,7 +608,7 @@
 
           
     <div class="social-share">
-      <span>Share:</span>
+      <span>Aktie:</span>
     </div>
 
 
@@ -648,7 +652,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-posts"></i> Recent</h3>
+    <h3 class="widget-title"><i class="fa fa-posts"></i> Letzte</h3>
     <div class="widget">
       <ul>
         
@@ -689,7 +693,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-classify"></i> Categories</h3>
+    <h3 class="widget-title"><i class="fa fa-classify"></i> Kategorien</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">23</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Charles/">Charles</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GitLab/">GitLab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Gradle/">Gradle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Log/">Log</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Log/Fix/">Fix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NDK/">NDK</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCV/">OpenCV</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/">WebHook</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WebHook/ngrok/">ngrok</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cmd/">cmd</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/">ngrok</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ngrok/nps/">nps</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/">人脸检测</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/人脸检测/Haar/">Haar</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -699,7 +703,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title"><i class="fa fa-archive"></i> Archive</h3>
+    <h3 class="widget-title"><i class="fa fa-archive"></i> Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020年</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019年</a><span class="archive-list-count">16</span></li></ul>
     </div>
@@ -742,9 +746,9 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       <p>
-        <a href="/sitemap.xml">Site Map</a>
-        <span> | </span><a href="/atom.xml">Subscribe to this site</a>
-        <span> | </span><a href="/about/">Contact the blogger</a>
+        <a href="/sitemap.xml">Sitemap</a>
+        <span> | </span><a href="/atom.xml">Abonnieren Sie diese Site</a>
+        <span> | </span><a href="/about/">Kontaktieren Sie den Blogger</a>
       </p>
       
         <p>
