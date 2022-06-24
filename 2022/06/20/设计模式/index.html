@@ -868,17 +868,24 @@
 <h2 id="23-中介者模式"><a href="#23-中介者模式" class="headerlink" title="23.中介者模式"></a>23.中介者模式</h2><p>中介者模式(Mediator Pattern)又称为调解者模式或调停者模式。用一个中介对象封装一系列的对象交互，中介者使各对象不需要显示地相互作用，从而使其耦合松散，而且可以独立地改变它们之间的交互。<br>核心：通过中介者解耦系统各层次对象的直接耦合，层次对象的对外依赖通信统统交由中介者转发。<br>属于行为型模式。</p>
 <p><strong>适用场景：</strong></p>
 <ul>
-<li>。</li>
+<li>系统中对象之间存在复杂的引用关系，产生的相互依赖关系结构混乱且难以理解。</li>
+<li>交互的公共行为，如果需要改变行为则可以增加新的中介者类。</li>
 </ul>
 <p><img src="http://nunu03.github.io/2022/06/20/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/pattern-meditor.png" alt></p>
 <p><strong>优点：</strong></p>
 <ul>
-<li>。</li>
+<li>减少类间依赖，将多对多依赖转化成了一对多，降低了类间耦合。</li>
+<li>类间各司其职，符合迪米特法则。</li>
 </ul>
 <p><strong>缺点：</strong></p>
 <ul>
-<li>。</li>
+<li>中介者模式将原本多个对象直接的相互依赖变成了中介者和多个同事类的依赖关系西，当同事类越多时，中介者就会越臃肿，变得复杂且难以维护。</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class User &#123;</span><br><span class="line">    public String name;</span><br><span class="line">    private ChatRoom chatRoom;</span><br><span class="line">    public User(String name,ChatRoom chatRoom)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.chatRoom = chatRoom;</span><br><span class="line">    &#125;</span><br><span class="line">    public void sendMessage(String msg)&#123;</span><br><span class="line">        this.chatRoom.showMessage(this,msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//中介者</span><br><span class="line">public class ChatRoom &#123;</span><br><span class="line">    public void showMessage(User user,String msg)&#123;</span><br><span class="line">        System.out.println(&quot;[&quot;+user.name+&quot;]&quot;+msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String[] args)&#123;</span><br><span class="line">    System.out.println(&quot;pattern----------------start&quot;);</span><br><span class="line">    ChatRoom chatRoom = new ChatRoom();</span><br><span class="line">    User zhang = new User(&quot;漳卅&quot;,chatRoom);</span><br><span class="line">    User li = new User(&quot;里斯&quot;,chatRoom);</span><br><span class="line">    zhang.sendMessage(&quot;你好，里斯&quot;);</span><br><span class="line">    li.sendMessage(&quot;你好，漳卅&quot;);</span><br><span class="line">    System.out.println(&quot;pattern----------------end&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pattern----------------start</span><br><span class="line">[漳卅]你好，里斯</span><br><span class="line">[里斯]你好，漳卅</span><br><span class="line">pattern----------------end</span><br></pre></td></tr></table></figure>
+
 <h2 id="24-解释器模式"><a href="#24-解释器模式" class="headerlink" title="24.解释器模式"></a>24.解释器模式</h2><p><strong>适用场景：</strong></p>
 <ul>
 <li>。</li>
