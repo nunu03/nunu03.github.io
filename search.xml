@@ -634,9 +634,8 @@
 
 <h2 id="19-迭代器模式"><a href="#19-迭代器模式" class="headerlink" title="19.迭代器模式"></a>19.迭代器模式</h2><p>迭代器模式(Iterator Pattern),又称为游标(Cursor Pattern)模式，它提供一种顺序访问集合、容器对象元素的方法，而又无须暴漏集合内部表示。<br>本质：抽离集合对象迭代行为到迭代器中，提供一致访问接口。<br>属于行为型模式。<br><strong>适用场景：</strong></p>
 <ul>
-<li>多个对象可以处理同一请求，但是具体由哪个对象处理则在运行时动态决定。</li>
-<li>在不明确指定接收者的情况下，向多个对象中的一个提交一个请求。</li>
-<li>可动态指定一组对象处理请求。</li>
+<li>访问一个集合对象的内容而无需暴露它的内部表示。</li>
+<li>为遍历不同的集合结构提供一个统一的访问接口。</li>
 </ul>
 <p><strong>优点：</strong></p>
 <ul>
@@ -646,7 +645,100 @@
 <ul>
 <li>。</li>
 </ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.bilibili.com/video/BV1L5411R7BP?p=4&spm_id_from=pageDriver&vd_source=5442b4c25ece27e33e3aeca4f29ec7f6" target="_blank" rel="noopener">从未见过如此通俗易懂的Java设计模式教程</a></p>
+<p>迭代器比较简单啊，而且jdk已经给实现了，下面手写一个迭代器，看下迭代器原理啊：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">public interface Iterator&lt;E&gt; &#123;</span><br><span class="line">    E next();</span><br><span class="line">    boolean hasNext();</span><br><span class="line">&#125;</span><br><span class="line">public class IteratorImpl&lt;E&gt; implements Iterator&lt;E&gt;&#123;</span><br><span class="line">    private List&lt;E&gt; list;</span><br><span class="line">    private int cursor;</span><br><span class="line">    private E element;</span><br><span class="line"></span><br><span class="line">    public IteratorImpl( List&lt;E&gt; list)&#123;</span><br><span class="line">        this.list= list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public E next() &#123;</span><br><span class="line">        System.out.println(&quot;当前位置：&quot;+cursor);</span><br><span class="line">        element = list.get(cursor);</span><br><span class="line">        cursor++;</span><br><span class="line">        return element;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean hasNext() &#123;</span><br><span class="line">        if (cursor &gt; list.size()-1)&#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public interface ICourseAggreagte &#123;</span><br><span class="line">    void add(Course course);</span><br><span class="line">    void remove(Course course);</span><br><span class="line">    Iterator&lt;Course&gt; iterator();</span><br><span class="line">&#125;</span><br><span class="line">public class CourseAggreagteImpl implements ICourseAggreagte &#123;</span><br><span class="line">    private List courseList;</span><br><span class="line">    public CourseAggreagteImpl()&#123;</span><br><span class="line">        this.courseList = new ArrayList();</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void add(Course course) &#123;</span><br><span class="line">        courseList.add(course);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void remove(Course course) &#123;</span><br><span class="line">        courseList.remove(course);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Iterator&lt;Course&gt; iterator() &#123;</span><br><span class="line">        return new IteratorImpl&lt;Course&gt;(courseList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Course &#123;</span><br><span class="line">    public String name;</span><br><span class="line">    public Course(String name)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(&quot;pattern----------------start&quot;);</span><br><span class="line">        Course java = new Course(&quot;java&quot;);</span><br><span class="line">        Course py = new Course(&quot;python&quot;);</span><br><span class="line">        Course js = new Course(&quot;js&quot;);</span><br><span class="line">        Course ai = new Course(&quot;ai&quot;);</span><br><span class="line"></span><br><span class="line">        ICourseAggreagte aggreagte = new CourseAggreagteImpl();</span><br><span class="line">        aggreagte.add(java);</span><br><span class="line">        aggreagte.add(py);</span><br><span class="line">        aggreagte.add(js);</span><br><span class="line">        aggreagte.add(ai);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;========课程列表========&quot;);</span><br><span class="line">        printCourser(aggreagte);</span><br><span class="line"></span><br><span class="line">        aggreagte.remove(js);</span><br><span class="line">        System.out.println(&quot;========课程列表-删除js========&quot;);</span><br><span class="line">        printCourser(aggreagte);</span><br><span class="line">        System.out.println(&quot;pattern----------------end&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void printCourser(ICourseAggreagte aggreagte)&#123;</span><br><span class="line">        Iterator&lt;Course&gt; iterator = aggreagte.iterator();</span><br><span class="line">        while(iterator.hasNext())&#123;</span><br><span class="line">            Course coure = iterator.next();</span><br><span class="line">            System.out.println(&quot;(&quot;+coure.name+&quot;)&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">pattern----------------start</span><br><span class="line">========课程列表========</span><br><span class="line">当前位置：0</span><br><span class="line">(java)</span><br><span class="line">当前位置：1</span><br><span class="line">(python)</span><br><span class="line">当前位置：2</span><br><span class="line">(js)</span><br><span class="line">当前位置：3</span><br><span class="line">(ai)</span><br><span class="line">========课程列表-删除js========</span><br><span class="line">当前位置：0</span><br><span class="line">(java)</span><br><span class="line">当前位置：1</span><br><span class="line">(python)</span><br><span class="line">当前位置：2</span><br><span class="line">(ai)</span><br><span class="line">pattern----------------end</span><br></pre></td></tr></table></figure>
+
+<h2 id="20-命令模式"><a href="#20-命令模式" class="headerlink" title="20.命令模式"></a>20.命令模式</h2><p><strong>适用场景：</strong></p>
+<ul>
+<li>.</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<h2 id="21-状态模式"><a href="#21-状态模式" class="headerlink" title="21.状态模式"></a>21.状态模式</h2><p><strong>适用场景：</strong></p>
+<ul>
+<li>.</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<h2 id="22-备忘录模式"><a href="#22-备忘录模式" class="headerlink" title="22.备忘录模式"></a>22.备忘录模式</h2><p><strong>适用场景：</strong></p>
+<ul>
+<li>.</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<h2 id="23-中介者模式"><a href="#23-中介者模式" class="headerlink" title="23.中介者模式"></a>23.中介者模式</h2><p><strong>适用场景：</strong></p>
+<ul>
+<li>.</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<h2 id="24-解释器模式"><a href="#24-解释器模式" class="headerlink" title="24.解释器模式"></a>24.解释器模式</h2><p><strong>适用场景：</strong></p>
+<ul>
+<li>.</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<h2 id="25-观察者模式"><a href="#25-观察者模式" class="headerlink" title="25.观察者模式"></a>25.观察者模式</h2><p><strong>适用场景：</strong></p>
+<ul>
+<li>.</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<h2 id="26-访问者模式"><a href="#26-访问者模式" class="headerlink" title="26.访问者模式"></a>26.访问者模式</h2><p><strong>适用场景：</strong></p>
+<ul>
+<li>.</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>。</li>
+</ul>
+<h2 id="27-设计模式总结"><a href="#27-设计模式总结" class="headerlink" title="27.设计模式总结"></a>27.设计模式总结</h2><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.bilibili.com/video/BV1L5411R7BP?p=4&spm_id_from=pageDriver&vd_source=5442b4c25ece27e33e3aeca4f29ec7f6" target="_blank" rel="noopener">从未见过如此通俗易懂的Java设计模式教程</a></p>
 ]]></content>
       
         <categories>
