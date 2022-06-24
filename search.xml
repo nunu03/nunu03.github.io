@@ -778,31 +778,48 @@
 <p>输出：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pattern----------------start</span><br><span class="line">入栈：10</span><br><span class="line">出栈：left:10   right:30</span><br><span class="line">应用运算符：+</span><br><span class="line">result:40</span><br><span class="line">pattern----------------end</span><br></pre></td></tr></table></figure>
 
-<h2 id="25-观察者模式"><a href="#25-观察者模式" class="headerlink" title="25.观察者模式"></a>25.观察者模式</h2><p><strong>适用场景：</strong></p>
+<h2 id="25-观察者模式"><a href="#25-观察者模式" class="headerlink" title="25.观察者模式"></a>25.观察者模式</h2><p>观察者模式(Observer Pattern),又叫发布-订阅(Publish-Subscribe)模式、模型-视图(Model-View)模式、源-监听器(Source-Listener)模式或从属者(Dependents)模式。定义一种一对多的依赖关系，一个主题对象可被多个观察者对象同时监听，使得每当主题对象状态变化时，所有依赖于它的对象都会得到通知并被自动更新。<br>属于行为型模式。</p>
+<p><strong>适用场景：</strong></p>
 <ul>
-<li>。</li>
+<li>当一个抽象模型包含两个方面内容，其中一个方面依赖于另一个方面。</li>
+<li>其他一个或多个对象的变化依赖于另一个对象的变化。</li>
+<li>实现类似广播机制的功能，无需知道具体收听者，只需分发广播，系统中感兴趣的对象会自动接受该广播。</li>
+<li>多层级嵌套使用，形成一种链式触发机制，使得事件具备跨域(跨越两种观察者类型)通知。</li>
 </ul>
 <p><strong>优点：</strong></p>
 <ul>
-<li>。</li>
+<li>观察者和被观察者是松耦合的，符合依赖倒置原则。</li>
+<li>分离了表示层(观察者)和数据逻辑层(被观察者)，并且建立了一套触发机制，使得数据的变化可以响应到多个表示层上。</li>
+<li>实现了一对多的通讯机制，支持事件注册机制，支持兴趣分发机制，当被观察者触发事件时，只有感兴趣的观察者可以接收到通知。</li>
 </ul>
 <p><strong>缺点：</strong></p>
 <ul>
-<li>。</li>
+<li>如果观察者数量过多，则事件通知会耗时较长。</li>
+<li>事件通知呈线性关系，如果其中一个观察者处理事件卡壳，会影响后续的观察者接收该事件。</li>
+<li>如果观察者和被观察者之间存在循环依赖，则可能造成两者之间的循环调用，导致系统崩溃。</li>
 </ul>
-<h2 id="26-访问者模式"><a href="#26-访问者模式" class="headerlink" title="26.访问者模式"></a>26.访问者模式</h2><p><strong>适用场景：</strong></p>
+<h2 id="26-访问者模式"><a href="#26-访问者模式" class="headerlink" title="26.访问者模式"></a>26.访问者模式</h2><p>访问者模式(Visitor Pattern)，是一种将数据结构与数据操作分离的设计模式。是指封装一些作用于某种数据结构中的各元素的操作。</p>
+<p><strong>特征：</strong><br>可以在不改变数据结构的前提下定义作用于这些元素的新的操作。<br>属于行为型模式。</p>
+<p><strong>适用场景：</strong></p>
 <ul>
-<li>。</li>
+<li>数据结构稳定，作用于数据结构的操作经常变化的场景。</li>
+<li>需要数据结构与数据操作分离的场景。</li>
+<li>需要对不同数据类型(元素)进行操作，而不适用分支判断具体类型的场景。</li>
 </ul>
 <p><strong>优点：</strong></p>
 <ul>
-<li>。</li>
+<li>解耦了数据结构与数据操作，使得操作集合可以独立变化。</li>
+<li>扩展性好：可以通过扩展访问者角色，实现对数据集的不同操作。</li>
+<li>元素具体类型并非单一，访问者均可操作。</li>
+<li>各角色职责分离，符合单一职责原则。</li>
 </ul>
 <p><strong>缺点：</strong></p>
 <ul>
-<li>。</li>
+<li>无法增加元素类型:若系统数据结构对象易于变化，经常有新的数据对象增加进来，则访问者类必须增加对应元素类型的操作，违背了开闭原则。</li>
+<li>具体元素变得更加困难：具体元素增加属性，删除属性等操作会导致对应的访问者类需要进行相应的修改，尤其当有大量访问者类时，修改范围太大。</li>
+<li>违背依赖倒置原则：为了达到”区别对待“，访问者依赖的是具体元素类型而不是抽象。</li>
 </ul>
-<h2 id="27-设计模式总结"><a href="#27-设计模式总结" class="headerlink" title="27.设计模式总结"></a>27.设计模式总结</h2><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.bilibili.com/video/BV1L5411R7BP?p=4&spm_id_from=pageDriver&vd_source=5442b4c25ece27e33e3aeca4f29ec7f6" target="_blank" rel="noopener">从未见过如此通俗易懂的Java设计模式教程</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.bilibili.com/video/BV1L5411R7BP?p=4&spm_id_from=pageDriver&vd_source=5442b4c25ece27e33e3aeca4f29ec7f6" target="_blank" rel="noopener">从未见过如此通俗易懂的Java设计模式教程</a></p>
 ]]></content>
       
         <categories>
